@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>1.0</key>
+	<string>Version</string>
+	<key>Encoder Options</key>
+	<array>
+		<dict>
+			<key>-f</key>
+			<string>mp3</string>
+		</dict>
+		<dict>
+			<key>-vn</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>-acodec</key>
+			<string>libmp3lame</string>
+		</dict>
+		<dict>
+			<key>-ab</key>
+			<string>320000</string>
+		</dict>
+		<dict>
+			<key>-ar</key>
+			<string>44100</string>
+		</dict>
+		<dict>
+			<key>-threads</key>
+			<string>8</string>
+		</dict>
+	</array>
+	<key>Extension</key>
+	<string>mp3</string>
+	<key>Extra Options</key>
+	<dict/>
+	<key>Name</key>
+	<string>MP3</string>
+	<key>Version</key>
+	<string>1.0</string>
+</dict>
+</plist>
