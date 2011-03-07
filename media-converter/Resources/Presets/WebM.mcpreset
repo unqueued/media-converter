@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>1.0</key>
+	<string>Version</string>
+	<key>Encoder Options</key>
+	<array>
+		<dict>
+			<key>-f</key>
+			<string>webm</string>
+		</dict>
+		<dict>
+			<key>-vcodec</key>
+			<string>libvpx</string>
+		</dict>
+		<dict>
+			<key>-b</key>
+			<string>4000000</string>
+		</dict>
+		<dict>
+			<key>-acodec</key>
+			<string>libvorbis</string>
+		</dict>
+		<dict>
+			<key>-ab</key>
+			<string>224000</string>
+		</dict>
+		<dict>
+			<key>-threads</key>
+			<string>8</string>
+		</dict>
+		<dict>
+			<key>-async</key>
+			<string>1</string>
+		</dict>
+		<dict>
+			<key>-ar</key>
+			<string>48000</string>
+		</dict>
+	</array>
+	<key>Extension</key>
+	<string>webm</string>
+	<key>Extra Options</key>
+	<dict/>
+	<key>Name</key>
+	<string>WebM</string>
+	<key>Version</key>
+	<string>1.0</string>
+</dict>
+</plist>

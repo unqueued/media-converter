@@ -1,0 +1,1876 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FE0EF520130A7E630076FE30 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
+		FE0EFC80130A928B0076FE30 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FE1A925012EC4C4A007273B3 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
+		FE1A976612EC4CC7007273B3 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
+		FE1A979C12EC4D32007273B3 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
+		FE1A97A612EC4D42007273B3 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FE4E9894132105CB00B440F4 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
+		FE4E9899132105DA00B440F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
+		FE4E9B0213210D3100B440F4 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
+		FE4E9B3813210E6200B440F4 /* Add Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B3613210E6200B440F4 /* Add Preset.png */; };
+		FE4E9BFE13218B7600B440F4 /* MediaConverterHelp in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */; };
+		FE5F7D47131D960900BF0236 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
+		FE77D66F13192E8800731569 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
+		FE77D88C13192F1400731569 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
+		FE77D8AA13192FA400731569 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
+		FE77D9BE131940B000731569 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
+		FE77D9E2131941C500731569 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FE8086DD12EB01F20047FD26 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
+		FE8086DF12EB092D0047FD26 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
+		FE8086F312EB09E30047FD26 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
+		FE8086F812EB0BA00047FD26 /* MCMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F712EB0BA00047FD26 /* MCMainController.m */; };
+		FE808B7C12EB0FEE0047FD26 /* MCCommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */; };
+		FE808B7D12EB0FEE0047FD26 /* MCConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7712EB0FEE0047FD26 /* MCConverter.m */; };
+		FE808B7E12EB0FEE0047FD26 /* MCProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7812EB0FEE0047FD26 /* MCProgress.m */; };
+		FE808BFF12EB18F20047FD26 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF212EB18F20047FD26 /* ffmpeg */; };
+		FE808C0012EB18F20047FD26 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF312EB18F20047FD26 /* movtowav */; };
+		FE808C0112EB18F20047FD26 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF412EB18F20047FD26 /* movtoy4m */; };
+		FE808C1C12EB19AC0047FD26 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
+		FE808C1D12EB19AC0047FD26 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
+		FE808C1F12EB19AC0047FD26 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
+		FE9DC01B12E99B2B007D3E9F /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
+		FEA8CE5513227D0F00C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		FEA8CE5613227D0F00C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		FEA8CE5713227D0F00C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
+		FEA8CE5813227D0F00C10516 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
+		FEA8CE5913227D0F00C10516 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
+		FEA8CE5A13227D0F00C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF212EB18F20047FD26 /* ffmpeg */; };
+		FEA8CE5B13227D0F00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF312EB18F20047FD26 /* movtowav */; };
+		FEA8CE5C13227D0F00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF412EB18F20047FD26 /* movtoy4m */; };
+		FEA8CE5D13227D0F00C10516 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
+		FEA8CE5E13227D0F00C10516 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
+		FEA8CE5F13227D0F00C10516 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
+		FEA8CE6013227D0F00C10516 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
+		FEA8CE6113227D0F00C10516 /* MCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CD8512EEB83B00981441 /* MCPreferences.xib */; };
+		FEA8CE6213227D0F00C10516 /* Advanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBE12EEC26000981441 /* Advanced.tiff */; };
+		FEA8CE6313227D0F00C10516 /* General.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBF12EEC26000981441 /* General.tiff */; };
+		FEA8CE6413227D0F00C10516 /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
+		FEA8CE6513227D0F00C10516 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
+		FEA8CE6613227D0F00C10516 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
+		FEA8CE6713227D0F00C10516 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
+		FEA8CE6813227D0F00C10516 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
+		FEA8CE6913227D0F00C10516 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
+		FEA8CE6A13227D0F00C10516 /* Add Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B3613210E6200B440F4 /* Add Preset.png */; };
+		FEA8CE6B13227D0F00C10516 /* MediaConverterHelp in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */; };
+		FEA8CE6D13227D0F00C10516 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FEA8CE6E13227D0F00C10516 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
+		FEA8CE6F13227D0F00C10516 /* MCMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F712EB0BA00047FD26 /* MCMainController.m */; };
+		FEA8CE7013227D0F00C10516 /* MCCommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */; };
+		FEA8CE7113227D0F00C10516 /* MCConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7712EB0FEE0047FD26 /* MCConverter.m */; };
+		FEA8CE7213227D0F00C10516 /* MCProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7812EB0FEE0047FD26 /* MCProgress.m */; };
+		FEA8CE7313227D0F00C10516 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FEA8CE7413227D0F00C10516 /* MCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CD8C12EEB89D00981441 /* MCPreferences.m */; };
+		FEA8CE7513227D0F00C10516 /* MCPantherCompatibleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */; };
+		FEA8CE7613227D0F00C10516 /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FEA8CE7713227D0F00C10516 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
+		FEA8CE7813227D0F00C10516 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FEA8CE7913227D0F00C10516 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
+		FEA8CE7A13227D0F00C10516 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
+		FEA8CE7B13227D0F00C10516 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
+		FEA8CE7C13227D0F00C10516 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
+		FEA8CE7D13227D0F00C10516 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FEA8CE7E13227D0F00C10516 /* NSControl_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */; };
+		FEA8CE7F13227D0F00C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
+		FEA8CE8013227D0F00C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
+		FEA8CE8213227D0F00C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FEA8CE8313227D0F00C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
+		FEA8CE9013227D2100C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		FEA8CE9113227D2100C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		FEA8CE9213227D2100C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
+		FEA8CE9313227D2100C10516 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
+		FEA8CE9413227D2100C10516 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
+		FEA8CE9813227D2100C10516 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
+		FEA8CE9913227D2100C10516 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
+		FEA8CE9A13227D2100C10516 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
+		FEA8CE9B13227D2100C10516 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
+		FEA8CE9C13227D2100C10516 /* MCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CD8512EEB83B00981441 /* MCPreferences.xib */; };
+		FEA8CE9D13227D2100C10516 /* Advanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBE12EEC26000981441 /* Advanced.tiff */; };
+		FEA8CE9E13227D2100C10516 /* General.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBF12EEC26000981441 /* General.tiff */; };
+		FEA8CE9F13227D2100C10516 /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
+		FEA8CEA013227D2100C10516 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
+		FEA8CEA113227D2100C10516 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
+		FEA8CEA213227D2100C10516 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
+		FEA8CEA313227D2100C10516 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
+		FEA8CEA413227D2100C10516 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
+		FEA8CEA513227D2100C10516 /* Add Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B3613210E6200B440F4 /* Add Preset.png */; };
+		FEA8CEA613227D2100C10516 /* MediaConverterHelp in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */; };
+		FEA8CEA813227D2100C10516 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FEA8CEA913227D2100C10516 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
+		FEA8CEAA13227D2100C10516 /* MCMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F712EB0BA00047FD26 /* MCMainController.m */; };
+		FEA8CEAB13227D2100C10516 /* MCCommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */; };
+		FEA8CEAC13227D2100C10516 /* MCConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7712EB0FEE0047FD26 /* MCConverter.m */; };
+		FEA8CEAD13227D2100C10516 /* MCProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7812EB0FEE0047FD26 /* MCProgress.m */; };
+		FEA8CEAE13227D2100C10516 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FEA8CEAF13227D2100C10516 /* MCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CD8C12EEB89D00981441 /* MCPreferences.m */; };
+		FEA8CEB013227D2100C10516 /* MCPantherCompatibleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */; };
+		FEA8CEB113227D2100C10516 /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FEA8CEB213227D2100C10516 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
+		FEA8CEB313227D2100C10516 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FEA8CEB413227D2100C10516 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
+		FEA8CEB513227D2100C10516 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
+		FEA8CEB613227D2100C10516 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
+		FEA8CEB713227D2100C10516 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
+		FEA8CEB813227D2100C10516 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FEA8CEB913227D2100C10516 /* NSControl_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */; };
+		FEA8CEBA13227D2100C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
+		FEA8CEBB13227D2100C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
+		FEA8CEBD13227D2100C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FEA8CEBE13227D2100C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
+		FEA8CECB13227D2400C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		FEA8CECC13227D2400C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		FEA8CECD13227D2400C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
+		FEA8CECE13227D2400C10516 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
+		FEA8CECF13227D2400C10516 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
+		FEA8CED313227D2400C10516 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
+		FEA8CED413227D2400C10516 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
+		FEA8CED513227D2400C10516 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
+		FEA8CED613227D2400C10516 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
+		FEA8CED713227D2400C10516 /* MCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CD8512EEB83B00981441 /* MCPreferences.xib */; };
+		FEA8CED813227D2400C10516 /* Advanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBE12EEC26000981441 /* Advanced.tiff */; };
+		FEA8CED913227D2400C10516 /* General.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBF12EEC26000981441 /* General.tiff */; };
+		FEA8CEDA13227D2400C10516 /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
+		FEA8CEDB13227D2400C10516 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
+		FEA8CEDC13227D2400C10516 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
+		FEA8CEDD13227D2400C10516 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
+		FEA8CEDE13227D2400C10516 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
+		FEA8CEDF13227D2400C10516 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
+		FEA8CEE013227D2400C10516 /* Add Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B3613210E6200B440F4 /* Add Preset.png */; };
+		FEA8CEE113227D2400C10516 /* MediaConverterHelp in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */; };
+		FEA8CEE313227D2400C10516 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FEA8CEE413227D2400C10516 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
+		FEA8CEE513227D2400C10516 /* MCMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F712EB0BA00047FD26 /* MCMainController.m */; };
+		FEA8CEE613227D2400C10516 /* MCCommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */; };
+		FEA8CEE713227D2400C10516 /* MCConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7712EB0FEE0047FD26 /* MCConverter.m */; };
+		FEA8CEE813227D2400C10516 /* MCProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7812EB0FEE0047FD26 /* MCProgress.m */; };
+		FEA8CEE913227D2400C10516 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FEA8CEEA13227D2400C10516 /* MCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CD8C12EEB89D00981441 /* MCPreferences.m */; };
+		FEA8CEEB13227D2400C10516 /* MCPantherCompatibleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */; };
+		FEA8CEEC13227D2400C10516 /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FEA8CEED13227D2400C10516 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
+		FEA8CEEE13227D2400C10516 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FEA8CEEF13227D2400C10516 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
+		FEA8CEF013227D2400C10516 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
+		FEA8CEF113227D2400C10516 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
+		FEA8CEF213227D2400C10516 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
+		FEA8CEF313227D2400C10516 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FEA8CEF413227D2400C10516 /* NSControl_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */; };
+		FEA8CEF513227D2400C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
+		FEA8CEF613227D2400C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
+		FEA8CEF813227D2400C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FEA8CEF913227D2400C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
+		FEA8CF0613227D3900C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		FEA8CF0713227D3900C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		FEA8CF0813227D3900C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
+		FEA8CF0913227D3900C10516 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
+		FEA8CF0A13227D3900C10516 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
+		FEA8CF0E13227D3900C10516 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
+		FEA8CF0F13227D3900C10516 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
+		FEA8CF1013227D3900C10516 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
+		FEA8CF1113227D3900C10516 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
+		FEA8CF1213227D3900C10516 /* MCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CD8512EEB83B00981441 /* MCPreferences.xib */; };
+		FEA8CF1313227D3900C10516 /* Advanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBE12EEC26000981441 /* Advanced.tiff */; };
+		FEA8CF1413227D3900C10516 /* General.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBF12EEC26000981441 /* General.tiff */; };
+		FEA8CF1513227D3900C10516 /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
+		FEA8CF1613227D3900C10516 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
+		FEA8CF1713227D3900C10516 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
+		FEA8CF1813227D3900C10516 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
+		FEA8CF1913227D3900C10516 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
+		FEA8CF1A13227D3900C10516 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
+		FEA8CF1B13227D3900C10516 /* Add Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B3613210E6200B440F4 /* Add Preset.png */; };
+		FEA8CF1C13227D3900C10516 /* MediaConverterHelp in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */; };
+		FEA8CF1E13227D3900C10516 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FEA8CF1F13227D3900C10516 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
+		FEA8CF2013227D3900C10516 /* MCMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F712EB0BA00047FD26 /* MCMainController.m */; };
+		FEA8CF2113227D3900C10516 /* MCCommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */; };
+		FEA8CF2213227D3900C10516 /* MCConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7712EB0FEE0047FD26 /* MCConverter.m */; };
+		FEA8CF2313227D3900C10516 /* MCProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7812EB0FEE0047FD26 /* MCProgress.m */; };
+		FEA8CF2413227D3900C10516 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FEA8CF2513227D3900C10516 /* MCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CD8C12EEB89D00981441 /* MCPreferences.m */; };
+		FEA8CF2613227D3900C10516 /* MCPantherCompatibleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */; };
+		FEA8CF2713227D3900C10516 /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FEA8CF2813227D3900C10516 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
+		FEA8CF2913227D3900C10516 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FEA8CF2A13227D3900C10516 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
+		FEA8CF2B13227D3900C10516 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
+		FEA8CF2C13227D3900C10516 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
+		FEA8CF2D13227D3900C10516 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
+		FEA8CF2E13227D3900C10516 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FEA8CF2F13227D3900C10516 /* NSControl_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */; };
+		FEA8CF3013227D3900C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
+		FEA8CF3113227D3900C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
+		FEA8CF3313227D3900C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FEA8CF3413227D3900C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
+		FEA8CF4113227D3C00C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		FEA8CF4213227D3C00C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		FEA8CF4313227D3C00C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
+		FEA8CF4413227D3C00C10516 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
+		FEA8CF4513227D3C00C10516 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
+		FEA8CF4913227D3C00C10516 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
+		FEA8CF4A13227D3C00C10516 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
+		FEA8CF4B13227D3C00C10516 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
+		FEA8CF4C13227D3C00C10516 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
+		FEA8CF4D13227D3C00C10516 /* MCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CD8512EEB83B00981441 /* MCPreferences.xib */; };
+		FEA8CF4E13227D3C00C10516 /* Advanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBE12EEC26000981441 /* Advanced.tiff */; };
+		FEA8CF4F13227D3C00C10516 /* General.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBF12EEC26000981441 /* General.tiff */; };
+		FEA8CF5013227D3C00C10516 /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
+		FEA8CF5113227D3C00C10516 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
+		FEA8CF5213227D3C00C10516 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
+		FEA8CF5313227D3C00C10516 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
+		FEA8CF5413227D3C00C10516 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
+		FEA8CF5513227D3C00C10516 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
+		FEA8CF5613227D3C00C10516 /* Add Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B3613210E6200B440F4 /* Add Preset.png */; };
+		FEA8CF5713227D3C00C10516 /* MediaConverterHelp in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */; };
+		FEA8CF5913227D3C00C10516 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FEA8CF5A13227D3C00C10516 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
+		FEA8CF5B13227D3C00C10516 /* MCMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F712EB0BA00047FD26 /* MCMainController.m */; };
+		FEA8CF5C13227D3C00C10516 /* MCCommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */; };
+		FEA8CF5D13227D3C00C10516 /* MCConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7712EB0FEE0047FD26 /* MCConverter.m */; };
+		FEA8CF5E13227D3C00C10516 /* MCProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7812EB0FEE0047FD26 /* MCProgress.m */; };
+		FEA8CF5F13227D3C00C10516 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FEA8CF6013227D3C00C10516 /* MCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CD8C12EEB89D00981441 /* MCPreferences.m */; };
+		FEA8CF6113227D3C00C10516 /* MCPantherCompatibleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */; };
+		FEA8CF6213227D3C00C10516 /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FEA8CF6313227D3C00C10516 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
+		FEA8CF6413227D3C00C10516 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FEA8CF6513227D3C00C10516 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
+		FEA8CF6613227D3C00C10516 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
+		FEA8CF6713227D3C00C10516 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
+		FEA8CF6813227D3C00C10516 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
+		FEA8CF6913227D3C00C10516 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FEA8CF6A13227D3C00C10516 /* NSControl_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */; };
+		FEA8CF6B13227D3C00C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
+		FEA8CF6C13227D3C00C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
+		FEA8CF6E13227D3C00C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FEA8CF6F13227D3C00C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
+		FEA8CF9C13227FF900C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953412EC4CC7007273B3 /* Growl.framework */; };
+		FEA8CFA21322800900C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926212EC4CC4007273B3 /* Growl.framework */; };
+		FEA8CFA81322802B00C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925C12EC4CC4007273B3 /* Growl.framework */; };
+		FEA8CFAE1322803500C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926512EC4CC4007273B3 /* Growl.framework */; };
+		FEA8CFB41322804300C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925F12EC4CC4007273B3 /* Growl.framework */; };
+		FEA8CFFA132283BC00C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BED12EB18F20047FD26 /* ffmpeg */; };
+		FEA8CFFB132283BD00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEE12EB18F20047FD26 /* movtowav */; };
+		FEA8CFFC132283BE00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEF12EB18F20047FD26 /* movtoy4m */; };
+		FEA8CFFD132283C900C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE812EB18F20047FD26 /* ffmpeg */; };
+		FEA8CFFE132283CA00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE912EB18F20047FD26 /* movtowav */; };
+		FEA8CFFF132283CB00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEA12EB18F20047FD26 /* movtoy4m */; };
+		FEA8D000132283E900C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BED12EB18F20047FD26 /* ffmpeg */; };
+		FEA8D001132283EA00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEE12EB18F20047FD26 /* movtowav */; };
+		FEA8D002132283EA00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEF12EB18F20047FD26 /* movtoy4m */; };
+		FEA8D003132283FD00C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE812EB18F20047FD26 /* ffmpeg */; };
+		FEA8D004132283FD00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE912EB18F20047FD26 /* movtowav */; };
+		FEA8D005132283FE00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEA12EB18F20047FD26 /* movtoy4m */; };
+		FEA8D4B513229AB200C10516 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
+		FEA8D4B613229AB200C10516 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
+		FEA8D4B713229AB200C10516 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
+		FEA8D4B813229AB200C10516 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
+		FEA8D4B913229AB200C10516 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
+		FEA8D4BA13229AB200C10516 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
+		FEA8D4FE1322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEA8D4FF1322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEA8D5001322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEA8D5011322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEA8D5021322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEA8D5031322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEB4E2B01313B09100F608D0 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
+		FEBC384512F163B300F0A20A /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
+		FEBC386712F169BE00F0A20A /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FEF466421324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
+		FEF466431324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
+		FEF466441324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
+		FEF466451324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
+		FEF466461324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
+		FEF466471324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
+		FEF466F3132527860079DBCF /* MCAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF466F2132527860079DBCF /* MCAlert.m */; };
+		FEF466F4132527860079DBCF /* MCAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF466F2132527860079DBCF /* MCAlert.m */; };
+		FEF466F5132527860079DBCF /* MCAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF466F2132527860079DBCF /* MCAlert.m */; };
+		FEF466F6132527860079DBCF /* MCAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF466F2132527860079DBCF /* MCAlert.m */; };
+		FEF466F7132527860079DBCF /* MCAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF466F2132527860079DBCF /* MCAlert.m */; };
+		FEF466F8132527860079DBCF /* MCAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF466F2132527860079DBCF /* MCAlert.m */; };
+		FEF5CD8712EEB83B00981441 /* MCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CD8512EEB83B00981441 /* MCPreferences.xib */; };
+		FEF5CD8D12EEB89D00981441 /* MCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CD8C12EEB89D00981441 /* MCPreferences.m */; };
+		FEF5CFB812EEBF1F00981441 /* MCPantherCompatibleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */; };
+		FEF5CFC112EEC26000981441 /* Advanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBE12EEC26000981441 /* Advanced.tiff */; };
+		FEF5CFC212EEC26000981441 /* General.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBF12EEC26000981441 /* General.tiff */; };
+		FEF7FB50131A857800E244C9 /* NSControl_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */; };
+		FEF7FB51131A857800E244C9 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
+		FEF7FB52131A857800E244C9 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FE1A97A312EC4D38007273B3 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FE1A979C12EC4D32007273B3 /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CE8413227D0F00C10516 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FEA8CF9C13227FF900C10516 /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CEBF13227D2100C10516 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FEA8CFA21322800900C10516 /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CEFA13227D2400C10516 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FEA8CFA81322802B00C10516 /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF3513227D3900C10516 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FEA8CFAE1322803500C10516 /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF7013227D3C00C10516 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FEA8CFB41322804300C10516 /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		32CA4F630368D1EE00C91783 /* Media Converter_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Media Converter_Prefix.pch"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE0EF51E130A7E630076FE30 /* MCPopupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCPopupButton.h; path = Source/MCPopupButton.h; sourceTree = "<group>"; };
+		FE0EF51F130A7E630076FE30 /* MCPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCPopupButton.m; path = Source/MCPopupButton.m; sourceTree = "<group>"; };
+		FE0EFC7E130A928B0076FE30 /* MCCheckBoxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCheckBoxCell.h; path = Source/MCCheckBoxCell.h; sourceTree = "<group>"; };
+		FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCheckBoxCell.m; path = Source/MCCheckBoxCell.m; sourceTree = "<group>"; };
+		FE1A924F12EC4C4A007273B3 /* complete.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = complete.aif; path = Sounds/complete.aif; sourceTree = "<group>"; };
+		FE1A925C12EC4CC4007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
+		FE1A925F12EC4CC4007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
+		FE1A926212EC4CC4007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
+		FE1A926512EC4CC4007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
+		FE1A953112EC4CC7007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
+		FE1A953412EC4CC7007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
+		FE1A97A412EC4D42007273B3 /* MCGrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGrowlController.h; path = Source/MCGrowlController.h; sourceTree = "<group>"; };
+		FE1A97A512EC4D42007273B3 /* MCGrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCGrowlController.m; path = Source/MCGrowlController.m; sourceTree = "<group>"; };
+		FE4E9893132105CB00B440F4 /* MCProgress.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MCProgress.xib; path = Resources/MCProgress.xib; sourceTree = "<group>"; };
+		FE4E9898132105DA00B440F4 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FE4E989C132105E700B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FE4E989D132105E700B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MCPreferences.xib; sourceTree = "<group>"; };
+		FE4E98A0132105F400B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FE4E98A1132105F400B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FE4E9B0113210D3100B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Dutch; path = Dutch.lproj/MCPresets.icns; sourceTree = "<group>"; };
+		FE4E9B0513210D4000B440F4 /* English */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = English; path = English.lproj/MCPresets.icns; sourceTree = "<group>"; };
+		FE4E9B3713210E6200B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Dutch; path = "Dutch.lproj/Add Preset.png"; sourceTree = "<group>"; };
+		FE4E9B3B13210E9100B440F4 /* English */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = English; path = "English.lproj/Add Preset.png"; sourceTree = "<group>"; };
+		FE4E9BEB13218B7600B440F4 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/MediaConverterHelp; sourceTree = "<group>"; };
+		FE4E9C1D1321926800B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Dutch; path = Dutch.lproj/MediaConverterHelp; sourceTree = "<group>"; };
+		FE5F7D46131D960900BF0236 /* Presets.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Presets.tiff; path = Images/Presets.tiff; sourceTree = "<group>"; };
+		FE77D66E13192E8800731569 /* Create Preset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Create Preset.png"; path = "Images/Create Preset.png"; sourceTree = "<group>"; };
+		FE77D88A13192F1400731569 /* ImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageAndTextCell.h; path = Source/ImageAndTextCell.h; sourceTree = "<group>"; };
+		FE77D88B13192F1400731569 /* ImageAndTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageAndTextCell.m; path = Source/ImageAndTextCell.m; sourceTree = "<group>"; };
+		FE77D8A813192FA400731569 /* MCAddDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCAddDelegate.h; path = Source/MCAddDelegate.h; sourceTree = "<group>"; };
+		FE77D8A913192FA400731569 /* MCAddDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCAddDelegate.m; path = Source/MCAddDelegate.m; sourceTree = "<group>"; };
+		FE77D9BC131940B000731569 /* MCCrippledButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCrippledButton.h; path = Source/MCCrippledButton.h; sourceTree = "<group>"; };
+		FE77D9BD131940B000731569 /* MCCrippledButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCrippledButton.m; path = Source/MCCrippledButton.m; sourceTree = "<group>"; };
+		FE77D9E0131941C500731569 /* MCCommandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCommandController.h; path = Source/MCCommandController.h; sourceTree = "<group>"; };
+		FE77D9E1131941C500731569 /* MCCommandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCommandController.m; path = Source/MCCommandController.m; sourceTree = "<group>"; };
+		FE8086DC12EB01F20047FD26 /* Dropzone.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Dropzone.pdf; path = Images/Dropzone.pdf; sourceTree = "<group>"; };
+		FE8086DE12EB092D0047FD26 /* Media Converter.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Media Converter.icns"; path = "Images/Media Converter.icns"; sourceTree = "<group>"; };
+		FE8086F112EB09E30047FD26 /* MCDropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCDropView.m; path = Source/MCDropView.m; sourceTree = "<group>"; };
+		FE8086F212EB09E30047FD26 /* MCDropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDropView.h; path = Source/MCDropView.h; sourceTree = "<group>"; };
+		FE8086F612EB0BA00047FD26 /* MCMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCMainController.h; path = Source/MCMainController.h; sourceTree = "<group>"; };
+		FE8086F712EB0BA00047FD26 /* MCMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCMainController.m; path = Source/MCMainController.m; sourceTree = "<group>"; };
+		FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCommonMethods.m; path = Source/MCCommonMethods.m; sourceTree = "<group>"; };
+		FE808B7712EB0FEE0047FD26 /* MCConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCConverter.m; path = Source/MCConverter.m; sourceTree = "<group>"; };
+		FE808B7812EB0FEE0047FD26 /* MCProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCProgress.m; path = Source/MCProgress.m; sourceTree = "<group>"; };
+		FE808B7912EB0FEE0047FD26 /* MCCommonMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCommonMethods.h; path = Source/MCCommonMethods.h; sourceTree = "<group>"; };
+		FE808B7A12EB0FEE0047FD26 /* MCConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCConverter.h; path = Source/MCConverter.h; sourceTree = "<group>"; };
+		FE808B7B12EB0FEE0047FD26 /* MCProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCProgress.h; path = Source/MCProgress.h; sourceTree = "<group>"; };
+		FE808BE812EB18F20047FD26 /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffmpeg; sourceTree = "<group>"; };
+		FE808BE912EB18F20047FD26 /* movtowav */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = movtowav; sourceTree = "<group>"; };
+		FE808BEA12EB18F20047FD26 /* movtoy4m */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = movtoy4m; sourceTree = "<group>"; };
+		FE808BED12EB18F20047FD26 /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = ffmpeg; sourceTree = "<group>"; };
+		FE808BEE12EB18F20047FD26 /* movtowav */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = movtowav; sourceTree = "<group>"; };
+		FE808BEF12EB18F20047FD26 /* movtoy4m */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = movtoy4m; sourceTree = "<group>"; };
+		FE808BF212EB18F20047FD26 /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffmpeg; sourceTree = "<group>"; };
+		FE808BF312EB18F20047FD26 /* movtowav */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = movtowav; sourceTree = "<group>"; };
+		FE808BF412EB18F20047FD26 /* movtoy4m */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = movtoy4m; sourceTree = "<group>"; };
+		FE808C1012EB19AC0047FD26 /* -1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-1.png"; sourceTree = "<group>"; };
+		FE808C1112EB19AC0047FD26 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
+		FE808C1312EB19AC0047FD26 /* 100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 100.png; sourceTree = "<group>"; };
+		FE9DC01A12E99B2B007D3E9F /* Empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Empty.png; path = Images/Empty.png; sourceTree = "<group>"; };
+		FEA8CE8913227D0F00C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEA8CEC413227D2100C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEA8CEFF13227D2400C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEA8CF3A13227D3900C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEA8CF7513227D3C00C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEA8D4B313229AB200C10516 /* MCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTableView.h; path = Source/MCTableView.h; sourceTree = "<group>"; };
+		FEA8D4B413229AB200C10516 /* MCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCTableView.m; path = Source/MCTableView.m; sourceTree = "<group>"; };
+		FEA8D4F81322AD4E00C10516 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/Donation; sourceTree = "<group>"; };
+		FEA8D5061322AD5800C10516 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Dutch; path = Dutch.lproj/Donation; sourceTree = "<group>"; };
+		FEB4E2AE1313B09100F608D0 /* NSArray_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArray_Extensions.h; path = Source/NSArray_Extensions.h; sourceTree = "<group>"; };
+		FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArray_Extensions.m; path = Source/NSArray_Extensions.m; sourceTree = "<group>"; };
+		FEBC384212F163B300F0A20A /* Presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presets; path = Resources/Presets; sourceTree = "<group>"; };
+		FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCOptionsDelegate.m; path = Source/MCOptionsDelegate.m; sourceTree = "<group>"; };
+		FEBC386612F169BE00F0A20A /* MCOptionsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCOptionsDelegate.h; path = Source/MCOptionsDelegate.h; sourceTree = "<group>"; };
+		FEF466411324E2000079DBCF /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
+		FEF466651324E4510079DBCF /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Dutch; path = Dutch.lproj/Credits.rtf; sourceTree = "<group>"; };
+		FEF466F1132527860079DBCF /* MCAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCAlert.h; path = Source/MCAlert.h; sourceTree = "<group>"; };
+		FEF466F2132527860079DBCF /* MCAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCAlert.m; path = Source/MCAlert.m; sourceTree = "<group>"; };
+		FEF5CD8612EEB83B00981441 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MCPreferences.xib; sourceTree = "<group>"; };
+		FEF5CD8B12EEB89D00981441 /* MCPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCPreferences.h; path = Source/MCPreferences.h; sourceTree = "<group>"; };
+		FEF5CD8C12EEB89D00981441 /* MCPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCPreferences.m; path = Source/MCPreferences.m; sourceTree = "<group>"; };
+		FEF5CFB612EEBF1F00981441 /* MCPantherCompatibleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCPantherCompatibleButton.h; path = Source/MCPantherCompatibleButton.h; sourceTree = "<group>"; };
+		FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCPantherCompatibleButton.m; path = Source/MCPantherCompatibleButton.m; sourceTree = "<group>"; };
+		FEF5CFBE12EEC26000981441 /* Advanced.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Advanced.tiff; path = Images/Advanced.tiff; sourceTree = "<group>"; };
+		FEF5CFBF12EEC26000981441 /* General.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = General.tiff; path = Images/General.tiff; sourceTree = "<group>"; };
+		FEF7FB4A131A857800E244C9 /* NSControl_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSControl_Extensions.h; path = Source/NSControl_Extensions.h; sourceTree = "<group>"; };
+		FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSControl_Extensions.m; path = Source/NSControl_Extensions.m; sourceTree = "<group>"; };
+		FEF7FB4C131A857800E244C9 /* NSNumber_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSNumber_Extensions.h; path = Source/NSNumber_Extensions.h; sourceTree = "<group>"; };
+		FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSNumber_Extensions.m; path = Source/NSNumber_Extensions.m; sourceTree = "<group>"; };
+		FEF7FB4E131A857800E244C9 /* NSString_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSString_Extensions.h; path = Source/NSString_Extensions.h; sourceTree = "<group>"; };
+		FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSString_Extensions.m; path = Source/NSString_Extensions.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				FE1A976612EC4CC7007273B3 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CE8113227D0F00C10516 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CE8213227D0F00C10516 /* Cocoa.framework in Frameworks */,
+				FEA8CE8313227D0F00C10516 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CEBC13227D2100C10516 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CEBD13227D2100C10516 /* Cocoa.framework in Frameworks */,
+				FEA8CEBE13227D2100C10516 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CEF713227D2400C10516 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CEF813227D2400C10516 /* Cocoa.framework in Frameworks */,
+				FEA8CEF913227D2400C10516 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF3213227D3900C10516 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CF3313227D3900C10516 /* Cocoa.framework in Frameworks */,
+				FEA8CF3413227D3900C10516 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF6D13227D3C00C10516 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CF6E13227D3C00C10516 /* Cocoa.framework in Frameworks */,
+				FEA8CF6F13227D3C00C10516 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FEF7FB70131A87B100E244C9 /* Main */,
+				FEF7FB71131A87BD00E244C9 /* Preferences */,
+				FE808B7512EB0FE40047FD26 /* General */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Media Converter.app */,
+				FEA8CE8913227D0F00C10516 /* Media Converter.app */,
+				FEA8CEC413227D2100C10516 /* Media Converter.app */,
+				FEA8CEFF13227D2400C10516 /* Media Converter.app */,
+				FEA8CF3A13227D3900C10516 /* Media Converter.app */,
+				FEA8CF7513227D3C00C10516 /* Media Converter.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* Media Converter */ = {
+			isa = PBXGroup;
+			children = (
+				FE808BE412EB18F20047FD26 /* Binaries */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = "Media Converter";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* Media Converter_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E9C0013218B7900B440F4 /* Help Folders */,
+				FEF7FBBD131A89E100E244C9 /* Strings */,
+				FEF7FBBB131A89A500E244C9 /* Interface */,
+				FEF7FBB9131A897E00E244C9 /* Images */,
+				FEF7FBBA131A899400E244C9 /* Sounds */,
+				FEF7FBBC131A89AB00E244C9 /* Other */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A925A12EC4CB6007273B3 /* Included Frameworks */,
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE1A925A12EC4CB6007273B3 /* Included Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A925B12EC4CC4007273B3 /* Intel */,
+				FE1A925E12EC4CC4007273B3 /* Intel 64-bit */,
+				FE1A926112EC4CC4007273B3 /* PowerPC */,
+				FE1A926412EC4CC4007273B3 /* PowerPC 64-bit */,
+				FE1A953012EC4CC7007273B3 /* Universal */,
+				FE1A953312EC4CC7007273B3 /* Universal 64-bit */,
+			);
+			name = "Included Frameworks";
+			sourceTree = "<group>";
+		};
+		FE1A925B12EC4CC4007273B3 /* Intel */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A925C12EC4CC4007273B3 /* Growl.framework */,
+			);
+			name = Intel;
+			path = Frameworks/Intel;
+			sourceTree = "<group>";
+		};
+		FE1A925E12EC4CC4007273B3 /* Intel 64-bit */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A925F12EC4CC4007273B3 /* Growl.framework */,
+			);
+			name = "Intel 64-bit";
+			path = "Frameworks/Intel 64-bit";
+			sourceTree = "<group>";
+		};
+		FE1A926112EC4CC4007273B3 /* PowerPC */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A926212EC4CC4007273B3 /* Growl.framework */,
+			);
+			name = PowerPC;
+			path = Frameworks/PowerPC;
+			sourceTree = "<group>";
+		};
+		FE1A926412EC4CC4007273B3 /* PowerPC 64-bit */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A926512EC4CC4007273B3 /* Growl.framework */,
+			);
+			name = "PowerPC 64-bit";
+			path = "Frameworks/PowerPC 64-bit";
+			sourceTree = "<group>";
+		};
+		FE1A953012EC4CC7007273B3 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A953112EC4CC7007273B3 /* Growl.framework */,
+			);
+			name = Universal;
+			path = Frameworks/Universal;
+			sourceTree = "<group>";
+		};
+		FE1A953312EC4CC7007273B3 /* Universal 64-bit */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A953412EC4CC7007273B3 /* Growl.framework */,
+			);
+			name = "Universal 64-bit";
+			path = "Frameworks/Universal 64-bit";
+			sourceTree = "<group>";
+		};
+		FE4E9C0013218B7900B440F4 /* Help Folders */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */,
+			);
+			name = "Help Folders";
+			sourceTree = "<group>";
+		};
+		FE808B7512EB0FE40047FD26 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				FEF466F1132527860079DBCF /* MCAlert.h */,
+				FEF466F2132527860079DBCF /* MCAlert.m */,
+				FE808B7912EB0FEE0047FD26 /* MCCommonMethods.h */,
+				FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */,
+				FE808B7A12EB0FEE0047FD26 /* MCConverter.h */,
+				FE808B7712EB0FEE0047FD26 /* MCConverter.m */,
+				FE1A97A412EC4D42007273B3 /* MCGrowlController.h */,
+				FE1A97A512EC4D42007273B3 /* MCGrowlController.m */,
+				FEF7FB72131A881400E244C9 /* Extensions */,
+				FEF7FB73131A885200E244C9 /* Subclasses */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
+		FE808BE412EB18F20047FD26 /* Binaries */ = {
+			isa = PBXGroup;
+			children = (
+				FE808BE712EB18F20047FD26 /* Intel */,
+				FE808BEC12EB18F20047FD26 /* PowerPC */,
+				FE808BF112EB18F20047FD26 /* Universal */,
+			);
+			path = Binaries;
+			sourceTree = "<group>";
+		};
+		FE808BE712EB18F20047FD26 /* Intel */ = {
+			isa = PBXGroup;
+			children = (
+				FE808BE812EB18F20047FD26 /* ffmpeg */,
+				FE808BE912EB18F20047FD26 /* movtowav */,
+				FE808BEA12EB18F20047FD26 /* movtoy4m */,
+			);
+			path = Intel;
+			sourceTree = "<group>";
+		};
+		FE808BEC12EB18F20047FD26 /* PowerPC */ = {
+			isa = PBXGroup;
+			children = (
+				FE808BED12EB18F20047FD26 /* ffmpeg */,
+				FE808BEE12EB18F20047FD26 /* movtowav */,
+				FE808BEF12EB18F20047FD26 /* movtoy4m */,
+			);
+			path = PowerPC;
+			sourceTree = "<group>";
+		};
+		FE808BF112EB18F20047FD26 /* Universal */ = {
+			isa = PBXGroup;
+			children = (
+				FE808BF212EB18F20047FD26 /* ffmpeg */,
+				FE808BF312EB18F20047FD26 /* movtowav */,
+				FE808BF412EB18F20047FD26 /* movtoy4m */,
+			);
+			path = Universal;
+			sourceTree = "<group>";
+		};
+		FE808C0F12EB19AC0047FD26 /* ProgressIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				FE808C1012EB19AC0047FD26 /* -1.png */,
+				FE808C1112EB19AC0047FD26 /* 0.png */,
+				FE808C1312EB19AC0047FD26 /* 100.png */,
+			);
+			name = ProgressIndicator;
+			path = Images/ProgressIndicator;
+			sourceTree = "<group>";
+		};
+		FEF7FB70131A87B100E244C9 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				FE8086F612EB0BA00047FD26 /* MCMainController.h */,
+				FE8086F712EB0BA00047FD26 /* MCMainController.m */,
+				FE8086F212EB09E30047FD26 /* MCDropView.h */,
+				FE8086F112EB09E30047FD26 /* MCDropView.m */,
+				FE808B7B12EB0FEE0047FD26 /* MCProgress.h */,
+				FE808B7812EB0FEE0047FD26 /* MCProgress.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
+		FEF7FB71131A87BD00E244C9 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				FEF5CD8B12EEB89D00981441 /* MCPreferences.h */,
+				FEF5CD8C12EEB89D00981441 /* MCPreferences.m */,
+				FEBC386612F169BE00F0A20A /* MCOptionsDelegate.h */,
+				FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */,
+				FE77D8A813192FA400731569 /* MCAddDelegate.h */,
+				FE77D8A913192FA400731569 /* MCAddDelegate.m */,
+				FE77D9E0131941C500731569 /* MCCommandController.h */,
+				FE77D9E1131941C500731569 /* MCCommandController.m */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		FEF7FB72131A881400E244C9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FEF7FB4A131A857800E244C9 /* NSControl_Extensions.h */,
+				FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */,
+				FEF7FB4C131A857800E244C9 /* NSNumber_Extensions.h */,
+				FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */,
+				FEF7FB4E131A857800E244C9 /* NSString_Extensions.h */,
+				FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */,
+				FEB4E2AE1313B09100F608D0 /* NSArray_Extensions.h */,
+				FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		FEF7FB73131A885200E244C9 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				FE0EF51E130A7E630076FE30 /* MCPopupButton.h */,
+				FE0EF51F130A7E630076FE30 /* MCPopupButton.m */,
+				FE0EFC7E130A928B0076FE30 /* MCCheckBoxCell.h */,
+				FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */,
+				FE77D88A13192F1400731569 /* ImageAndTextCell.h */,
+				FE77D88B13192F1400731569 /* ImageAndTextCell.m */,
+				FE77D9BC131940B000731569 /* MCCrippledButton.h */,
+				FE77D9BD131940B000731569 /* MCCrippledButton.m */,
+				FEF5CFB612EEBF1F00981441 /* MCPantherCompatibleButton.h */,
+				FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */,
+				FEA8D4B313229AB200C10516 /* MCTableView.h */,
+				FEA8D4B413229AB200C10516 /* MCTableView.m */,
+			);
+			name = Subclasses;
+			sourceTree = "<group>";
+		};
+		FEF7FBB9131A897E00E244C9 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E9B3613210E6200B440F4 /* Add Preset.png */,
+				FE4E9B0013210D3100B440F4 /* MCPresets.icns */,
+				FE808C0F12EB19AC0047FD26 /* ProgressIndicator */,
+				FE77D66E13192E8800731569 /* Create Preset.png */,
+				FEF5CFBE12EEC26000981441 /* Advanced.tiff */,
+				FEF5CFBF12EEC26000981441 /* General.tiff */,
+				FE5F7D46131D960900BF0236 /* Presets.tiff */,
+				FE8086DE12EB092D0047FD26 /* Media Converter.icns */,
+				FE8086DC12EB01F20047FD26 /* Dropzone.pdf */,
+				FE9DC01A12E99B2B007D3E9F /* Empty.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		FEF7FBBA131A899400E244C9 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A924F12EC4C4A007273B3 /* complete.aif */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		FEF7FBBB131A89A500E244C9 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				FE4E9893132105CB00B440F4 /* MCProgress.xib */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				FEF5CD8512EEB83B00981441 /* MCPreferences.xib */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
+		FEF7FBBC131A89AB00E244C9 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				FEA8D4F71322AD4E00C10516 /* Donation */,
+				FEBC384212F163B300F0A20A /* Presets */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		FEF7FBBD131A89E100E244C9 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				FEF466401324E2000079DBCF /* Credits.rtf */,
+				FE4E9897132105DA00B440F4 /* Localizable.strings */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+			);
+			name = Strings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* Media Converter (Universal) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Media Converter (Universal)" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				FE1A97A312EC4D38007273B3 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Media Converter (Universal)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Media Converter";
+			productReference = 8D1107320486CEB800E47090 /* Media Converter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FEA8CE5313227D0F00C10516 /* Media Converter (Universal 64-bit) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEA8CE8613227D0F00C10516 /* Build configuration list for PBXNativeTarget "Media Converter (Universal 64-bit)" */;
+			buildPhases = (
+				FEA8CE5413227D0F00C10516 /* Resources */,
+				FEA8CE6C13227D0F00C10516 /* Sources */,
+				FEA8CE8113227D0F00C10516 /* Frameworks */,
+				FEA8CE8413227D0F00C10516 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Media Converter (Universal 64-bit)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Media Converter";
+			productReference = FEA8CE8913227D0F00C10516 /* Media Converter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FEA8CE8E13227D2100C10516 /* Media Converter (PowerPC) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEA8CEC113227D2100C10516 /* Build configuration list for PBXNativeTarget "Media Converter (PowerPC)" */;
+			buildPhases = (
+				FEA8CE8F13227D2100C10516 /* Resources */,
+				FEA8CEA713227D2100C10516 /* Sources */,
+				FEA8CEBC13227D2100C10516 /* Frameworks */,
+				FEA8CEBF13227D2100C10516 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Media Converter (PowerPC)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Media Converter";
+			productReference = FEA8CEC413227D2100C10516 /* Media Converter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FEA8CEC913227D2400C10516 /* Media Converter (Intel) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEA8CEFC13227D2400C10516 /* Build configuration list for PBXNativeTarget "Media Converter (Intel)" */;
+			buildPhases = (
+				FEA8CECA13227D2400C10516 /* Resources */,
+				FEA8CEE213227D2400C10516 /* Sources */,
+				FEA8CEF713227D2400C10516 /* Frameworks */,
+				FEA8CEFA13227D2400C10516 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Media Converter (Intel)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Media Converter";
+			productReference = FEA8CEFF13227D2400C10516 /* Media Converter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FEA8CF0413227D3900C10516 /* Media Converter (PowerPC 64-bit) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEA8CF3713227D3900C10516 /* Build configuration list for PBXNativeTarget "Media Converter (PowerPC 64-bit)" */;
+			buildPhases = (
+				FEA8CF0513227D3900C10516 /* Resources */,
+				FEA8CF1D13227D3900C10516 /* Sources */,
+				FEA8CF3213227D3900C10516 /* Frameworks */,
+				FEA8CF3513227D3900C10516 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Media Converter (PowerPC 64-bit)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Media Converter";
+			productReference = FEA8CF3A13227D3900C10516 /* Media Converter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FEA8CF3F13227D3C00C10516 /* Media Converter (Intel 64-bit) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FEA8CF7213227D3C00C10516 /* Build configuration list for PBXNativeTarget "Media Converter (Intel 64-bit)" */;
+			buildPhases = (
+				FEA8CF4013227D3C00C10516 /* Resources */,
+				FEA8CF5813227D3C00C10516 /* Sources */,
+				FEA8CF6D13227D3C00C10516 /* Frameworks */,
+				FEA8CF7013227D3C00C10516 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Media Converter (Intel 64-bit)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Media Converter";
+			productReference = FEA8CF7513227D3C00C10516 /* Media Converter.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Media Converter" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				Dutch,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Media Converter */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Media Converter (Universal) */,
+				FEA8CE5313227D0F00C10516 /* Media Converter (Universal 64-bit) */,
+				FEA8CE8E13227D2100C10516 /* Media Converter (PowerPC) */,
+				FEA8CEC913227D2400C10516 /* Media Converter (Intel) */,
+				FEA8CF0413227D3900C10516 /* Media Converter (PowerPC 64-bit) */,
+				FEA8CF3F13227D3C00C10516 /* Media Converter (Intel 64-bit) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				FE9DC01B12E99B2B007D3E9F /* Empty.png in Resources */,
+				FE8086DD12EB01F20047FD26 /* Dropzone.pdf in Resources */,
+				FE8086DF12EB092D0047FD26 /* Media Converter.icns in Resources */,
+				FE808BFF12EB18F20047FD26 /* ffmpeg in Resources */,
+				FE808C0012EB18F20047FD26 /* movtowav in Resources */,
+				FE808C0112EB18F20047FD26 /* movtoy4m in Resources */,
+				FE808C1C12EB19AC0047FD26 /* -1.png in Resources */,
+				FE808C1D12EB19AC0047FD26 /* 0.png in Resources */,
+				FE808C1F12EB19AC0047FD26 /* 100.png in Resources */,
+				FE1A925012EC4C4A007273B3 /* complete.aif in Resources */,
+				FEF5CD8712EEB83B00981441 /* MCPreferences.xib in Resources */,
+				FEF5CFC112EEC26000981441 /* Advanced.tiff in Resources */,
+				FEF5CFC212EEC26000981441 /* General.tiff in Resources */,
+				FEBC384512F163B300F0A20A /* Presets in Resources */,
+				FE77D66F13192E8800731569 /* Create Preset.png in Resources */,
+				FE5F7D47131D960900BF0236 /* Presets.tiff in Resources */,
+				FE4E9894132105CB00B440F4 /* MCProgress.xib in Resources */,
+				FE4E9899132105DA00B440F4 /* Localizable.strings in Resources */,
+				FE4E9B0213210D3100B440F4 /* MCPresets.icns in Resources */,
+				FE4E9B3813210E6200B440F4 /* Add Preset.png in Resources */,
+				FE4E9BFE13218B7600B440F4 /* MediaConverterHelp in Resources */,
+				FEA8D5021322AD4E00C10516 /* Donation in Resources */,
+				FEF466461324E2000079DBCF /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CE5413227D0F00C10516 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CE5513227D0F00C10516 /* InfoPlist.strings in Resources */,
+				FEA8CE5613227D0F00C10516 /* MainMenu.xib in Resources */,
+				FEA8CE5713227D0F00C10516 /* Empty.png in Resources */,
+				FEA8CE5813227D0F00C10516 /* Dropzone.pdf in Resources */,
+				FEA8CE5913227D0F00C10516 /* Media Converter.icns in Resources */,
+				FEA8CE5A13227D0F00C10516 /* ffmpeg in Resources */,
+				FEA8CE5B13227D0F00C10516 /* movtowav in Resources */,
+				FEA8CE5C13227D0F00C10516 /* movtoy4m in Resources */,
+				FEA8CE5D13227D0F00C10516 /* -1.png in Resources */,
+				FEA8CE5E13227D0F00C10516 /* 0.png in Resources */,
+				FEA8CE5F13227D0F00C10516 /* 100.png in Resources */,
+				FEA8CE6013227D0F00C10516 /* complete.aif in Resources */,
+				FEA8CE6113227D0F00C10516 /* MCPreferences.xib in Resources */,
+				FEA8CE6213227D0F00C10516 /* Advanced.tiff in Resources */,
+				FEA8CE6313227D0F00C10516 /* General.tiff in Resources */,
+				FEA8CE6413227D0F00C10516 /* Presets in Resources */,
+				FEA8CE6513227D0F00C10516 /* Create Preset.png in Resources */,
+				FEA8CE6613227D0F00C10516 /* Presets.tiff in Resources */,
+				FEA8CE6713227D0F00C10516 /* MCProgress.xib in Resources */,
+				FEA8CE6813227D0F00C10516 /* Localizable.strings in Resources */,
+				FEA8CE6913227D0F00C10516 /* MCPresets.icns in Resources */,
+				FEA8CE6A13227D0F00C10516 /* Add Preset.png in Resources */,
+				FEA8CE6B13227D0F00C10516 /* MediaConverterHelp in Resources */,
+				FEA8D5031322AD4E00C10516 /* Donation in Resources */,
+				FEF466471324E2000079DBCF /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CE8F13227D2100C10516 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CE9013227D2100C10516 /* InfoPlist.strings in Resources */,
+				FEA8CE9113227D2100C10516 /* MainMenu.xib in Resources */,
+				FEA8CE9213227D2100C10516 /* Empty.png in Resources */,
+				FEA8CE9313227D2100C10516 /* Dropzone.pdf in Resources */,
+				FEA8CE9413227D2100C10516 /* Media Converter.icns in Resources */,
+				FEA8CE9813227D2100C10516 /* -1.png in Resources */,
+				FEA8CE9913227D2100C10516 /* 0.png in Resources */,
+				FEA8CE9A13227D2100C10516 /* 100.png in Resources */,
+				FEA8CE9B13227D2100C10516 /* complete.aif in Resources */,
+				FEA8CE9C13227D2100C10516 /* MCPreferences.xib in Resources */,
+				FEA8CE9D13227D2100C10516 /* Advanced.tiff in Resources */,
+				FEA8CE9E13227D2100C10516 /* General.tiff in Resources */,
+				FEA8CE9F13227D2100C10516 /* Presets in Resources */,
+				FEA8CEA013227D2100C10516 /* Create Preset.png in Resources */,
+				FEA8CEA113227D2100C10516 /* Presets.tiff in Resources */,
+				FEA8CEA213227D2100C10516 /* MCProgress.xib in Resources */,
+				FEA8CEA313227D2100C10516 /* Localizable.strings in Resources */,
+				FEA8CEA413227D2100C10516 /* MCPresets.icns in Resources */,
+				FEA8CEA513227D2100C10516 /* Add Preset.png in Resources */,
+				FEA8CEA613227D2100C10516 /* MediaConverterHelp in Resources */,
+				FEA8CFFA132283BC00C10516 /* ffmpeg in Resources */,
+				FEA8CFFB132283BD00C10516 /* movtowav in Resources */,
+				FEA8CFFC132283BE00C10516 /* movtoy4m in Resources */,
+				FEA8D5001322AD4E00C10516 /* Donation in Resources */,
+				FEF466441324E2000079DBCF /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CECA13227D2400C10516 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CECB13227D2400C10516 /* InfoPlist.strings in Resources */,
+				FEA8CECC13227D2400C10516 /* MainMenu.xib in Resources */,
+				FEA8CECD13227D2400C10516 /* Empty.png in Resources */,
+				FEA8CECE13227D2400C10516 /* Dropzone.pdf in Resources */,
+				FEA8CECF13227D2400C10516 /* Media Converter.icns in Resources */,
+				FEA8CED313227D2400C10516 /* -1.png in Resources */,
+				FEA8CED413227D2400C10516 /* 0.png in Resources */,
+				FEA8CED513227D2400C10516 /* 100.png in Resources */,
+				FEA8CED613227D2400C10516 /* complete.aif in Resources */,
+				FEA8CED713227D2400C10516 /* MCPreferences.xib in Resources */,
+				FEA8CED813227D2400C10516 /* Advanced.tiff in Resources */,
+				FEA8CED913227D2400C10516 /* General.tiff in Resources */,
+				FEA8CEDA13227D2400C10516 /* Presets in Resources */,
+				FEA8CEDB13227D2400C10516 /* Create Preset.png in Resources */,
+				FEA8CEDC13227D2400C10516 /* Presets.tiff in Resources */,
+				FEA8CEDD13227D2400C10516 /* MCProgress.xib in Resources */,
+				FEA8CEDE13227D2400C10516 /* Localizable.strings in Resources */,
+				FEA8CEDF13227D2400C10516 /* MCPresets.icns in Resources */,
+				FEA8CEE013227D2400C10516 /* Add Preset.png in Resources */,
+				FEA8CEE113227D2400C10516 /* MediaConverterHelp in Resources */,
+				FEA8CFFD132283C900C10516 /* ffmpeg in Resources */,
+				FEA8CFFE132283CA00C10516 /* movtowav in Resources */,
+				FEA8CFFF132283CB00C10516 /* movtoy4m in Resources */,
+				FEA8D4FE1322AD4E00C10516 /* Donation in Resources */,
+				FEF466421324E2000079DBCF /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF0513227D3900C10516 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CF0613227D3900C10516 /* InfoPlist.strings in Resources */,
+				FEA8CF0713227D3900C10516 /* MainMenu.xib in Resources */,
+				FEA8CF0813227D3900C10516 /* Empty.png in Resources */,
+				FEA8CF0913227D3900C10516 /* Dropzone.pdf in Resources */,
+				FEA8CF0A13227D3900C10516 /* Media Converter.icns in Resources */,
+				FEA8CF0E13227D3900C10516 /* -1.png in Resources */,
+				FEA8CF0F13227D3900C10516 /* 0.png in Resources */,
+				FEA8CF1013227D3900C10516 /* 100.png in Resources */,
+				FEA8CF1113227D3900C10516 /* complete.aif in Resources */,
+				FEA8CF1213227D3900C10516 /* MCPreferences.xib in Resources */,
+				FEA8CF1313227D3900C10516 /* Advanced.tiff in Resources */,
+				FEA8CF1413227D3900C10516 /* General.tiff in Resources */,
+				FEA8CF1513227D3900C10516 /* Presets in Resources */,
+				FEA8CF1613227D3900C10516 /* Create Preset.png in Resources */,
+				FEA8CF1713227D3900C10516 /* Presets.tiff in Resources */,
+				FEA8CF1813227D3900C10516 /* MCProgress.xib in Resources */,
+				FEA8CF1913227D3900C10516 /* Localizable.strings in Resources */,
+				FEA8CF1A13227D3900C10516 /* MCPresets.icns in Resources */,
+				FEA8CF1B13227D3900C10516 /* Add Preset.png in Resources */,
+				FEA8CF1C13227D3900C10516 /* MediaConverterHelp in Resources */,
+				FEA8D000132283E900C10516 /* ffmpeg in Resources */,
+				FEA8D001132283EA00C10516 /* movtowav in Resources */,
+				FEA8D002132283EA00C10516 /* movtoy4m in Resources */,
+				FEA8D5011322AD4E00C10516 /* Donation in Resources */,
+				FEF466451324E2000079DBCF /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF4013227D3C00C10516 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CF4113227D3C00C10516 /* InfoPlist.strings in Resources */,
+				FEA8CF4213227D3C00C10516 /* MainMenu.xib in Resources */,
+				FEA8CF4313227D3C00C10516 /* Empty.png in Resources */,
+				FEA8CF4413227D3C00C10516 /* Dropzone.pdf in Resources */,
+				FEA8CF4513227D3C00C10516 /* Media Converter.icns in Resources */,
+				FEA8CF4913227D3C00C10516 /* -1.png in Resources */,
+				FEA8CF4A13227D3C00C10516 /* 0.png in Resources */,
+				FEA8CF4B13227D3C00C10516 /* 100.png in Resources */,
+				FEA8CF4C13227D3C00C10516 /* complete.aif in Resources */,
+				FEA8CF4D13227D3C00C10516 /* MCPreferences.xib in Resources */,
+				FEA8CF4E13227D3C00C10516 /* Advanced.tiff in Resources */,
+				FEA8CF4F13227D3C00C10516 /* General.tiff in Resources */,
+				FEA8CF5013227D3C00C10516 /* Presets in Resources */,
+				FEA8CF5113227D3C00C10516 /* Create Preset.png in Resources */,
+				FEA8CF5213227D3C00C10516 /* Presets.tiff in Resources */,
+				FEA8CF5313227D3C00C10516 /* MCProgress.xib in Resources */,
+				FEA8CF5413227D3C00C10516 /* Localizable.strings in Resources */,
+				FEA8CF5513227D3C00C10516 /* MCPresets.icns in Resources */,
+				FEA8CF5613227D3C00C10516 /* Add Preset.png in Resources */,
+				FEA8CF5713227D3C00C10516 /* MediaConverterHelp in Resources */,
+				FEA8D003132283FD00C10516 /* ffmpeg in Resources */,
+				FEA8D004132283FD00C10516 /* movtowav in Resources */,
+				FEA8D005132283FE00C10516 /* movtoy4m in Resources */,
+				FEA8D4FF1322AD4E00C10516 /* Donation in Resources */,
+				FEF466431324E2000079DBCF /* Credits.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				FE8086F312EB09E30047FD26 /* MCDropView.m in Sources */,
+				FE8086F812EB0BA00047FD26 /* MCMainController.m in Sources */,
+				FE808B7C12EB0FEE0047FD26 /* MCCommonMethods.m in Sources */,
+				FE808B7D12EB0FEE0047FD26 /* MCConverter.m in Sources */,
+				FE808B7E12EB0FEE0047FD26 /* MCProgress.m in Sources */,
+				FE1A97A612EC4D42007273B3 /* MCGrowlController.m in Sources */,
+				FEF5CD8D12EEB89D00981441 /* MCPreferences.m in Sources */,
+				FEF5CFB812EEBF1F00981441 /* MCPantherCompatibleButton.m in Sources */,
+				FEBC386712F169BE00F0A20A /* MCOptionsDelegate.m in Sources */,
+				FE0EF520130A7E630076FE30 /* MCPopupButton.m in Sources */,
+				FE0EFC80130A928B0076FE30 /* MCCheckBoxCell.m in Sources */,
+				FEB4E2B01313B09100F608D0 /* NSArray_Extensions.m in Sources */,
+				FE77D88C13192F1400731569 /* ImageAndTextCell.m in Sources */,
+				FE77D8AA13192FA400731569 /* MCAddDelegate.m in Sources */,
+				FE77D9BE131940B000731569 /* MCCrippledButton.m in Sources */,
+				FE77D9E2131941C500731569 /* MCCommandController.m in Sources */,
+				FEF7FB50131A857800E244C9 /* NSControl_Extensions.m in Sources */,
+				FEF7FB51131A857800E244C9 /* NSNumber_Extensions.m in Sources */,
+				FEF7FB52131A857800E244C9 /* NSString_Extensions.m in Sources */,
+				FEA8D4B913229AB200C10516 /* MCTableView.m in Sources */,
+				FEF466F7132527860079DBCF /* MCAlert.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CE6C13227D0F00C10516 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CE6D13227D0F00C10516 /* main.m in Sources */,
+				FEA8CE6E13227D0F00C10516 /* MCDropView.m in Sources */,
+				FEA8CE6F13227D0F00C10516 /* MCMainController.m in Sources */,
+				FEA8CE7013227D0F00C10516 /* MCCommonMethods.m in Sources */,
+				FEA8CE7113227D0F00C10516 /* MCConverter.m in Sources */,
+				FEA8CE7213227D0F00C10516 /* MCProgress.m in Sources */,
+				FEA8CE7313227D0F00C10516 /* MCGrowlController.m in Sources */,
+				FEA8CE7413227D0F00C10516 /* MCPreferences.m in Sources */,
+				FEA8CE7513227D0F00C10516 /* MCPantherCompatibleButton.m in Sources */,
+				FEA8CE7613227D0F00C10516 /* MCOptionsDelegate.m in Sources */,
+				FEA8CE7713227D0F00C10516 /* MCPopupButton.m in Sources */,
+				FEA8CE7813227D0F00C10516 /* MCCheckBoxCell.m in Sources */,
+				FEA8CE7913227D0F00C10516 /* NSArray_Extensions.m in Sources */,
+				FEA8CE7A13227D0F00C10516 /* ImageAndTextCell.m in Sources */,
+				FEA8CE7B13227D0F00C10516 /* MCAddDelegate.m in Sources */,
+				FEA8CE7C13227D0F00C10516 /* MCCrippledButton.m in Sources */,
+				FEA8CE7D13227D0F00C10516 /* MCCommandController.m in Sources */,
+				FEA8CE7E13227D0F00C10516 /* NSControl_Extensions.m in Sources */,
+				FEA8CE7F13227D0F00C10516 /* NSNumber_Extensions.m in Sources */,
+				FEA8CE8013227D0F00C10516 /* NSString_Extensions.m in Sources */,
+				FEA8D4BA13229AB200C10516 /* MCTableView.m in Sources */,
+				FEF466F8132527860079DBCF /* MCAlert.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CEA713227D2100C10516 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CEA813227D2100C10516 /* main.m in Sources */,
+				FEA8CEA913227D2100C10516 /* MCDropView.m in Sources */,
+				FEA8CEAA13227D2100C10516 /* MCMainController.m in Sources */,
+				FEA8CEAB13227D2100C10516 /* MCCommonMethods.m in Sources */,
+				FEA8CEAC13227D2100C10516 /* MCConverter.m in Sources */,
+				FEA8CEAD13227D2100C10516 /* MCProgress.m in Sources */,
+				FEA8CEAE13227D2100C10516 /* MCGrowlController.m in Sources */,
+				FEA8CEAF13227D2100C10516 /* MCPreferences.m in Sources */,
+				FEA8CEB013227D2100C10516 /* MCPantherCompatibleButton.m in Sources */,
+				FEA8CEB113227D2100C10516 /* MCOptionsDelegate.m in Sources */,
+				FEA8CEB213227D2100C10516 /* MCPopupButton.m in Sources */,
+				FEA8CEB313227D2100C10516 /* MCCheckBoxCell.m in Sources */,
+				FEA8CEB413227D2100C10516 /* NSArray_Extensions.m in Sources */,
+				FEA8CEB513227D2100C10516 /* ImageAndTextCell.m in Sources */,
+				FEA8CEB613227D2100C10516 /* MCAddDelegate.m in Sources */,
+				FEA8CEB713227D2100C10516 /* MCCrippledButton.m in Sources */,
+				FEA8CEB813227D2100C10516 /* MCCommandController.m in Sources */,
+				FEA8CEB913227D2100C10516 /* NSControl_Extensions.m in Sources */,
+				FEA8CEBA13227D2100C10516 /* NSNumber_Extensions.m in Sources */,
+				FEA8CEBB13227D2100C10516 /* NSString_Extensions.m in Sources */,
+				FEA8D4B713229AB200C10516 /* MCTableView.m in Sources */,
+				FEF466F5132527860079DBCF /* MCAlert.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CEE213227D2400C10516 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CEE313227D2400C10516 /* main.m in Sources */,
+				FEA8CEE413227D2400C10516 /* MCDropView.m in Sources */,
+				FEA8CEE513227D2400C10516 /* MCMainController.m in Sources */,
+				FEA8CEE613227D2400C10516 /* MCCommonMethods.m in Sources */,
+				FEA8CEE713227D2400C10516 /* MCConverter.m in Sources */,
+				FEA8CEE813227D2400C10516 /* MCProgress.m in Sources */,
+				FEA8CEE913227D2400C10516 /* MCGrowlController.m in Sources */,
+				FEA8CEEA13227D2400C10516 /* MCPreferences.m in Sources */,
+				FEA8CEEB13227D2400C10516 /* MCPantherCompatibleButton.m in Sources */,
+				FEA8CEEC13227D2400C10516 /* MCOptionsDelegate.m in Sources */,
+				FEA8CEED13227D2400C10516 /* MCPopupButton.m in Sources */,
+				FEA8CEEE13227D2400C10516 /* MCCheckBoxCell.m in Sources */,
+				FEA8CEEF13227D2400C10516 /* NSArray_Extensions.m in Sources */,
+				FEA8CEF013227D2400C10516 /* ImageAndTextCell.m in Sources */,
+				FEA8CEF113227D2400C10516 /* MCAddDelegate.m in Sources */,
+				FEA8CEF213227D2400C10516 /* MCCrippledButton.m in Sources */,
+				FEA8CEF313227D2400C10516 /* MCCommandController.m in Sources */,
+				FEA8CEF413227D2400C10516 /* NSControl_Extensions.m in Sources */,
+				FEA8CEF513227D2400C10516 /* NSNumber_Extensions.m in Sources */,
+				FEA8CEF613227D2400C10516 /* NSString_Extensions.m in Sources */,
+				FEA8D4B513229AB200C10516 /* MCTableView.m in Sources */,
+				FEF466F3132527860079DBCF /* MCAlert.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF1D13227D3900C10516 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CF1E13227D3900C10516 /* main.m in Sources */,
+				FEA8CF1F13227D3900C10516 /* MCDropView.m in Sources */,
+				FEA8CF2013227D3900C10516 /* MCMainController.m in Sources */,
+				FEA8CF2113227D3900C10516 /* MCCommonMethods.m in Sources */,
+				FEA8CF2213227D3900C10516 /* MCConverter.m in Sources */,
+				FEA8CF2313227D3900C10516 /* MCProgress.m in Sources */,
+				FEA8CF2413227D3900C10516 /* MCGrowlController.m in Sources */,
+				FEA8CF2513227D3900C10516 /* MCPreferences.m in Sources */,
+				FEA8CF2613227D3900C10516 /* MCPantherCompatibleButton.m in Sources */,
+				FEA8CF2713227D3900C10516 /* MCOptionsDelegate.m in Sources */,
+				FEA8CF2813227D3900C10516 /* MCPopupButton.m in Sources */,
+				FEA8CF2913227D3900C10516 /* MCCheckBoxCell.m in Sources */,
+				FEA8CF2A13227D3900C10516 /* NSArray_Extensions.m in Sources */,
+				FEA8CF2B13227D3900C10516 /* ImageAndTextCell.m in Sources */,
+				FEA8CF2C13227D3900C10516 /* MCAddDelegate.m in Sources */,
+				FEA8CF2D13227D3900C10516 /* MCCrippledButton.m in Sources */,
+				FEA8CF2E13227D3900C10516 /* MCCommandController.m in Sources */,
+				FEA8CF2F13227D3900C10516 /* NSControl_Extensions.m in Sources */,
+				FEA8CF3013227D3900C10516 /* NSNumber_Extensions.m in Sources */,
+				FEA8CF3113227D3900C10516 /* NSString_Extensions.m in Sources */,
+				FEA8D4B813229AB200C10516 /* MCTableView.m in Sources */,
+				FEF466F6132527860079DBCF /* MCAlert.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEA8CF5813227D3C00C10516 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FEA8CF5913227D3C00C10516 /* main.m in Sources */,
+				FEA8CF5A13227D3C00C10516 /* MCDropView.m in Sources */,
+				FEA8CF5B13227D3C00C10516 /* MCMainController.m in Sources */,
+				FEA8CF5C13227D3C00C10516 /* MCCommonMethods.m in Sources */,
+				FEA8CF5D13227D3C00C10516 /* MCConverter.m in Sources */,
+				FEA8CF5E13227D3C00C10516 /* MCProgress.m in Sources */,
+				FEA8CF5F13227D3C00C10516 /* MCGrowlController.m in Sources */,
+				FEA8CF6013227D3C00C10516 /* MCPreferences.m in Sources */,
+				FEA8CF6113227D3C00C10516 /* MCPantherCompatibleButton.m in Sources */,
+				FEA8CF6213227D3C00C10516 /* MCOptionsDelegate.m in Sources */,
+				FEA8CF6313227D3C00C10516 /* MCPopupButton.m in Sources */,
+				FEA8CF6413227D3C00C10516 /* MCCheckBoxCell.m in Sources */,
+				FEA8CF6513227D3C00C10516 /* NSArray_Extensions.m in Sources */,
+				FEA8CF6613227D3C00C10516 /* ImageAndTextCell.m in Sources */,
+				FEA8CF6713227D3C00C10516 /* MCAddDelegate.m in Sources */,
+				FEA8CF6813227D3C00C10516 /* MCCrippledButton.m in Sources */,
+				FEA8CF6913227D3C00C10516 /* MCCommandController.m in Sources */,
+				FEA8CF6A13227D3C00C10516 /* NSControl_Extensions.m in Sources */,
+				FEA8CF6B13227D3C00C10516 /* NSNumber_Extensions.m in Sources */,
+				FEA8CF6C13227D3C00C10516 /* NSString_Extensions.m in Sources */,
+				FEA8D4B613229AB200C10516 /* MCTableView.m in Sources */,
+				FEF466F4132527860079DBCF /* MCAlert.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+				FE4E98A0132105F400B440F4 /* Dutch */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+				FE4E989C132105E700B440F4 /* Dutch */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		FE4E9897132105DA00B440F4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE4E9898132105DA00B440F4 /* English */,
+				FE4E98A1132105F400B440F4 /* Dutch */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		FE4E9B0013210D3100B440F4 /* MCPresets.icns */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE4E9B0113210D3100B440F4 /* Dutch */,
+				FE4E9B0513210D4000B440F4 /* English */,
+			);
+			name = MCPresets.icns;
+			sourceTree = "<group>";
+		};
+		FE4E9B3613210E6200B440F4 /* Add Preset.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE4E9B3713210E6200B440F4 /* Dutch */,
+				FE4E9B3B13210E9100B440F4 /* English */,
+			);
+			name = "Add Preset.png";
+			sourceTree = "<group>";
+		};
+		FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE4E9BEB13218B7600B440F4 /* English */,
+				FE4E9C1D1321926800B440F4 /* Dutch */,
+			);
+			name = MediaConverterHelp;
+			sourceTree = "<group>";
+		};
+		FEA8D4F71322AD4E00C10516 /* Donation */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEA8D4F81322AD4E00C10516 /* English */,
+				FEA8D5061322AD5800C10516 /* Dutch */,
+			);
+			name = Donation;
+			sourceTree = "<group>";
+		};
+		FEF466401324E2000079DBCF /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEF466411324E2000079DBCF /* English */,
+				FEF466651324E4510079DBCF /* Dutch */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		FEF5CD8512EEB83B00981441 /* MCPreferences.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEF5CD8612EEB83B00981441 /* English */,
+				FE4E989D132105E700B440F4 /* Dutch */,
+			);
+			name = MCPreferences.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Universal\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Universal\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.4;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				PREBINDING = NO;
+				SDKROOT = macosx10.4;
+			};
+			name = Release;
+		};
+		FEA8CE8713227D0F00C10516 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/Universal\\ 64-bit\"",
+					"$(inherited)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				GCC_VERSION = 4.2;
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = "Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "Media Converter";
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		FEA8CE8813227D0F00C10516 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					ppc64,
+					x86_64,
+				);
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/Universal\\ 64-bit\"",
+					"$(inherited)",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				GCC_VERSION = 4.2;
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "Media Converter";
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+		FEA8CEC213227D2100C10516 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/PowerPC\"",
+					"$(inherited)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = "Info copy.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Debug;
+		};
+		FEA8CEC313227D2100C10516 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = ppc;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/PowerPC\"",
+					"$(inherited)",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Release;
+		};
+		FEA8CEFD13227D2400C10516 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Intel\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = "Info copy 2.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Debug;
+		};
+		FEA8CEFE13227D2400C10516 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = i386;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Intel\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Release;
+		};
+		FEA8CF3813227D3900C10516 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/PowerPC\\ 64-bit\"",
+					"$(inherited)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = "Info copy 3.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Debug;
+		};
+		FEA8CF3913227D3900C10516 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = ppc64;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/PowerPC\\ 64-bit\"",
+					"$(inherited)",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				GCC_VERSION = 4.2;
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "Media Converter";
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+		FEA8CF7313227D3C00C10516 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/Intel\\ 64-bit\"",
+					"$(inherited)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = "Info copy 4.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "Media Converter";
+			};
+			name = Debug;
+		};
+		FEA8CF7413227D3C00C10516 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SRCROOT)/Frameworks/Intel\\ 64-bit\"",
+					"$(inherited)",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				PRODUCT_NAME = "Media Converter";
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Media Converter (Universal)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Media Converter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEA8CE8613227D0F00C10516 /* Build configuration list for PBXNativeTarget "Media Converter (Universal 64-bit)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEA8CE8713227D0F00C10516 /* Debug */,
+				FEA8CE8813227D0F00C10516 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEA8CEC113227D2100C10516 /* Build configuration list for PBXNativeTarget "Media Converter (PowerPC)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEA8CEC213227D2100C10516 /* Debug */,
+				FEA8CEC313227D2100C10516 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEA8CEFC13227D2400C10516 /* Build configuration list for PBXNativeTarget "Media Converter (Intel)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEA8CEFD13227D2400C10516 /* Debug */,
+				FEA8CEFE13227D2400C10516 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEA8CF3713227D3900C10516 /* Build configuration list for PBXNativeTarget "Media Converter (PowerPC 64-bit)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEA8CF3813227D3900C10516 /* Debug */,
+				FEA8CF3913227D3900C10516 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEA8CF7213227D3C00C10516 /* Build configuration list for PBXNativeTarget "Media Converter (Intel 64-bit)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FEA8CF7313227D3C00C10516 /* Debug */,
+				FEA8CF7413227D3C00C10516 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

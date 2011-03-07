@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>1.0</key>
+	<string>Version</string>
+	<key>Encoder Options</key>
+	<array>
+		<dict>
+			<key>-f</key>
+			<string>dvd</string>
+		</dict>
+		<dict>
+			<key>-vcodec</key>
+			<string>mpeg2video</string>
+		</dict>
+		<dict>
+			<key>-s</key>
+			<string>720x480</string>
+		</dict>
+		<dict>
+			<key>-qmin</key>
+			<string>2</string>
+		</dict>
+		<dict>
+			<key>-qmax</key>
+			<string>31</string>
+		</dict>
+		<dict>
+			<key>-b</key>
+			<string>6000000</string>
+		</dict>
+		<dict>
+			<key>-r</key>
+			<string>29.97</string>
+		</dict>
+		<dict>
+			<key>-acodec</key>
+			<string>ac3</string>
+		</dict>
+		<dict>
+			<key>-ar</key>
+			<string>48000</string>
+		</dict>
+		<dict>
+			<key>-ab</key>
+			<string>448000</string>
+		</dict>
+		<dict>
+			<key>-vf</key>
+			<string>setdar=16:9</string>
+		</dict>
+		<dict>
+			<key>-aspect</key>
+			<string>16:9</string>
+		</dict>
+		<dict>
+			<key>-threads</key>
+			<string>8</string>
+		</dict>
+		<dict>
+			<key>-async</key>
+			<string>1</string>
+		</dict>
+	</array>
+	<key>Extension</key>
+	<string>mpg</string>
+	<key>Extra Options</key>
+	<dict>
+		<key>Keep Aspect</key>
+		<integer>1</integer>
+	</dict>
+	<key>Name</key>
+	<string>DVD-Video (NTSC)</string>
+	<key>Version</key>
+	<string>1.0</string>
+</dict>
+</plist>
