@@ -288,26 +288,25 @@
 		return [[NSBundle mainBundle] pathForResource:@"ffmpeg" ofType:@""];
 }
 
-+ (void)logCommandIfNeeded:(NSTask *)command
++ (NSString *)logCommandIfNeeded:(NSTask *)command
 {
 	//Set environment to UTF-8
 	NSMutableDictionary *environment = [NSMutableDictionary dictionaryWithDictionary:[[NSProcessInfo processInfo] environment]];
 	[environment setObject:@"en_US.UTF-8" forKey:@"LC_ALL"];
 	[command setEnvironment:environment];
 
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == YES)
-	{
-		NSArray *showArgs = [command arguments];
-		NSString *commandString = [command launchPath];
+	NSArray *showArgs = [command arguments];
+	NSString *commandString = [command launchPath];
 
-		NSInteger i;
-		for (i=0;i<[showArgs count];i++)
+	NSInteger i;
+	for (i = 0; i < [showArgs count]; i ++)
 		{
 			commandString = [NSString stringWithFormat:@"%@ %@", commandString, [showArgs objectAtIndex:i]];
 		}
 	
-		NSLog(@"%@", commandString);
-	}
+	NSLog(@"%@", commandString);
+	
+	return commandString;
 }
 
 + (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data

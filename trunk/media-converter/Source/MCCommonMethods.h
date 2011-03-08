@@ -43,7 +43,7 @@ typedef float CGFloat;
 //Get used ffmpeg
 + (NSString *)ffmpegPath;
 //Log command with arguments for easier debugging
-+ (void)logCommandIfNeeded:(NSTask *)command;
++ (NSString *)logCommandIfNeeded:(NSTask *)command;
 //Conveniant method to load a NSTask
 + (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data;
 //Standard informative alert
