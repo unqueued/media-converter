@@ -347,7 +347,7 @@
 	[ffmpeg setStandardError:pipe];
 	handle = [pipe fileHandleForReading];
 	
-	[MCCommonMethods logCommandIfNeeded:ffmpeg];
+	NSMutableString *ffmpegErrorString = [[NSMutableString alloc] initWithString:[MCCommonMethods logCommandIfNeeded:ffmpeg]];
 	[ffmpeg launch];
 
 	if (useQuickTime == YES)
@@ -362,6 +362,8 @@
 	
 	if (timeString)
 		inputTotalTime = [timeString integerValue];
+		
+	BOOL started = NO;
 
 	//Here we go
 	while([data = [handle availableData] length]) 
@@ -383,6 +385,8 @@
 		//Format the time sting ffmpeg outputs and format it to percent
 		if ([string rangeOfString:@"time="].length > 0)
 		{
+			started = YES;
+		
 			NSString *currentTimeString = [[[[string componentsSeparatedByString:@"time="] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:0];
 			CGFloat percent = [currentTimeString cgfloatValue] / inputTotalTime * 100;
 		
@@ -401,6 +405,9 @@
 		}
 
 		data = nil;
+		
+		if (started == NO)
+			[ffmpegErrorString appendString:string];
 	
 		[innerPool release];
 		innerPool = nil;
@@ -456,9 +463,12 @@
 		
 		
 		if (*error != nil)
-			*error = [NSString stringWithFormat:@"%@\n\n%@", *error, string];
+			*error = [NSString stringWithFormat:@"%@\n\n%@", *error, ffmpegErrorString];
 		else
-			*error = [NSString stringWithString:string];
+			*error = [NSString stringWithString:ffmpegErrorString];
+			
+		[ffmpegErrorString release];
+		ffmpegErrorString = nil;
 	
 		[string release];
 		string = nil;

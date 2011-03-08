@@ -565,8 +565,6 @@
 	NSString *fileErrors = [errorParts objectAtIndex:0];
 	[alert setInformativeText:fileErrors];
 	
-	
-	
 	[alert beginSheetModalForWindow:mainWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
 	
 	if ([errorParts count] > 1)
