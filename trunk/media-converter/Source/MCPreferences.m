@@ -1191,9 +1191,13 @@
 	{
 		[control setEnabled:NO];
 	}
-	else
+	else if ([[control cell] isKindOfClass:[MCCheckBoxCell class]])
 	{
 		[(MCCheckBoxCell *)[control cell] setStateWithoutSelecting:NSOffState];
+	}
+	else
+	{
+		[control setState:NSOffState];
 	}
 }
 
