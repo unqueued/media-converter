@@ -1174,7 +1174,11 @@
 		}
 		else if ([control isKindOfClass:[NSTextField class]])
 		{
-			[[control cell] setStringValue:property];
+			[control setStringValue:property];
+		}
+		else if ([[control cell] isKindOfClass:[MCCheckBoxCell class]])
+		{
+			[(MCCheckBoxCell *)[control cell] setStateWithoutSelecting:NSOnState];
 		}
 		else
 		{
@@ -1189,7 +1193,7 @@
 	}
 	else
 	{
-		[(NSButton *)control setState:NSOffState];
+		[(MCCheckBoxCell *)[control cell] setStateWithoutSelecting:NSOffState];
 	}
 }
 
@@ -1288,7 +1292,7 @@
 	[delegate performSelector:@selector(update)];
 }
 
-- (void)updateForKey:(NSString *)key withProperty:(id)property
+- (BOOL)updateForKey:(NSString *)key withProperty:(id)property
 {
 	if ([viewMappings containsObject:key])
 	{
@@ -1326,7 +1330,11 @@
 			if ([[control cell] respondsToSelector:@selector(dependChild)])
 				[self setProperty:property forControl:[[control cell] dependChild]];
 		}
+		
+		return YES;
 	}
+	
+	return NO;
 }
 
 - (void)setupPopups

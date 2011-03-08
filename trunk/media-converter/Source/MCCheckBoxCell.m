@@ -11,6 +11,11 @@
 
 @implementation MCCheckBoxCell
 
+- (void)setStateWithoutSelecting:(NSInteger)value
+{
+	[super setState:value];
+}
+
 - (void)setState:(NSInteger)value
 {
 	[super setState:value];

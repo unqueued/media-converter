@@ -114,7 +114,7 @@
 - (void)clearOptionsInViews:(NSArray *)views;
 - (void)setProperty:(id)property forControl:(id)control;
 - (void)reloadPresets;
-- (void)updateForKey:(NSString *)key withProperty:(id)property;
+- (BOOL)updateForKey:(NSString *)key withProperty:(id)property;
 - (void)setupPopups;
 
 @end

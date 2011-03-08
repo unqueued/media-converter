@@ -15,6 +15,7 @@
 	IBOutlet id dependChild;
 }
 
+- (void)setStateWithoutSelecting:(NSInteger)value;
 - (id)dependChild;
 
 @end
