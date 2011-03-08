@@ -12,8 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="4"/>
 			<integer value="5"/>
+			<integer value="317"/>
+			<integer value="6"/>
+			<integer value="4"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -44,7 +46,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{192, 355}, {402, 288}}</string>
 				<int key="NSWTFlags">1886912512</int>
-				<string key="NSWindowTitle">Choose ffmpeg</string>
+				<string key="NSWindowTitle">Choose FFmpeg</string>
 				<object class="NSMutableString" key="NSWindowClass">
 					<characters key="NS.bytes">NSPanel</characters>
 				</object>
@@ -54,7 +56,7 @@
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{213, 107}</string>
 				<object class="NSView" key="NSWindowView" id="368484352">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -511,6 +513,7 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{402, 288}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{213, 129}</string>
@@ -1001,7 +1004,7 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="692066972">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">256</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1051,14 +1054,14 @@
 					<object class="NSButton" id="974213737">
 						<reference key="NSNextResponder" ref="692066972"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 48}, {190, 18}}</string>
+						<string key="NSFrame">{{18, 48}, {195, 18}}</string>
 						<reference key="NSSuperview" ref="692066972"/>
 						<int key="NSTag">5</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="192584395">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
-							<string key="NSContents">Use Custom ffmpeg binary</string>
+							<string key="NSContents">Use Custom FFmpeg Binary</string>
 							<reference key="NSSupport" ref="212994765"/>
 							<reference key="NSControlView" ref="974213737"/>
 							<int key="NSButtonFlags">1211912703</int>
@@ -1096,6 +1099,7 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{460, 104}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSWindowTemplate" id="247242183">
@@ -2634,7 +2638,6 @@
 									</object>
 									<string key="NSFrame">{{1, 1}, {479, 132}}</string>
 									<reference key="NSSuperview" ref="658027131"/>
-									<reference key="NSNextKeyView" ref="617014883"/>
 									<reference key="NSDocView" ref="617014883"/>
 									<reference key="NSBGColor" ref="275731890"/>
 									<int key="NScvFlags">4</int>
@@ -2661,7 +2664,6 @@
 							</object>
 							<string key="NSFrame">{{20, 61}, {481, 134}}</string>
 							<reference key="NSSuperview" ref="475489399"/>
-							<reference key="NSNextKeyView" ref="915927294"/>
 							<int key="NSsFlags">562</int>
 							<reference key="NSVScroller" ref="24511825"/>
 							<reference key="NSHScroller" ref="783516541"/>
