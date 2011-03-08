@@ -18,14 +18,32 @@
 	NSDictionary *userInfo = [notification userInfo];
 	NSInteger textMovement = [[userInfo valueForKey:@"NSTextMovement"] integerValue];
 	NSInteger editedColumn = [self editedColumn];
+	NSInteger editedRow = [self editedRow];
+	
+	[super textDidEndEditing:notification];
 
 	if (textMovement == NSTabTextMovement)
 	{
-		// Tab pressed!
-		[super textDidEndEditing:notification];
-		
 		if (editedColumn == 1)
-			[(MCOptionsDelegate *)[self delegate] addOption:nil];
+		{
+			if (editedRow < [self numberOfRows] - 1)
+			{
+				[self selectRowIndexes:[NSIndexSet indexSetWithIndex:editedRow + 1] byExtendingSelection:NO];
+				[self editColumn:0 row:editedRow+1 withEvent:nil select:YES];
+			}
+			else
+			{
+				[(MCOptionsDelegate *)[self delegate] addOption:nil];
+			}
+		}
+	}
+	else if (textMovement == NSBacktabTextMovement)
+	{
+		if (editedColumn == 0)
+		{
+			[self selectRowIndexes:[NSIndexSet indexSetWithIndex:editedRow - 1] byExtendingSelection:NO];
+			[self editColumn:1 row:editedRow - 1 withEvent:nil select:YES];
+		}
 	}
 }
 
