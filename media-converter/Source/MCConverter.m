@@ -353,7 +353,7 @@
 		[args addObject:[NSString stringWithFormat:@"frontend=Media Encoder %@", version]];
 		
 		if (passes == 2)
-			[args addObjectsFromArray:[NSArray arrayWithObjects:@"-passlogfile", passLogFile, nil]];
+			[ffmpeg setCurrentDirectoryPath:@"/tmp"];
 		
 		if (passes == 2 && pass == 0)
 		{
