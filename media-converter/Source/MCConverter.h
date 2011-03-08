@@ -12,9 +12,9 @@
 {
 	//ffmpeg the main encoder
 	NSTask *ffmpeg;
-	//movtoy4m, passes the decoded quicktime movie to ffmpeg
+	//movtoy4m, passes the decoded quicktime movie to FFmpeg
 	NSTask *movtoy4m;
-	//movtowav, encodes the movie to wav, after that ffmpeg can encode it
+	//movtowav, encodes the movie to wav, after that FFmpeg can encode it
 	NSTask *movtowav;
 	//Status: 0=idle, 1=encoding audio, 2=encoding video
 	NSInteger status;
@@ -61,7 +61,7 @@
 
 //Test actions
 
-//Test if ffmpeg can encode, sound and/or video, and if it does have any sound
+//Test if FFmpeg can encode, sound and/or video, and if it does have any sound
 - (NSInteger)testFile:(NSString *)path;
 //Test methods used in (NSInteger)testFile....
 - (BOOL)streamWorksOfKind:(NSString *)kind inOutput:(NSString *)output;
