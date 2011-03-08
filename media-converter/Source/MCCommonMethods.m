@@ -304,6 +304,7 @@
 			commandString = [NSString stringWithFormat:@"%@ %@", commandString, [showArgs objectAtIndex:i]];
 		}
 	
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == YES) 
 	NSLog(@"%@", commandString);
 	
 	return commandString;

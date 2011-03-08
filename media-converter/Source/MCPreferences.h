@@ -35,6 +35,7 @@
 	IBOutlet id keepAspectButton;
 	IBOutlet id autoAspectButton;
 	IBOutlet id autoSizeButton;
+	IBOutlet id twoPassButton;
 	IBOutlet id modePopup;
 	IBOutlet id advancedTableView;
 	IBOutlet id advancedAddButton;
@@ -90,6 +91,7 @@
 - (IBAction)setKeepAspect:(id)sender;
 - (IBAction)setAutoAspect:(id)sender;
 - (IBAction)setAutoSize:(id)sender;
+- (IBAction)setTwoPass:(id)sender;
 - (IBAction)goToPresetSite:(id)sender;
 - (IBAction)savePreset:(id)sender;
 //Advanced actions

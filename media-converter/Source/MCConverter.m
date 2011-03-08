@@ -257,187 +257,238 @@
 			}
 		}
 	}
-
-	ffmpeg = [[NSTask alloc] init];
-	NSPipe *pipe2;
-	NSPipe *errorPipe;
-
-	//Check if we need to use movtoy4m to decode
-	if (useQuickTime == YES)
+	
+	NSInteger passes = 1;
+	if ([[extraOptions objectForKey:@"Two Pass"] boolValue] == YES)
+		passes = 2;
+	
+	NSInteger taskStatus;
+	NSString *passLogFile = @"/tmp/mcpasslog";
+	NSMutableString *ffmpegErrorString;
+	
+	NSInteger pass;
+	for (pass = 0; pass < passes; pass ++)
 	{
-		quicktimeOptions = [NSArray arrayWithObjects:@"-f", @"yuv4mpegpipe", @"-i", @"-", nil];
-	
-		movtoy4m = [[NSTask alloc] init];
-		pipe2 = [[NSPipe alloc] init];
-		NSFileHandle *handle2;
-		[movtoy4m setLaunchPath:[[NSBundle mainBundle] pathForResource:@"movtoy4m" ofType:@""]];
-		[movtoy4m setArguments:[NSArray arrayWithObjects:@"-w",[NSString stringWithFormat:@"%i", inputWidth],@"-h",[NSString stringWithFormat:@"%i", inputHeight],@"-F",[NSString stringWithFormat:@"%f:1", inputFps],@"-a",[NSString stringWithFormat:@"%i:%i", inputWidth, inputHeight],path, nil]];
-		[movtoy4m setStandardOutput:pipe2];
-		
-		if ([defaults boolForKey:@"MCDebug"] == NO)
-		{
-			errorPipe = [[NSPipe alloc] init];
-			[movtoy4m setStandardError:[NSFileHandle fileHandleWithNullDevice]];
-		}
-	
-		[ffmpeg setStandardInput:pipe2];
-		handle2=[pipe2 fileHandleForReading];
-		[MCCommonMethods logCommandIfNeeded:movtoy4m];
-		[movtoy4m launch];
-	}
-	
-	if (useWav == YES)
-	{
-		wavOptions = [NSArray arrayWithObjects:@"-i", [outputFile stringByAppendingString:@" (tmp).wav"], nil];
-	}
-	
-	if (useWav == NO | useQuickTime == NO)
-	{
-		inputOptions = [NSArray arrayWithObjects:@"-i", path, nil];
-	}
+		ffmpeg = [[NSTask alloc] init];
+		NSPipe *pipe2;
+		NSPipe *errorPipe;
 
-	NSPipe *pipe=[[NSPipe alloc] init];
-	NSFileHandle *handle;
-	NSData *data;
-	
-	[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
-	
-	NSMutableArray *args = [NSMutableArray array];
-	[args addObjectsFromArray:quicktimeOptions];
-	[args addObjectsFromArray:wavOptions];
-	[args addObjectsFromArray:inputOptions];
-	
-	NSString *threads = @"1";
-	
-	NSInteger x;
-	for (x = 0; x < [options count]; x ++)
-	{
-		NSDictionary *dict = [options objectAtIndex:x];
-		NSString *key = [[dict allKeys] objectAtIndex:0];
-		NSString *object = [dict objectForKey:key];
-		
-		if ([key isEqualTo:@"-threads"])
+		//Check if we need to use movtoy4m to decode
+		if (useQuickTime == YES)
 		{
-			threads = object;
-		}
-		else
-		{
-			[args addObject:key];
-			
-			if (![object isEqualTo:@""])
-				[args addObject:object];
-		}
-	}
+			quicktimeOptions = [NSArray arrayWithObjects:@"-f", @"yuv4mpegpipe", @"-i", @"-", nil];
 	
-	NSArray *threadObjects = [NSArray arrayWithObjects:@"-threads", threads, nil];
-	NSString *pathExtension = [outFileWithExtension pathExtension];
-	if ([pathExtension isEqualTo:@"mov"] | [pathExtension isEqualTo:@"m4v"] | [pathExtension isEqualTo:@"mp4"])
-		[args addObjectsFromArray:threadObjects];
-	else
-		[args insertObjects:threadObjects atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]];
-	
-	NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-	[args addObjectsFromArray:padOptions];
-	[args addObject:@"-metadata"];
-	[args addObject:[NSString stringWithFormat:@"frontend=Media Encoder %@", version]];
-	[args addObject:outFileWithExtension];
-
-	[ffmpeg setArguments:args];
-	//ffmpeg uses stderr to show the progress
-	[ffmpeg setStandardError:pipe];
-	handle = [pipe fileHandleForReading];
-	
-	NSMutableString *ffmpegErrorString = [[NSMutableString alloc] initWithString:[MCCommonMethods logCommandIfNeeded:ffmpeg]];
-	[ffmpeg launch];
-
-	if (useQuickTime == YES)
-		status = 3;
-	else
-		status = 2;
-
-	NSString *string = nil;
-	
-	//Get the time we want to encode
-	NSString *timeString = [options objectForKey:@"-t"];
-	
-	if (timeString)
-		inputTotalTime = [timeString integerValue];
+			movtoy4m = [[NSTask alloc] init];
+			pipe2 = [[NSPipe alloc] init];
+			NSFileHandle *handle2;
+			[movtoy4m setLaunchPath:[[NSBundle mainBundle] pathForResource:@"movtoy4m" ofType:@""]];
+			[movtoy4m setArguments:[NSArray arrayWithObjects:@"-w",[NSString stringWithFormat:@"%i", inputWidth],@"-h",[NSString stringWithFormat:@"%i", inputHeight],@"-F",[NSString stringWithFormat:@"%f:1", inputFps],@"-a",[NSString stringWithFormat:@"%i:%i", inputWidth, inputHeight],path, nil]];
+			[movtoy4m setStandardOutput:pipe2];
 		
-	BOOL started = NO;
-
-	//Here we go
-	while([data = [handle availableData] length]) 
-	{
-		NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
-	
-		if (string)
-		{
-			[string release];
-			string = nil;
-		}
-	
-		//The string containing ffmpeg's output
-		string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	
-		if ([defaults boolForKey:@"MCDebug"] == YES)
-			NSLog(@"%@", string);
-		
-		//Format the time sting ffmpeg outputs and format it to percent
-		if ([string rangeOfString:@"time="].length > 0)
-		{
-			started = YES;
-		
-			NSString *currentTimeString = [[[[string componentsSeparatedByString:@"time="] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:0];
-			CGFloat percent = [currentTimeString cgfloatValue] / inputTotalTime * 100;
-		
-			if (inputTotalTime > 0)
+			if ([defaults boolForKey:@"MCDebug"] == NO)
 			{
-				if (percent < 101)
-				{
-					[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:[NSString stringWithFormat: @" (%.0f%@)", percent, @"%"]];
-					[[NSNotificationCenter defaultCenter] postNotificationName:@"MCValueChanged" object:[NSNumber numberWithDouble:percent + (double)number * 100]];
-				}
+				errorPipe = [[NSPipe alloc] init];
+				[movtoy4m setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+			}
+	
+			[ffmpeg setStandardInput:pipe2];
+			handle2=[pipe2 fileHandleForReading];
+			[MCCommonMethods logCommandIfNeeded:movtoy4m];
+			[movtoy4m launch];
+		}
+	
+		if (useWav == YES)
+		{
+			wavOptions = [NSArray arrayWithObjects:@"-i", [outputFile stringByAppendingString:@" (tmp).wav"], nil];
+		}
+	
+		if (useWav == NO | useQuickTime == NO)
+		{
+			inputOptions = [NSArray arrayWithObjects:@"-i", path, nil];
+		}
+
+		NSPipe *pipe = [[NSPipe alloc] init];
+		NSFileHandle *handle;
+		NSData *data;
+	
+		[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
+	
+		NSMutableArray *args = [NSMutableArray array];
+		[args addObjectsFromArray:quicktimeOptions];
+		[args addObjectsFromArray:wavOptions];
+		[args addObjectsFromArray:inputOptions];
+	
+		NSString *threads = @"1";
+	
+		NSInteger x;
+		for (x = 0; x < [options count]; x ++)
+		{
+			NSDictionary *dict = [options objectAtIndex:x];
+			NSString *key = [[dict allKeys] objectAtIndex:0];
+			NSString *object = [dict objectForKey:key];
+		
+			if ([key isEqualTo:@"-threads"])
+			{
+				threads = object;
 			}
 			else
 			{
-				[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:@" (?%)"];
+				[args addObject:key];
+			
+				if (![object isEqualTo:@""])
+					[args addObject:object];
 			}
 		}
-
-		data = nil;
+	
+		NSArray *threadObjects = [NSArray arrayWithObjects:@"-threads", threads, nil];
+		NSString *pathExtension = [outFileWithExtension pathExtension];
+		if ([pathExtension isEqualTo:@"mov"] | [pathExtension isEqualTo:@"m4v"] | [pathExtension isEqualTo:@"mp4"])
+			[args addObjectsFromArray:threadObjects];
+		else
+			[args insertObjects:threadObjects atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]];
+	
+		NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+		[args addObjectsFromArray:padOptions];
+		[args addObject:@"-metadata"];
+		[args addObject:[NSString stringWithFormat:@"frontend=Media Encoder %@", version]];
 		
-		if (started == NO)
-			[ffmpegErrorString appendString:string];
-	
-		[innerPool release];
-		innerPool = nil;
-	}
-
-	//After there's no output wait for ffmpeg to stop
-	[ffmpeg waitUntilExit];
-
-	//Check if the encoding succeeded, if not remove the mpg file ,NOT POSSIBLE :-(
-	NSInteger taskStatus = [ffmpeg terminationStatus];
-
-	//Release ffmpeg
-	[ffmpeg release];
-	ffmpeg = nil;
-	
-	//If we used a wav file, delete it
-	if (useWav == YES)
-		[MCCommonMethods removeItemAtPath:[outputFile stringByAppendingString:@" (tmp).wav"]];
-	
-	if (useQuickTime == YES)
-	{	
-		[movtoy4m release];
-		movtoy4m = nil;
+		if (passes == 2)
+			[args addObjectsFromArray:[NSArray arrayWithObjects:@"-passlogfile", passLogFile, nil]];
 		
-		[pipe2 release];
-		pipe2 = nil;
+		if (passes == 2 && pass == 0)
+		{
+			[args addObjectsFromArray:[NSArray arrayWithObjects:@"-an", @"-pass", @"1", @"-y", @"/dev/null", nil]];
+		}
+		else if (passes == 2 && pass == 1)
+		{
+			[args addObjectsFromArray:[NSArray arrayWithObjects:@"-pass", @"2", nil]];
+			[args addObject:outFileWithExtension];
+		}
+		else
+		{
+			[args addObject:outFileWithExtension];
+		}
+
+		[ffmpeg setArguments:args];
+		//ffmpeg uses stderr to show the progress
+		[ffmpeg setStandardError:pipe];
+		handle = [pipe fileHandleForReading];
+	
+		ffmpegErrorString = [[NSMutableString alloc] initWithString:[MCCommonMethods logCommandIfNeeded:ffmpeg]];
+		[ffmpeg launch];
+
+		if (useQuickTime == YES)
+			status = 3;
+		else
+			status = 2;
+
+		NSString *string = nil;
+	
+		//Get the time we want to encode
+		NSString *timeString = [options objectForKey:@"-t"];
+	
+		if (timeString)
+			inputTotalTime = [timeString integerValue];
+			
+		inputTotalTime = inputTotalTime * passes;
+		
+		BOOL started = NO;
+
+		//Here we go
+		while([data = [handle availableData] length]) 
+		{
+			NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+	
+			if (string)
+			{
+				[string release];
+				string = nil;
+			}
+	
+			//The string containing ffmpeg's output
+			string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	
+			if ([defaults boolForKey:@"MCDebug"] == YES)
+				NSLog(@"%@", string);
+		
+			//Format the time sting ffmpeg outputs and format it to percent
+			if ([string rangeOfString:@"time="].length > 0)
+			{
+				started = YES;
+		
+				NSString *currentTimeString = [[[[string componentsSeparatedByString:@"time="] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:0];
+				CGFloat percent = ([currentTimeString cgfloatValue] + (inputTotalTime / 2 * pass)) / inputTotalTime * 100;
+				
+				NSString *currentPass = @"";
+						
+				if (passes == 2)
+					currentPass = [NSString stringWithFormat: @"pass %i - ", pass + 1];
+				
+				if (inputTotalTime > 0)
+				{
+					if (percent < 101)
+					{
+						[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:[NSString stringWithFormat: @" (%@%.0f%@)", currentPass, percent, @"%"]];
+						[[NSNotificationCenter defaultCenter] postNotificationName:@"MCValueChanged" object:[NSNumber numberWithDouble:percent + (double)number * 100]];
+					}
+				}
+				else
+				{
+					[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:[NSString stringWithFormat:@" (%@?%)", currentPass]];
+				}
+			}
+
+			data = nil;
+		
+			if (started == NO)
+				[ffmpegErrorString appendString:string];
+	
+			[innerPool release];
+			innerPool = nil;
+		}
+
+		//After there's no output wait for ffmpeg to stop
+		[ffmpeg waitUntilExit];
+
+		//Check if the encoding succeeded, if not remove the mpg file ,NOT POSSIBLE :-(
+		taskStatus = [ffmpeg terminationStatus];
+
+		//Release ffmpeg
+		[ffmpeg release];
+		ffmpeg = nil;
+	
+		//If we used a wav file, delete it
+		if (useWav == YES)
+			[MCCommonMethods removeItemAtPath:[outputFile stringByAppendingString:@" (tmp).wav"]];
+	
+		if (useQuickTime == YES)
+		{	
+			[movtoy4m release];
+			movtoy4m = nil;
+		
+			[pipe2 release];
+			pipe2 = nil;
+		}
+	
+		[pipe release];
+		pipe = nil;
+		
+		if (taskStatus != 0)
+		{
+			break;
+		}
+		else
+		{
+			[ffmpegErrorString release];
+			ffmpegErrorString = nil;
+		}
+		
+		[string release];
+		string = nil;
 	}
 	
-	[pipe release];
-	pipe = nil;
+	if ([[NSFileManager defaultManager] fileExistsAtPath:passLogFile])
+		[MCCommonMethods removeItemAtPath:passLogFile];
 	
 	//Return if ffmpeg failed or not
 	if (taskStatus == 0)
@@ -461,7 +512,6 @@
 		
 		[MCCommonMethods removeItemAtPath:outFileWithExtension];
 		
-		
 		if (*error != nil)
 			*error = [NSString stringWithFormat:@"%@\n\n%@", *error, ffmpegErrorString];
 		else
@@ -469,9 +519,6 @@
 			
 		[ffmpegErrorString release];
 		ffmpegErrorString = nil;
-	
-		[string release];
-		string = nil;
 		
 		return 1;
 	}

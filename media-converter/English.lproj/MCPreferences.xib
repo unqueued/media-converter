@@ -12,10 +12,10 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="42"/>
-			<integer value="95"/>
-			<integer value="317"/>
 			<integer value="6"/>
+			<integer value="317"/>
+			<integer value="90"/>
+			<integer value="42"/>
 			<integer value="4"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -2212,6 +2212,42 @@
 									<reference key="NSColor" ref="986069176"/>
 									<reference key="NSTabView" ref="33582028"/>
 								</object>
+								<object class="NSTabViewItem" id="110326241">
+									<string key="NSIdentifier">Item 2</string>
+									<object class="NSView" key="NSView" id="271458680">
+										<nil key="NSNextResponder"/>
+										<int key="NSvFlags">256</int>
+										<object class="NSMutableArray" key="NSSubviews">
+											<bool key="EncodedWithXMLCoder">YES</bool>
+											<object class="NSButton" id="534372736">
+												<reference key="NSNextResponder" ref="271458680"/>
+												<int key="NSvFlags">268</int>
+												<string key="NSFrame">{{15, 221}, {156, 18}}</string>
+												<reference key="NSSuperview" ref="271458680"/>
+												<bool key="NSEnabled">YES</bool>
+												<object class="NSButtonCell" key="NSCell" id="667525129">
+													<int key="NSCellFlags">-2080244224</int>
+													<int key="NSCellFlags2">0</int>
+													<string key="NSContents">Use 2-pass encoding</string>
+													<reference key="NSSupport" ref="212994765"/>
+													<reference key="NSControlView" ref="534372736"/>
+													<int key="NSButtonFlags">1211912703</int>
+													<int key="NSButtonFlags2">2</int>
+													<reference key="NSNormalImage" ref="308579833"/>
+													<reference key="NSAlternateImage" ref="983118908"/>
+													<string key="NSAlternateContents"/>
+													<string key="NSKeyEquivalent"/>
+													<int key="NSPeriodicDelay">200</int>
+													<int key="NSPeriodicInterval">25</int>
+												</object>
+											</object>
+										</object>
+										<string key="NSFrame">{{10, 33}, {520, 256}}</string>
+									</object>
+									<string key="NSLabel">Advanced</string>
+									<reference key="NSColor" ref="986069176"/>
+									<reference key="NSTabView" ref="33582028"/>
+								</object>
 							</object>
 							<reference key="NSSelectedTabViewItem" ref="386876361"/>
 							<reference key="NSFont" ref="212994765"/>
@@ -3448,6 +3484,22 @@
 					</object>
 					<int key="connectionID">396</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setTwoPass:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="534372736"/>
+					</object>
+					<int key="connectionID">401</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">twoPassButton</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="534372736"/>
+					</object>
+					<int key="connectionID">402</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3798,6 +3850,7 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="386876361"/>
 							<reference ref="80881290"/>
+							<reference ref="110326241"/>
 						</object>
 						<reference key="parent" ref="999151002"/>
 					</object>
@@ -5129,6 +5182,38 @@
 						<reference key="object" ref="687202330"/>
 						<reference key="parent" ref="606888994"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">397</int>
+						<reference key="object" ref="110326241"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="271458680"/>
+						</object>
+						<reference key="parent" ref="33582028"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">398</int>
+						<reference key="object" ref="271458680"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="534372736"/>
+						</object>
+						<reference key="parent" ref="110326241"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">399</int>
+						<reference key="object" ref="534372736"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="667525129"/>
+						</object>
+						<reference key="parent" ref="271458680"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">400</int>
+						<reference key="object" ref="667525129"/>
+						<reference key="parent" ref="534372736"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -5405,9 +5490,11 @@
 					<string>39.IBPluginDependency</string>
 					<string>392.IBPluginDependency</string>
 					<string>393.IBPluginDependency</string>
+					<string>399.IBPluginDependency</string>
 					<string>4.IBEditorWindowLastContentRect</string>
 					<string>4.IBPluginDependency</string>
 					<string>40.IBPluginDependency</string>
+					<string>400.IBPluginDependency</string>
 					<string>41.IBPluginDependency</string>
 					<string>42.IBPluginDependency</string>
 					<string>43.IBPluginDependency</string>
@@ -5795,7 +5882,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{65, 688}, {460, 112}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5888,9 +5977,9 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{361, 258}, {566, 460}}</string>
+					<string>{{111, 26}, {566, 460}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{361, 258}, {566, 460}}</string>
+					<string>{{111, 26}, {566, 460}}</string>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
 					<boolean value="NO"/>
@@ -5930,7 +6019,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">396</int>
+			<int key="maxID">402</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6102,10 +6191,12 @@
 							<string>setMode:</string>
 							<string>setOption:</string>
 							<string>setPreferenceOption:</string>
+							<string>setTwoPass:</string>
 							<string>toggleAdvancedView:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -6157,10 +6248,12 @@
 							<string>saveButton</string>
 							<string>saveFolderPopUp</string>
 							<string>suppressButton</string>
+							<string>twoPassButton</string>
 							<string>videoFormatPopUp</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
