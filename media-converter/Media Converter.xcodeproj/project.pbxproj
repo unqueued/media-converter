@@ -287,6 +287,12 @@
 		FEB4E2B01313B09100F608D0 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
 		FEBC384512F163B300F0A20A /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
 		FEBC386712F169BE00F0A20A /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FED68D0F13265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
+		FED68D1013265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
+		FED68D1113265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
+		FED68D1213265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
+		FED68D1313265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
+		FED68D1413265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
 		FEF466421324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
 		FEF466431324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
 		FEF466441324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
@@ -463,6 +469,8 @@
 		FEBC384212F163B300F0A20A /* Presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presets; path = Resources/Presets; sourceTree = "<group>"; };
 		FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCOptionsDelegate.m; path = Source/MCOptionsDelegate.m; sourceTree = "<group>"; };
 		FEBC386612F169BE00F0A20A /* MCOptionsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCOptionsDelegate.h; path = Source/MCOptionsDelegate.h; sourceTree = "<group>"; };
+		FED68D0D13265A1000332D8E /* MCOptionsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCOptionsTableView.h; path = Source/MCOptionsTableView.h; sourceTree = "<group>"; };
+		FED68D0E13265A1000332D8E /* MCOptionsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCOptionsTableView.m; path = Source/MCOptionsTableView.m; sourceTree = "<group>"; };
 		FEF466411324E2000079DBCF /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		FEF466651324E4510079DBCF /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Dutch; path = Dutch.lproj/Credits.rtf; sourceTree = "<group>"; };
 		FEF466F1132527860079DBCF /* MCAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCAlert.h; path = Source/MCAlert.h; sourceTree = "<group>"; };
@@ -827,6 +835,8 @@
 				FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */,
 				FEA8D4B313229AB200C10516 /* MCTableView.h */,
 				FEA8D4B413229AB200C10516 /* MCTableView.m */,
+				FED68D0D13265A1000332D8E /* MCOptionsTableView.h */,
+				FED68D0E13265A1000332D8E /* MCOptionsTableView.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -1254,6 +1264,7 @@
 				FEF7FB52131A857800E244C9 /* NSString_Extensions.m in Sources */,
 				FEA8D4B913229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F7132527860079DBCF /* MCAlert.m in Sources */,
+				FED68D0F13265A1000332D8E /* MCOptionsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1283,6 +1294,7 @@
 				FEA8CE8013227D0F00C10516 /* NSString_Extensions.m in Sources */,
 				FEA8D4BA13229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F8132527860079DBCF /* MCAlert.m in Sources */,
+				FED68D1013265A1000332D8E /* MCOptionsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1312,6 +1324,7 @@
 				FEA8CEBB13227D2100C10516 /* NSString_Extensions.m in Sources */,
 				FEA8D4B713229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F5132527860079DBCF /* MCAlert.m in Sources */,
+				FED68D1113265A1000332D8E /* MCOptionsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1341,6 +1354,7 @@
 				FEA8CEF613227D2400C10516 /* NSString_Extensions.m in Sources */,
 				FEA8D4B513229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F3132527860079DBCF /* MCAlert.m in Sources */,
+				FED68D1213265A1000332D8E /* MCOptionsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1370,6 +1384,7 @@
 				FEA8CF3113227D3900C10516 /* NSString_Extensions.m in Sources */,
 				FEA8D4B813229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F6132527860079DBCF /* MCAlert.m in Sources */,
+				FED68D1313265A1000332D8E /* MCOptionsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1399,6 +1414,7 @@
 				FEA8CF6C13227D3C00C10516 /* NSString_Extensions.m in Sources */,
 				FEA8D4B613229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F4132527860079DBCF /* MCAlert.m in Sources */,
+				FED68D1413265A1000332D8E /* MCOptionsTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
