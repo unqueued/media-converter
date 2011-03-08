@@ -39,7 +39,24 @@
 
 - (IBAction)removeOption:(id)sender
 {
-	[tableData removeObjectsInArray:[self allSelectedItemsInTableView:tableView fromArray:tableData]];
+	
+	NSArray *removeObjects = [self allSelectedItemsInTableView:tableView fromArray:tableData];
+	
+	NSInteger i;
+	for (i = 0; i < [removeObjects count]; i ++)
+	{
+		id object = [removeObjects objectAtIndex:i];
+		NSInteger index = [tableData indexOfObject:object];
+		NSDictionary *currentDictionary = [tableData objectAtIndex:index];
+		NSString *currentKey = [[currentDictionary allKeys] objectAtIndex:0];
+		
+		[(MCPreferences *)windowController updateForKey:currentKey withProperty:nil];
+	}
+
+	[tableData removeObjectsInArray:removeObjects];
+	
+	
+	
 	[tableView reloadData];
 }
 
@@ -109,7 +126,7 @@
 		newDictionary = [NSDictionary dictionaryWithObject:anObject forKey:currentKey];
 		[(MCPreferences *)windowController updateForKey:currentKey withProperty:anObject];
 	}
-	
+
 	[tableData replaceObjectAtIndex:currentIndex withObject:newDictionary];
 }
 
