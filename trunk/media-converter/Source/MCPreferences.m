@@ -233,6 +233,7 @@
 		[keepAspectButton setState:[[extraOptions objectForKey:@"Keep Aspect"] integerValue]];
 		[autoAspectButton setState:[[extraOptions objectForKey:@"Auto Aspect"] integerValue]];
 		[autoSizeButton setState:[[extraOptions objectForKey:@"Auto Size"] integerValue]];
+		[twoPassButton setState:[[extraOptions objectForKey:@"Two Pass"] integerValue]];
 		
 		NSString *aspectString = [options objectForKey:@"-vf"];
 
@@ -300,6 +301,7 @@
 			[keepAspectButton setState:NSOffState];
 			[autoAspectButton setState:NSOffState];
 			[autoSizeButton setState:NSOffState];
+			[twoPassButton setState:NSOffState];
 			
 			[aspectRatioButton setState:NSOffState];
 			[aspectRatioField setObjectValue:nil];
@@ -776,6 +778,11 @@
 - (IBAction)setAutoSize:(id)sender
 {
 	[extraOptions setObject:[NSNumber numberWithInteger:[sender state]] forKey:@"Auto Size"];
+}
+
+- (IBAction)setTwoPass:(id)sender
+{
+	[extraOptions setObject:[NSNumber numberWithInteger:[sender state]] forKey:@"Two Pass"];
 }
 
 - (IBAction)goToPresetSite:(id)sender
