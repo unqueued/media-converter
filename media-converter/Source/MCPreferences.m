@@ -318,6 +318,42 @@
 	}
 }
 
+- (IBAction)duplicate:(id)sender
+{
+	NSInteger selRow = [presetsTableView selectedRow];
+	
+	if (selRow > -1)
+	{
+		NSArray *selectedObjects = [MCCommonMethods allSelectedItemsInTableView:presetsTableView fromArray:presetsData];
+		[presetsTableView deselectAll:nil];
+		
+		NSInteger i;
+		for (i = 0; i < [selectedObjects count]; i ++)
+		{
+			NSDictionary *selectedObject = [selectedObjects objectAtIndex:i];
+			NSString *path = [selectedObject objectForKey:@"Path"];
+
+			NSMutableDictionary *presetDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+			NSString *oldName = [presetDictionary objectForKey:@"Name"];
+			[presetDictionary setObject:[NSString stringWithFormat:NSLocalizedString(@"%@ copy", nil), oldName] forKey:@"Name"];
+		
+			NSString *error = nil;
+			BOOL result = [MCCommonMethods writeDictionary:presetDictionary toFile:[MCCommonMethods uniquePathNameFromPath:path] errorString:&error];
+		
+			if (result == NO)
+			{
+				[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed duplicate to preset file", nil) withInformationText:error withParentWindow:nil];
+			}
+			else
+			{
+				[self reloadPresets];
+				NSInteger lastRow = [presetsData count] - 1;
+				[presetsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:lastRow] byExtendingSelection:YES];
+			}
+		}
+	}
+}
+
 - (NSInteger)installThemesWithNames:(NSArray *)names presetDictionaries:(NSArray *)dictionaries
 {
 	NSString *savePath = nil;
