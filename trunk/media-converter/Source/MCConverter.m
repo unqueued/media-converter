@@ -73,7 +73,7 @@
 			[[NSNotificationCenter defaultCenter] postNotificationName:@"MCTaskChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Encoding file %i of %i to '%@'", nil), i + 1, [files count], [options objectForKey:@"Name"]]];
 		
 			//Test the file on how to encode it
-			NSInteger output = [self testFile:currentPath];
+			NSInteger output = [self testFile:currentPath errorString:&*error];
 			
 			useWav = (output == 2 | output == 4 | output == 8);
 			useQuickTime = (output == 2 | output == 3 | output == 6);
@@ -650,10 +650,10 @@
 #pragma mark •• Test actions
 
 //Test if ffmpeg can encode, sound and/or video, and if it does have any sound
-- (NSInteger)testFile:(NSString *)path
+- (NSInteger)testFile:(NSString *)path errorString:(NSString **)ffmpegError
 {
 	NSString *displayName = [[NSFileManager defaultManager] displayNameAtPath:path];
-	NSString *tempFile = @"/tmp/tempkf.mpg";
+	NSString *tempFile = @"/tmp/tempkf";
 	
 	BOOL audioWorks = YES;
 	BOOL videoWorks = YES;
@@ -666,7 +666,25 @@
 
 	while (keepGoing == YES)
 	{
-		NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-vframes", @"1", @"-i", path, @"-target", @"pal-vcd", nil];
+		NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-vframes", @"1", @"-i", path, nil];
+		
+		NSInteger i;
+		for (i = 0; i < [options count]; i ++)
+		{
+			NSDictionary *dict = [options objectAtIndex:i];
+			NSString *key = [[dict allKeys] objectAtIndex:0];
+			NSString *object = [dict objectForKey:key];
+			
+			if (![key isEqualTo:@"-t"] | ![key isEqualTo:@"-ss"] | ![key isEqualTo:@"-vframes"] | ![key isEqualTo:@"-dframes"])
+			{
+				[arguments addObject:key];
+			
+				if (![object isEqualTo:@""])
+					[arguments addObject:object];
+			}
+		}
+		 
+		  // = [NSMutableArray arrayWithObjects:@"-vframes", @"1", @"-i", path, @"-target", @"pal-vcd", nil];
 			
 		if (videoWorks == NO)
 			[arguments addObject:@"-vn"];
@@ -676,26 +694,25 @@
 		[arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-ac",@"2",@"-r",@"25",@"-y", tempFile,nil]];
 		
 		NSString *string;
-		[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string];
+		BOOL result = [MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string];
 		
 		keepGoing = NO;
 		
 		NSInteger code = 0;
 		NSString *error = NSLocalizedString(@"%@ (Unknown error)", nil);
 		
-		if ([string rangeOfString:@"No such file or directory"].length > 0)
-		{
-			error = [NSString stringWithFormat:NSLocalizedString(@"%@ (Stream not found)", nil), displayName];
-			[self setErrorStringWithString:error];
-			
-			return 0;
-		}
-		
-		
 		if ([string rangeOfString:@"Video: Apple Intermediate Codec"].length > 0)
 		{
 			if ([self setTimeAndAspectFromOutputString:string fromFile:path])
 				return 2;
+			else
+				return 0;
+		}
+		
+		if (result == YES)
+		{
+			if ([self setTimeAndAspectFromOutputString:string fromFile:path])
+				return 1;
 			else
 				return 0;
 		}
@@ -829,6 +846,11 @@
 			}
 			else
 			{
+				if (*ffmpegError != nil)
+					*ffmpegError = [NSString stringWithFormat:@"%@\n\n%@", *ffmpegError, string];
+				else
+					*ffmpegError = [NSString stringWithString:string];
+			
 				[self setErrorStringWithString:error];
 				
 				return 0;
