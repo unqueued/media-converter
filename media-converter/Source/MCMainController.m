@@ -271,6 +271,8 @@
 	
 		[self checkFiles:[fieldString componentsSeparatedByString:@"\n"]];
 	}
+	
+	[locationsTextField setString:@""];
 }
 
 //Open preferences
