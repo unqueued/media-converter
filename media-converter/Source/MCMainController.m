@@ -294,7 +294,7 @@
 
 - (IBAction)downloadSource:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/projects/media-converter/files/media-converter/1.0/"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/projects/media-converter/files/media-converter/1.1/"]];
 }
 
 - (IBAction)makeDonation:(id)sender
