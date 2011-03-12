@@ -191,8 +191,31 @@
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
 {
-	[self openPreferences:nil];
-	[preferences openPresetFiles:filenames];
+	NSMutableArray *presetFiles = [NSMutableArray array];
+	NSMutableArray *otherFiles = [NSMutableArray array];
+	
+	NSInteger i;
+	for (i = 0; i < [filenames count]; i ++)
+	{
+		NSString *file = [filenames objectAtIndex:i];
+		NSString *extension = [file pathExtension];
+		
+		if ([[extension lowercaseString] isEqualTo:@"mcpreset"])
+			[presetFiles addObject:file];
+		else
+			[otherFiles addObject:file];
+	}
+	
+	if ([presetFiles count] > 0)
+	{
+		[self openPreferences:nil];
+		[preferences openPresetFiles:filenames];
+	}
+	
+	if ([otherFiles count] > 0)
+	{
+		[self checkFiles:otherFiles];
+	}
 }
 
 ///////////////////////
@@ -233,6 +256,23 @@
 	}
 }
 
+- (IBAction)openURLs:(id)sender
+{
+	[NSApp beginSheet:locationsPanel modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(openURLsPanelDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)openURLsPanelDidEnd:(NSWindow *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	[panel orderOut:self];
+
+	if (returnCode == NSOKButton)
+	{
+		NSString *fieldString = [[locationsTextField textStorage] string];
+	
+		[self checkFiles:[fieldString componentsSeparatedByString:@"\n"]];
+	}
+}
+
 //Open preferences
 - (IBAction)openPreferences:(id)sender
 {
@@ -258,6 +298,13 @@
 - (IBAction)makeDonation:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] openFile:[[[NSBundle mainBundle] pathForResource:@"Donation" ofType:@""] stringByAppendingPathComponent:@"donate.html"]];
+}
+
+//Locations actions
+
+- (IBAction)endOpenLocations:(id)sender
+{
+	[NSApp endSheet:locationsPanel returnCode:[sender tag]];
 }
 
 //////////////////
@@ -584,6 +631,12 @@
 //Use some c to get the real path
 - (NSString *)getRealPath:(NSString *)inPath
 {
+	NSString *extension = [inPath pathExtension];
+	if ([[extension lowercaseString] isEqualTo:@"webloc"])
+		return [[NSDictionary dictionaryWithContentsOfFile:inPath] objectForKey:@"URL"];
+	else if ([[extension lowercaseString] isEqualTo:@"url"])
+		return [NSString stringWithContentsOfFile:inPath];
+
 	CFStringRef resolvedPath = nil;
 	CFURLRef url = CFURLCreateWithFileSystemPath(NULL, (CFStringRef)inPath, kCFURLPOSIXPathStyle, NO);
 	

@@ -78,6 +78,23 @@
 			useWav = (output == 2 | output == 4 | output == 8);
 			useQuickTime = (output == 2 | output == 3 | output == 6);
 			
+			BOOL stream = (![[NSFileManager defaultManager] fileExistsAtPath:currentPath]);
+			if (stream && (useWav | useQuickTime))
+			{
+				NSString *streamError;
+				if (useWav)
+					streamError = NSLocalizedString(@"%@ (Unsupported audio)", nil);
+				else
+					streamError = NSLocalizedString(@"%@ (Unsupported video)", nil);
+				
+				NSString *displayName = [[NSFileManager defaultManager] displayNameAtPath:currentPath];
+				
+				[self setErrorStringWithString:[NSString stringWithFormat:streamError, displayName]];
+				
+				continue;
+			}
+					
+			
 			if (useWav)
 				output = [self encodeAudioAtPath:currentPath errorString:&ffmpegOutput];
 			else if (output != 0)
@@ -664,7 +681,16 @@
 		keepGoing = NO;
 		
 		NSInteger code = 0;
-		NSString *error = @"%@ (Unknown error)";
+		NSString *error = NSLocalizedString(@"%@ (Unknown error)", nil);
+		
+		if ([string rangeOfString:@"No such file or directory"].length > 0)
+		{
+			error = [NSString stringWithFormat:NSLocalizedString(@"%@ (Stream not found)", nil), displayName];
+			[self setErrorStringWithString:error];
+			
+			return 0;
+		}
+		
 		
 		if ([string rangeOfString:@"Video: Apple Intermediate Codec"].length > 0)
 		{
