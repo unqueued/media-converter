@@ -16,6 +16,8 @@
 {
 	IBOutlet id mainWindow;
 	IBOutlet id presetPopUp;
+	IBOutlet id locationsPanel;
+	IBOutlet id locationsTextField;
 	MCProgress *progressPanel;
 	MCConverter *converter;
 	NSArray *inputFiles;
@@ -32,10 +34,14 @@
 
 //Menu actions
 - (IBAction)openFiles:(id)sender;
+- (IBAction)openURLs:(id)sender;
 - (IBAction)openPreferences:(id)sender;
 - (IBAction)goToSite:(id)sender;
 - (IBAction)downloadSource:(id)sender;
 - (IBAction)makeDonation:(id)sender;
+
+//Locations actions
+- (IBAction)endOpenLocations:(id)sender;
 
 //Main actions
 //Start a thread to check our files
