@@ -64,7 +64,7 @@
 //Test actions
 
 //Test if FFmpeg can encode, sound and/or video, and if it does have any sound
-- (NSInteger)testFile:(NSString *)path;
+- (NSInteger)testFile:(NSString *)path errorString:(NSString **)error;
 //Test methods used in (NSInteger)testFile....
 - (BOOL)streamWorksOfKind:(NSString *)kind inOutput:(NSString *)output;
 - (BOOL)isReferenceMovie:(NSString *)output;
