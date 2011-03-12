@@ -7,6 +7,7 @@
 //
 
 #import "MCTableView.h"
+#import "MCPreferences.h"
 
 
 @implementation MCTableView
@@ -16,6 +17,24 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCListSelected" object:self];
 
 	return [super becomeFirstResponder];
+}
+
+- (void)duplicate:(id)sender
+{
+	[(MCPreferences *)[self delegate] duplicate:sender];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+	if (aSelector == @selector(duplicate:))
+	{
+		NSInteger selRow = [self selectedRow];
+
+		if (selRow == -1)
+			return NO;
+	}
+	
+	return [super respondsToSelector:aSelector];
 }
 
 @end

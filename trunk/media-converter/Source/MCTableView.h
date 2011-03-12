@@ -11,4 +11,6 @@
 
 @interface MCTableView : NSTableView{}
 
+- (void)duplicate:(id)sender;
+
 @end

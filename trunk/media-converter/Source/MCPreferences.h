@@ -82,6 +82,7 @@
 //Presets actions
 - (IBAction)addPreset:(id)sender;
 - (IBAction)removePreset:(id)sender;
+- (IBAction)duplicate:(id)sender;
 - (NSInteger)installThemesWithNames:(NSArray *)names presetDictionaries:(NSArray *)dictionaries;
 - (void)openPresetFiles:(NSArray *)paths;
 - (IBAction)endSheet:(id)sender;
