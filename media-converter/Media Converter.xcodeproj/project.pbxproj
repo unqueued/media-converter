@@ -284,6 +284,12 @@
 		FEA8D5011322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
 		FEA8D5021322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
 		FEA8D5031322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEADF2B2132BB73F00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B1132BB73F00A99179 /* qt-faststart */; };
+		FEADF2B3132BB73F00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B1132BB73F00A99179 /* qt-faststart */; };
+		FEADF2B5132BB74D00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B4132BB74D00A99179 /* qt-faststart */; };
+		FEADF2B6132BB74D00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B4132BB74D00A99179 /* qt-faststart */; };
+		FEB2647213278730002C46AE /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEB2647113278730002C46AE /* qt-faststart */; };
+		FEB2647313278730002C46AE /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEB2647113278730002C46AE /* qt-faststart */; };
 		FEB4E2B01313B09100F608D0 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
 		FEBC384512F163B300F0A20A /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
 		FEBC386712F169BE00F0A20A /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
@@ -464,6 +470,9 @@
 		FEA8D4B413229AB200C10516 /* MCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCTableView.m; path = Source/MCTableView.m; sourceTree = "<group>"; };
 		FEA8D4F81322AD4E00C10516 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/Donation; sourceTree = "<group>"; };
 		FEA8D5061322AD5800C10516 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Dutch; path = Dutch.lproj/Donation; sourceTree = "<group>"; };
+		FEADF2B1132BB73F00A99179 /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "qt-faststart"; sourceTree = "<group>"; };
+		FEADF2B4132BB74D00A99179 /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "qt-faststart"; sourceTree = "<group>"; };
+		FEB2647113278730002C46AE /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "qt-faststart"; sourceTree = "<group>"; };
 		FEB4E2AE1313B09100F608D0 /* NSArray_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArray_Extensions.h; path = Source/NSArray_Extensions.h; sourceTree = "<group>"; };
 		FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArray_Extensions.m; path = Source/NSArray_Extensions.m; sourceTree = "<group>"; };
 		FEBC384212F163B300F0A20A /* Presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presets; path = Resources/Presets; sourceTree = "<group>"; };
@@ -742,6 +751,7 @@
 				FE808BE812EB18F20047FD26 /* ffmpeg */,
 				FE808BE912EB18F20047FD26 /* movtowav */,
 				FE808BEA12EB18F20047FD26 /* movtoy4m */,
+				FEB2647113278730002C46AE /* qt-faststart */,
 			);
 			path = Intel;
 			sourceTree = "<group>";
@@ -752,6 +762,7 @@
 				FE808BED12EB18F20047FD26 /* ffmpeg */,
 				FE808BEE12EB18F20047FD26 /* movtowav */,
 				FE808BEF12EB18F20047FD26 /* movtoy4m */,
+				FEADF2B1132BB73F00A99179 /* qt-faststart */,
 			);
 			path = PowerPC;
 			sourceTree = "<group>";
@@ -762,6 +773,7 @@
 				FE808BF212EB18F20047FD26 /* ffmpeg */,
 				FE808BF312EB18F20047FD26 /* movtowav */,
 				FE808BF412EB18F20047FD26 /* movtoy4m */,
+				FEADF2B4132BB74D00A99179 /* qt-faststart */,
 			);
 			path = Universal;
 			sourceTree = "<group>";
@@ -1072,6 +1084,7 @@
 				FE4E9BFE13218B7600B440F4 /* MediaConverterHelp in Resources */,
 				FEA8D5021322AD4E00C10516 /* Donation in Resources */,
 				FEF466461324E2000079DBCF /* Credits.rtf in Resources */,
+				FEADF2B5132BB74D00A99179 /* qt-faststart in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,6 +1117,7 @@
 				FEA8CE6B13227D0F00C10516 /* MediaConverterHelp in Resources */,
 				FEA8D5031322AD4E00C10516 /* Donation in Resources */,
 				FEF466471324E2000079DBCF /* Credits.rtf in Resources */,
+				FEADF2B6132BB74D00A99179 /* qt-faststart in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1136,6 +1150,7 @@
 				FEA8CFFC132283BE00C10516 /* movtoy4m in Resources */,
 				FEA8D5001322AD4E00C10516 /* Donation in Resources */,
 				FEF466441324E2000079DBCF /* Credits.rtf in Resources */,
+				FEADF2B2132BB73F00A99179 /* qt-faststart in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1168,6 +1183,7 @@
 				FEA8CFFF132283CB00C10516 /* movtoy4m in Resources */,
 				FEA8D4FE1322AD4E00C10516 /* Donation in Resources */,
 				FEF466421324E2000079DBCF /* Credits.rtf in Resources */,
+				FEB2647213278730002C46AE /* qt-faststart in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1200,6 +1216,7 @@
 				FEA8D002132283EA00C10516 /* movtoy4m in Resources */,
 				FEA8D5011322AD4E00C10516 /* Donation in Resources */,
 				FEF466451324E2000079DBCF /* Credits.rtf in Resources */,
+				FEADF2B3132BB73F00A99179 /* qt-faststart in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1232,6 +1249,7 @@
 				FEA8D005132283FE00C10516 /* movtoy4m in Resources */,
 				FEA8D4FF1322AD4E00C10516 /* Donation in Resources */,
 				FEF466431324E2000079DBCF /* Credits.rtf in Resources */,
+				FEB2647313278730002C46AE /* qt-faststart in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1696,7 +1714,7 @@
 				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
 				IBC_NOTICES = NO;
 				IBC_WARNINGS = NO;
-				INFOPLIST_FILE = "Info copy 2.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PRODUCT_NAME = "Media Converter";
@@ -1777,6 +1795,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SRCROOT)/Frameworks/Intel\\ 64-bit\"",
@@ -1790,7 +1809,7 @@
 				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
 				IBC_NOTICES = NO;
 				IBC_WARNINGS = NO;
-				INFOPLIST_FILE = "Info copy 4.plist";
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "Media Converter";
