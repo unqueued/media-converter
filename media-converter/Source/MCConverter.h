@@ -16,6 +16,8 @@
 	NSTask *movtoy4m;
 	//movtowav, encodes the movie to wav, after that FFmpeg can encode it
 	NSTask *movtowav;
+	//qt-faststart, place moov atom at start of movie
+	NSTask *qtfaststart;
 	//Status: 0=idle, 1=encoding audio, 2=encoding video
 	NSInteger status;
 	//Number of file encoding
