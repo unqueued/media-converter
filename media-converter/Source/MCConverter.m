@@ -550,7 +550,7 @@
 	{
 		status = 0;
 		
-		//[MCCommonMethods removeItemAtPath:outFileWithExtension];
+		[MCCommonMethods removeItemAtPath:outFileWithExtension];
 		
 		if (*error != nil)
 			*error = [NSString stringWithFormat:@"%@\n\n%@", *error, ffmpegErrorString];
