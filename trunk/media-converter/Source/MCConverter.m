@@ -70,7 +70,7 @@
 		{
 			number = i;
 		
-			[[NSNotificationCenter defaultCenter] postNotificationName:@"MCTaskChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Encoding file %i of %i to %@", nil), i + 1, [files count], [options objectForKey:@"Name"]]];
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"MCTaskChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Encoding file %i of %i to '%@'", nil), i + 1, [files count], [options objectForKey:@"Name"]]];
 		
 			//Test the file on how to encode it
 			NSInteger output = [self testFile:currentPath];
@@ -263,7 +263,6 @@
 		passes = 2;
 	
 	NSInteger taskStatus;
-	NSString *passLogFile = @"/tmp/mcpasslog";
 	NSMutableString *ffmpegErrorString;
 	
 	NSInteger pass;
@@ -487,8 +486,32 @@
 		string = nil;
 	}
 	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:passLogFile])
-		[MCCommonMethods removeItemAtPath:passLogFile];
+	if ([[extraOptions objectForKey:@"Start Atom"] boolValue] == YES)
+	{
+		status = 4;
+		qtfaststart = [[NSTask alloc] init];
+		[qtfaststart setLaunchPath:[[NSBundle mainBundle] pathForResource:@"qt-faststart" ofType:@""]];
+		NSString *extension = [outFileWithExtension pathExtension];
+		NSString *extensionlessFile = [outFileWithExtension stringByDeletingPathExtension];
+		NSString *tempFile = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@ (tmp).%@", extensionlessFile, extension]];
+		[qtfaststart setArguments:[NSArray arrayWithObjects:outFileWithExtension, tempFile, nil]];
+		[qtfaststart launch];
+		[qtfaststart waitUntilExit];
+		taskStatus = [qtfaststart terminationStatus];
+		
+		if (taskStatus == 0)
+		{
+			[MCCommonMethods removeItemAtPath:outFileWithExtension];
+			[[NSFileManager defaultManager] movePath:tempFile toPath:outFileWithExtension handler:nil];
+		}
+		else
+		{
+			ffmpegErrorString = @"Failed to set moov atom to the start of the file";
+		}
+		
+		[qtfaststart release];
+		qtfaststart = nil;
+	}
 	
 	//Return if ffmpeg failed or not
 	if (taskStatus == 0)
@@ -510,7 +533,7 @@
 	{
 		status = 0;
 		
-		[MCCommonMethods removeItemAtPath:outFileWithExtension];
+		//[MCCommonMethods removeItemAtPath:outFileWithExtension];
 		
 		if (*error != nil)
 			*error = [NSString stringWithFormat:@"%@\n\n%@", *error, ffmpegErrorString];
@@ -593,14 +616,13 @@
 	userCanceled = YES;
 	
 	if (status == 1 | status == 3)
-	{
 		[movtowav terminate];
-	}
 	
 	if (status == 2 | status == 3)
-	{
 		[ffmpeg terminate];
-	}
+	
+	if (status == 4)
+		[qtfaststart terminate];
 }
 
 /////////////////////

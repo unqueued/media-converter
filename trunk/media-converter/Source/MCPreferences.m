@@ -218,7 +218,7 @@
 		NSDictionary *currentData = [presetsData objectAtIndex:[presetsTableView selectedRow]];
 
 		currentPresetPath = [[currentData objectForKey:@"Path"] retain];
-		
+
 		NSDictionary *presetDictionary = [NSDictionary dictionaryWithContentsOfFile:currentPresetPath];
 	
 		[nameField setStringValue:[presetDictionary objectForKey:@"Name"]];
@@ -234,14 +234,20 @@
 		[autoAspectButton setState:[[extraOptions objectForKey:@"Auto Aspect"] integerValue]];
 		[autoSizeButton setState:[[extraOptions objectForKey:@"Auto Size"] integerValue]];
 		[twoPassButton setState:[[extraOptions objectForKey:@"Two Pass"] integerValue]];
+		[startAtomButton setState:[[extraOptions objectForKey:@"Start Atom"] integerValue]];
 		
 		NSString *aspectString = [options objectForKey:@"-vf"];
+		
+		if (aspectString)
+		{
+			if ([aspectString rangeOfString:@"setdar="].length > 0 && [[aspectString componentsSeparatedByString:@"setdar="] count] > 1)
+				[aspectRatioField setStringValue:[[aspectString componentsSeparatedByString:@"setdar="] objectAtIndex:1]];
+			else
+				aspectString = nil;
+		}
 
 		[aspectRatioButton setState:[[NSNumber numberWithBool:(aspectString != nil)] integerValue]];
 		
-		if (aspectString)
-			[aspectRatioField setStringValue:[[aspectString componentsSeparatedByString:@"setdar="] objectAtIndex:1]];
-	
 		if ([options containsObject:[NSDictionary dictionaryWithObject:@"1" forKey:@"-ac"]])
 			[modePopup selectItemAtIndex:0];
 		else if ([options containsObject:[NSDictionary dictionaryWithObject:@"2" forKey:@"-ac"]])
@@ -302,6 +308,7 @@
 			[autoAspectButton setState:NSOffState];
 			[autoSizeButton setState:NSOffState];
 			[twoPassButton setState:NSOffState];
+			[startAtomButton setState:NSOffState];
 			
 			[aspectRatioButton setState:NSOffState];
 			[aspectRatioField setObjectValue:nil];
@@ -783,6 +790,11 @@
 - (IBAction)setTwoPass:(id)sender
 {
 	[extraOptions setObject:[NSNumber numberWithInteger:[sender state]] forKey:@"Two Pass"];
+}
+
+- (IBAction)setStartAtom:(id)sender
+{
+	[extraOptions setObject:[NSNumber numberWithInteger:[sender state]] forKey:@"Start Atom"];
 }
 
 - (IBAction)goToPresetSite:(id)sender
