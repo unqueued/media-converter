@@ -280,7 +280,7 @@
 		passes = 2;
 	
 	NSInteger taskStatus;
-	NSMutableString *ffmpegErrorString;
+	NSMutableString *ffmpegErrorString = nil;
 	
 	NSInteger pass;
 	for (pass = 0; pass < passes; pass ++)
@@ -523,7 +523,13 @@
 		}
 		else
 		{
-			ffmpegErrorString = @"Failed to set moov atom to the start of the file";
+			if (ffmpegErrorString)
+			{
+				[ffmpegErrorString release];
+				ffmpegErrorString = nil;
+			}
+			
+			ffmpegErrorString = [[NSMutableString alloc] initWithString:@"Failed to set moov atom to the start of the file"];
 		}
 		
 		[qtfaststart release];

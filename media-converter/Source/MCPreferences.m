@@ -141,7 +141,7 @@
 	NSInteger tag = [sender tag];
 	id object = [sender objectValue];
 
-	if (tag == 2 && [sender indexOfSelectedItem] == 5)
+	if (tag == 2 && [sender indexOfSelectedItem] == 4)
 	{
 		NSOpenPanel *sheet = [NSOpenPanel openPanel];
 		[sheet setCanChooseFiles:NO];
