@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="372"/>
 			<integer value="530"/>
 			<integer value="205"/>
+			<integer value="372"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -912,6 +912,7 @@
 				<string key="NSWindowTitle">Open Locations</string>
 				<string key="NSWindowClass">NSPanel</string>
 				<nil key="NSViewClass"/>
+				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
 				<string key="NSWindowContentMinSize">{417, 155}</string>
 				<object class="NSView" key="NSWindowView" id="63869731">
 					<reference key="NSNextResponder"/>
@@ -2641,7 +2642,7 @@
 					<string>{{55, 392}, {417, 155}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{55, 392}, {417, 155}}</string>
-					<boolean value="YES"/>
+					<boolean value="NO"/>
 					<boolean value="YES"/>
 					<string>{417, 155}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -2707,6 +2708,7 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
+					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">duplicate:</string>
 						<string key="NS.object.0">id</string>
@@ -2776,6 +2778,146 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Source/MCMainController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MCPreferences</string>
+					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addPreset:</string>
+							<string>chooseFFMPEG:</string>
+							<string>duplicate:</string>
+							<string>endAddSheet:</string>
+							<string>endSettingMode:</string>
+							<string>endSheet:</string>
+							<string>goToPresetSite:</string>
+							<string>removePreset:</string>
+							<string>savePreset:</string>
+							<string>setAspect:</string>
+							<string>setAutoAspect:</string>
+							<string>setAutoSize:</string>
+							<string>setKeepAspect:</string>
+							<string>setMode:</string>
+							<string>setOption:</string>
+							<string>setPreferenceOption:</string>
+							<string>setStartAtom:</string>
+							<string>setTwoPass:</string>
+							<string>toggleAdvancedView:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addPanel</string>
+							<string>addTableView</string>
+							<string>advancedAddButton</string>
+							<string>advancedBarButton</string>
+							<string>advancedCompleteButton</string>
+							<string>advancedDeleteButton</string>
+							<string>advancedTableView</string>
+							<string>advancedView</string>
+							<string>aspectRatioButton</string>
+							<string>aspectRatioField</string>
+							<string>audioFormatPopUp</string>
+							<string>autoAspectButton</string>
+							<string>autoSizeButton</string>
+							<string>commandPanel</string>
+							<string>containerPopUp</string>
+							<string>delegate</string>
+							<string>extensionField</string>
+							<string>generalView</string>
+							<string>installModePanel</string>
+							<string>installModePopup</string>
+							<string>keepAspectButton</string>
+							<string>modePopup</string>
+							<string>nameField</string>
+							<string>presetsPanel</string>
+							<string>presetsTableView</string>
+							<string>presetsView</string>
+							<string>saveButton</string>
+							<string>saveFolderPopUp</string>
+							<string>startAtomButton</string>
+							<string>suppressButton</string>
+							<string>twoPassButton</string>
+							<string>videoFormatPopUp</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Source/MCPreferences.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MCTableView</string>
+					<string key="superclassName">NSTableView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">duplicate:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">Source/MCTableView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3350,6 +3492,18 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowScripting.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSWindowController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">showWindow:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSWindowController.h</string>
 					</object>
 				</object>
 			</object>

@@ -637,7 +637,7 @@
 	if ([[extension lowercaseString] isEqualTo:@"webloc"])
 		return [[NSDictionary dictionaryWithContentsOfFile:inPath] objectForKey:@"URL"];
 	else if ([[extension lowercaseString] isEqualTo:@"url"])
-		return [NSString stringWithContentsOfFile:inPath];
+		return [MCCommonMethods stringWithContentsOfFile:inPath];
 
 	CFStringRef resolvedPath = nil;
 	CFURLRef url = CFURLCreateWithFileSystemPath(NULL, (CFStringRef)inPath, kCFURLPOSIXPathStyle, NO);
