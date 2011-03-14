@@ -989,12 +989,12 @@
 		//iMovie projects with HDV 1080i are 16:9, ffmpeg guesses 4:3
 		if ([inputString rangeOfString:@"Video: Apple Intermediate Codec"].length > 0)
 		{
-			//if ([file rangeOfString:@".iMovieProject"].length > 0)
-			//{
+			if ([file rangeOfString:@".iMovieProject"].length > 0)
+			{
 				inputAspect = (CGFloat)16 / (CGFloat)9;
 				inputWidth = 1024;
 				inputHeight = 576;
-			//}
+			}
 		}
 	}
 	
