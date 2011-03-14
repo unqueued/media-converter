@@ -672,7 +672,7 @@
 
 	while (keepGoing == YES)
 	{
-		NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-vframes", @"1", @"-i", path, nil];
+		NSMutableArray *arguments  = [NSMutableArray arrayWithObjects:@"-t", @"1", @"-vframes", @"1", @"-i", path, nil];
 		
 		NSInteger i;
 		for (i = 0; i < [options count]; i ++)
