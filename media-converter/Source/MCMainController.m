@@ -556,7 +556,7 @@
 	converter = [[MCConverter alloc] init];
 	
 	//NSDictionary *options = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:path, @"mpg", [NSNumber numberWithInteger:0], [NSNumber numberWithInteger:3], nil]  forKeys:[NSArray arrayWithObjects:@"MCConvertDestination", @"MCConvertExtension", @"MCConvertRegion", @"MCConvertKind", nil]];
-	NSString *errorString;
+	NSString *errorString = nil;
 	
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 	NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
