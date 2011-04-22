@@ -28,6 +28,25 @@
 	
 	convertedFiles = [[NSMutableArray alloc] init];
 	
+	NSArray *oldLanguageCodes = [NSArray arrayWithObjects:	@"alb", @"arm", @"baq", @"bur", @"chi", @"ger", @"fre", @"geo", @"gre", 
+															@"ice", @"scr", @"mac", @"may", @"dut", @"per", @"rum", @"scc", @"slo", 
+															@"tib", @"cze", @"wel", @"al", @"am", @"ba", @"cn", @"cz", @"dk", @"jp", 
+															@"gr", @"zht", @"zhs", @"zh_TW", @"zh_CN", @"chs", @"cht", nil];
+															
+	NSArray	*newLanguageCodes = [NSArray arrayWithObjects:	@"sqi", @"hye", @"eus", @"mya", @"zho", @"deu", @"fra", @"kat", @"ell", 
+															@"isl", @"hrv", @"mkd", @"msa", @"nld", @"fas", @"ron", @"srp", @"slk", 
+															@"bod", @"ces", @"cym", @"sq", @"hy", @"bs", @"zh", @"cs", @"da", @"ja", 
+															@"el", @"zh", @"zh", @"zh", @"zh", @"zh", @"zh", nil];
+															
+	oldToNewLanguageCodes = [NSDictionary dictionaryWithObjects:newLanguageCodes forKeys:oldLanguageCodes];
+	
+	cyrillicLanguages = [NSArray arrayWithObjects:			@"abk", @"ab", @"ava", @"av", @"aze", @"az", @"bak", @"ba", @"bel", @"be",
+															@"bul", @"bg", @"che", @"ce", @" chu", @"cu", @"chv", @"cv", @"kaz", @"kk",
+															@"kom", @"kv", @"kur", @"ku", @"mkd", @"mk", @"mon", @"mn", @"sme", @"se",
+															@"ron", @"ro", @"rus", @"ru", @"srp", @"sr", @"tgk", @"tg", @"tat", @"tt", @"tuk",
+															@"tk", @"ukr", @"uk", @"uzb", @"uz", nil];
+															
+	
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(cancelEncoding) name:@"MCStopConverter" object:nil];
 	[defaultCenter postNotificationName:@"MCCancelNotificationChanged" object:@"MCStopConverter"];
@@ -111,8 +130,12 @@
 			else if (output == 1)
 			{
 				NSString *displayName = [[NSFileManager defaultManager] displayNameAtPath:currentPath];
+				NSString *problem = NSLocalizedString(@"%@ (Unknown error)", nil);
 				
-				[self setErrorStringWithString:[NSString stringWithFormat:NSLocalizedString(@"%@ (Unknown error)", nil), displayName]];
+				if (subtitleProblem == YES)
+					problem = NSLocalizedString(@"%@ (Subtitle problem)", nil);
+				
+				[self setErrorStringWithString:[NSString stringWithFormat:problem, displayName]];
 			}
 			else if (output == 2)
 			{
@@ -165,15 +188,30 @@
 //Encode the file, use wav file if quicktime created it, use pipe (from movtoy4m)
 - (NSInteger)encodeFileAtPath:(NSString *)path errorString:(NSString **)error
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSLocalizedString(@"Encoding: ", Localized) stringByAppendingString:[[NSFileManager defaultManager] displayNameAtPath:path]]];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	// Reset our stuff
+	subtitleProblem = NO;
+	detailedErrorString = nil;
 	
 	NSMutableArray *options = [NSMutableArray arrayWithArray:[convertOptions objectForKey:@"Encoder Options"]];
 	NSDictionary *extraOptions = [convertOptions objectForKey:@"Extra Options"];
 	
 	// Encoder options for ffmpeg, movtoy4m
-	NSString *outFileWithExtension = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@/%@.%@", convertDestination, [[path lastPathComponent] stringByDeletingPathExtension], convertExtension]];
+	NSString *outFileWithExtension = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@/%@.%@", convertDestination, [[path lastPathComponent] stringByDeletingPathExtension], convertExtension] withSeperator:@" "];
 	NSString *outputFile = [outFileWithExtension stringByDeletingPathExtension];
+	temporaryFolder = [[NSString alloc] initWithString:[NSTemporaryDirectory() stringByAppendingPathComponent:@"MCTemp"]];
+	[MCCommonMethods createDirectoryAtPath:temporaryFolder errorString:nil];
+	
+	NSString *subtitleType = [extraOptions objectForKey:@"Subtitle Type"];
+	
+	NSDictionary *streamDictionary = [self firstAudioAndVideoStreamAtPath:path];
+
+	//No need to use subtitles with no video
+	if ([streamDictionary objectForKey:@"Video"] == nil)
+		subtitleType = @"none";
+	
+	NSString *temporarySubtitleFile = nil;
 	
 	NSArray *quicktimeOptions = [NSArray array];
 	NSArray *wavOptions = [NSArray array];
@@ -279,6 +317,15 @@
 	if ([[extraOptions objectForKey:@"Two Pass"] boolValue] == YES)
 		passes = 2;
 	
+	if (![subtitleType isEqualTo:@"none"] && ![subtitleType isEqualTo:@"dvd"])
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Converting subtitles: %@…", nil), [[NSFileManager defaultManager] displayNameAtPath:path]]];
+		temporarySubtitleFile = [[temporaryFolder stringByAppendingPathComponent:@"tmpmovie"] stringByAppendingPathExtension:subtitleType];
+		[self createMovieWithSubtitlesAtPath:temporarySubtitleFile inputFile:path ouputType:subtitleType];
+	}
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSLocalizedString(@"Encoding: ", Localized) stringByAppendingString:[[NSFileManager defaultManager] displayNameAtPath:path]]];
+	
 	NSInteger taskStatus;
 	NSMutableString *ffmpegErrorString = nil;
 	
@@ -308,7 +355,7 @@
 			}
 	
 			[ffmpeg setStandardInput:pipe2];
-			handle2=[pipe2 fileHandleForReading];
+			handle2 = [pipe2 fileHandleForReading];
 			[MCCommonMethods logCommandIfNeeded:movtoy4m];
 			[movtoy4m launch];
 		}
@@ -355,6 +402,16 @@
 					[args addObject:object];
 			}
 		}
+		
+		if ([subtitleType isEqualTo:@"mkv"])
+		{
+			[args addObject:@"-scodec"];
+			[args addObject:@"copy"];
+		}
+		else if ([subtitleType isEqualTo:@"none"])
+		{
+			[args addObject:@"-sn"];
+		}
 	
 		NSArray *threadObjects = [NSArray arrayWithObjects:@"-threads", threads, nil];
 		NSString *pathExtension = [outFileWithExtension pathExtension];
@@ -378,20 +435,33 @@
 		else if (passes == 2 && pass == 1)
 		{
 			[args addObjectsFromArray:[NSArray arrayWithObjects:@"-pass", @"2", nil]];
-			[args addObject:outFileWithExtension];
+			
+			if (![subtitleType isEqualTo:@"dvd"])
+				[args addObject:outFileWithExtension];
+			else	
+				[args addObject:@"-"];
 		}
 		else
 		{
-			[args addObject:outFileWithExtension];
+			if (![subtitleType isEqualTo:@"dvd"])
+				[args addObject:outFileWithExtension];
+			else
+				[args addObject:@"-"];
 		}
-
+		
 		[ffmpeg setArguments:args];
 		//ffmpeg uses stderr to show the progress
 		[ffmpeg setStandardError:pipe];
+		
+		NSPipe *outputPipe = [[NSPipe alloc] init];
+		[ffmpeg setStandardOutput:outputPipe];
 		handle = [pipe fileHandleForReading];
 	
 		ffmpegErrorString = [[NSMutableString alloc] initWithString:[MCCommonMethods logCommandIfNeeded:ffmpeg]];
 		[ffmpeg launch];
+		
+		if ([subtitleType isEqualTo:@"dvd"])
+			[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd"];
 
 		if (useQuickTime == YES)
 			status = 3;
@@ -510,7 +580,7 @@
 		[qtfaststart setLaunchPath:[[NSBundle mainBundle] pathForResource:@"qt-faststart" ofType:@""]];
 		NSString *extension = [outFileWithExtension pathExtension];
 		NSString *extensionlessFile = [outFileWithExtension stringByDeletingPathExtension];
-		NSString *tempFile = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@ (tmp).%@", extensionlessFile, extension]];
+		NSString *tempFile = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@ (tmp).%@", extensionlessFile, extension] withSeperator:@" "];
 		[qtfaststart setArguments:[NSArray arrayWithObjects:outFileWithExtension, tempFile, nil]];
 		[qtfaststart launch];
 		[qtfaststart waitUntilExit];
@@ -536,11 +606,48 @@
 		qtfaststart = nil;
 	}
 	
+	if (temporarySubtitleFile && [[NSFileManager defaultManager] fileExistsAtPath:temporarySubtitleFile])
+	{
+		if ([subtitleType isEqualTo:@"mp4"])
+		{
+			[self addTracksFromMP4Movie:temporarySubtitleFile toPath:outFileWithExtension];
+		}
+		else if ([subtitleType isEqualTo:@"kate"])
+		{
+			NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
+			BOOL result = [self addTracksFromOGGMovies:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
+	
+			if (result)
+			{
+				[MCCommonMethods removeItemAtPath:outFileWithExtension];
+				[[NSFileManager defaultManager] movePath:temporaryFile toPath:outFileWithExtension handler:nil];
+			}
+		}
+		else if ([subtitleType isEqualTo:@"mkv"])
+		{
+			NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
+			BOOL result = [self addTracksFromMKVMovie:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
+	
+			if (result)
+			{
+				[MCCommonMethods removeItemAtPath:outFileWithExtension];
+				[[NSFileManager defaultManager] movePath:temporaryFile toPath:outFileWithExtension handler:nil];
+			}
+		}
+	}
+	
+	[MCCommonMethods removeItemAtPath:temporaryFolder];
+	[temporaryFolder release];
+	temporaryFolder = nil;
+	
 	//Return if ffmpeg failed or not
 	if (taskStatus == 0)
 	{
 		status = 0;
 		encodedOutputFile = outFileWithExtension;
+		
+		if ([subtitleType isEqualTo:@"srt"])
+			[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension]];
 	
 		return 0;
 	}
@@ -558,10 +665,20 @@
 		
 		[MCCommonMethods removeItemAtPath:outFileWithExtension];
 		
-		if (*error != nil)
-			*error = [NSString stringWithFormat:@"%@\n\n%@", *error, ffmpegErrorString];
+		if (detailedErrorString != nil)
+		{
+			*error = [NSString stringWithString:detailedErrorString];
+			
+			[detailedErrorString release];
+			detailedErrorString = nil;
+		}
 		else
-			*error = [NSString stringWithString:ffmpegErrorString];
+		{
+			if (*error != nil)
+				*error = [NSString stringWithFormat:@"%@\n\n%@", *error, ffmpegErrorString];
+			else
+				*error = [NSString stringWithString:ffmpegErrorString];
+		}
 			
 		[ffmpegErrorString release];
 		ffmpegErrorString = nil;
@@ -579,7 +696,7 @@
 	//Output file (without extension)
 	NSString *outputFile = [NSString stringWithFormat:@"%@/%@", convertDestination, [[path lastPathComponent] stringByDeletingPathExtension]];
 
-	outputFile = [[MCCommonMethods uniquePathNameFromPath:[outputFile stringByAppendingPathExtension:convertExtension]] stringByDeletingPathExtension];
+	outputFile = [[MCCommonMethods uniquePathNameFromPath:[outputFile stringByAppendingPathExtension:convertExtension] withSeperator:@" "] stringByDeletingPathExtension];
 	outputFile = [NSString stringWithFormat:@"%@ (tmp)", outputFile];
 
 	if ([defaultFileManager fileExistsAtPath:[outputFile stringByAppendingString:@".wav"]])
@@ -659,7 +776,7 @@
 - (NSInteger)testFile:(NSString *)path errorString:(NSString **)ffmpegError
 {
 	NSString *displayName = [[NSFileManager defaultManager] displayNameAtPath:path];
-	NSString *tempFile = @"/tmp/tempkf";
+	NSString *tempFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpkf"];
 	
 	BOOL audioWorks = YES;
 	BOOL videoWorks = YES;
@@ -840,8 +957,8 @@
 				}
 			}
 			
-			useWav = (code == 2 | code == 4 | code == 8);
-			useQuickTime = (code == 2 | code == 3 | code == 6);
+			//useWav = (code == 2 | code == 4 | code == 8);
+			//useQuickTime = (code == 2 | code == 3 | code == 6);
 			
 			if (code > 0)
 			{
@@ -1070,6 +1187,883 @@
 	return NO;
 }
 
+- (NSDictionary *)firstAudioAndVideoStreamAtPath:(NSString *)path
+{
+	NSString *string = [self ffmpegOutputForPath:path];
+
+	NSArray *streams = [string componentsSeparatedByString:@"Stream #"];
+	NSString *videoNumber = nil;
+	NSString *audioNumber = nil;
+	
+	NSMutableDictionary *firstStreams = [NSMutableDictionary dictionary];
+	
+	NSInteger i;
+	for (i = 0; i < [streams count]; i ++)
+	{
+		NSString *streamContent = [streams objectAtIndex:i];
+		NSString *streamnumber = [[[[streamContent componentsSeparatedByString:@":"] objectAtIndex:0] componentsSeparatedByString:@"("] objectAtIndex:0];
+		
+		if (!videoNumber && [streamContent rangeOfString:@"Video:"].length > 0)
+			videoNumber = streamnumber;
+		else if (!audioNumber && [streamContent rangeOfString:@"Audio:"].length > 0)
+			audioNumber = streamnumber;
+	}
+	
+	//Just a guess
+	if (videoNumber)
+		[firstStreams setObject:videoNumber forKey:@"Video"];
+	
+	if (audioNumber)
+		[firstStreams setObject:audioNumber forKey:@"Audio"];
+
+	return firstStreams;
+}
+
+//////////////////////
+// Subtitle actions //
+//////////////////////
+
+#pragma mark -
+#pragma mark •• Subtitle actions
+
+//outputType: 0 = mp4, 1 = mkv, 2 = ogg (kate)
+- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type
+{
+	BOOL result;
+	BOOL firstSubtitle = YES;
+
+	//Extract subtitles from input mp4 / mkv / ogg, when possible
+	NSString *subPath = [temporaryFolder stringByAppendingPathComponent:@"Subtitles"];
+	[self extractSubtitlesFromMovieAtPath:inFile toPath:subPath];
+	
+	NSArray *folderContents = [MCCommonMethods getFullPathsForFolders:[NSArray arrayWithObject:temporaryFolder] withType:@"srt"];
+	NSMutableArray *subtitlePaths = [NSMutableArray array];
+	NSMutableArray *languages = [NSMutableArray array];
+	
+	NSInteger i;
+	for (i = 0; i < [folderContents count]; i ++)
+	{
+		result = YES;
+	
+		NSString *currentPath = [folderContents objectAtIndex:i];		
+		NSString *language = [[[[currentPath stringByDeletingPathExtension] pathExtension] componentsSeparatedByString:@"_"] objectAtIndex:0];
+			
+		// Not working right now (would allow extra options in presets, by editing ttxt file)
+		/*if ([type isEqualTo:@"mp4"])
+		{
+			NSString *newPath = [[currentPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"ttxt"];
+			[self convertSRT:currentPath toTTXT:newPath];
+					
+			result = [self addSubtitleToMP4Movie:newPath outPath:path forLanguage:language firstSubtitle:firstSubtitle];
+							
+			if (result == YES)
+			{
+				firstSubtitle = NO;
+				continue;
+			}
+		}
+		else*/
+			
+		if (![type isEqualTo:@"mp4"])
+		{
+			[subtitlePaths addObject:currentPath];
+			[languages addObject:language];
+		}
+			
+		if ([type isEqualTo:@"mp4"])
+			[self addSubtitleToMP4Movie:currentPath outPath:path forLanguage:language firstSubtitle:firstSubtitle];
+					
+		firstSubtitle = NO;
+	}
+	
+	if ([subtitlePaths count] > 0)
+	{
+		if ([type isEqualTo:@"mkv"])
+			[self addSubtitlesToMKVMovie:subtitlePaths outPath:path forLanguages:languages];
+		else if ([type isEqualTo:@"kate"])
+			[self addSubtitlesToOGGMovie:subtitlePaths outPath:path forLanguages:languages];
+	}
+	
+	if ([type isEqualTo:@"dvd"])
+		[self addDVDSubtitlesToOutputStreamFromTask:ffmpeg withSubtitles:subtitlePaths toPath:path];
+	
+	return YES;
+}
+
+- (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath
+{
+	BOOL result = YES;
+	NSArray *supportedFileTypes = [NSArray arrayWithObjects:@"srt", @"ttxt", @"kate", nil];
+	NSString *inputFolder = [inPath stringByDeletingLastPathComponent];
+	NSString *fileName = [[inPath lastPathComponent] stringByDeletingPathExtension];
+	
+	NSArray *beforeFolderContents = [MCCommonMethods getFullPathsForFolders:[NSArray arrayWithObject:inputFolder] withType:nil];
+
+	//Extract subtitles from input mp4 / mkv / ogg, when possible
+	NSString *inputExtension = [[inPath pathExtension] lowercaseString];
+	if ([inputExtension isEqualTo:@"mp4"] | [inputExtension isEqualTo:@"3gp"] | [inputExtension isEqualTo:@"mov"] | [inputExtension isEqualTo:@"m4v"])
+		[self extractSubtitlesFromMP4Movie:inPath ofType:@"srt" toPath:outPath];
+	else if ([inputExtension isEqualTo:@"mkv"])
+		[self extractSubtitlesFromMKVMovie:inPath ofType:@"srt" toPath:outPath];
+	else if ([inputExtension isEqualTo:@"ogg"] | [inputExtension isEqualTo:@"ogv"])
+		[self extractSubtitlesFromOGGMovie:inPath ofType:@"srt" toPath:outPath];
+	
+	NSArray *folderContents = [MCCommonMethods getFullPathsForFolders:[NSArray arrayWithObject:inputFolder] withType:nil];
+	NSMutableArray *subtitlePaths = [NSMutableArray array];
+	NSMutableArray *languages = [NSMutableArray array];
+	
+	NSInteger i;
+	for (i = 0; i < [folderContents count]; i ++)
+	{
+		NSString *currentPath = [folderContents objectAtIndex:i];
+		NSString *extensionlessPath = [[[currentPath stringByDeletingPathExtension] stringByDeletingPathExtension] lastPathComponent];
+		result = YES;
+
+		if ([extensionlessPath isEqualTo:fileName])
+		{
+			NSString *fileExtension = [[currentPath pathExtension] lowercaseString];
+			
+			if ([supportedFileTypes containsObject:fileExtension])
+			{
+				NSString *newPath = currentPath;
+				NSString *language = [[currentPath stringByDeletingPathExtension] pathExtension];
+
+				if ([fileExtension isEqualTo:@"srt"])
+				{
+					//Don't copy a srt file when using the same input folder as the output folder
+					if ([beforeFolderContents containsObject:currentPath])
+					{
+						//NSString *originalString = [NSString stringWithContentsOfFile:currentPath];
+						
+						NSString *originalString = [NSString stringWithContentsOfFile:currentPath encoding:NSUTF8StringEncoding error:nil];
+						NSString *language = [[currentPath stringByDeletingPathExtension] pathExtension];
+
+						if (!originalString)
+						{
+							NSStringEncoding encoding = 0x0000000C;
+							
+							if ([cyrillicLanguages containsObject:language])
+								encoding = 0x0000000B;
+							else if ([language isEqualTo:@"zho"] | [language isEqualTo:@"zh"] | [language isEqualTo:@"zht"] | [language isEqualTo:@"zh_TW"] | [language isEqualTo:@"cht"])
+								encoding = 0x80000632;
+							else if ([language isEqualTo:@"cn"] | [language isEqualTo:@"zhs"] | [language isEqualTo:@"zh_CN"] | [language isEqualTo:@"chs"])
+								encoding = 0x80000421;
+							else if ([language isEqualTo:@"ara"] | [language isEqualTo:@"ar"] | [language isEqualTo:@"som"] | [language isEqualTo:@"so"])
+								encoding = 0x80000506;
+							else if ([language isEqualTo:@"ell"] | [language isEqualTo:@"el"] | [language isEqualTo:@"gr"])
+								encoding = 0x0000000D;
+							else if ([language isEqualTo:@"heb"] | [language isEqualTo:@"he"] | [language isEqualTo:@"yid"] | [language isEqualTo:@"yi"])
+								encoding = 0x80000505;
+							else if ([language isEqualTo:@"jpn"] | [language isEqualTo:@"ja"] | [language isEqualTo:@"jp"])
+								encoding = 0x00000003;
+							else if ([language isEqualTo:@"tur"] | [language isEqualTo:@"tr"])
+								encoding = 0x0000000E;
+							else if ([language isEqualTo:@"tha"] | [language isEqualTo:@"th"])
+								encoding = 0x8000041D;
+							else if ([language isEqualTo:@"kor"] | [language isEqualTo:@"ko"])
+								encoding = 0x80000422;
+							else if ([language isEqualTo:@"vie"] | [language isEqualTo:@"vi"])
+								encoding = 0x80000508;
+							
+							originalString = [NSString stringWithContentsOfFile:currentPath encoding:encoding error:nil];
+						}
+						
+						if (!originalString)
+							originalString = [NSString stringWithContentsOfFile:currentPath encoding:NSUnicodeStringEncoding error:nil];
+						
+						if ([language isEqualTo:@""])
+							language = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCSubtitleLanguage"];
+						
+						NSDictionary *languageDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Languages" ofType:@"plist"]];
+						if ([[languageDict allKeysForObject:language] count] == 0)
+						{
+							if ([[oldToNewLanguageCodes allKeys] containsObject:language])
+								language = [oldToNewLanguageCodes objectForKey:language];
+						}
+						
+						NSString *tmpUTFFileName = [MCCommonMethods uniquePathNameFromPath:[[outPath stringByAppendingPathExtension:language] stringByAppendingPathExtension:@"srt"] withSeperator:@"_"];
+				
+						NSString *outString = nil;
+						[MCCommonMethods writeString:originalString toFile:tmpUTFFileName errorString:&outString];
+						newPath = tmpUTFFileName;
+					}
+			
+					[subtitlePaths addObject:newPath];
+					[languages addObject:language];
+				}
+				else if ([fileExtension isEqualTo:@"ttxt"])
+				{
+					NSString *language = [[currentPath stringByDeletingPathExtension] pathExtension];
+					NSString *newFileName = [MCCommonMethods uniquePathNameFromPath:[[outPath stringByAppendingPathExtension:language] stringByAppendingPathExtension:@"srt"] withSeperator:@"_"];
+					[self convertSubtitleFromMP4Movie:currentPath toSubtitle:newFileName outType:@"srt" fromID:nil];
+				}
+				else if ([fileExtension isEqualTo:@"kate"])
+				{
+					[self extractSubtitlesFromOGGMovie:currentPath ofType:@"srt" toPath:outPath];
+				}
+			}
+		}
+	}
+	
+	return result;
+}
+
+- (NSArray *)trackDictionariesFromPath:(NSString *)path withType:(NSString *)type
+{	
+	if ([type isEqualTo:@"mp4"])
+		return [self trackDictionariesFromMP4MovieAtPath:path];
+	else if ([type isEqualTo:@"mkv"])
+		return [self trackDictionariesFromMKVMovieAtPath:path];
+	else if ([type isEqualTo:@"ogg"])
+		return [self trackDictionariesFromOGGMovieAtPath:path];
+		
+	return nil;
+}
+
+//MP4 Subtitle methods
+
+#pragma mark -
+#pragma mark ••• MP4 Subtitle methods
+
+- (BOOL)addSubtitleToMP4Movie:(NSString *)subPath outPath:(NSString *)moviePath forLanguage:(NSString *)lang firstSubtitle:(BOOL)first
+{	
+	NSString *disableText = @"";
+	if (!first)
+		disableText = @":disable";
+
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"MP4Box" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-add", [NSString stringWithFormat:@"%@:lang=%@%@:group=2", subPath, lang, disableText], nil];
+
+	if (first == YES)
+		[arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-new", moviePath]];
+	else
+		[arguments addObject:moviePath];
+	
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (BOOL)convertSubtitleFromMP4Movie:(NSString *)inPath toSubtitle:(NSString *)outPath outType:(NSString *)type fromID:(NSString *)streamID
+{
+	[[NSFileManager defaultManager] createFileAtPath:outPath contents:[NSData data] attributes:nil];
+	
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"MP4Box" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObject:[NSString stringWithFormat:@"-%@", type]];
+	
+	if (streamID != nil)
+		[arguments addObject:streamID];
+		
+	[arguments addObjectsFromArray:[NSArray arrayWithObjects:inPath, @"-std", @"-quiet", @"-noprog", nil]];
+	
+	NSString *output;
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output];
+	
+	if (result == YES)
+	{
+		//Bit ugly clean up
+		NSString *subtitleString = nil;
+		NSArray *components = [output componentsSeparatedByString:@"\n"];
+		
+		NSInteger i;
+		for (i = 0; i < [components count] - 2; i ++)
+		{
+			NSString *currentSentence = [components objectAtIndex:i];
+			
+			if ([currentSentence rangeOfString:@"WARNING: "].length == 0 | [currentSentence rangeOfString:@"SRT"].length == 0)
+			{
+				if (!subtitleString)
+					subtitleString = currentSentence;
+				else
+					subtitleString = [NSString stringWithFormat:@"%@\n%@", subtitleString, currentSentence];
+			}
+		}
+		
+		NSString *outString = nil;
+		
+		[MCCommonMethods writeString:subtitleString toFile:outPath errorString:&outString];
+	}
+	
+	return result;
+}
+
+//Not working right now
+/*- (BOOL)convertSRT:(NSString *)inPath toTTXT:(NSString *)outPath
+{
+	BOOL result = [self convertSubtitleFromMP4Movie:inPath toSubtitle:outPath outType:@"ttxt" fromID:nil];
+	convertOptions = [NSDictionary dictionaryWithContentsOfFile:@"/Library/Application Support/Media Converter/Presets/DVD-Video (PAL).mcpreset"];
+	if (result == YES)
+	{
+		NSDictionary *extraOptions = [convertOptions objectForKey:@"Extra Options"];
+		
+		NSError *error = nil;
+		NSXMLDocument *doc = [[NSXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:outPath] options:NSXMLNodePreserveAll error:&error];
+		result = (error == nil);
+		
+		if (result)
+		{
+			NSArray *nodes = [doc nodesForXPath:@"./TextStream/TextStreamHeader/TextSampleDescription" error:&error];
+			result = (error == nil);
+			
+			if (result)
+			{
+				NSXMLElement *currentNode = [nodes objectAtIndex:0];
+				
+				NSNumber *horizontalAlignment = [extraOptions objectForKey:@"Subtitle Horizontal Alignment"];
+				
+				if (horizontalAlignment)
+					[[currentNode attributeForName:@"horizontalJustification"] setObjectValue:horizontalAlignment];
+					
+				NSNumber *verticalAlignment = [extraOptions objectForKey:@"Subtitle Vertical Alignment"];
+				
+				if (verticalAlignment)
+					[[currentNode attributeForName:@"verticalJustification"] setObjectValue:verticalAlignment];
+					
+				NSArray *boxNodes = [currentNode nodesForXPath:@"./TextBox" error:&error];
+				result = (error == nil);
+				
+				if (result)
+				{
+					NSXMLElement *boxElement = [boxNodes objectAtIndex:0];
+				
+					NSNumber *boxTop = [extraOptions objectForKey:@"Subtitle Top Margin"];
+				
+					if (boxTop)
+						[[boxElement attributeForName:@"top"] setObjectValue:boxTop];
+				
+					NSNumber *boxLeft = [extraOptions objectForKey:@"Subtitle Left Margin"];
+				
+					if (boxLeft)
+						[[boxElement attributeForName:@"left"] setObjectValue:boxLeft];
+					
+					NSNumber *boxBottom = [extraOptions objectForKey:@"Subtitle Bottom Margin"];
+				
+					if (boxBottom)
+						[[boxElement attributeForName:@"bottom"] setObjectValue:boxBottom];
+					
+					NSNumber *boxRight = [extraOptions objectForKey:@"Subtitle Right Margin"];
+				
+					if (boxRight)
+						[[boxElement attributeForName:@"right"] setObjectValue:boxRight];
+				}
+			}
+			
+			NSString *outString = nil;
+			result = [MCCommonMethods writeString:[doc XMLString] toFile:outPath errorString:&outString];
+		}
+	}
+	
+	return result;
+}*/
+
+- (BOOL)extractSubtitlesFromMP4Movie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath
+{
+	BOOL result = YES;
+	NSArray *trackDictionaries = [self trackDictionariesFromMP4MovieAtPath:inPath];
+
+	NSInteger i;
+	for (i = 0; i < [trackDictionaries count]; i ++)
+	{
+		NSDictionary *currentTrackDictionary = [trackDictionaries objectAtIndex:i];
+		NSString *language = [currentTrackDictionary objectForKey:@"Language Code"];
+		NSString *idString = [currentTrackDictionary objectForKey:@"Track ID"];
+			
+		NSString *saveFilePath;
+		if (language)
+			saveFilePath = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@.%@.%@", outPath, language, type] withSeperator:@"_"];
+		else
+			saveFilePath = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@.%@", outPath, type] withSeperator:@"."];
+
+		result = [self convertSubtitleFromMP4Movie:inPath toSubtitle:saveFilePath outType:type fromID:idString];
+	}
+	
+	return result;
+}
+
+- (BOOL)addTracksFromMP4Movie:(NSString *)inPath toPath:(NSString *)outPath
+{
+	int firstSubTrack = 3;
+	
+	NSDictionary *streamDictionary = [self firstAudioAndVideoStreamAtPath:inPath];
+	if ([streamDictionary objectForKey:@"Audio"] != nil)
+		firstSubTrack = 2;
+
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"MP4Box" ofType:@""];
+	NSArray *arguments = [NSArray arrayWithObjects:@"-add", inPath, outPath, @"-enable", [NSString stringWithFormat:@"%i", firstSubTrack], nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (NSArray *)trackDictionariesFromMP4MovieAtPath:(NSString *)path
+{
+	NSMutableArray *trackNumbers = [NSMutableArray array];
+	
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"MP4Box" ofType:@""];
+	NSArray *arguments = [NSArray arrayWithObjects:@"-info", path, nil];
+	
+	NSString *output;
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output];
+	
+	if (result == YES)
+	{
+		NSArray *tracks = [output componentsSeparatedByString:@"\n\n"];
+		
+		NSInteger i;
+		for (i = 0; i < [tracks count]; i ++)
+		{
+			NSString *component = [tracks objectAtIndex:i];
+			
+			if ([component rangeOfString:@"TrackID"].length > 0)
+			{
+				if ([component rangeOfString:@"sbtl:"].length > 0 | [component rangeOfString:@"text:"].length > 0)
+				{
+					NSString *trackID = [[[[component componentsSeparatedByString:@"TrackID "] objectAtIndex:1] componentsSeparatedByString:@" -"] objectAtIndex:0];
+					NSString *language = [[[[component componentsSeparatedByString:@"Language \""] objectAtIndex:1] componentsSeparatedByString:@"\""] objectAtIndex:0];
+					NSString *languageDictPath = [[NSBundle mainBundle] pathForResource:@"Languages" ofType:@"plist"];
+					NSDictionary *languageDict = [NSDictionary dictionaryWithContentsOfFile:languageDictPath];
+					NSString *languageCode = [languageDict objectForKey:language];
+					
+					[trackNumbers addObject:[NSDictionary dictionaryWithObjectsAndKeys:trackID, @"Track ID", languageCode, @"Language Code", nil]];
+				}
+			}
+		}
+	}
+	
+	return trackNumbers;
+}
+
+//MKV Subtitle methods
+
+#pragma mark -
+#pragma mark ••• MKV Subtitle methods
+
+- (BOOL)addSubtitlesToMKVMovie:(NSArray *)subtitles outPath:(NSString *)moviePath forLanguages:(NSArray *)languages
+{	
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"mkvmerge" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-o", moviePath, nil];
+
+	NSInteger i;
+	for (i = 0; i < [subtitles count]; i ++)
+	{
+		NSString *path = [subtitles objectAtIndex:i];
+		NSString *lang = [languages objectAtIndex:i];
+		
+		[arguments addObject:@"--language"];
+		[arguments addObject:[NSString stringWithFormat:@"0:%@", lang]];
+		[arguments addObject:path];
+	}
+
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (BOOL)extractSubtitlesFromMKVMovie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath
+{
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"mkvextract" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"tracks", inPath, nil];
+	
+	NSArray *trackDictionaries = [self trackDictionariesFromMKVMovieAtPath:inPath];
+		
+	NSInteger i;
+	for (i = 0; i < [trackDictionaries count]; i ++)
+	{
+		NSDictionary *currentTrackDictionary = [trackDictionaries objectAtIndex:i];
+		NSString *language = [currentTrackDictionary objectForKey:@"Language Code"];
+		NSString *idString = [currentTrackDictionary objectForKey:@"Track ID"];
+			
+		[arguments addObject:[NSString stringWithFormat:@"%@:%@.%@.srt", idString, outPath, language]];
+	}
+	
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (BOOL)addTracksFromMKVMovie:(NSArray *)inPaths toPath:(NSString *)outPath
+{
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"mkvmerge" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-o", outPath, nil];
+	[arguments addObjectsFromArray:inPaths];
+
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (NSArray *)trackDictionariesFromMKVMovieAtPath:(NSString *)path
+{	
+	NSMutableArray *trackNumbers = [NSMutableArray array];
+	
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"mkvinfo" ofType:@""];
+	NSArray *arguments = [NSArray arrayWithObject:path];
+	
+	NSString *output;
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output];
+	
+	if (result == YES)
+	{
+		NSArray *tracks = [output componentsSeparatedByString:@"| + A track"];
+		
+		NSInteger i;
+		for (i = 0; i < [tracks count]; i ++)
+		{
+			NSString *track = [tracks objectAtIndex:i];
+			NSLog(@"Track: %@", track);
+			if ([track rangeOfString:@"S_TEXT/UTF8"].length > 0)
+			{
+				NSString *trackID = [[[[track componentsSeparatedByString:@"Track number: "] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0];
+				NSString *language = @"eng";
+				
+				if ([track rangeOfString:@"Language: "].length > 0)
+					language = [[[[track componentsSeparatedByString:@"Language: "] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0];
+					
+				if ([[oldToNewLanguageCodes allKeys] containsObject:language])
+					language = [oldToNewLanguageCodes objectForKey:language];
+					
+				[trackNumbers addObject:[NSDictionary dictionaryWithObjectsAndKeys:trackID, @"Track ID", language, @"Language Code", nil]];
+			}
+		}
+	}
+	
+	return trackNumbers;
+}
+
+//OGG (Kate) Subtitle methods
+
+#pragma mark -
+#pragma mark ••• OGG (Kate) Subtitle methods
+
+- (BOOL)addSubtitlesToOGGMovie:(NSArray *)subtitles outPath:(NSString *)moviePath forLanguages:(NSArray *)languages
+{	
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"oggz-merge" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-o", moviePath, nil];
+	NSMutableArray *newPaths = [NSMutableArray array];
+
+	NSInteger i;
+	for (i = 0; i < [subtitles count]; i ++)
+	{
+		NSString *path = [subtitles objectAtIndex:i];
+		NSString *lang = [languages objectAtIndex:i];
+		NSString *newPath = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"ogg"];
+		[newPaths addObject:newPath];
+		
+		[self convertSRT:path toKateOGG:newPath forLanguage:lang];
+		
+		[arguments addObject:newPath];
+	}
+
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (BOOL)addTracksFromOGGMovies:(NSArray *)inPaths toPath:(NSString *)outPath
+{
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"oggz-merge" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-o", outPath, nil];
+	[arguments addObjectsFromArray:inPaths];
+	
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (BOOL)convertSRT:(NSString *)inPath toKateOGG:(NSString *)outPath forLanguage:(NSString *)language
+{
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"kateenc" ofType:@""];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-c", @"SUB", @"-t",  @"srt", @"-l", language, @"-o", outPath, inPath, nil];
+	
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+}
+
+- (BOOL)extractSubtitlesFromOGGMovie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath
+{
+	NSArray *trackDictionaries = [self trackDictionariesFromOGGMovieAtPath:inPath];
+
+	NSInteger i;
+	for (i = 0; i < [trackDictionaries count]; i ++)
+	{
+		NSString *helperPath;
+		NSArray *arguments;
+		NSString *tmpOggFile;
+		
+		NSDictionary *currentTrackDictionary = [trackDictionaries objectAtIndex:i];
+		NSString *language = [currentTrackDictionary objectForKey:@"Language Code"];
+		NSString *idString = [currentTrackDictionary objectForKey:@"Track ID"];
+	
+		if ([trackDictionaries count] > 1)
+		{
+			helperPath = [[NSBundle mainBundle] pathForResource:@"oggz-rip" ofType:@""];
+		
+			tmpOggFile = [NSString stringWithFormat:@"%@.ogg", outPath];
+			arguments = [NSArray arrayWithObjects:@"-s", idString, @"-o", tmpOggFile, inPath, nil];
+			
+			[MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+		}
+		else
+		{
+			tmpOggFile = inPath;
+		}
+		
+		helperPath = [[NSBundle mainBundle] pathForResource:@"katedec" ofType:@""];
+		
+		NSString *outputFile = [NSString stringWithFormat:@"%@.%@.srt", outPath, language];
+		outputFile = [MCCommonMethods uniquePathNameFromPath:outputFile withSeperator:@"_"];
+		
+		arguments = [NSArray arrayWithObjects:@"-t", @"srt", @"-o", outputFile, tmpOggFile, nil];
+		NSLog(@"Arguments: %@", arguments);
+		[MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil];
+	}
+	
+	return YES;
+}
+
+- (NSArray *)trackDictionariesFromOGGMovieAtPath:(NSString *)path
+{	
+	NSMutableArray *trackNumbers = [NSMutableArray array];
+	
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"oggz-info" ofType:@""];
+	NSArray *arguments = [NSArray arrayWithObject:path];
+	
+	NSString *output;
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output];
+	NSLog(@"Output: %@", output);
+	if (result == YES)
+	{
+		NSArray *tracks = [output componentsSeparatedByString:@"Kate: "];
+		
+		NSInteger i;
+		for (i = 1; i < [tracks count]; i ++)
+		{
+			NSString *track = [tracks objectAtIndex:i];
+
+			NSString *trackID = [[[[track componentsSeparatedByString:@"serialno "] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0];
+			NSString *language = [[[[track componentsSeparatedByString:@"Content-Language: "] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0];
+			
+			if ([language isEqualTo:@""])
+				language = @"en";
+					
+			[trackNumbers addObject:[NSDictionary dictionaryWithObjectsAndKeys:trackID, @"Track ID", language, @"Language Code", nil]];
+		}
+	}
+	
+	return trackNumbers;
+}
+
+//DVD Subtitle methods
+
+#pragma mark -
+#pragma mark ••• DVD Subtitle methods
+
+- (BOOL)addDVDSubtitlesToOutputStreamFromTask:(NSTask *)task withSubtitles:(NSArray *)subtitles toPath:(NSString *)outPath
+{	
+	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	[defaultManager createFileAtPath:outPath contents:[NSData data] attributes:nil];
+
+	if ([subtitles count] == 0)
+	{
+		[NSThread detachNewThreadSelector:@selector(writeDataOnThread:) toTarget:self withObject:outPath];
+		
+		return YES;
+	}
+	
+	NSInteger i;
+	NSTask *currentTask = task;
+	for (i = 0; i < [subtitles count]; i ++)
+	{
+		NSDictionary *extraOptions = [convertOptions objectForKey:@"Extra Options"];
+		NSDictionary *encoderOptions = [convertOptions objectForKey:@"Encoder Options"];
+
+		NSString *subPath = [subtitles objectAtIndex:i];
+		NSString *fontSize = [extraOptions objectForKey:@"Subtitle Font Size"];
+		
+		NSString *spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
+		NSString *language = [[subPath stringByDeletingPathExtension] pathExtension];
+		
+		NSString *font = nil;
+		if ([cyrillicLanguages containsObject:language])
+			font = @"HelveticaCYPlain";
+		else if ([language isEqualTo:@"zho"] | [language isEqualTo:@"zh"] | [language isEqualTo:@"chs"])
+			font = @"Hei";
+		else if ([language isEqualTo:@"ara"] | [language isEqualTo:@"ar"] | [language isEqualTo:@"som"] | [language isEqualTo:@"so"])
+			font = @"AlBayan";
+		else if ([language isEqualTo:@"ell"] | [language isEqualTo:@"el"])
+			font = @"Lucida Sans Unicode";
+		else if ([language isEqualTo:@"heb"] | [language isEqualTo:@"he"] | [language isEqualTo:@"yid"] | [language isEqualTo:@"yi"])
+			font = @"Raanana";
+		else if ([language isEqualTo:@"jpn"] | [language isEqualTo:@"ja"])
+			font = @"Osaka";
+		else if ([language isEqualTo:@"tha"] | [language isEqualTo:@"th"])
+			font = @"Ayuthaya";
+		else if ([language isEqualTo:@"kor"] | [language isEqualTo:@"ko"])
+			font = @"AppleGothic";
+		else if ([language isEqualTo:@"cht"] | [language isEqualTo:@"zht"])
+			font = @"LiHei Pro";
+		else if ([language isEqualTo:@"hye"] | [language isEqualTo:@"hy"])
+			font = @"MshtakanRegular";
+		
+		if (font == nil | ![[NSFileManager defaultManager] fileExistsAtPath:[spumuxPath stringByAppendingPathComponent:[font stringByAppendingPathExtension:@"ttf"]]])
+			font = [extraOptions objectForKey:@"Subtitle Font"];
+
+		NSString *hAlign = [extraOptions objectForKey:@"Subtitle Horizontal Alignment"];
+		NSString *vAlign = [extraOptions objectForKey:@"Subtitle Vertical Alignment"];
+		NSString *lMargin = [extraOptions objectForKey:@"Subtitle Left Margin"];
+		NSString *rMargin = [extraOptions objectForKey:@"Subtitle Right Margin"];
+		NSString *tMargin = [extraOptions objectForKey:@"Subtitle Top Margin"];
+		NSString *bMargin = [extraOptions objectForKey:@"Subtitle Bottom Margin"];
+		
+		NSString *fps = [NSString stringWithFormat:@"%f", inputFps];
+		NSString *fpsString = [encoderOptions objectForKey:@"-r"];
+		if (fpsString)
+			fps = fpsString;
+		
+		NSString *movieWidth = [NSString stringWithFormat:@"%i", inputWidth];
+		NSString *movieHeight = [NSString stringWithFormat:@"%i", inputHeight];
+		NSString *sizeString = [encoderOptions objectForKey:@"-s"];
+		if (sizeString)
+		{
+			NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
+			movieWidth = [sizeParts objectAtIndex:0];
+			movieHeight = [sizeParts objectAtIndex:1];
+		}
+		
+		NSString *xmlPath = [MCCommonMethods uniquePathNameFromPath:[temporaryFolder stringByAppendingPathComponent:@"sub.xml"] withSeperator:@"-"];
+		NSString *xmlContent = [NSString stringWithFormat:
+		@"<subpictures><stream><textsub filename=\"%@\" characterset=\"UTF-8\" fontsize=\"%@\" font=\"%@\" horizontal-alignment=\"%@\" vertical-alignment=\"%@\" left-margin=\"%@\" right-margin=\"%@\" top-margin=\"%@\" bottom-margin=\"%@\" subtitle-fps=\"%@\" movie-fps=\"%@\" movie-width=\"%@\" movie-height=\"%@\" force=\"yes\"/></stream></subpictures>"
+		, subPath, fontSize, [font stringByAppendingPathExtension:@"ttf"], hAlign, vAlign, lMargin, rMargin, tMargin, bMargin, fps, fps, movieWidth, movieHeight];
+		
+		NSString *error = nil;
+		[MCCommonMethods writeString:xmlContent toFile:xmlPath errorString:&error];
+		
+		NSTask *spumux = [[NSTask alloc] init];
+		NSFileHandle *inputHandle = [(NSPipe *)[currentTask standardOutput] fileHandleForReading];
+			
+		if (i == [subtitles count] - 1)
+		{
+			currentFileHandle = [NSFileHandle fileHandleForWritingAtPath:outPath];
+			[spumux setStandardOutput:currentFileHandle];
+		}
+		else
+		{
+			NSPipe *pipe = [[NSPipe alloc] init];
+			[spumux setStandardOutput:pipe];
+		}
+		
+		[spumux setStandardInput:inputHandle];
+		[spumux setLaunchPath:[[NSBundle mainBundle] pathForResource:@"spumux" ofType:@""]];
+		[spumux setCurrentDirectoryPath:[outPath stringByDeletingLastPathComponent]];
+		[spumux setArguments:[NSArray arrayWithObjects:@"-s", [NSString stringWithFormat:@"%i", i], xmlPath, nil]];
+		//[spumux setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		
+		[NSThread detachNewThreadSelector:@selector(runTaskOnThread:) toTarget:self withObject:spumux];
+		
+		currentTask = spumux;
+	}
+	
+	return YES;
+}
+
+- (BOOL)testFontWithName:(NSString *)name
+{
+	NSString *xmlPath = [MCCommonMethods uniquePathNameFromPath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"sub.xml"] withSeperator:@"-"];
+	NSString *testSubtitle = [[NSBundle mainBundle] pathForResource:@"SubTest" ofType:@"srt"];
+	NSString *xmlContent = [NSString stringWithFormat:@"<subpictures><stream><textsub filename=\"%@\" characterset=\"UTF-8\" fontsize=\"12\" font=\"%@\" horizontal-alignment=\"center\" vertical-alignment=\"bottom\" left-margin=\"60\" right-margin=\"60\" top-margin=\"20\" bottom-margin=\"30\" subtitle-fps=\"1\" movie-fps=\"1\" movie-width=\"720\" movie-height=\"480\" force=\"yes\"/></stream></subpictures>", testSubtitle, name];
+		
+	NSString *error = nil;
+	[MCCommonMethods writeString:xmlContent toFile:xmlPath errorString:&error];
+	
+	NSTask *spumux = [[NSTask alloc] init];
+	NSString *testMPG = [[NSBundle mainBundle] pathForResource:@"SubTest" ofType:@"mpg"];
+	NSFileHandle *inputHandle = [NSFileHandle fileHandleForReadingAtPath:testMPG];
+	[spumux setStandardInput:inputHandle];
+	[spumux setStandardOutput:[NSFileHandle fileHandleWithNullDevice]];
+	[spumux setLaunchPath:[[NSBundle mainBundle] pathForResource:@"spumux" ofType:@""]];
+	[spumux setCurrentDirectoryPath:[testMPG stringByDeletingLastPathComponent]];
+	[spumux setArguments:[NSArray arrayWithObjects:xmlPath, nil]];
+	
+	[spumux launch];
+	[spumux waitUntilExit];
+	
+	NSInteger result = [spumux terminationStatus];
+	
+	[spumux release];
+	spumux = nil;
+	
+	return (result == 0);
+}
+
+- (void)writeDataOnThread:(NSString *)path
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	NSData *data;
+	NSFileHandle *handle = [(NSPipe *)[ffmpeg standardOutput] fileHandleForReading];
+	NSFileHandle *outputFile = [NSFileHandle fileHandleForWritingAtPath:path];
+	
+	while([data = [handle availableData] length])
+	{
+		[outputFile writeData:data];
+	}
+	
+	[outputFile closeFile];
+	
+	[pool release];
+}
+
+- (void)runTaskOnThread:(NSTask *)task
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	NSPipe *errorPipe = [[NSPipe alloc] init];
+	[task setStandardError:errorPipe];
+	
+	[task launch];
+	[task waitUntilExit];
+	
+	NSFileHandle *handle = [errorPipe fileHandleForReading];
+	NSData *data;
+	NSString *string = nil;
+	
+	while([data = [handle availableData] length]) 
+	{
+		if (string)
+		{
+			[string release];
+			string = nil;
+		}
+	
+		string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == YES)
+			NSLog(@"%@", string);
+	}
+	
+	//NSFileHandle *handle = [(NSPipe *)[ffmpeg standardOutput] fileHandleForReading];
+	//[handle closeFile];
+	
+	NSInteger result = [task terminationStatus];
+	
+	if (result != 0)
+	{
+		if (subtitleProblem == NO)
+		{
+			subtitleProblem = YES;
+
+			NSArray *errorArray = [string componentsSeparatedByString:@"ERR: "];
+			NSString *problemString = [[[errorArray objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0];
+			
+			NSArray *timeArray = [string componentsSeparatedByString:@"STAT: "];
+			NSString *timeString = [[[timeArray lastObject] componentsSeparatedByString:@"\n"] objectAtIndex:0];
+			
+			NSString *xmlPath = [[task arguments] objectAtIndex:2];
+			NSString *xmlString = [NSString stringWithContentsOfFile:xmlPath];
+			
+			NSArray *xmlArray = [xmlString componentsSeparatedByString:@"filename=\""];
+			NSString *subFileName = [[[[xmlArray objectAtIndex:1] componentsSeparatedByString:@"\""] objectAtIndex:0] lastPathComponent];
+			
+			detailedErrorString = [[NSString stringWithFormat:@"File: %@\nTime: %@\n%@", subFileName, timeString, problemString] retain];
+		}
+		
+		[string release];
+		string = nil;
+		
+		[[task standardInput] closeFile];
+	}
+	
+	[task release];
+	task = nil;
+	
+	[pool release];
+}
+
 ///////////////////////
 // Framework actions //
 ///////////////////////
@@ -1221,6 +2215,69 @@
 	}
 
 	return formats;
+}
+
+- (void)extractImportantFontsToPath:(NSString *)path
+{
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
+	NSArray *fonts = [NSArray arrayWithObjects:@"/Library/Fonts/Hei.dfont", @"/Library/Fonts/Osaka.dfont", @"/Library/Fonts/HelveticaCY.dfont", nil];
+	NSArray *copyFonts = [NSArray arrayWithObjects:@"HeiRegular.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+	NSArray *newCopyFontNames = [NSArray arrayWithObjects:@"Hei.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+	#else
+	NSArray *fonts;
+	NSArray *copyFonts;
+	NSArray *newCopyFontNames;
+	
+	if ([MCCommonMethods OSVersion] < 0x1050)
+	{
+		fonts = [NSArray arrayWithObjects:@"/System/Library/Fonts/AppleGothic.dfont", @"/System/Library/Fonts/Hei.dfont", @"/System/Library/Fonts/Osaka.dfont", @"/Library/Fonts/HelveticaCY.dfont", nil];
+		copyFonts = [NSArray arrayWithObjects:@"HeiRegular.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+		newCopyFontNames = [NSArray arrayWithObjects:@"Hei.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+	}
+	else
+	{
+		fonts = [NSArray arrayWithObjects:@"/System/Library/Fonts/AppleGothic.dfont", @"/Library/Fonts/Hei.dfont", @"/Library/Fonts/Osaka.dfont", @"/Library/Fonts/HelveticaCY.dfont", nil];
+		copyFonts = [NSArray arrayWithObjects:@"AppleGothicRegular.ttf", @"HeiRegular.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+		newCopyFontNames = [NSArray arrayWithObjects:@"AppleGothic.ttf", @"Hei.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+	}
+	#endif
+	
+	
+	
+	NSString *tempFolder = [NSTemporaryDirectory() stringByAppendingPathComponent:@"MCTemp"];
+	NSString *error;
+	[MCCommonMethods createDirectoryAtPath:tempFolder errorString:&error];
+	NSInteger i;
+	for (i = 0; i < [fonts count]; i ++)
+	{
+		NSString *currentPath = [fonts objectAtIndex:i];
+		
+		if ([[NSFileManager defaultManager] fileExistsAtPath:currentPath])
+		{
+			NSString *fontName = [copyFonts objectAtIndex:i];
+			NSString *newFontName = [newCopyFontNames objectAtIndex:i];
+			NSString *newPath = [tempFolder stringByAppendingPathComponent:[currentPath lastPathComponent]];
+			[MCCommonMethods copyItemAtPath:currentPath toPath:newPath errorString:nil];
+			
+			NSString *fonduPath = [[NSBundle mainBundle] pathForResource:@"fondu" ofType:@""];
+			NSTask *fondu = [[NSTask alloc] init];
+			[fondu setLaunchPath:fonduPath];
+			[fondu setCurrentDirectoryPath:tempFolder];
+			[fondu setArguments:[NSArray arrayWithObject:newPath]];
+			[fondu setStandardOutput:[NSFileHandle fileHandleWithNullDevice]];
+			[fondu setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+			[fondu launch];
+			[fondu waitUntilExit];
+			
+			if ([fondu terminationStatus] == 0)
+				[MCCommonMethods copyItemAtPath:[tempFolder stringByAppendingPathComponent:fontName] toPath:[path stringByAppendingPathComponent:newFontName] errorString:nil];
+			
+			[fondu release];
+			fondu = nil;
+		}
+	}
+	
+	[MCCommonMethods removeItemAtPath:tempFolder];
 }
 
 @end
