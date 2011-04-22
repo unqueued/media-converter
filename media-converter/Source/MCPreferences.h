@@ -30,13 +30,13 @@
 	IBOutlet id containerPopUp;
 	IBOutlet id videoFormatPopUp;
 	IBOutlet id audioFormatPopUp;
+	IBOutlet id subtitleFormatPopUp;
+	IBOutlet id subtitleLanguagePopup;
+	IBOutlet id fontPopup;
+	IBOutlet id hAlignFormatPopUp;
+	IBOutlet id vAlignFormatPopUp;
 	IBOutlet id aspectRatioButton;
 	IBOutlet id aspectRatioField;
-	IBOutlet id keepAspectButton;
-	IBOutlet id autoAspectButton;
-	IBOutlet id autoSizeButton;
-	IBOutlet id twoPassButton;
-	IBOutlet id startAtomButton;
 	IBOutlet id modePopup;
 	IBOutlet id advancedTableView;
 	IBOutlet id advancedAddButton;
@@ -59,6 +59,7 @@
 	//Variables
 	NSArray *viewMappings;
 	NSArray *preferenceMappings;
+	NSArray *extraOptionMappings;
 	NSMutableArray *presetsData;
 	
 	NSString *currentPresetPath;
@@ -90,11 +91,8 @@
 - (IBAction)toggleAdvancedView:(id)sender;
 - (IBAction)setOption:(id)sender;
 - (IBAction)setAspect:(id)sender;
-- (IBAction)setKeepAspect:(id)sender;
-- (IBAction)setAutoAspect:(id)sender;
-- (IBAction)setAutoSize:(id)sender;
-- (IBAction)setTwoPass:(id)sender;
-- (IBAction)setStartAtom:(id)sender;
+- (IBAction)setExtraOption:(id)sender;
+- (IBAction)setSubtitleKind:(id)sender;
 - (IBAction)goToPresetSite:(id)sender;
 - (IBAction)savePreset:(id)sender;
 //Advanced actions
@@ -115,7 +113,7 @@
 //Other actions
 //MatPeterson http://www.cocoadev.com/index.pl?NSWindow
 - (void)resizeWindowOnSpotWithRect:(NSRect)aRect;
-- (void)setViewOptions:(NSArray *)views infoObject:(id)info mappingsObject:(NSArray *)mappings;
+- (void)setViewOptions:(NSArray *)views infoObject:(id)info mappingsObject:(NSArray *)mappings startCount:(NSInteger)start;
 - (void)clearOptionsInViews:(NSArray *)views;
 - (void)setProperty:(id)property forControl:(id)control;
 - (void)reloadPresets;
