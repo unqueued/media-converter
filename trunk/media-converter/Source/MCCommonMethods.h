@@ -26,14 +26,15 @@ typedef float CGFloat;
 
 //File actions
 //Get a non existing file name (example Folder 1, Folder 2 etc.)
-+ (NSString *)uniquePathNameFromPath:(NSString *)path;
++ (NSString *)uniquePathNameFromPath:(NSString *)path withSeperator:(NSString *)seperator;
 //Get full paths for multiple folders in an array
-+ (NSArray *)getFullPathsForFolders:(NSArray *)folders;
++ (NSArray *)getFullPathsForFolders:(NSArray *)folders withType:(NSString *)type;
 
 //Error actions
 + (BOOL)createDirectoryAtPath:(NSString *)path errorString:(NSString **)error;
 + (BOOL)copyItemAtPath:(NSString *)inPath toPath:(NSString *)newPath errorString:(NSString **)error;
 + (BOOL)removeItemAtPath:(NSString *)path;
++ (BOOL)writeString:(NSString *)string toFile:(NSString *)path errorString:(NSString **)error;
 + (BOOL)writeDictionary:(NSDictionary *)dictionary toFile:(NSString *)path errorString:(NSString **)error;
 
 //Mac OS X 10.3.9 compatible methods

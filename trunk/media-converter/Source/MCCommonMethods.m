@@ -42,7 +42,7 @@
 #pragma mark -
 #pragma mark •• File actions
 
-+ (NSString *)uniquePathNameFromPath:(NSString *)path
++ (NSString *)uniquePathNameFromPath:(NSString *)path withSeperator:(NSString *)seperator
 {
 	if ([[NSFileManager defaultManager] fileExistsAtPath:path])
 	{
@@ -60,7 +60,7 @@
 			newPath = [path stringByDeletingPathExtension];
 			
 			y = y + 1;
-			newPath = [NSString stringWithFormat:@"%@ %i", newPath, y];
+			newPath = [NSString stringWithFormat:@"%@%@%i", newPath, seperator, y];
 		}
 
 		return [newPath stringByAppendingString:pathExtension];
@@ -72,7 +72,7 @@
 }
 
 //Get full paths for multiple folders in an array
-+ (NSArray *)getFullPathsForFolders:(NSArray *)folders
++ (NSArray *)getFullPathsForFolders:(NSArray *)folders withType:(NSString *)type
 {
 	NSMutableArray *paths = [NSMutableArray array];
 
@@ -86,8 +86,12 @@
 		for (i = 0; i < [folderContents count]; i ++)
 		{
 			NSString *item = [folderContents objectAtIndex:i];
-			NSString *path = [folder stringByAppendingPathComponent:item];
-			[paths addObject:path];
+			
+			if (type == nil | [[[item pathExtension] lowercaseString] isEqualTo:[type lowercaseString]])
+			{
+				NSString *path = [folder stringByAppendingPathComponent:item];
+				[paths addObject:path];
+			}
 		}
 	}
 	
@@ -239,6 +243,45 @@
 	return succes;
 }
 
++ (BOOL)writeString:(NSString *)string toFile:(NSString *)path errorString:(NSString **)error
+{
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
+	BOOL succes;
+	NSError *myError;
+	succes = [string writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&myError];
+			
+	if (!succes)
+		*error = [myError localizedDescription];
+	#else
+
+	BOOL succes;
+	NSString *details;
+	
+	if ([MCCommonMethods OSVersion] >= 0x1040)
+	{
+		NSError *myError;
+		succes = [string writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&myError];
+			
+			if (!succes)
+			details = [myError localizedDescription];
+	}
+	else
+	{
+		succes = [string writeToFile:path atomically:YES];
+		NSFileManager *defaultManager = [NSFileManager defaultManager];
+		NSString *file = [defaultManager displayNameAtPath:path];
+		NSString *parent = [defaultManager displayNameAtPath:[path stringByDeletingLastPathComponent]];
+		details = [NSString stringWithFormat:NSLocalizedString(@"Failed to write '%@' to '%@'", nil), file, parent];
+	}
+
+	if (!succes)
+		*error = details;
+		
+	#endif
+
+	return succes;
+}
+
 + (BOOL)writeDictionary:(NSDictionary *)dictionary toFile:(NSString *)path errorString:(NSString **)error
 {
 	if (![dictionary writeToFile:path atomically:YES])
@@ -338,16 +381,13 @@
 	else
 		output = [outputHandle readDataToEndOfFile];
 		
-	if (string)
-	{
-		output = [[[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding] autorelease];
+	output = [[[NSString alloc] initWithData:output encoding:NSUTF8StringEncoding] autorelease];
 		
-		if (!error)
-			errorString = [[[NSString alloc] initWithData:[handle readDataToEndOfFile] encoding:NSUTF8StringEncoding] autorelease];
+	if (!error && string)
+		errorString = [[[NSString alloc] initWithData:[handle readDataToEndOfFile] encoding:NSUTF8StringEncoding] autorelease];
 
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"])
-			NSLog(@"%@\n%@", output, errorString);
-	}
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"])
+		NSLog(@"%@\n%@", output, errorString);
 		
 	[task waitUntilExit];
 	
@@ -362,7 +402,8 @@
 	outputPipe = nil;
 	[task release];
 	task = nil;
-
+	
+	if (error | string)
 	*data = output;
 	
 	return (result == 0);
