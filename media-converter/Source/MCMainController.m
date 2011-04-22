@@ -15,6 +15,8 @@
 
 + (void)initialize
 {
+	NSDictionary *infoDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
+
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults]; // standard user defaults
 	NSArray *defaultKeys = [NSArray arrayWithObjects:	@"MCUseSoundEffects",
 														@"MCInstallMode",
@@ -28,20 +30,22 @@
 														@"MCDVDForceAspect",
 														@"MCMuxSeperateStreams",
 														@"MCRemuxMPEG2Streams",
+														@"MCSubtitleLanguage",
 	nil];
 
-	NSArray *defaultValues = [NSArray arrayWithObjects:	[NSNumber numberWithBool:YES],					// MCUseSoundEffects
-														[NSNumber numberWithInteger:0],					// MCInstallMode
-														[NSNumber numberWithInteger:0],					// MCSaveMethod
-														[@"~/Movies" stringByExpandingTildeInPath],		// MCSaveLocation
-														[NSNumber numberWithBool:NO],					// MCDebug
-														[NSNumber numberWithBool:NO],					// MCUseCustomFFMPEG
-														@"",											// MCCustomFFMPEG
-														@"General",										// MCSavedPrefView
-														[NSNumber numberWithInteger:0],					// MCSelectedPreset
-														[NSNumber numberWithInteger:0],					// MCDVDForceAspect
-														[NSNumber numberWithBool:NO],					// MCMuxSeperateStreams
-														[NSNumber numberWithBool:NO],					// MCRemuxMPEG2Streams
+	NSArray *defaultValues = [NSArray arrayWithObjects:	[NSNumber numberWithBool:YES],							// MCUseSoundEffects
+														[NSNumber numberWithInteger:0],							// MCInstallMode
+														[NSNumber numberWithInteger:0],							// MCSaveMethod
+														[@"~/Movies" stringByExpandingTildeInPath],				// MCSaveLocation
+														[NSNumber numberWithBool:NO],							// MCDebug
+														[NSNumber numberWithBool:NO],							// MCUseCustomFFMPEG
+														@"",													// MCCustomFFMPEG
+														@"General",												// MCSavedPrefView
+														[NSNumber numberWithInteger:0],							// MCSelectedPreset
+														[NSNumber numberWithInteger:0],							// MCDVDForceAspect
+														[NSNumber numberWithBool:NO],							// MCMuxSeperateStreams
+														[NSNumber numberWithBool:NO],							// MCRemuxMPEG2Streams
+														[infoDictionary objectForKey:@"MCSubtitleLanguage"],	// MCSubtitleLanguage
 	nil];
 
 	NSDictionary *appDefaults = [NSDictionary dictionaryWithObjects:defaultValues forKeys:defaultKeys];
@@ -117,7 +121,7 @@
 		else
 			folders = [NSArray arrayWithObject:folder];
 	
-		NSArray *presetPaths = [MCCommonMethods getFullPathsForFolders:folders];
+		NSArray *presetPaths = [MCCommonMethods getFullPathsForFolders:folders withType:@"mcpreset"];
 		NSMutableArray *savedPresets = [NSMutableArray array];
 		
 		NSInteger i;
@@ -125,14 +129,11 @@
 		{
 			NSString *path = [presetPaths objectAtIndex:i];
 			
-			if ([[[path pathExtension] lowercaseString] isEqualTo:@"mcpreset"])
-			{
-				NSDictionary *preset = [NSDictionary dictionaryWithContentsOfFile:path];
-				NSString *name = [preset objectForKey:@"Name"];
-				NSDictionary *newPreset = [NSDictionary dictionaryWithObjectsAndKeys:name, @"Name", path, @"Path", nil];
+			NSDictionary *preset = [NSDictionary dictionaryWithContentsOfFile:path];
+			NSString *name = [preset objectForKey:@"Name"];
+			NSDictionary *newPreset = [NSDictionary dictionaryWithObjectsAndKeys:name, @"Name", path, @"Path", nil];
 			
-				[savedPresets addObject:newPreset];
-			}
+			[savedPresets addObject:newPreset];
 		}
 
 		[standardDefaults setObject:savedPresets forKey:@"MCPresets"];
