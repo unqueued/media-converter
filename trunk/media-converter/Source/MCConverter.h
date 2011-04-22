@@ -30,6 +30,8 @@
 	NSMutableArray *convertedFiles;
 	//To differ if it must be reported to be a problem (when canceling)
 	BOOL userCanceled;
+	//Some old ISO 639 codes used in mkv files as language
+	NSDictionary *oldToNewLanguageCodes;
 	
 	//Input file values
 	NSInteger inputWidth;
@@ -42,12 +44,20 @@
 
 	NSDictionary *convertOptions;
 	NSString *errorString;
+	NSString *detailedErrorString;
 	NSString *convertDestination;
 	NSString *convertExtension;
+	NSString *temporaryFolder;
+	NSFileHandle *currentFileHandle;
+	
+	//Encodings
+	NSArray *cyrillicLanguages;
 	
 	BOOL useWav;
 	BOOL useQuickTime;
 	BOOL copyAudio;
+	
+	BOOL subtitleProblem;
 }
 
 //Encode actions
@@ -64,6 +74,17 @@
 //Test actions
 
 //Test if FFmpeg can encode, sound and/or video, and if it does have any sound
+
+/*Results:
+1 = video / audio
+2 = video / audio (movtoy4m && movtowav)
+3 = video / audio (movtoy4m)
+4 = video / audio (movtowav)
+5 = no audio / video
+6 = no audio / video (movtoy4m)
+7 = no video / audio
+8 = no video / audio (movtowav)*/
+
 - (NSInteger)testFile:(NSString *)path errorString:(NSString **)error;
 //Test methods used in (NSInteger)testFile....
 - (BOOL)streamWorksOfKind:(NSString *)kind inOutput:(NSString *)output;
@@ -77,9 +98,41 @@
 - (BOOL)isMediaFile:(NSString *)path;
 //Check for ac3 audio
 - (BOOL)containsAC3:(NSString *)path;
+//Get the first audio and video streams (used for mp4 subs)
+- (NSDictionary *)firstAudioAndVideoStreamAtPath:(NSString *)path;
 
 //Framework actions
 - (NSArray *)succesArray;
+
+//Subtitle actions
+//outputType: 0 = mp4, 1 = mkv, 2 = ogg (kate)
+- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type;
+- (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath;
+- (NSArray *)trackDictionariesFromPath:(NSString *)path withType:(NSString *)type;
+
+//MP4 Subtitle methods
+- (BOOL)addSubtitleToMP4Movie:(NSString *)subPath outPath:(NSString *)moviePath forLanguage:(NSString *)lang firstSubtitle:(BOOL)first;
+- (BOOL)convertSubtitleFromMP4Movie:(NSString *)inPath toSubtitle:(NSString *)outPath outType:(NSString *)type fromID:(NSString *)streamID;
+- (BOOL)extractSubtitlesFromMP4Movie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath;
+- (BOOL)addTracksFromMP4Movie:(NSString *)inPath toPath:(NSString *)outPath;
+- (NSArray *)trackDictionariesFromMP4MovieAtPath:(NSString *)path;
+
+//MKV Subtitle methods
+- (BOOL)addSubtitlesToMKVMovie:(NSArray *)subtitles outPath:(NSString *)moviePath forLanguages:(NSArray *)languages;
+- (BOOL)extractSubtitlesFromMKVMovie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath;
+- (BOOL)addTracksFromMKVMovie:(NSArray *)inPaths toPath:(NSString *)outPath;
+- (NSArray *)trackDictionariesFromMKVMovieAtPath:(NSString *)path;
+
+//OGG (Kate) Subtitle methods
+- (BOOL)addSubtitlesToOGGMovie:(NSArray *)subtitles outPath:(NSString *)moviePath forLanguages:(NSArray *)languages;
+- (BOOL)addTracksFromOGGMovies:(NSArray *)inPaths toPath:(NSString *)outPath;
+- (BOOL)convertSRT:(NSString *)inPath toKateOGG:(NSString *)outPath forLanguage:(NSString *)language;
+- (BOOL)extractSubtitlesFromOGGMovie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath;
+- (NSArray *)trackDictionariesFromOGGMovieAtPath:(NSString *)path;
+
+//DVD Subtitle methods
+- (BOOL)addDVDSubtitlesToOutputStreamFromTask:(NSTask *)task withSubtitles:(NSArray *)subtitles toPath:(NSString *)outPath;
+- (BOOL)testFontWithName:(NSString *)name;
 
 //Other actions
 - (NSInteger)convertToEven:(NSString *)number;
@@ -91,5 +144,7 @@
 - (NSArray *)getFormats;
 - (NSArray *)getVideoCodecs;
 - (NSArray *)getAudioCodecs;
+
+- (void)extractImportantFontsToPath:(NSString *)path;
 
 @end
