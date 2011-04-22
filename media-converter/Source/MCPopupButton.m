@@ -45,7 +45,7 @@
 	{
 		NSDictionary *itemDictionary = [ar objectAtIndex:i];
 	
-		NSString *name = [itemDictionary objectForKey:@"Name"];
+		id name = [itemDictionary objectForKey:@"Name"];
 		
 		if ([name isEqualTo:@""])
 		{
@@ -53,13 +53,22 @@
 		}
 		else
 		{
-			if ([self indexOfItemWithTitle:name] > -1)
-				name = [NSString stringWithFormat:@"%@ (2)", name];
+			if ([name isKindOfClass:[NSAttributedString class]])
+			{
+				[self addItemWithTitle:[(NSAttributedString *)name string]];
+				[[self lastItem] setAttributedTitle:(NSAttributedString *)name];
+			}
+			else
+			{
+				if ([self indexOfItemWithTitle:(NSString *)name] > -1)
+					name = [NSString stringWithFormat:@"%@ (2)", (NSString *)name];
 		
-			[self addItemWithTitle:name];
+				[self addItemWithTitle:(NSString *)name];
+			}
 		}
 		
 		NSString *rawName = [itemDictionary objectForKey:@"Format"];
+
 		[array addObject:rawName];
 	}
 }
