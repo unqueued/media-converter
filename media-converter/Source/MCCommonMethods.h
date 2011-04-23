@@ -49,7 +49,7 @@ typedef float CGFloat;
 //Log command with arguments for easier debugging
 + (NSString *)logCommandIfNeeded:(NSTask *)command;
 //Conveniant method to load a NSTask
-+ (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data;
++ (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data inputPipe:(NSPipe *)inPipe;
 //Standard informative alert
 + (void)standardAlertWithMessageText:(NSString *)message withInformationText:(NSString *)information withParentWindow:(NSWindow *)parent;
 //Get the selected items in the tableview

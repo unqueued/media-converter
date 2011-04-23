@@ -144,7 +144,7 @@
 - (NSArray *)getFormats;
 - (NSArray *)getVideoCodecs;
 - (NSArray *)getAudioCodecs;
-
 - (void)extractImportantFontsToPath:(NSString *)path;
+- (NSString *)getYouTubeName:(NSString *)urlString;
 
 @end
