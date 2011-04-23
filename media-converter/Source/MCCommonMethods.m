@@ -12,6 +12,7 @@
 
 - (BOOL)createDirectoryAtPath:(NSString *)path withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error;
 - (BOOL)copyItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath error:(NSError **)error;
+- (BOOL)moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath error:(NSError **)error;
 - (BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error;
 
 @end
@@ -182,6 +183,49 @@
 		NSString *inFile = [defaultManager displayNameAtPath:inPath];
 		NSString *outFile = [defaultManager displayNameAtPath:[newPath stringByDeletingLastPathComponent]];
 		details = [NSString stringWithFormat:NSLocalizedString(@"Failed to copy '%@' to '%@'. %@", nil), inFile, outFile, details];
+		*error = details;
+	}
+	#endif
+
+	return succes;
+}
+
++ (BOOL)moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath error:(NSString **)error
+{
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
+	BOOL succes;
+	NSError *myError;
+	succes = [defaultManager moveItemAtPath:srcPath toPath:dstPath error:&myError];
+			
+	if (!succes)
+		*error = [myError localizedDescription];
+	
+	return succes;
+	#else
+
+	BOOL succes = YES;
+	NSString *details = @"";
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
+
+	if ([MCCommonMethods OSVersion] >= 0x1050)
+	{
+		NSError *myError;
+		succes = [defaultManager moveItemAtPath:srcPath toPath:dstPath error:&myError];
+			
+		if (!succes)
+			details = [myError localizedDescription];
+	}
+	else
+	{
+		succes = [defaultManager movePath:srcPath toPath:dstPath handler:nil];
+	}
+		
+	if (!succes)
+	{
+		NSString *inFile = [defaultManager displayNameAtPath:srcPath];
+		NSString *outFile = [defaultManager displayNameAtPath:[dstPath stringByDeletingLastPathComponent]];
+		details = [NSString stringWithFormat:NSLocalizedString(@"Failed to move '%@' to '%@'. %@", nil), inFile, outFile, details];
 		*error = details;
 	}
 	#endif

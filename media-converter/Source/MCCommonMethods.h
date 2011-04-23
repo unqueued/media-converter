@@ -33,6 +33,7 @@ typedef float CGFloat;
 //Error actions
 + (BOOL)createDirectoryAtPath:(NSString *)path errorString:(NSString **)error;
 + (BOOL)copyItemAtPath:(NSString *)inPath toPath:(NSString *)newPath errorString:(NSString **)error;
++ (BOOL)moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath error:(NSString **)error;
 + (BOOL)removeItemAtPath:(NSString *)path;
 + (BOOL)writeString:(NSString *)string toFile:(NSString *)path errorString:(NSString **)error;
 + (BOOL)writeDictionary:(NSDictionary *)dictionary toFile:(NSString *)path errorString:(NSString **)error;
