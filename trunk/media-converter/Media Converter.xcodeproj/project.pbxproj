@@ -116,6 +116,12 @@
 		FEA2099A132F5FEC0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA20998132F5FEC0089B135 /* spumux */; };
 		FEA2099B132F5FEC0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA20997132F5FEC0089B135 /* MP4Box */; };
 		FEA2099C132F5FEC0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA20998132F5FEC0089B135 /* spumux */; };
+		FEA3B06B13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
+		FEA3B06C13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
+		FEA3B06D13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
+		FEA3B06E13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
+		FEA3B06F13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
+		FEA3B07013630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
 		FEA8CE5513227D0F00C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		FEA8CE5613227D0F00C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		FEA8CE5713227D0F00C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
@@ -580,6 +586,7 @@
 		FEA20992132F5FDD0089B135 /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = spumux; sourceTree = "<group>"; };
 		FEA20997132F5FEC0089B135 /* MP4Box */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = MP4Box; sourceTree = "<group>"; };
 		FEA20998132F5FEC0089B135 /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = spumux; sourceTree = "<group>"; };
+		FEA3B06A13630DC800AD6085 /* youtube-dl.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "youtube-dl.sh"; path = "Resources/youtube-dl.sh"; sourceTree = "<group>"; };
 		FEA8CE8913227D0F00C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEA8CEC413227D2100C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEA8CEFF13227D2400C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1058,6 +1065,7 @@
 		FEF7FBBC131A89AB00E244C9 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				FEA3B06A13630DC800AD6085 /* youtube-dl.sh */,
 				FEA8D4F71322AD4E00C10516 /* Donation */,
 				FEBC384212F163B300F0A20A /* Presets */,
 			);
@@ -1268,6 +1276,7 @@
 				FED0E3FB1349805E00F06BA6 /* fondu in Resources */,
 				FE58A69F135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A0135EBE8400A99750 /* SubTest.srt in Resources */,
+				FEA3B06F13630DC800AD6085 /* youtube-dl.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1316,6 +1325,7 @@
 				FED0E3FC1349805E00F06BA6 /* fondu in Resources */,
 				FE58A6A1135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A2135EBE8400A99750 /* SubTest.srt in Resources */,
+				FEA3B06C13630DC800AD6085 /* youtube-dl.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1363,6 +1373,7 @@
 				FED0E3F81349804C00F06BA6 /* fondu in Resources */,
 				FE58A6A3135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A4135EBE8400A99750 /* SubTest.srt in Resources */,
+				FEA3B07013630DC800AD6085 /* youtube-dl.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1410,6 +1421,7 @@
 				FED0E3F51349803F00F06BA6 /* fondu in Resources */,
 				FE58A6A5135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A6135EBE8400A99750 /* SubTest.srt in Resources */,
+				FEA3B06D13630DC800AD6085 /* youtube-dl.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1457,6 +1469,7 @@
 				FED0E3F91349804C00F06BA6 /* fondu in Resources */,
 				FE58A6A7135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A8135EBE8400A99750 /* SubTest.srt in Resources */,
+				FEA3B06B13630DC800AD6085 /* youtube-dl.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1504,6 +1517,7 @@
 				FED0E3F61349803F00F06BA6 /* fondu in Resources */,
 				FE58A6A9135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6AA135EBE8400A99750 /* SubTest.srt in Resources */,
+				FEA3B06E13630DC800AD6085 /* youtube-dl.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
