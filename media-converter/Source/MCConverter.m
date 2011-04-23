@@ -1435,7 +1435,7 @@
 	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-add", [NSString stringWithFormat:@"%@:lang=%@%@:group=2", subPath, lang, disableText], nil];
 
 	if (first == YES)
-		[arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-new", moviePath]];
+		[arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-new", moviePath, nil]];
 	else
 		[arguments addObject:moviePath];
 	
@@ -2044,7 +2044,7 @@
 			NSString *timeString = [[[timeArray lastObject] componentsSeparatedByString:@"\n"] objectAtIndex:0];
 			
 			NSString *xmlPath = [[task arguments] objectAtIndex:2];
-			NSString *xmlString = [NSString stringWithContentsOfFile:xmlPath];
+			NSString *xmlString = [NSString stringWithContentsOfFile:xmlPath encoding:NSUTF8StringEncoding error:nil];
 			
 			NSArray *xmlArray = [xmlString componentsSeparatedByString:@"filename=\""];
 			NSString *subFileName = [[[[xmlArray objectAtIndex:1] componentsSeparatedByString:@"\""] objectAtIndex:0] lastPathComponent];
