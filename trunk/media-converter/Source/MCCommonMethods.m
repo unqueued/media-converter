@@ -420,7 +420,7 @@
 	return commandString;
 }
 
-+ (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data
++ (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data inputPipe:(NSPipe *)inPipe
 {
 	id output;
 	NSTask *task = [[NSTask alloc] init];
@@ -439,6 +439,9 @@
 		[task setStandardOutput:outputPipe];
 		outputHandle=[outputPipe fileHandleForReading];
 	}
+	
+	if (inPipe != nil)
+		[task setStandardInput:inPipe];
 	
 	[MCCommonMethods logCommandIfNeeded:task];
 	[task launch];
