@@ -303,7 +303,7 @@
 				aspectWidth = width;
 				aspectHeight = height;
 			}
-		
+			
 			if (inputAspect != (aspectWidth / aspectHeight))
 			{
 				topBars = (inputAspect > (aspectWidth / aspectHeight));
@@ -1081,6 +1081,7 @@
 {	
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSString *inputString = [[output componentsSeparatedByString:@"Input"] objectAtIndex:1];
+	inputString = [[inputString componentsSeparatedByString:@"Output"] objectAtIndex:0];
 
 	inputWidth = 0;
 	inputHeight = 0;
@@ -1090,10 +1091,10 @@
 	inputFormat = 0;
 
 	//Calculate the aspect ratio width / height	
-	if ([[[inputString componentsSeparatedByString:@"Output"] objectAtIndex:0] rangeOfString:@"Video:"].length > 0)
+	if ([inputString rangeOfString:@"Video:"].length > 0)
 	{
-		NSArray *resolutionArray = [[[[[[[inputString componentsSeparatedByString:@"Output"] objectAtIndex:0] componentsSeparatedByString:@"Video:"] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0] componentsSeparatedByString:@"x"];
-		NSArray *fpsArray = [[[[[inputString componentsSeparatedByString:@"Output"] objectAtIndex:0] componentsSeparatedByString:@" tbc"] objectAtIndex:0] componentsSeparatedByString:@","];
+		NSArray *resolutionArray = [[[[[inputString componentsSeparatedByString:@"Video:"] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0] componentsSeparatedByString:@"x"];
+		NSArray *fpsArray = [[[inputString componentsSeparatedByString:@" tbc"] objectAtIndex:0] componentsSeparatedByString:@","];
 		
 		NSArray *beforeX = [[resolutionArray objectAtIndex:0] componentsSeparatedByString:@" "];
 		NSArray *afterX = [[resolutionArray objectAtIndex:1] componentsSeparatedByString:@" "];
@@ -1780,7 +1781,7 @@
 		for (i = 0; i < [tracks count]; i ++)
 		{
 			NSString *track = [tracks objectAtIndex:i];
-			NSLog(@"Track: %@", track);
+
 			if ([track rangeOfString:@"S_TEXT/UTF8"].length > 0)
 			{
 				NSString *trackID = [[[[track componentsSeparatedByString:@"Track number: "] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0];
@@ -1879,7 +1880,7 @@
 		outputFile = [MCCommonMethods uniquePathNameFromPath:outputFile withSeperator:@"_"];
 		
 		arguments = [NSArray arrayWithObjects:@"-t", @"srt", @"-o", outputFile, tmpOggFile, nil];
-		NSLog(@"Arguments: %@", arguments);
+		
 		[MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
 	}
 	
@@ -1895,7 +1896,7 @@
 	
 	NSString *output;
 	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil];
-	NSLog(@"Output: %@", output);
+
 	if (result == YES)
 	{
 		NSArray *tracks = [output componentsSeparatedByString:@"Kate: "];
