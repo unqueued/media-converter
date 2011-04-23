@@ -1335,7 +1335,7 @@
 					{
 						//NSString *originalString = [NSString stringWithContentsOfFile:currentPath];
 						
-						NSString *originalString = [NSString stringWithContentsOfFile:currentPath encoding:NSUTF8StringEncoding error:nil];
+						NSString *originalString = [MCCommonMethods stringWithContentsOfFile:currentPath encoding:NSUTF8StringEncoding error:nil];
 						NSString *language = [[currentPath stringByDeletingPathExtension] pathExtension];
 
 						if (!originalString)
@@ -1365,11 +1365,11 @@
 							else if ([language isEqualTo:@"vie"] | [language isEqualTo:@"vi"])
 								encoding = 0x80000508;
 							
-							originalString = [NSString stringWithContentsOfFile:currentPath encoding:encoding error:nil];
+							originalString = [MCCommonMethods stringWithContentsOfFile:currentPath encoding:encoding error:nil];
 						}
 						
 						if (!originalString)
-							originalString = [NSString stringWithContentsOfFile:currentPath encoding:NSUnicodeStringEncoding error:nil];
+							originalString = [MCCommonMethods stringWithContentsOfFile:currentPath encoding:NSUnicodeStringEncoding error:nil];
 						
 						if ([language isEqualTo:@""])
 							language = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCSubtitleLanguage"];
@@ -2044,7 +2044,7 @@
 			NSString *timeString = [[[timeArray lastObject] componentsSeparatedByString:@"\n"] objectAtIndex:0];
 			
 			NSString *xmlPath = [[task arguments] objectAtIndex:2];
-			NSString *xmlString = [NSString stringWithContentsOfFile:xmlPath encoding:NSUTF8StringEncoding error:nil];
+			NSString *xmlString = [MCCommonMethods stringWithContentsOfFile:xmlPath encoding:NSUTF8StringEncoding error:nil];
 			
 			NSArray *xmlArray = [xmlString componentsSeparatedByString:@"filename=\""];
 			NSString *subFileName = [[[[xmlArray objectAtIndex:1] componentsSeparatedByString:@"\""] objectAtIndex:0] lastPathComponent];
