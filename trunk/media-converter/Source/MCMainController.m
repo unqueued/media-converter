@@ -634,6 +634,11 @@
 //Use some c to get the real path
 - (NSString *)getRealPath:(NSString *)inPath
 {
+	char first = [inPath characterAtIndex:0];
+	
+	if (first != '/')
+		return inPath;
+
 	NSString *extension = [inPath pathExtension];
 	if ([[extension lowercaseString] isEqualTo:@"webloc"])
 		return [[NSDictionary dictionaryWithContentsOfFile:inPath] objectForKey:@"URL"];

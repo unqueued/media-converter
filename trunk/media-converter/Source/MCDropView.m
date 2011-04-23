@@ -14,7 +14,7 @@
 - (id)initWithFrame:(NSRect)frameRect
 {
 	if ((self = [super initWithFrame:frameRect]) != nil)
-		[self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, nil]];
+		[self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, NSStringPboardType, nil]];
 	
 	return self;
 }
@@ -77,11 +77,11 @@
 {
     NSPasteboard *paste = [sender draggingPasteboard];
         //gets the dragging-specific pasteboard from the sender
-    NSArray *types = [NSArray arrayWithObject:NSFilenamesPboardType];
+    NSArray *types = [NSArray arrayWithObjects:NSFilenamesPboardType, NSStringPboardType, nil];
         //a list of types that we can accept
     NSString *desiredType = [paste availableTypeFromArray:types];
     NSData *carriedData = [paste dataForType:desiredType];
-
+//NSLog(@"Type: %@", [paste types]);
     if (nil == carriedData)
     {
         //the operation failed for some reason
@@ -95,6 +95,11 @@
             NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
 			[mainController checkFiles:fileArray];
         }
+		else if ([desiredType isEqualToString:NSStringPboardType])
+		{
+			NSString *urlString = [paste stringForType:NSStringPboardType];
+			[mainController checkFiles:[NSArray arrayWithObject:urlString]];
+		}
         else
         {
             //this can't happen
