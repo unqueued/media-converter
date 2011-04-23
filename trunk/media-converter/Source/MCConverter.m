@@ -97,7 +97,7 @@
 			useWav = (output == 2 | output == 4 | output == 8);
 			useQuickTime = (output == 2 | output == 3 | output == 6);
 			
-			BOOL stream = (![[NSFileManager defaultManager] fileExistsAtPath:currentPath]);
+			BOOL stream = (![[MCCommonMethods defaultManager] fileExistsAtPath:currentPath]);
 			if (stream && (useWav | useQuickTime))
 			{
 				NSString *streamError;
@@ -106,7 +106,7 @@
 				else
 					streamError = NSLocalizedString(@"%@ (Unsupported video)", nil);
 				
-				NSString *displayName = [[NSFileManager defaultManager] displayNameAtPath:currentPath];
+				NSString *displayName = [[MCCommonMethods defaultManager] displayNameAtPath:currentPath];
 				
 				[self setErrorStringWithString:[NSString stringWithFormat:streamError, displayName]];
 				
@@ -129,7 +129,7 @@
 			}
 			else if (output == 1)
 			{
-				NSString *displayName = [[NSFileManager defaultManager] displayNameAtPath:currentPath];
+				NSString *displayName = [[MCCommonMethods defaultManager] displayNameAtPath:currentPath];
 				NSString *problem = NSLocalizedString(@"%@ (Unknown error)", nil);
 				
 				if (subtitleProblem == YES)
@@ -319,12 +319,12 @@
 	
 	if (![subtitleType isEqualTo:@"none"] && ![subtitleType isEqualTo:@"dvd"])
 	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Converting subtitles: %@…", nil), [[NSFileManager defaultManager] displayNameAtPath:path]]];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Converting subtitles: %@…", nil), [[MCCommonMethods defaultManager] displayNameAtPath:path]]];
 		temporarySubtitleFile = [[temporaryFolder stringByAppendingPathComponent:@"tmpmovie"] stringByAppendingPathExtension:subtitleType];
 		[self createMovieWithSubtitlesAtPath:temporarySubtitleFile inputFile:path ouputType:subtitleType];
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSLocalizedString(@"Encoding: ", Localized) stringByAppendingString:[[NSFileManager defaultManager] displayNameAtPath:path]]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSLocalizedString(@"Encoding: ", Localized) stringByAppendingString:[[MCCommonMethods defaultManager] displayNameAtPath:path]]];
 	
 	NSInteger taskStatus;
 	NSMutableString *ffmpegErrorString = nil;
@@ -589,7 +589,7 @@
 		if (taskStatus == 0)
 		{
 			[MCCommonMethods removeItemAtPath:outFileWithExtension];
-			[[NSFileManager defaultManager] movePath:tempFile toPath:outFileWithExtension handler:nil];
+			[[MCCommonMethods defaultManager] movePath:tempFile toPath:outFileWithExtension handler:nil];
 		}
 		else
 		{
@@ -606,7 +606,7 @@
 		qtfaststart = nil;
 	}
 	
-	if (temporarySubtitleFile && [[NSFileManager defaultManager] fileExistsAtPath:temporarySubtitleFile])
+	if (temporarySubtitleFile && [[MCCommonMethods defaultManager] fileExistsAtPath:temporarySubtitleFile])
 	{
 		if ([subtitleType isEqualTo:@"mp4"])
 		{
@@ -620,7 +620,7 @@
 			if (result)
 			{
 				[MCCommonMethods removeItemAtPath:outFileWithExtension];
-				[[NSFileManager defaultManager] movePath:temporaryFile toPath:outFileWithExtension handler:nil];
+				[[MCCommonMethods defaultManager] movePath:temporaryFile toPath:outFileWithExtension handler:nil];
 			}
 		}
 		else if ([subtitleType isEqualTo:@"mkv"])
@@ -631,7 +631,7 @@
 			if (result)
 			{
 				[MCCommonMethods removeItemAtPath:outFileWithExtension];
-				[[NSFileManager defaultManager] movePath:temporaryFile toPath:outFileWithExtension handler:nil];
+				[[MCCommonMethods defaultManager] movePath:temporaryFile toPath:outFileWithExtension handler:nil];
 			}
 		}
 	}
@@ -690,7 +690,7 @@
 //Encode sound to wav
 - (NSInteger)encodeAudioAtPath:(NSString *)path errorString:(NSString **)error
 {
-	NSFileManager *defaultFileManager = [NSFileManager defaultManager];
+	NSFileManager *defaultFileManager = [MCCommonMethods defaultManager];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Decoding sound: %@", nil), [defaultFileManager displayNameAtPath:path]]];
 
 	//Output file (without extension)
@@ -775,7 +775,7 @@
 //Test if ffmpeg can encode, sound and/or video, and if it does have any sound
 - (NSInteger)testFile:(NSString *)path errorString:(NSString **)ffmpegError
 {
-	NSString *displayName = [[NSFileManager defaultManager] displayNameAtPath:path];
+	NSString *displayName = [[MCCommonMethods defaultManager] displayNameAtPath:path];
 	NSString *tempFile = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpkf"];
 	
 	BOOL audioWorks = YES;
@@ -1068,7 +1068,7 @@
 				NSString *projectLocation = [[[file stringByDeletingLastPathComponent] stringByDeletingLastPathComponent]stringByDeletingLastPathComponent];
 				NSString *projectSettings = [[projectLocation stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"iMovieProj"];
 			
-				if ([[NSFileManager defaultManager] fileExistsAtPath:projectSettings])
+				if ([[MCCommonMethods defaultManager] fileExistsAtPath:projectSettings])
 				{
 					if ([[MCCommonMethods stringWithContentsOfFile:projectSettings] rangeOfString:@"WIDE"].length > 0)
 					{
@@ -1141,7 +1141,7 @@
 	}
 	else
 	{
-		[self setErrorStringWithString:[NSString stringWithFormat:NSLocalizedString(@"%@ (Couldn't get attributes)", nil), [[NSFileManager defaultManager] displayNameAtPath:file]]];
+		[self setErrorStringWithString:[NSString stringWithFormat:NSLocalizedString(@"%@ (Couldn't get attributes)", nil), [[MCCommonMethods defaultManager] displayNameAtPath:file]]];
 		return NO;
 	}
 }
@@ -1444,7 +1444,7 @@
 
 - (BOOL)convertSubtitleFromMP4Movie:(NSString *)inPath toSubtitle:(NSString *)outPath outType:(NSString *)type fromID:(NSString *)streamID
 {
-	[[NSFileManager defaultManager] createFileAtPath:outPath contents:[NSData data] attributes:nil];
+	[[MCCommonMethods defaultManager] createFileAtPath:outPath contents:[NSData data] attributes:nil];
 	
 	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"MP4Box" ofType:@""];
 	NSMutableArray *arguments = [NSMutableArray arrayWithObject:[NSString stringWithFormat:@"-%@", type]];
@@ -1845,7 +1845,7 @@
 
 - (BOOL)addDVDSubtitlesToOutputStreamFromTask:(NSTask *)task withSubtitles:(NSArray *)subtitles toPath:(NSString *)outPath
 {	
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	[defaultManager createFileAtPath:outPath contents:[NSData data] attributes:nil];
 
 	if ([subtitles count] == 0)
@@ -1890,7 +1890,7 @@
 		else if ([language isEqualTo:@"hye"] | [language isEqualTo:@"hy"])
 			font = @"MshtakanRegular";
 		
-		if (font == nil | ![[NSFileManager defaultManager] fileExistsAtPath:[spumuxPath stringByAppendingPathComponent:[font stringByAppendingPathExtension:@"ttf"]]])
+		if (font == nil | ![[MCCommonMethods defaultManager] fileExistsAtPath:[spumuxPath stringByAppendingPathComponent:[font stringByAppendingPathExtension:@"ttf"]]])
 			font = [extraOptions objectForKey:@"Subtitle Font"];
 
 		NSString *hAlign = [extraOptions objectForKey:@"Subtitle Horizontal Alignment"];
@@ -2252,7 +2252,7 @@
 	{
 		NSString *currentPath = [fonts objectAtIndex:i];
 		
-		if ([[NSFileManager defaultManager] fileExistsAtPath:currentPath])
+		if ([[MCCommonMethods defaultManager] fileExistsAtPath:currentPath])
 		{
 			NSString *fontName = [copyFonts objectAtIndex:i];
 			NSString *newFontName = [newCopyFontNames objectAtIndex:i];

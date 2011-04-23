@@ -67,7 +67,7 @@
 
 	[presetPopUp removeAllItems];
 	
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSString *folder = @"/Library/Application Support/Media Converter/Presets";
 	NSString *supportFolder = [folder stringByDeletingLastPathComponent];
 	
@@ -342,7 +342,7 @@
 	//Needed because we're in a new thread
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSMutableArray *files = [NSMutableArray array];
 	NSInteger protectedCount = 0;
 	
@@ -677,7 +677,7 @@
 {
 	NSArray *protectedFileTypes = [NSArray arrayWithObjects:@"m4p", @"m4b", NSFileTypeForHFSTypeCode('M4P '), NSFileTypeForHFSTypeCode('M4B '), nil];
 	
-	return ([protectedFileTypes containsObject:[[path pathExtension] lowercaseString]] | [protectedFileTypes containsObject:NSFileTypeForHFSTypeCode([[[[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:YES] objectForKey:NSFileHFSTypeCode] longValue])]);
+	return ([protectedFileTypes containsObject:[[path pathExtension] lowercaseString]] | [protectedFileTypes containsObject:NSFileTypeForHFSTypeCode([[[[MCCommonMethods defaultManager] fileAttributesAtPath:path traverseLink:YES] objectForKey:NSFileHFSTypeCode] longValue])]);
 }
 
 - (void)closeWindow
