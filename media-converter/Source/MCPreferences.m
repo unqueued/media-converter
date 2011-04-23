@@ -90,7 +90,7 @@
 - (void)awakeFromNib
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableViewSelectionDidChange:) name:@"MCListSelected" object:presetsTableView];
 	
@@ -206,7 +206,7 @@
 
 	if (returnCode == NSOKButton)
 	{
-		NSFileManager *defaultManager = [NSFileManager defaultManager];
+		NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 		[saveFolderPopUp removeItemAtIndex:0];
 		NSString *temporaryFolder = [sheet filename];
 		[saveFolderPopUp insertItemWithTitle:[defaultManager displayNameAtPath:temporaryFolder] atIndex:0];
@@ -429,7 +429,7 @@
 		else if (installMode == 2)
 			applicationSupportFolder = [@"~/Library/Application Support" stringByExpandingTildeInPath];
 			
-		NSFileManager *defaultManager = [NSFileManager defaultManager];
+		NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 		NSString *folder = [applicationSupportFolder stringByAppendingPathComponent:@"Media Converter"];
 			
 		BOOL supportWritable = YES;
@@ -498,7 +498,7 @@
 				{
 					NSString *name = [duplicatePresetNames objectAtIndex:i];
 					NSDictionary *presetDictionary = [presetsData objectAtIndex:[presetsData indexOfObject:name forKey:@"Name"]];
-					[[NSFileManager defaultManager] removeFileAtPath:[presetDictionary objectForKey:@"Path"] handler:nil];
+					[[MCCommonMethods defaultManager] removeFileAtPath:[presetDictionary objectForKey:@"Path"] handler:nil];
 				}
 			}
 			else
@@ -598,7 +598,7 @@
 		}
 		else
 		{
-			warningString = [NSString stringWithFormat:NSLocalizedString(@"Failed to open '%@'.", nil), [[NSFileManager defaultManager] displayNameAtPath:[paths objectAtIndex:0]]];
+			warningString = [NSString stringWithFormat:NSLocalizedString(@"Failed to open '%@'.", nil), [[MCCommonMethods defaultManager] displayNameAtPath:[paths objectAtIndex:0]]];
 			detailsString = NSLocalizedString(@"Try re-downloading or re-copying it.", nil);
 		}
 			
@@ -657,7 +657,7 @@
 		for (i = 0; i < [selectedObjects count]; i ++)
 		{
 			NSDictionary *selectedObject = [selectedObjects objectAtIndex:i];
-			[[NSFileManager defaultManager] removeFileAtPath:[selectedObject objectForKey:@"Path"] handler:nil];
+			[[MCCommonMethods defaultManager] removeFileAtPath:[selectedObject objectForKey:@"Path"] handler:nil];
 		}
 	}
 	
@@ -1509,7 +1509,7 @@
 	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Bottom", nil), @"Name", @"bottom", @"Format", nil] atIndex:2];
 	[vAlignFormatPopUp setArray:verticalAlignments];
 	
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSString *spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
 	
 	NSMutableArray *fontDictionaries = [NSMutableArray array];

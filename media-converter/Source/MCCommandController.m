@@ -62,7 +62,7 @@
 
 	for(x = 0; x < [paths count]; x ++)
 	{
-		NSArray *itemsInPathToOpen = [[NSFileManager defaultManager] directoryContentsAtPath:[paths objectAtIndex:x]];
+		NSArray *itemsInPathToOpen = [[MCCommonMethods defaultManager] directoryContentsAtPath:[paths objectAtIndex:x]];
 		NSInteger i;
 		NSInteger pathcount;
 		pathcount = [itemsInPathToOpen count];

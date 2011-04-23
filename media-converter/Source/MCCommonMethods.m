@@ -44,7 +44,7 @@
 
 + (NSString *)uniquePathNameFromPath:(NSString *)path withSeperator:(NSString *)seperator
 {
-	if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+	if ([[MCCommonMethods defaultManager] fileExistsAtPath:path])
 	{
 		NSString *newPath = [path stringByDeletingPathExtension];
 		NSString *pathExtension;
@@ -55,7 +55,7 @@
 			pathExtension = [@"." stringByAppendingString:[path pathExtension]];
 
 		NSInteger y = 0;
-		while ([[NSFileManager defaultManager] fileExistsAtPath:[newPath stringByAppendingString:pathExtension]])
+		while ([[MCCommonMethods defaultManager] fileExistsAtPath:[newPath stringByAppendingString:pathExtension]])
 		{
 			newPath = [path stringByDeletingPathExtension];
 			
@@ -80,7 +80,7 @@
 	for (x = 0; x < [folders count]; x ++)
 	{
 		NSString *folder = [folders objectAtIndex:x];
-		NSArray *folderContents = [[NSFileManager defaultManager] directoryContentsAtPath:folder];
+		NSArray *folderContents = [[MCCommonMethods defaultManager] directoryContentsAtPath:folder];
 	
 		NSInteger i;
 		for (i = 0; i < [folderContents count]; i ++)
@@ -108,7 +108,7 @@
 + (BOOL)createDirectoryAtPath:(NSString *)path errorString:(NSString **)error
 {
 	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSError *myError;
 	BOOL succes = [defaultManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&myError];
 			
@@ -118,7 +118,7 @@
 	
 	BOOL succes = YES;
 	NSString *details;
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	
 	if (![defaultManager fileExistsAtPath:path])
 	{
@@ -149,7 +149,7 @@
 + (BOOL)copyItemAtPath:(NSString *)inPath toPath:(NSString *)newPath errorString:(NSString **)error
 {
 	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	BOOL succes;
 	NSError *myError;
 	succes = [defaultManager copyItemAtPath:inPath toPath:newPath error:&myError];
@@ -162,7 +162,7 @@
 
 	BOOL succes = YES;
 	NSString *details = @"";
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 
 	if ([MCCommonMethods OSVersion] >= 0x1050)
 	{
@@ -192,7 +192,7 @@
 + (BOOL)removeItemAtPath:(NSString *)path
 {
 	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	BOOL succes = YES;
 	NSString *details;
 	
@@ -214,7 +214,7 @@
 	
 	BOOL succes = YES;
 	NSString *details;
-	NSFileManager *defaultManager = [NSFileManager defaultManager];
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	
 	if ([defaultManager fileExistsAtPath:path])
 	{
@@ -268,7 +268,7 @@
 	else
 	{
 		succes = [string writeToFile:path atomically:YES];
-		NSFileManager *defaultManager = [NSFileManager defaultManager];
+		NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 		NSString *file = [defaultManager displayNameAtPath:path];
 		NSString *parent = [defaultManager displayNameAtPath:[path stringByDeletingLastPathComponent]];
 		details = [NSString stringWithFormat:NSLocalizedString(@"Failed to write '%@' to '%@'", nil), file, parent];
@@ -286,7 +286,7 @@
 {
 	if (![dictionary writeToFile:path atomically:YES])
 	{
-		NSFileManager *defaultManager = [NSFileManager defaultManager];
+		NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 		NSString *file = [defaultManager displayNameAtPath:path];
 		NSString *parent = [defaultManager displayNameAtPath:[path stringByDeletingLastPathComponent]];
 		*error = [NSString stringWithFormat:NSLocalizedString(@"Failed to write '%@' to '%@'", nil), file, parent];
@@ -327,6 +327,16 @@
 		return [NSString stringWithContentsOfFile:path encoding:enc error:&*error];
 }
 
++ (NSFileManager *)defaultManager
+{
+	#if MAC_OS_X_VERSION_MAX_ALLOWED < 1050
+	if ([MCCommonMethods OSVersion] < 0x1050)
+		return [NSFileManager defaultManager];
+	else
+	#endif
+		return [[[NSFileManager alloc] init] autorelease];
+}
+
 ///////////////////
 // Other actions //
 ///////////////////
@@ -338,7 +348,7 @@
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 
-	if ([standardDefaults boolForKey:@"MCUseCustomFFMPEG"] == YES && [[NSFileManager defaultManager] fileExistsAtPath:[standardDefaults objectForKey:@"MCCustomFFMPEG"]])
+	if ([standardDefaults boolForKey:@"MCUseCustomFFMPEG"] == YES && [[MCCommonMethods defaultManager] fileExistsAtPath:[standardDefaults objectForKey:@"MCCustomFFMPEG"]])
 		return [[NSUserDefaults standardUserDefaults] objectForKey:@"MCCustomFFMPEG"];
 	else
 		return [[NSBundle mainBundle] pathForResource:@"ffmpeg" ofType:@""];
