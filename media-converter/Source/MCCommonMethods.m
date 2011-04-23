@@ -306,12 +306,25 @@
 
 + (id)stringWithContentsOfFile:(NSString *)path
 {
-	#if MAC_OS_X_VERSION_MAX_ALLOWED < 1050
+	#if MAC_OS_X_VERSION_MAX_ALLOWED < 1040
 	if ([MCCommonMethods OSVersion] < 0x1040)
 		return [NSString stringWithContentsOfFile:path];
 	else
 	#endif
 		return [NSString stringWithContentsOfFile:path usedEncoding:nil error:nil];
+}
+
++ (id)stringWithContentsOfFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error
+{
+	#if MAC_OS_X_VERSION_MAX_ALLOWED < 1040
+	if ([MCCommonMethods OSVersion] < 0x1040)
+	{
+		NSData *stringData = [NSData dataWithContentsOfFile:path];
+		return [[NSString alloc] initWithData:stringData encoding:enc];
+	}
+	else
+	#endif
+		return [NSString stringWithContentsOfFile:path encoding:enc error:&*error];
 }
 
 ///////////////////

@@ -39,6 +39,7 @@ typedef float CGFloat;
 
 //Mac OS X 10.3.9 compatible methods
 + (id)stringWithContentsOfFile:(NSString *)path;
++ (id)stringWithContentsOfFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error;
 
 //Other actions
 //Get used ffmpeg
