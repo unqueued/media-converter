@@ -719,44 +719,24 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Decoding sound: %@", nil), [defaultFileManager displayNameAtPath:path]]];
 
 	//Output file (without extension)
-	NSString *outputFile = [NSString stringWithFormat:@"%@/%@", convertDestination, [[path lastPathComponent] stringByDeletingPathExtension]];
-
-	outputFile = [[MCCommonMethods uniquePathNameFromPath:[outputFile stringByAppendingPathExtension:convertExtension] withSeperator:@" "] stringByDeletingPathExtension];
-	outputFile = [NSString stringWithFormat:@"%@ (tmp)", outputFile];
-
-	if ([defaultFileManager fileExistsAtPath:[outputFile stringByAppendingString:@".wav"]])
-		[MCCommonMethods removeItemAtPath:[outputFile stringByAppendingString:@".wav"]];
+	NSString *outputName = [[path lastPathComponent] stringByDeletingPathExtension];
+	outputName = [NSString stringWithFormat:@"%@ (tmp).wav", outputName];
+	NSString *outputFile = [MCCommonMethods uniquePathNameFromPath:[convertDestination stringByAppendingPathComponent:outputName] withSeperator:@"-"];
 	
 	//movtowav encodes quicktime movie's sound to wav
 	movtowav = [[NSTask alloc] init];
-	[movtowav setLaunchPath:[[NSBundle mainBundle] pathForResource:@"movtowav" ofType:@""]];
-	[movtowav setArguments:[NSArray arrayWithObjects:@"-o", [outputFile stringByAppendingString:@".wav"], path,nil]];
-	NSInteger taskStatus;
-
-	NSPipe *pipe=[[NSPipe alloc] init];
-	NSFileHandle *handle=[pipe fileHandleForReading];
-	[movtowav setStandardError:pipe];
-	[MCCommonMethods logCommandIfNeeded:movtowav];
-	[movtowav launch];
-	NSString *string = [[NSString alloc] initWithData:[handle readDataToEndOfFile] encoding:NSUTF8StringEncoding];
-
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == YES)
-		NSLog(@"%@", string);
+	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"movtowav" ofType:@""];
+	NSArray *arguments = [NSArray arrayWithObjects:@"-o", outputFile, path, nil];
+	
+	NSString *string;
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:YES outputString:NO output:&string inputPipe:nil predefinedTask:movtowav];
 
 	status = 1;
-	[movtowav waitUntilExit];
-	taskStatus = [movtowav terminationStatus];
-	[movtowav release];
-	movtowav = nil;
-	[pipe release];
-	pipe = nil;
-	[string release];
-	string = nil;
 	
 	//Check if it all went OK if not remove the wave file and return NO
-    if (!taskStatus == 0)
+    if (result == NO)
 	{
-		[MCCommonMethods removeItemAtPath:[outputFile stringByAppendingString:@".wav"]];
+		[MCCommonMethods removeItemAtPath:outputFile];
 	
 		status = 0;
 		
@@ -853,7 +833,7 @@
 		if (isYoutubeURL)
 			[self downloadYouTubeURL:path toTask:nil outPipe:&youtubePipe];
 		
-		BOOL result = [MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string inputPipe:youtubePipe];
+		BOOL result = [MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string inputPipe:youtubePipe predefinedTask:nil];
 		
 		keepGoing = NO;
 		
@@ -1207,7 +1187,7 @@
 	if (isYoutubeURL)
 		[self downloadYouTubeURL:path toTask:nil outPipe:&youtubePipe];
 	
-	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string inputPipe:youtubePipe];
+	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string inputPipe:youtubePipe predefinedTask:nil];
 	
 	if (![string rangeOfString:@"Unknown format"].length > 0 && [string rangeOfString:@"Input #0"].length > 0)
 		return [[string componentsSeparatedByString:@"Input #0"] objectAtIndex:1];
@@ -1489,7 +1469,7 @@
 	else
 		[arguments addObject:moviePath];
 	
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (BOOL)convertSubtitleFromMP4Movie:(NSString *)inPath toSubtitle:(NSString *)outPath outType:(NSString *)type fromID:(NSString *)streamID
@@ -1505,7 +1485,7 @@
 	[arguments addObjectsFromArray:[NSArray arrayWithObjects:inPath, @"-std", @"-quiet", @"-noprog", nil]];
 	
 	NSString *output;
-	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil];
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil predefinedTask:nil];
 	
 	if (result == YES)
 	{
@@ -1638,7 +1618,7 @@
 
 	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"MP4Box" ofType:@""];
 	NSArray *arguments = [NSArray arrayWithObjects:@"-add", inPath, outPath, @"-enable", [NSString stringWithFormat:@"%i", firstSubTrack], nil];
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (NSArray *)trackDictionariesFromMP4MovieAtPath:(NSString *)path
@@ -1649,7 +1629,7 @@
 	NSArray *arguments = [NSArray arrayWithObjects:@"-info", path, nil];
 	
 	NSString *output;
-	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil];
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil predefinedTask:nil];
 	
 	if (result == YES)
 	{
@@ -1700,7 +1680,7 @@
 		[arguments addObject:path];
 	}
 
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (BOOL)extractSubtitlesFromMKVMovie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath
@@ -1720,7 +1700,7 @@
 		[arguments addObject:[NSString stringWithFormat:@"%@:%@.%@.srt", idString, outPath, language]];
 	}
 	
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (BOOL)addTracksFromMKVMovie:(NSArray *)inPaths toPath:(NSString *)outPath
@@ -1729,7 +1709,7 @@
 	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-o", outPath, nil];
 	[arguments addObjectsFromArray:inPaths];
 
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (NSArray *)trackDictionariesFromMKVMovieAtPath:(NSString *)path
@@ -1740,7 +1720,7 @@
 	NSArray *arguments = [NSArray arrayWithObject:path];
 	
 	NSString *output;
-	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil];
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil predefinedTask:nil];
 	
 	if (result == YES)
 	{
@@ -1794,7 +1774,7 @@
 		[arguments addObject:newPath];
 	}
 
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (BOOL)addTracksFromOGGMovies:(NSArray *)inPaths toPath:(NSString *)outPath
@@ -1803,7 +1783,7 @@
 	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-o", outPath, nil];
 	[arguments addObjectsFromArray:inPaths];
 	
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (BOOL)convertSRT:(NSString *)inPath toKateOGG:(NSString *)outPath forLanguage:(NSString *)language
@@ -1811,7 +1791,7 @@
 	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"kateenc" ofType:@""];
 	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-c", @"SUB", @"-t",  @"srt", @"-l", language, @"-o", outPath, inPath, nil];
 	
-	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 }
 
 - (BOOL)extractSubtitlesFromOGGMovie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath
@@ -1836,7 +1816,7 @@
 			tmpOggFile = [NSString stringWithFormat:@"%@.ogg", outPath];
 			arguments = [NSArray arrayWithObjects:@"-s", idString, @"-o", tmpOggFile, inPath, nil];
 			
-			[MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+			[MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 		}
 		else
 		{
@@ -1850,7 +1830,7 @@
 		
 		arguments = [NSArray arrayWithObjects:@"-t", @"srt", @"-o", outputFile, tmpOggFile, nil];
 		
-		[MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil];
+		[MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
 	}
 	
 	return YES;
@@ -1864,7 +1844,7 @@
 	NSArray *arguments = [NSArray arrayWithObject:path];
 	
 	NSString *output;
-	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil];
+	BOOL result = [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:YES output:&output inputPipe:nil predefinedTask:nil];
 
 	if (result == YES)
 	{
@@ -2186,7 +2166,7 @@
 
 	NSArray *arguments = [NSArray arrayWithObject:@"-codecs"];
 	NSString *string;
-	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil];
+	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil predefinedTask:nil];
 	NSArray *lines = [[[[[string componentsSeparatedByString:@"------\n"] objectAtIndex:1] componentsSeparatedByString:@"\n\nNote"] objectAtIndex:0] componentsSeparatedByString:@"\n"];
 
 	NSInteger i;
@@ -2215,7 +2195,7 @@
 
 	NSArray *arguments = [NSArray arrayWithObject:@"-codecs"];
 	NSString *string;
-	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil];
+	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil predefinedTask:nil];
 	NSArray *lines = [[[[[string componentsSeparatedByString:@"------\n"] objectAtIndex:1] componentsSeparatedByString:@"\n\nNote"] objectAtIndex:0] componentsSeparatedByString:@"\n"];
 
 	NSInteger i;
@@ -2244,7 +2224,7 @@
 
 	NSArray *arguments = [NSArray arrayWithObject:@"-formats"];
 	NSString *string;
-	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil];
+	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil predefinedTask:nil];
 	NSArray *lines = [[[string componentsSeparatedByString:@"--\n"] objectAtIndex:1] componentsSeparatedByString:@"\n"];
 
 	NSInteger i;
@@ -2357,7 +2337,7 @@
 	NSString *string;
 	NSString *curlPath = @"/usr/bin/curl";
 	NSArray *arguments = [NSArray arrayWithObject:urlString];
-	[MCCommonMethods launchNSTaskAtPath:curlPath withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil];
+	[MCCommonMethods launchNSTaskAtPath:curlPath withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil predefinedTask:nil];
 	
 	if ([string rangeOfString:@"<title>"].length > 0 && [string rangeOfString:@"</title>"].length > 0)
 	{
