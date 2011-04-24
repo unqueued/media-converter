@@ -208,6 +208,7 @@
 		fileName = [self getYouTubeName:path];
 	else
 		fileName = [[[path lastPathComponent] stringByDeletingPathExtension] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		
 	NSString *outFileWithExtension = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@/%@.%@", convertDestination, fileName, convertExtension] withSeperator:@" "];
 	NSString *outputFile = [outFileWithExtension stringByDeletingPathExtension];
 	temporaryFolder = [[NSString alloc] initWithString:[NSTemporaryDirectory() stringByAppendingPathComponent:@"MCTemp"]];
@@ -2376,7 +2377,7 @@
 				titleString = [partString substringWithRange:NSMakeRange(1, [partString length] - 1)];
 		}
 		
-		return titleString;
+		return (NSString*)CFXMLCreateStringByUnescapingEntities(kCFAllocatorDefault, (CFStringRef)titleString, NULL);
 	}
 	
 	return [urlString lastPathComponent];
