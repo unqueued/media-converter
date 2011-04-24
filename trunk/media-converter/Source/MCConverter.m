@@ -215,6 +215,9 @@
 	
 	NSString *subtitleType = [extraOptions objectForKey:@"Subtitle Type"];
 	
+	if (subtitleType == nil)
+		subtitleType = @"none";
+	
 	NSDictionary *streamDictionary = [self firstAudioAndVideoStreamAtPath:path];
 
 	//No need to use subtitles with no video
@@ -351,22 +354,9 @@
 		ffmpeg = [[NSTask alloc] init];
 		NSPipe *pipe2;
 		NSPipe *errorPipe;
-
-		NSTask *youtubeDL = nil;
-		NSPipe *youtubePipe = nil;
 		
 		if (isYoutubeURL)
-		{
-			youtubeDL = [[NSTask alloc] init];
-			youtubePipe = [[NSPipe alloc] init];
-			[youtubeDL setLaunchPath:@"/usr/bin/python"];
-			NSString *youtubeDLPath = [[NSBundle mainBundle] pathForResource:@"youtube-dl" ofType:@"sh"];
-			[youtubeDL setArguments:[NSArray arrayWithObjects:youtubeDLPath, path, @"-o", @"-", nil]];
-			[youtubeDL setStandardOutput:youtubePipe];
-			[MCCommonMethods logCommandIfNeeded:youtubeDL];
-			[ffmpeg setStandardInput:youtubePipe];
-			[youtubeDL launch];
-		}
+			[self downloadYouTubeURL:path toTask:ffmpeg outPipe:nil];
 
 		//Check if we need to use movtoy4m to decode
 		if (useQuickTime == YES)
@@ -857,21 +847,10 @@
 		[arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-ac",@"2",@"-r",@"25",@"-y", tempFile,nil]];
 		
 		NSString *string;
-		NSTask *youtubeDL = nil;
-		NSPipe *youtubePipe = nil;
 		
+		NSPipe *youtubePipe;
 		if (isYoutubeURL)
-		{
-			youtubeDL = [[NSTask alloc] init];
-			youtubePipe = [[NSPipe alloc] init];
-			[youtubeDL setLaunchPath:@"/usr/bin/python"];
-			NSString *youtubeDLPath = [[NSBundle mainBundle] pathForResource:@"youtube-dl" ofType:@"sh"];
-			[youtubeDL setArguments:[NSArray arrayWithObjects:youtubeDLPath, path, @"-o", @"-", nil]];
-			[youtubeDL setStandardOutput:youtubePipe];
-			[MCCommonMethods logCommandIfNeeded:youtubeDL];
-			[youtubeDL launch];
-		}
-		
+			[self downloadYouTubeURL:path toTask:nil outPipe:&youtubePipe];
 		
 		BOOL result = [MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string inputPipe:youtubePipe];
 		
@@ -1223,20 +1202,9 @@
 	else
 		arguments = [NSArray arrayWithObjects:@"-i", path, nil];
 	
-	NSTask *youtubeDL = nil;
-	NSPipe *youtubePipe = nil;
-		
+	NSPipe *youtubePipe;
 	if (isYoutubeURL)
-	{
-		youtubeDL = [[NSTask alloc] init];
-		youtubePipe = [[NSPipe alloc] init];
-		[youtubeDL setLaunchPath:@"/usr/bin/python"];
-		NSString *youtubeDLPath = [[NSBundle mainBundle] pathForResource:@"youtube-dl" ofType:@"sh"];
-		[youtubeDL setArguments:[NSArray arrayWithObjects:youtubeDLPath, path, @"-o", @"-", nil]];
-		[youtubeDL setStandardOutput:youtubePipe];
-		[MCCommonMethods logCommandIfNeeded:youtubeDL];
-		[youtubeDL launch];
-	}
+		[self downloadYouTubeURL:path toTask:nil outPipe:&youtubePipe];
 	
 	[MCCommonMethods launchNSTaskAtPath:[MCCommonMethods ffmpegPath] withArguments:arguments outputError:YES outputString:YES output:&string inputPipe:youtubePipe];
 	
@@ -2359,6 +2327,28 @@
 	}
 	
 	[MCCommonMethods removeItemAtPath:tempFolder];
+}
+
+- (void)downloadYouTubeURL:(NSString *)urlString toTask:(NSTask *)inTask outPipe:(NSPipe **)pipe
+{
+	NSTask *youtubeDL = [[NSTask alloc] init];
+	NSPipe *youtubePipe = [[NSPipe alloc] init];
+	[youtubeDL setLaunchPath:@"/usr/bin/python"];
+	NSString *youtubeDLPath = [[NSBundle mainBundle] pathForResource:@"youtube-dl" ofType:@"sh"];
+	[youtubeDL setArguments:[NSArray arrayWithObjects:youtubeDLPath, urlString, @"-o", @"-", nil]];
+	[youtubeDL setStandardOutput:youtubePipe];
+	
+	if (inTask != nil)
+		[inTask setStandardInput:youtubePipe];
+			
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == NO)
+		[youtubeDL setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+			
+	[MCCommonMethods logCommandIfNeeded:youtubeDL];
+	[youtubeDL launch];
+	
+	if (pipe != nil)
+		*pipe = youtubePipe;
 }
 
 - (NSString *)getYouTubeName:(NSString *)urlString
