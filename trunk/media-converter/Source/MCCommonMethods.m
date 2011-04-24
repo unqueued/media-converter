@@ -420,10 +420,16 @@
 	return commandString;
 }
 
-+ (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data inputPipe:(NSPipe *)inPipe
++ (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data inputPipe:(NSPipe *)inPipe predefinedTask:(NSTask *)preTask
 {
 	id output;
-	NSTask *task = [[NSTask alloc] init];
+	
+	NSTask *task;
+	if (preTask != nil)
+		task = preTask;
+	else
+		task = [[NSTask alloc] init];
+	
 	NSPipe *pipe =[ [NSPipe alloc] init];
 	NSPipe *outputPipe = [[NSPipe alloc] init];
 	NSFileHandle *handle;
