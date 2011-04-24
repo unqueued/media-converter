@@ -794,13 +794,14 @@
 
 	while (keepGoing == YES)
 	{
-		NSMutableArray *arguments;
 		BOOL isYoutubeURL = ([path rangeOfString:@"youtube.com/"].length > 0 && [path rangeOfString:@"http://"].length > 0);
-
+		
+		NSString *outputPath = path;
+		
 		if (isYoutubeURL)
-			arguments = [NSMutableArray arrayWithObjects:@"-t", @"1", @"-vframes", @"1", @"-i", @"-", nil];
-		else
-			arguments = [NSMutableArray arrayWithObjects:@"-t", @"1", @"-vframes", @"1", @"-i", path, nil];
+			outputPath = @"-";
+			
+		NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"-t", @"1", @"-vframes", @"1", @"-i", outputPath, nil];
 		
 		NSInteger i;
 		for (i = 0; i < [options count]; i ++)
@@ -817,19 +818,17 @@
 					[arguments addObject:object];
 			}
 		}
-		 
-		  // = [NSMutableArray arrayWithObjects:@"-vframes", @"1", @"-i", path, @"-target", @"pal-vcd", nil];
 			
 		if (videoWorks == NO)
 			[arguments addObject:@"-vn"];
 		else if (audioWorks == NO)
 			[arguments addObject:@"-an"];
 				
-		[arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-ac",@"2",@"-r",@"25",@"-y", tempFile,nil]];
+		[arguments addObjectsFromArray:[NSArray arrayWithObjects:@"-ac", @"2", @"-r", @"25", @"-y", tempFile, nil]];
 		
 		NSString *string;
 		
-		NSPipe *youtubePipe;
+		NSPipe *youtubePipe = nil;
 		if (isYoutubeURL)
 			[self downloadYouTubeURL:path toTask:nil outPipe:&youtubePipe];
 		
@@ -1183,7 +1182,7 @@
 	else
 		arguments = [NSArray arrayWithObjects:@"-i", path, nil];
 	
-	NSPipe *youtubePipe;
+	NSPipe *youtubePipe = nil;
 	if (isYoutubeURL)
 		[self downloadYouTubeURL:path toTask:nil outPipe:&youtubePipe];
 	
