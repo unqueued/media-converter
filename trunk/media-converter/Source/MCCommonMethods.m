@@ -113,7 +113,7 @@
 	NSError *myError;
 	BOOL succes = [defaultManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&myError];
 			
-	if (!succes)
+	if (!succes && error != nil)
 		*error = [myError localizedDescription];
 	#else
 	
@@ -139,7 +139,7 @@
 			details = [NSString stringWithFormat:NSLocalizedString(@"Failed to create folder '%@' in '%@'.", nil), folder, parent];
 		}
 		
-		if (!succes)
+		if (!succes && error != nil)
 			*error = details;
 	}
 	#endif
@@ -155,7 +155,7 @@
 	NSError *myError;
 	succes = [defaultManager copyItemAtPath:inPath toPath:newPath error:&myError];
 			
-	if (!succes)
+	if (!succes && error != nil)
 		*error = [myError localizedDescription];
 	
 	return succes;
@@ -178,10 +178,11 @@
 		succes = [defaultManager copyPath:inPath toPath:newPath handler:nil];
 	}
 		
-	if (!succes)
+	if (!succes && error != nil)
 	{
 		NSString *inFile = [defaultManager displayNameAtPath:inPath];
 		NSString *outFile = [defaultManager displayNameAtPath:[newPath stringByDeletingLastPathComponent]];
+
 		details = [NSString stringWithFormat:NSLocalizedString(@"Failed to copy '%@' to '%@'. %@", nil), inFile, outFile, details];
 		*error = details;
 	}
@@ -198,7 +199,7 @@
 	NSError *myError;
 	succes = [defaultManager moveItemAtPath:srcPath toPath:dstPath error:&myError];
 			
-	if (!succes)
+	if (!succes && error != nil)
 		*error = [myError localizedDescription];
 	
 	return succes;
@@ -221,7 +222,7 @@
 		succes = [defaultManager movePath:srcPath toPath:dstPath handler:nil];
 	}
 		
-	if (!succes)
+	if (!succes && error != nil)
 	{
 		NSString *inFile = [defaultManager displayNameAtPath:srcPath];
 		NSString *outFile = [defaultManager displayNameAtPath:[dstPath stringByDeletingLastPathComponent]];
@@ -294,7 +295,7 @@
 	NSError *myError;
 	succes = [string writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&myError];
 			
-	if (!succes)
+	if (!succes && error != nil)
 		*error = [myError localizedDescription];
 	#else
 
@@ -318,7 +319,7 @@
 		details = [NSString stringWithFormat:NSLocalizedString(@"Failed to write '%@' to '%@'", nil), file, parent];
 	}
 
-	if (!succes)
+	if (!succes && error != nil)
 		*error = details;
 		
 	#endif
@@ -333,6 +334,8 @@
 		NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 		NSString *file = [defaultManager displayNameAtPath:path];
 		NSString *parent = [defaultManager displayNameAtPath:[path stringByDeletingLastPathComponent]];
+		
+		if (error != nil)
 		*error = [NSString stringWithFormat:NSLocalizedString(@"Failed to write '%@' to '%@'", nil), file, parent];
 	
 		return NO;
