@@ -217,13 +217,18 @@
 
 - (void)setCanCancel:(BOOL)cancel
 {
+	BOOL isHidden = [cancelProgress isHidden];
+	
+	if ((isHidden && !cancel) | (!isHidden && cancel))
+		return;
+
 	NSWindow *window = [self window];
 	[cancelProgress setHidden:!cancel];
 
 	if (cancel)
-		[window setFrame:NSMakeRect([window frame].origin.x, [window frame].origin.y, [window frame].size.width, 163) display:YES];
+		[window setFrame:NSMakeRect([window frame].origin.x, [window frame].origin.y, [window frame].size.width, 163) display:NO];
 	else
-		[[self window] setFrame:NSMakeRect([window frame].origin.x, [window frame].origin.y, [window frame].size.width, 124) display:YES];
+		[[self window] setFrame:NSMakeRect([window frame].origin.x, [window frame].origin.y, [window frame].size.width, 124) display:YES animate:NO];
 }
 
 - (void)setMaxiumValueOnMainThread:(NSNumber *)number
