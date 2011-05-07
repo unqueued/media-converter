@@ -374,7 +374,7 @@
 		
 			if (result == NO)
 			{
-				[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed duplicate to preset file", nil) withInformationText:error withParentWindow:nil];
+				[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed duplicate to preset file", nil) withInformationText:error withParentWindow:nil withDetails:nil];
 			}
 			else
 			{
@@ -448,7 +448,7 @@
 		
 		if (!supportWritable)
 		{
-			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed to create 'Presets' folder", nil) withInformationText:error withParentWindow:nil];
+			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed to create 'Presets' folder", nil) withInformationText:error withParentWindow:nil withDetails:nil];
 				
 			return NSCancelButton;
 		}
@@ -531,7 +531,7 @@
 		
 		if (result == NO)
 		{
-			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed install preset file", nil) withInformationText:error withParentWindow:nil];
+			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed install preset file", nil) withInformationText:error withParentWindow:nil withDetails:nil];
 		
 			return NSCancelButton;
 		}
@@ -915,7 +915,7 @@
 		
 		if (result == NO)
 		{
-			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed save preset file", nil) withInformationText:error withParentWindow:nil];
+			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed save preset file", nil) withInformationText:error withParentWindow:nil withDetails:nil];
 		}
 	}
 }
@@ -1517,10 +1517,11 @@
 	if (![defaultManager fileExistsAtPath:spumuxPath])
 	{
 		MCProgress *progressPanel = [[MCProgress alloc] init];
-		[progressPanel setTask:NSLocalizedString(@"Checking for usable fonts...", nil)];
+		[progressPanel setTask:NSLocalizedString(@"Adding fonts (one time)", nil)];
 		[progressPanel setStatus:NSLocalizedString(@"Checking font: %@", nil)];
 		[progressPanel setIcon:[NSImage imageNamed:@"Media Converter"]];
 		[progressPanel setMaximumValue:[NSNumber numberWithDouble:0]];
+		[progressPanel setCanCancel:NO];
 		[progressPanel beginSheetForWindow:[self window]];
 	
 		[defaultManager createDirectoryAtPath:spumuxPath attributes:nil];
@@ -1539,7 +1540,7 @@
 		}
 		
 		NSArray *fontPaths = [MCCommonMethods getFullPathsForFolders:fontFolderPaths withType:@"ttf"];
-		[progressPanel setMaximumValue:[NSNumber numberWithDouble:[fontPaths count]]];
+		[progressPanel setMaximumValue:[NSNumber numberWithDouble:[fontPaths count] + 4]];
 			
 		NSInteger i;
 		for (i = 0; i < [fontPaths count]; i ++)
@@ -1562,11 +1563,52 @@
 			[progressPanel setValue:[NSNumber numberWithDouble:i + 1]];
 		}
 		
-		[converter extractImportantFontsToPath:spumuxPath];
+		[converter extractImportantFontsToPath:spumuxPath statusStart:[fontPaths count]];
 		
 		[progressPanel endSheet];
 		[progressPanel release];
 		progressPanel = nil;
+		
+		NSArray *defaultFonts = [NSArray arrayWithObjects:	@"AppleGothic.ttf", @"Hei.ttf", 
+															@"Osaka.ttf", @"HelveticaCYPlain.ttf", 
+															@"AlBayan.ttf", @"Lucida Sans Unicode.ttf",
+															@"Raanana.ttf", @"Ayuthaya.ttf",
+															@"LiHei Pro.ttf", @"MshtakanRegular.ttf",
+															nil];
+															
+		NSArray *defaultLanguages = [NSArray arrayWithObjects:	NSLocalizedString(@"Korean", nil), NSLocalizedString(@"Simplified Chinese", nil), 
+																NSLocalizedString(@"Japanese", nil), NSLocalizedString(@"Cyrilic", nil), 
+																NSLocalizedString(@"Arabic", nil), NSLocalizedString(@"Greek", nil),
+																NSLocalizedString(@"Hebrew", nil), NSLocalizedString(@"Thai", nil),
+																NSLocalizedString(@"Traditional Chinese", nil), NSLocalizedString(@"Armenian", nil),
+																nil];
+		
+		NSString *errorMessage = NSLocalizedString(@"Not found:", nil);
+		BOOL shouldWarn = NO;
+		
+		NSInteger z;
+		for (z = 0; z < [defaultFonts count]; z ++)
+		{
+			NSString *font = [defaultFonts objectAtIndex:z];
+			
+			if (![defaultManager fileExistsAtPath:[spumuxPath stringByAppendingPathComponent:font]])
+			{
+				NSString *language = [defaultLanguages objectAtIndex:z];
+			
+				shouldWarn = YES;
+				
+				NSString *warningString = [NSString stringWithFormat:@"%@ (%@)", font, language];
+				
+				if ([errorMessage isEqualTo:@""])
+					errorMessage = warningString;
+				else
+					errorMessage = [NSString stringWithFormat:@"%@\n%@", errorMessage, warningString];
+			}
+		}
+		
+		if (shouldWarn == YES)
+			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed to add some default language fonts", nil) withInformationText:NSLocalizedString(@"You can savely ignore this message if you don't use these languages (see details).", nil) withParentWindow:[self window] withDetails:errorMessage];
+		
 	}
 		
 	NSArray *fonts = [defaultManager subpathsAtPath:spumuxPath];
