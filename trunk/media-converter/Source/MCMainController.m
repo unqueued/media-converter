@@ -103,7 +103,7 @@
 			
 			if (!supportWritable)
 			{
-				[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed to copy 'Presets' folder", nil) withInformationText:error withParentWindow:nil];
+				[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed to copy 'Presets' folder", nil) withInformationText:error withParentWindow:nil withDetails:nil];
 				
 				[presetPopUp setEnabled:NO];
 				[presetPopUp addItemWithTitle:NSLocalizedString(@"No Presets", nil)];
@@ -345,6 +345,7 @@
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSMutableArray *files = [NSMutableArray array];
 	NSInteger protectedCount = 0;
+	BOOL upgradedPython = [MCCommonMethods isPythonUpgradeInstalled];
 	
 	NSInteger x = 0;
 	for (x = 0; x < [paths count]; x++)
@@ -375,7 +376,8 @@
 			
 				if (![self isProtected:realPathName])
 				{
-					if ([[MCConverter alloc] isMediaFile:realPathName])
+					BOOL youTubeURL = [MCCommonMethods isYouTubeURLAtPath:realPathName];
+					if ((!youTubeURL | youTubeURL && upgradedPython) && [[MCConverter alloc] isMediaFile:realPathName])
 						[files addObject:realPathName];
 				}
 				else
@@ -394,8 +396,9 @@
 						
 			if (![self isProtected:realPath])
 			{
-					if ([[MCConverter alloc] isMediaFile:realPath])
-						[files addObject:realPath];
+				BOOL youTubeURL = [MCCommonMethods isYouTubeURLAtPath:realPath];
+				if ((!youTubeURL | youTubeURL && upgradedPython) && [[MCConverter alloc] isMediaFile:realPath])
+					[files addObject:realPath];
 			}
 			else
 			{
@@ -407,14 +410,24 @@
 		subPool = nil;
 	}
 	
-	inputFiles = [[NSArray alloc] initWithArray:files];
+	if ([files count] > 0)
+		inputFiles = [[NSArray alloc] initWithArray:files];
 		
 	cancelAddingFiles = NO;
 
 	//Stop being the observer
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:@"cancelAdding" object:nil];
-
-	[self performSelectorOnMainThread:@selector(showAlert:) withObject:[NSNumber numberWithInteger:protectedCount] waitUntilDone:NO];
+	
+	if ([files count] > 0)
+	{
+		[self performSelectorOnMainThread:@selector(showAlert:) withObject:[NSNumber numberWithInteger:protectedCount] waitUntilDone:NO];
+	}
+	else
+	{
+		[progressPanel endSheet];
+		[progressPanel release];
+		progressPanel = nil;
+	}
 
 	[pool release];
 	pool = nil;
@@ -470,7 +483,7 @@
 				information = NSLocalizedString(@"This file can't be converted", nil);
 			}
 
-			[MCCommonMethods standardAlertWithMessageText:message withInformationText:information withParentWindow:mainWindow];
+			[MCCommonMethods standardAlertWithMessageText:message withInformationText:information withParentWindow:mainWindow withDetails:nil];
 		}
 	}
 	else
