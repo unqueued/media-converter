@@ -144,7 +144,7 @@
 - (NSArray *)getFormats;
 - (NSArray *)getVideoCodecs;
 - (NSArray *)getAudioCodecs;
-- (void)extractImportantFontsToPath:(NSString *)path;
+- (void)extractImportantFontsToPath:(NSString *)path statusStart:(NSInteger)start;
 - (void)downloadYouTubeURL:(NSString *)urlString toTask:(NSTask *)inTask outPipe:(NSPipe **)pipe;
 - (NSString *)getYouTubeName:(NSString *)urlString;
 

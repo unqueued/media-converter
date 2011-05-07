@@ -192,7 +192,7 @@
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	
 	//Check if the url is a YouTube url
-	BOOL isYoutubeURL = ([path rangeOfString:@"youtube.com/"].length > 0 && [path rangeOfString:@"http://"].length > 0);
+	BOOL isYoutubeURL = [MCCommonMethods isYouTubeURLAtPath:path];
 	
 	// Reset our stuff
 	subtitleProblem = NO;
@@ -598,67 +598,76 @@
 		string = nil;
 	}
 	
-	if ([[extraOptions objectForKey:@"Start Atom"] boolValue] == YES)
+	//Do some other stuff with the movie if encoding succeeded
+	if (taskStatus == 0)
 	{
-		status = 4;
-		qtfaststart = [[NSTask alloc] init];
-		[qtfaststart setLaunchPath:[[NSBundle mainBundle] pathForResource:@"qt-faststart" ofType:@""]];
-		NSString *extension = [outFileWithExtension pathExtension];
-		NSString *extensionlessFile = [outFileWithExtension stringByDeletingPathExtension];
-		NSString *tempFile = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@ (tmp).%@", extensionlessFile, extension] withSeperator:@" "];
-		[qtfaststart setArguments:[NSArray arrayWithObjects:outFileWithExtension, tempFile, nil]];
-		[qtfaststart launch];
-		[qtfaststart waitUntilExit];
-		taskStatus = [qtfaststart terminationStatus];
+		if ([[extraOptions objectForKey:@"Start Atom"] boolValue] == YES)
+		{
+			status = 4;
+			qtfaststart = [[NSTask alloc] init];
+			[qtfaststart setLaunchPath:[[NSBundle mainBundle] pathForResource:@"qt-faststart" ofType:@""]];
+			NSString *extension = [outFileWithExtension pathExtension];
+			NSString *extensionlessFile = [outFileWithExtension stringByDeletingPathExtension];
+			NSString *tempFile = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@ (tmp).%@", extensionlessFile, extension] withSeperator:@" "];
+			[qtfaststart setArguments:[NSArray arrayWithObjects:outFileWithExtension, tempFile, nil]];
+			[qtfaststart launch];
+			[qtfaststart waitUntilExit];
+			taskStatus = [qtfaststart terminationStatus];
 		
-		if (taskStatus == 0)
-		{
-			[MCCommonMethods removeItemAtPath:outFileWithExtension];
-			[MCCommonMethods moveItemAtPath:tempFile toPath:outFileWithExtension error:nil];
-		}
-		else
-		{
-			if (ffmpegErrorString)
+			if (taskStatus == 0)
 			{
-				[ffmpegErrorString release];
-				ffmpegErrorString = nil;
+				[MCCommonMethods removeItemAtPath:outFileWithExtension];
+				[MCCommonMethods moveItemAtPath:tempFile toPath:outFileWithExtension error:nil];
 			}
+			else
+			{
+				if (ffmpegErrorString)
+				{
+					[ffmpegErrorString release];
+					ffmpegErrorString = nil;
+				}
 			
-			ffmpegErrorString = [[NSMutableString alloc] initWithString:@"Failed to set moov atom to the start of the file"];
+				ffmpegErrorString = [[NSMutableString alloc] initWithString:@"Failed to set moov atom to the start of the file"];
+			}
+		
+			[qtfaststart release];
+			qtfaststart = nil;
+		}
+	
+		if (temporarySubtitleFile && [defaultManager fileExistsAtPath:temporarySubtitleFile])
+		{
+			if ([subtitleType isEqualTo:@"mp4"])
+			{
+				[self addTracksFromMP4Movie:temporarySubtitleFile toPath:outFileWithExtension];
+			}
+			else if ([subtitleType isEqualTo:@"kate"])
+			{
+				NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
+				BOOL result = [self addTracksFromOGGMovies:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
+	
+				if (result)
+				{
+					[MCCommonMethods removeItemAtPath:outFileWithExtension];
+					[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
+				}
+			}
+			else if ([subtitleType isEqualTo:@"mkv"])
+			{
+				NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
+				BOOL result = [self addTracksFromMKVMovie:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
+	
+				if (result)
+				{
+					[MCCommonMethods removeItemAtPath:outFileWithExtension];
+					[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
+				}
+			}
 		}
 		
-		[qtfaststart release];
-		qtfaststart = nil;
-	}
-	
-	if (temporarySubtitleFile && [defaultManager fileExistsAtPath:temporarySubtitleFile])
-	{
-		if ([subtitleType isEqualTo:@"mp4"])
-		{
-			[self addTracksFromMP4Movie:temporarySubtitleFile toPath:outFileWithExtension];
-		}
-		else if ([subtitleType isEqualTo:@"kate"])
-		{
-			NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
-			BOOL result = [self addTracksFromOGGMovies:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
-	
-			if (result)
-			{
-				[MCCommonMethods removeItemAtPath:outFileWithExtension];
-				[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
-			}
-		}
-		else if ([subtitleType isEqualTo:@"mkv"])
-		{
-			NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
-			BOOL result = [self addTracksFromMKVMovie:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
-	
-			if (result)
-			{
-				[MCCommonMethods removeItemAtPath:outFileWithExtension];
-				[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
-			}
-		}
+		encodedOutputFile = outFileWithExtension;
+		
+		if ([subtitleType isEqualTo:@"srt"])
+			[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension]];
 	}
 	
 	[MCCommonMethods removeItemAtPath:temporaryFolder];
@@ -669,10 +678,6 @@
 	if (taskStatus == 0)
 	{
 		status = 0;
-		encodedOutputFile = outFileWithExtension;
-		
-		if ([subtitleType isEqualTo:@"srt"])
-			[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension]];
 	
 		return 0;
 	}
@@ -1686,6 +1691,7 @@
 {
 	NSString *helperPath = [[NSBundle mainBundle] pathForResource:@"mkvextract" ofType:@""];
 	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"tracks", inPath, nil];
+	NSMutableArray *languages = [NSMutableArray array];
 	
 	NSArray *trackDictionaries = [self trackDictionariesFromMKVMovieAtPath:inPath];
 		
@@ -1695,8 +1701,19 @@
 		NSDictionary *currentTrackDictionary = [trackDictionaries objectAtIndex:i];
 		NSString *language = [currentTrackDictionary objectForKey:@"Language Code"];
 		NSString *idString = [currentTrackDictionary objectForKey:@"Track ID"];
+		
+		NSInteger extNumber = 1;
+		while ([languages containsObject:language])
+		{
+			language = [NSString stringWithFormat:@"%@_%i", language, extNumber];
+			extNumber = extNumber + 1;
+		}
+		
+		NSString *argument = [NSString stringWithFormat:@"%@:%@.%@.srt", idString, outPath, language];
 			
-		[arguments addObject:[NSString stringWithFormat:@"%@:%@.%@.srt", idString, outPath, language]];
+		[arguments addObject:argument];
+		
+		[languages addObject:language];
 	}
 	
 	return [MCCommonMethods launchNSTaskAtPath:helperPath withArguments:arguments outputError:NO outputString:NO output:nil inputPipe:nil predefinedTask:nil];
@@ -1796,6 +1813,7 @@
 - (BOOL)extractSubtitlesFromOGGMovie:(NSString *)inPath ofType:(NSString *)type toPath:(NSString *)outPath
 {
 	NSArray *trackDictionaries = [self trackDictionariesFromOGGMovieAtPath:inPath];
+	NSMutableArray *languages = [NSMutableArray array];
 
 	NSInteger i;
 	for (i = 0; i < [trackDictionaries count]; i ++)
@@ -1807,6 +1825,15 @@
 		NSDictionary *currentTrackDictionary = [trackDictionaries objectAtIndex:i];
 		NSString *language = [currentTrackDictionary objectForKey:@"Language Code"];
 		NSString *idString = [currentTrackDictionary objectForKey:@"Track ID"];
+		
+		NSInteger extNumber = 1;
+		while ([languages containsObject:language])
+		{
+			language = [NSString stringWithFormat:@"%@_%i", language, extNumber];
+			extNumber = extNumber + 1;
+		}
+		
+		[languages addObject:language];
 	
 		if ([trackDictionaries count] > 1)
 		{
@@ -1921,13 +1948,39 @@
 		
 		if (font == nil | ![defaultManager fileExistsAtPath:[spumuxPath stringByAppendingPathComponent:[font stringByAppendingPathExtension:@"ttf"]]])
 			font = [extraOptions objectForKey:@"Subtitle Font"];
+			
+		if (font == nil)
+			font = @"Helvetica";
 
 		NSString *hAlign = [extraOptions objectForKey:@"Subtitle Horizontal Alignment"];
+		
+		if (hAlign == nil)
+			hAlign = @"center";
+		
 		NSString *vAlign = [extraOptions objectForKey:@"Subtitle Vertical Alignment"];
+		
+		if (vAlign == nil)
+			vAlign = @"bottom";
+		
 		NSString *lMargin = [extraOptions objectForKey:@"Subtitle Left Margin"];
+		
+		if (lMargin == nil)
+			lMargin = @"60";
+		
 		NSString *rMargin = [extraOptions objectForKey:@"Subtitle Right Margin"];
+		
+		if (rMargin == nil)
+			rMargin = @"60";
+		
 		NSString *tMargin = [extraOptions objectForKey:@"Subtitle Top Margin"];
+		
+		if (tMargin == nil)
+			tMargin = @"20";
+		
 		NSString *bMargin = [extraOptions objectForKey:@"Subtitle Bottom Margin"];
+		
+		if (bMargin == nil)
+			bMargin = @"30";
 		
 		NSString *fps = [NSString stringWithFormat:@"%f", inputFps];
 		NSString *fpsString = [encoderOptions objectForKey:@"-r"];
@@ -1970,7 +2023,14 @@
 		[spumux setLaunchPath:[[NSBundle mainBundle] pathForResource:@"spumux" ofType:@""]];
 		[spumux setCurrentDirectoryPath:[outPath stringByDeletingLastPathComponent]];
 		[spumux setArguments:[NSArray arrayWithObjects:@"-s", [NSString stringWithFormat:@"%i", i], xmlPath, nil]];
-		//[spumux setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == NO)
+		{
+			[spumux setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+			NSLog(@"XMLFile: %@", xmlContent);
+		}
+		
+		[MCCommonMethods logCommandIfNeeded:spumux];
 		
 		[NSThread detachNewThreadSelector:@selector(runTaskOnThread:) toTarget:self withObject:spumux];
 		
@@ -1998,6 +2058,14 @@
 	[spumux setCurrentDirectoryPath:[testMPG stringByDeletingLastPathComponent]];
 	[spumux setArguments:[NSArray arrayWithObjects:xmlPath, nil]];
 	
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == YES)
+	{
+		[spumux setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		NSLog(@"XMLFile:\n%@", xmlContent);
+	}
+		
+	[MCCommonMethods logCommandIfNeeded:spumux];
+	
 	[spumux launch];
 	[spumux waitUntilExit];
 	
@@ -2005,6 +2073,8 @@
 	
 	[spumux release];
 	spumux = nil;
+	
+	[MCCommonMethods removeItemAtPath:xmlPath];
 	
 	return (result == 0);
 }
@@ -2246,32 +2316,37 @@
 	return formats;
 }
 
-- (void)extractImportantFontsToPath:(NSString *)path
+- (void)extractImportantFontsToPath:(NSString *)path statusStart:(NSInteger)start
 {
 	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
-	NSArray *fonts = [NSArray arrayWithObjects:@"/Library/Fonts/Hei.dfont", @"/Library/Fonts/Osaka.dfont", @"/Library/Fonts/HelveticaCY.dfont", nil];
-	NSArray *copyFonts = [NSArray arrayWithObjects:@"HeiRegular.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
-	NSArray *newCopyFontNames = [NSArray arrayWithObjects:@"Hei.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+	NSMutableArray *fonts = [NSMutableArray arrayWithObjects:@"/Library/Fonts/HelveticaCY.dfont", @"/System/Library/Fonts/Helvetica.dfont", nil];
+	NSMutableArray *copyFonts = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
+	NSMutableArray *newCopyFontNames = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
+	
+	if ([MCCommonMethods OSVersion] < 0x1060)
+	{
+		[fonts addObjectsFromArray:[NSArray arrayWithObjects:@"/Library/Fonts/Hei.dfont", @"/Library/Fonts/Osaka.dfont", nil]];
+		[copyFonts addObjectsFromArray:[NSArray arrayWithObjects:@"HeiRegular.ttf", @"Osaka.ttf", nil]];
+		[newCopyFontNames addObjectsFromArray:[NSArray arrayWithObjects:@"Hei.ttf", @"Osaka.ttf", nil]];
+	}
 	#else
-	NSArray *fonts;
-	NSArray *copyFonts;
-	NSArray *newCopyFontNames;
+	NSMutableArray *fonts = [NSMutableArray arrayWithObjects:@"/Library/Fonts/HelveticaCY.dfont", @"/System/Library/Fonts/Helvetica.dfont", nil];
+	NSMutableArray *copyFonts = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
+	NSMutableArray *newCopyFontNames = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
 	
 	if ([MCCommonMethods OSVersion] < 0x1050)
 	{
-		fonts = [NSArray arrayWithObjects:@"/System/Library/Fonts/AppleGothic.dfont", @"/System/Library/Fonts/Hei.dfont", @"/System/Library/Fonts/Osaka.dfont", @"/Library/Fonts/HelveticaCY.dfont", nil];
-		copyFonts = [NSArray arrayWithObjects:@"HeiRegular.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
-		newCopyFontNames = [NSArray arrayWithObjects:@"Hei.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+		[fonts addObject:@"/System/Library/Fonts/AppleGothic.dfont"];
+		[copyFonts addObject:@"AppleGothicRegular.ttf"];
+		[newCopyFontNames addObject:@"AppleGothic.ttf"];
 	}
-	else
+	else if ([MCCommonMethods OSVersion] < 0x1060)
 	{
-		fonts = [NSArray arrayWithObjects:@"/System/Library/Fonts/AppleGothic.dfont", @"/Library/Fonts/Hei.dfont", @"/Library/Fonts/Osaka.dfont", @"/Library/Fonts/HelveticaCY.dfont", nil];
-		copyFonts = [NSArray arrayWithObjects:@"AppleGothicRegular.ttf", @"HeiRegular.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
-		newCopyFontNames = [NSArray arrayWithObjects:@"AppleGothic.ttf", @"Hei.ttf", @"Osaka.ttf", @"HelveticaCYPlain.ttf", nil];
+		[fonts addObjectsFromArray:[NSArray arrayWithObjects:@"/Library/Fonts/Hei.dfont", @"/Library/Fonts/Osaka.dfont", nil]];
+		[copyFonts addObjectsFromArray:[NSArray arrayWithObjects:@"HeiRegular.ttf", @"Osaka.ttf", nil]];
+		[newCopyFontNames addObjectsFromArray:[NSArray arrayWithObjects:@"Hei.ttf", @"Osaka.ttf", nil]];
 	}
 	#endif
-	
-	
 	
 	NSString *tempFolder = [NSTemporaryDirectory() stringByAppendingPathComponent:@"MCTemp"];
 	NSString *error;
@@ -2285,6 +2360,10 @@
 		{
 			NSString *fontName = [copyFonts objectAtIndex:i];
 			NSString *newFontName = [newCopyFontNames objectAtIndex:i];
+			
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"MCValueChanged" object:[NSNumber numberWithDouble:start + i]];
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Extracting: %@", nil), newFontName]];
+			
 			NSString *newPath = [tempFolder stringByAppendingPathComponent:[currentPath lastPathComponent]];
 			[MCCommonMethods copyItemAtPath:currentPath toPath:newPath errorString:nil];
 			
@@ -2304,7 +2383,11 @@
 			[fondu release];
 			fondu = nil;
 		}
+		
+		
 	}
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCValueChanged" object:[NSNumber numberWithDouble:start + [fonts count]]];
 	
 	[MCCommonMethods removeItemAtPath:tempFolder];
 }
@@ -2313,7 +2396,16 @@
 {
 	NSTask *youtubeDL = [[NSTask alloc] init];
 	NSPipe *youtubePipe = [[NSPipe alloc] init];
+	
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
 	[youtubeDL setLaunchPath:@"/usr/bin/python"];
+	#else
+	if ([MCCommonMethods OSVersion] >= 0x1050)
+		[youtubeDL setLaunchPath:@"/usr/bin/python"];
+	else
+		[youtubeDL setLaunchPath:@"/usr/local/bin/python"];
+	#endif
+	
 	NSString *youtubeDLPath = [[NSBundle mainBundle] pathForResource:@"youtube-dl" ofType:@"sh"];
 	[youtubeDL setArguments:[NSArray arrayWithObjects:youtubeDLPath, urlString, @"-o", @"-", nil]];
 	[youtubeDL setStandardOutput:youtubePipe];
