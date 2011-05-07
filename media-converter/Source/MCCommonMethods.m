@@ -7,6 +7,8 @@
 //
 
 #import "MCCommonMethods.h"
+#import "NSString_Extensions.h"
+#import "MCAlert.h"
 
 @interface NSFileManager (MyUndocumentedMethodsForNSTheClass)
 
@@ -252,7 +254,7 @@
 		if (!succes)
 		{
 			NSString *file = [defaultManager displayNameAtPath:path];
-			[MCCommonMethods standardAlertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Failed to delete '%@'.", nil), file ] withInformationText:details withParentWindow:nil];
+			[MCCommonMethods standardAlertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Failed to delete '%@'.", nil), file ] withInformationText:details withParentWindow:nil withDetails:nil];
 		}
 	}
 	#else
@@ -280,7 +282,7 @@
 		if (!succes)
 		{
 			NSString *file = [defaultManager displayNameAtPath:path];
-			[MCCommonMethods standardAlertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Failed to delete '%@'.", nil), file ] withInformationText:details withParentWindow:nil];
+			[MCCommonMethods standardAlertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Failed to delete '%@'.", nil), file ] withInformationText:details withParentWindow:nil withDetails:nil];
 		}
 	}
 	#endif
@@ -488,12 +490,15 @@
 	return (result == 0);
 }
 
-+ (void)standardAlertWithMessageText:(NSString *)message withInformationText:(NSString *)information withParentWindow:(NSWindow *)parent
++ (void)standardAlertWithMessageText:(NSString *)message withInformationText:(NSString *)information withParentWindow:(NSWindow *)parent withDetails:(NSString *)details
 {
-	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+	MCAlert *alert = [[[MCAlert alloc] init] autorelease];
 	[alert addButtonWithTitle:NSLocalizedString(@"OK", Localized)];
 	[alert setMessageText:message];
 	[alert setInformativeText:information];
+	
+	if (details != nil)
+		[alert setDetails:details];
 	
 	if (parent)
 		[alert beginSheetModalForWindow:parent modalDelegate:self didEndSelector:nil contextInfo:nil];
@@ -516,6 +521,34 @@
     }
 
 	return items;
+}
+
++ (BOOL)isYouTubeURLAtPath:(NSString *)path
+{
+	return ([path rangeOfString:@"youtube.com/"].length > 0 && [path rangeOfString:@"http://"].length > 0 && [[[path componentsSeparatedByString:@"youtube.com"] objectAtIndex:0] rangeOfString:@"cache"].length == 0);
+}
+
++ (BOOL)isPythonUpgradeInstalled
+{
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
+	return YES;
+	#else
+	if ([MCCommonMethods OSVersion] >= 0x1050)
+	{
+		return YES;
+	}
+	else
+	{
+		if (![[MCCommonMethods defaultManager] fileExistsAtPath:@"/usr/local/bin/python"])
+			return NO;
+	
+		NSString *string;
+		[MCCommonMethods launchNSTaskAtPath:@"/usr/local/bin/python" withArguments:[NSArray arrayWithObject:@"-V"] outputError:YES outputString:YES output:&string inputPipe:nil predefinedTask:nil];
+		NSInteger version = [[[[[string componentsSeparatedByString:@"Python 2."] objectAtIndex:1] componentsSeparatedByString:@"."] objectAtIndex:0] integerValue];
+		
+		return (version >= 5);
+	}
+	#endif
 }
 
 @end
