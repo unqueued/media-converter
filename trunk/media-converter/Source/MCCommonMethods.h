@@ -51,8 +51,12 @@ typedef float CGFloat;
 //Conveniant method to load a NSTask
 + (BOOL)launchNSTaskAtPath:(NSString *)path withArguments:(NSArray *)arguments outputError:(BOOL)error outputString:(BOOL)string output:(id *)data inputPipe:(NSPipe *)inPipe predefinedTask:(NSTask *)preTask;
 //Standard informative alert
-+ (void)standardAlertWithMessageText:(NSString *)message withInformationText:(NSString *)information withParentWindow:(NSWindow *)parent;
++ (void)standardAlertWithMessageText:(NSString *)message withInformationText:(NSString *)information withParentWindow:(NSWindow *)parent withDetails:(NSString *)details;
 //Get the selected items in the tableview
 + (NSArray *)allSelectedItemsInTableView:(NSTableView *)tableView fromArray:(NSArray *)array;
+//Check if the given path is a YouTube url
++ (BOOL)isYouTubeURLAtPath:(NSString *)path;
+//Check for a version 2.5... or higher Python
++ (BOOL)isPythonUpgradeInstalled;
 
 @end
