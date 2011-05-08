@@ -9,6 +9,7 @@
 #import "MCMainController.h"
 #import "MCGrowlController.h"
 #import "NSNumber_Extensions.h"
+#import "NSArray_Extensions.h"
 #import "MCAlert.h"
 
 @implementation MCMainController
@@ -130,6 +131,7 @@
 			NSString *path = [presetPaths objectAtIndex:i];
 			
 			NSDictionary *preset = [NSDictionary dictionaryWithContentsOfFile:path];
+			
 			NSString *name = [preset objectForKey:@"Name"];
 			NSDictionary *newPreset = [NSDictionary dictionaryWithObjectsAndKeys:name, @"Name", path, @"Path", nil];
 			
@@ -142,6 +144,100 @@
 	[self update];
 	
 	[[MCGrowlController alloc] init];
+	
+	[self performSelectorOnMainThread:@selector(versionUpdateCheck) withObject:nil waitUntilDone:NO];
+}
+
+- (void)versionUpdateCheck
+{
+	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+	CGFloat lastCheck = [[standardDefaults objectForKey:@"MCLastCheck"] cgfloatValue];
+	
+	if (lastCheck < 1.2)
+	{
+		NSInteger returnCode;
+	
+		if (![MCCommonMethods isPythonUpgradeInstalled])
+		{
+			NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+			[alert addButtonWithTitle:NSLocalizedString(@"Get it", nil)];
+			[alert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+			[[[alert buttons] objectAtIndex:1] setKeyEquivalent:@"\E"];
+			[alert setMessageText:NSLocalizedString(@"To convert YouTube videos on Mac OS X 10.4 'Media Converter' requires a newer version of python", nil)];
+			[alert setInformativeText:NSLocalizedString(@"Would you like to download it?", nil)];
+		
+			returnCode = [alert runModal];
+		
+			if (returnCode == NSAlertFirstButtonReturn) 
+				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.python.org/download"]];
+		}
+		
+		NSAlert *upgradeAlert = [[[NSAlert alloc] init] autorelease];
+		[upgradeAlert addButtonWithTitle:NSLocalizedString(@"Update", nil)];
+		[upgradeAlert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+		[[[upgradeAlert buttons] objectAtIndex:1] setKeyEquivalent:@"\E"];
+		[upgradeAlert setMessageText:NSLocalizedString(@"This release of 'Media Converter' adds subtitle support", nil)];
+		[upgradeAlert setInformativeText:NSLocalizedString(@"Would you like to update the presets to support it?", nil)];
+		
+		returnCode = [upgradeAlert runModal];
+		
+		if (returnCode == NSAlertFirstButtonReturn)
+		{
+			NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
+			
+			NSInteger i;
+			for (i = 0; i < [presets count]; i ++)
+			{
+				NSString *path = [[presets objectAtIndex:i] objectForKey:@"Path"];
+				NSMutableDictionary *preset = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+
+				NSArray *encoderOptions = [preset objectForKey:@"Encoder Options"];
+				NSMutableDictionary *extraOptions = [preset objectForKey:@"Extra Options"];
+			
+				if ([encoderOptions indexOfObject:@"matroska" forKey:@"-f"] != NSNotFound)
+					[extraOptions setObject:@"mkv" forKey:@"Subtitle Type"];
+				
+				if ([encoderOptions indexOfObject:@"ogg" forKey:@"-f"] != NSNotFound)
+					[extraOptions setObject:@"kate" forKey:@"Subtitle Type"];
+				
+				if ([encoderOptions indexOfObject:@"ipod" forKey:@"-f"] != NSNotFound)
+					[extraOptions setObject:@"mp4" forKey:@"Subtitle Type"];
+				
+				if ([encoderOptions indexOfObject:@"mov" forKey:@"-f"] != NSNotFound)
+					[extraOptions setObject:@"mp4" forKey:@"Subtitle Type"];
+					
+				if ([encoderOptions indexOfObject:@"avi" forKey:@"-f"] != NSNotFound)
+					[extraOptions setObject:@"srt" forKey:@"Subtitle Type"];
+					
+				if ([encoderOptions indexOfObject:@"dvd" forKey:@"-f"] != NSNotFound)
+					[extraOptions setObject:@"dvd" forKey:@"Subtitle Type"];
+					
+				[extraOptions setObject:@"Helvetica" forKey:@"Subtitle Font"];
+				[extraOptions setObject:@"24" forKey:@"Subtitle Font Size"];
+				[extraOptions setObject:@"center" forKey:@"Subtitle Horizontal Alignment"];
+				[extraOptions setObject:@"bottom" forKey:@"Subtitle Vertical Alignment"];
+				[extraOptions setObject:@"60" forKey:@"Subtitle Left Margin"];
+				[extraOptions setObject:@"60" forKey:@"Subtitle Right Margin"];
+				[extraOptions setObject:@"20" forKey:@"Subtitle Top Margin"];
+				[extraOptions setObject:@"30" forKey:@"Subtitle Bottom Margin"];
+					
+				[preset setObject:extraOptions forKey:@"Extra Options"];
+				[preset writeToFile:path atomically:YES];
+				[MCCommonMethods writeDictionary:preset toFile:path errorString:nil];
+			}
+		}
+		
+		preferences = [[MCPreferences alloc] init];
+		[preferences setDelegate:self];
+		[preferences updateFontListForWindow:nil];
+		
+		[standardDefaults setObject:[NSNumber numberWithCGFloat:1.2] forKey:@"MCLastCheck"];
+		
+		[preferences release];
+		preferences = nil;
+		
+		[mainWindow makeKeyAndOrderFront:nil];
+	}
 }
 
 - (void)update
@@ -342,6 +438,8 @@
 	//Needed because we're in a new thread
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+	MCConverter *convertObject = [[MCConverter alloc] init];
+	
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSMutableArray *files = [NSMutableArray array];
 	NSInteger protectedCount = 0;
@@ -377,7 +475,7 @@
 				if (![self isProtected:realPathName])
 				{
 					BOOL youTubeURL = [MCCommonMethods isYouTubeURLAtPath:realPathName];
-					if ((!youTubeURL | youTubeURL && upgradedPython) && [[MCConverter alloc] isMediaFile:realPathName])
+					if ((!youTubeURL | youTubeURL && upgradedPython) && [convertObject isMediaFile:realPathName])
 						[files addObject:realPathName];
 				}
 				else
@@ -397,7 +495,7 @@
 			if (![self isProtected:realPath])
 			{
 				BOOL youTubeURL = [MCCommonMethods isYouTubeURLAtPath:realPath];
-				if ((!youTubeURL | youTubeURL && upgradedPython) && [[MCConverter alloc] isMediaFile:realPath])
+				if ((!youTubeURL | youTubeURL && upgradedPython) && [convertObject isMediaFile:realPath])
 					[files addObject:realPath];
 			}
 			else
@@ -412,6 +510,9 @@
 	
 	if ([files count] > 0)
 		inputFiles = [[NSArray alloc] initWithArray:files];
+		
+	[converter release];
+	converter = nil;
 		
 	cancelAddingFiles = NO;
 
