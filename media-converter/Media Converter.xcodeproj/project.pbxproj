@@ -122,6 +122,18 @@
 		FEA3B06E13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
 		FEA3B06F13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
 		FEA3B07013630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
+		FEA63EA51376C28D001816F2 /* MCInstallPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA63EA41376C28D001816F2 /* MCInstallPanel.m */; };
+		FEA63EA61376C28D001816F2 /* MCInstallPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA63EA41376C28D001816F2 /* MCInstallPanel.m */; };
+		FEA63EA71376C28D001816F2 /* MCInstallPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA63EA41376C28D001816F2 /* MCInstallPanel.m */; };
+		FEA63EA81376C28D001816F2 /* MCInstallPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA63EA41376C28D001816F2 /* MCInstallPanel.m */; };
+		FEA63EA91376C28D001816F2 /* MCInstallPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA63EA41376C28D001816F2 /* MCInstallPanel.m */; };
+		FEA63EAA1376C28D001816F2 /* MCInstallPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA63EA41376C28D001816F2 /* MCInstallPanel.m */; };
+		FEA63EB81376C352001816F2 /* MCInstallPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA63EB61376C352001816F2 /* MCInstallPanel.xib */; };
+		FEA63EB91376C352001816F2 /* MCInstallPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA63EB61376C352001816F2 /* MCInstallPanel.xib */; };
+		FEA63EBA1376C352001816F2 /* MCInstallPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA63EB61376C352001816F2 /* MCInstallPanel.xib */; };
+		FEA63EBB1376C352001816F2 /* MCInstallPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA63EB61376C352001816F2 /* MCInstallPanel.xib */; };
+		FEA63EBC1376C352001816F2 /* MCInstallPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA63EB61376C352001816F2 /* MCInstallPanel.xib */; };
+		FEA63EBD1376C352001816F2 /* MCInstallPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA63EB61376C352001816F2 /* MCInstallPanel.xib */; };
 		FEA8CE5513227D0F00C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		FEA8CE5613227D0F00C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		FEA8CE5713227D0F00C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
@@ -587,6 +599,10 @@
 		FEA20997132F5FEC0089B135 /* MP4Box */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = MP4Box; sourceTree = "<group>"; };
 		FEA20998132F5FEC0089B135 /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = spumux; sourceTree = "<group>"; };
 		FEA3B06A13630DC800AD6085 /* youtube-dl.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "youtube-dl.sh"; path = "Resources/youtube-dl.sh"; sourceTree = "<group>"; };
+		FEA63EA31376C28D001816F2 /* MCInstallPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCInstallPanel.h; path = Source/MCInstallPanel.h; sourceTree = "<group>"; };
+		FEA63EA41376C28D001816F2 /* MCInstallPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCInstallPanel.m; path = Source/MCInstallPanel.m; sourceTree = "<group>"; };
+		FEA63EB71376C352001816F2 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MCInstallPanel.xib; sourceTree = "<group>"; };
+		FEA63EC01376C35B001816F2 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MCInstallPanel.xib; sourceTree = "<group>"; };
 		FEA8CE8913227D0F00C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEA8CEC413227D2100C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEA8CEFF13227D2400C10516 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -972,6 +988,8 @@
 				FE8086F112EB09E30047FD26 /* MCDropView.m */,
 				FE808B7B12EB0FEE0047FD26 /* MCProgress.h */,
 				FE808B7812EB0FEE0047FD26 /* MCProgress.m */,
+				FEA63EA31376C28D001816F2 /* MCInstallPanel.h */,
+				FEA63EA41376C28D001816F2 /* MCInstallPanel.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -1055,6 +1073,7 @@
 		FEF7FBBB131A89A500E244C9 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				FEA63EB61376C352001816F2 /* MCInstallPanel.xib */,
 				FE4E9893132105CB00B440F4 /* MCProgress.xib */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				FEF5CD8512EEB83B00981441 /* MCPreferences.xib */,
@@ -1277,6 +1296,7 @@
 				FE58A69F135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A0135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06F13630DC800AD6085 /* youtube-dl.sh in Resources */,
+				FEA63EBB1376C352001816F2 /* MCInstallPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1326,6 +1346,7 @@
 				FE58A6A1135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A2135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06C13630DC800AD6085 /* youtube-dl.sh in Resources */,
+				FEA63EB81376C352001816F2 /* MCInstallPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1374,6 +1395,7 @@
 				FE58A6A3135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A4135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B07013630DC800AD6085 /* youtube-dl.sh in Resources */,
+				FEA63EBA1376C352001816F2 /* MCInstallPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1422,6 +1444,7 @@
 				FE58A6A5135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A6135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06D13630DC800AD6085 /* youtube-dl.sh in Resources */,
+				FEA63EBD1376C352001816F2 /* MCInstallPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1470,6 +1493,7 @@
 				FE58A6A7135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A8135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06B13630DC800AD6085 /* youtube-dl.sh in Resources */,
+				FEA63EB91376C352001816F2 /* MCInstallPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1518,6 +1542,7 @@
 				FE58A6A9135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6AA135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06E13630DC800AD6085 /* youtube-dl.sh in Resources */,
+				FEA63EBC1376C352001816F2 /* MCInstallPanel.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1551,6 +1576,7 @@
 				FEA8D4B913229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F7132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D0F13265A1000332D8E /* MCOptionsTableView.m in Sources */,
+				FEA63EA81376C28D001816F2 /* MCInstallPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1581,6 +1607,7 @@
 				FEA8D4BA13229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F8132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1013265A1000332D8E /* MCOptionsTableView.m in Sources */,
+				FEA63EA51376C28D001816F2 /* MCInstallPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1611,6 +1638,7 @@
 				FEA8D4B713229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F5132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1113265A1000332D8E /* MCOptionsTableView.m in Sources */,
+				FEA63EA71376C28D001816F2 /* MCInstallPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1641,6 +1669,7 @@
 				FEA8D4B513229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F3132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1213265A1000332D8E /* MCOptionsTableView.m in Sources */,
+				FEA63EAA1376C28D001816F2 /* MCInstallPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1671,6 +1700,7 @@
 				FEA8D4B813229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F6132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1313265A1000332D8E /* MCOptionsTableView.m in Sources */,
+				FEA63EA61376C28D001816F2 /* MCInstallPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1701,6 +1731,7 @@
 				FEA8D4B613229AB200C10516 /* MCTableView.m in Sources */,
 				FEF466F4132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1413265A1000332D8E /* MCOptionsTableView.m in Sources */,
+				FEA63EA91376C28D001816F2 /* MCInstallPanel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1759,6 +1790,15 @@
 				FE4E9C1D1321926800B440F4 /* Dutch */,
 			);
 			name = MediaConverterHelp;
+			sourceTree = "<group>";
+		};
+		FEA63EB61376C352001816F2 /* MCInstallPanel.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FEA63EB71376C352001816F2 /* Dutch */,
+				FEA63EC01376C35B001816F2 /* English */,
+			);
+			name = MCInstallPanel.xib;
 			sourceTree = "<group>";
 		};
 		FEA8D4F71322AD4E00C10516 /* Donation */ = {
