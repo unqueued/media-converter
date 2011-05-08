@@ -47,11 +47,6 @@
 	//Advanced
 	IBOutlet id commandPanel;
 	
-	//Install Mode
-	IBOutlet id installModePanel;
-	IBOutlet id installModePopup;
-	IBOutlet id suppressButton;
-	
 	//Toolbar outlets
 	NSToolbar *toolbar;
 	NSMutableDictionary *itemsList;
@@ -97,9 +92,7 @@
 - (IBAction)savePreset:(id)sender;
 //Advanced actions
 - (IBAction)chooseFFMPEG:(id)sender;
-
-//Install Mode actions
-- (IBAction)endSettingMode:(id)sender;
+- (IBAction)rebuildFonts:(id)sender;
 
 //Toolbar actions
 - (NSToolbarItem *)createToolbarItemWithName:(NSString *)name;
@@ -119,5 +112,6 @@
 - (void)reloadPresets;
 - (BOOL)updateForKey:(NSString *)key withProperty:(id)property;
 - (void)setupPopups;
+- (void)updateFontListForWindow:(NSWindow *)window;
 
 @end
