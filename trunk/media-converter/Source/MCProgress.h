@@ -23,6 +23,7 @@
 	NSString *cancelNotification;
 	id notifObject;
 	NSImage *application;
+	NSModalSession session;
 }
 //Main actions
 - (IBAction)cancelProgress:(id)sender;
