@@ -18,6 +18,8 @@
 
 	cancelNotification = nil;
 	[NSBundle loadNibNamed:@"MCProgress" owner:self];
+	
+	session = nil;
 
 	return self;
 }
@@ -82,8 +84,7 @@
 - (void)beginWindow
 {
 	NSWindow *window = [self window];
-	[NSApp runModalForWindow:window];
-	[window close];
+	session = [NSApp beginModalSessionForWindow:window];
 }
 
 - (void)sheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
@@ -100,7 +101,16 @@
 	}
 
 	[NSApp setApplicationIconImage:[NSImage imageNamed:@"Media Converter"]];
-	[NSApp endSheet:[self window]];
+	
+	if (session != nil)
+	{
+		[NSApp endModalSession:session];
+		[[self window] close];
+	}
+	else
+	{
+		[NSApp endSheet:[self window]];
+	}
 }
 
 - (void)setTask:(NSString *)task
