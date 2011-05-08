@@ -27,6 +27,7 @@
 }
 
 //Main actions
+- (void)versionUpdateCheck;
 - (void)update;
 
 //Interface actions
