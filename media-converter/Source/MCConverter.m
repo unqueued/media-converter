@@ -194,6 +194,10 @@
 	//Check if the url is a YouTube url
 	BOOL isYoutubeURL = [MCCommonMethods isYouTubeURLAtPath:path];
 	
+	// DVD Subtitle variables
+	NSString *spumuxPath;
+	NSString *uniqueSpumuxPath;
+	
 	// Reset our stuff
 	subtitleProblem = NO;
 	detailedErrorString = nil;
@@ -486,7 +490,19 @@
 		[ffmpeg launch];
 		
 		if ([subtitleType isEqualTo:@"dvd"])
+		{
+			spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
+			uniqueSpumuxPath = [MCCommonMethods uniquePathNameFromPath:spumuxPath withSeperator:@"_"];
+		
+			if ([defaultManager fileExistsAtPath:spumuxPath])
+				[MCCommonMethods moveItemAtPath:spumuxPath toPath:uniqueSpumuxPath error:nil];
+			
+			NSString *savedFontPath = [defaults objectForKey:@"MCFontFolderPath"];
+
+			[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:savedFontPath];
+		
 			[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd"];
+		}
 
 		if (useQuickTime == YES)
 			status = 3;
@@ -668,6 +684,14 @@
 		
 		if ([subtitleType isEqualTo:@"srt"])
 			[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension]];
+	}
+	
+	if ([subtitleType isEqualTo:@"dvd"])
+	{
+		[MCCommonMethods removeItemAtPath:spumuxPath];
+		
+		if ([defaultManager fileExistsAtPath:uniqueSpumuxPath])
+			[MCCommonMethods moveItemAtPath:uniqueSpumuxPath toPath:spumuxPath error:nil];
 	}
 	
 	[MCCommonMethods removeItemAtPath:temporaryFolder];
@@ -1921,7 +1945,7 @@
 		NSString *subPath = [subtitles objectAtIndex:i];
 		NSString *fontSize = [extraOptions objectForKey:@"Subtitle Font Size"];
 		
-		NSString *spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
+		NSString *fontPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCFontFolderPath"];
 		NSString *language = [[subPath stringByDeletingPathExtension] pathExtension];
 		
 		NSString *font = nil;
@@ -1946,41 +1970,15 @@
 		else if ([language isEqualTo:@"hye"] | [language isEqualTo:@"hy"])
 			font = @"MshtakanRegular";
 		
-		if (font == nil | ![defaultManager fileExistsAtPath:[spumuxPath stringByAppendingPathComponent:[font stringByAppendingPathExtension:@"ttf"]]])
+		if (font == nil | ![defaultManager fileExistsAtPath:[fontPath stringByAppendingPathComponent:[font stringByAppendingPathExtension:@"ttf"]]])
 			font = [extraOptions objectForKey:@"Subtitle Font"];
-			
-		if (font == nil)
-			font = @"Helvetica";
 
 		NSString *hAlign = [extraOptions objectForKey:@"Subtitle Horizontal Alignment"];
-		
-		if (hAlign == nil)
-			hAlign = @"center";
-		
 		NSString *vAlign = [extraOptions objectForKey:@"Subtitle Vertical Alignment"];
-		
-		if (vAlign == nil)
-			vAlign = @"bottom";
-		
 		NSString *lMargin = [extraOptions objectForKey:@"Subtitle Left Margin"];
-		
-		if (lMargin == nil)
-			lMargin = @"60";
-		
 		NSString *rMargin = [extraOptions objectForKey:@"Subtitle Right Margin"];
-		
-		if (rMargin == nil)
-			rMargin = @"60";
-		
 		NSString *tMargin = [extraOptions objectForKey:@"Subtitle Top Margin"];
-		
-		if (tMargin == nil)
-			tMargin = @"20";
-		
 		NSString *bMargin = [extraOptions objectForKey:@"Subtitle Bottom Margin"];
-		
-		if (bMargin == nil)
-			bMargin = @"30";
 		
 		NSString *fps = [NSString stringWithFormat:@"%f", inputFps];
 		NSString *fpsString = [encoderOptions objectForKey:@"-r"];
@@ -2025,10 +2023,9 @@
 		[spumux setArguments:[NSArray arrayWithObjects:@"-s", [NSString stringWithFormat:@"%i", i], xmlPath, nil]];
 		
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == NO)
-		{
 			[spumux setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		else
 			NSLog(@"XMLFile: %@", xmlContent);
-		}
 		
 		[MCCommonMethods logCommandIfNeeded:spumux];
 		
@@ -2058,11 +2055,10 @@
 	[spumux setCurrentDirectoryPath:[testMPG stringByDeletingLastPathComponent]];
 	[spumux setArguments:[NSArray arrayWithObjects:xmlPath, nil]];
 	
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == YES)
-	{
-		[spumux setStandardError:[NSFileHandle fileHandleWithNullDevice]];
-		NSLog(@"XMLFile:\n%@", xmlContent);
-	}
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:@"MCDebug"] == NO)
+			[spumux setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		else
+			NSLog(@"XMLFile: %@", xmlContent);
 		
 	[MCCommonMethods logCommandIfNeeded:spumux];
 	
