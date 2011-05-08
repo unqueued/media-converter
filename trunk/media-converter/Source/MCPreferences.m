@@ -14,6 +14,7 @@
 #import "NSArray_Extensions.h"
 #import "MCCheckBoxCell.h"
 #import "NSNumber_Extensions.h"
+#import "MCInstallPanel.h"
 
 @implementation MCPreferences
 
@@ -93,6 +94,7 @@
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableViewSelectionDidChange:) name:@"MCListSelected" object:presetsTableView];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(installModeChanged:) name:@"MCInstallModeChanged" object:nil];
 	
 	//General
 	NSString *temporaryFolder = [standardDefaults objectForKey:@"MCSaveLocation"];
@@ -261,7 +263,7 @@
 	
 		[nameField setStringValue:[presetDictionary objectForKey:@"Name"]];
 		[extensionField setStringValue:[presetDictionary objectForKey:@"Extension"]];
-	
+		
 		NSArray *options = [presetDictionary objectForKey:@"Encoder Options"];
 
 		[self setViewOptions:[NSArray arrayWithObject:[presetsPanel contentView]] infoObject:options mappingsObject:viewMappings startCount:0];
@@ -335,6 +337,25 @@
 			[self setOption:containerPopUp];
 			[self setOption:videoFormatPopUp];
 			[self setOption:audioFormatPopUp];
+			
+			//Set some default values for DVD subtitles
+			[fontPopup selectItemWithTitle:@"Helvetica"];
+			[self setExtraOption:fontPopup];
+			[hAlignFormatPopUp selectItemAtIndex:1];
+			[self setExtraOption:hAlignFormatPopUp];
+			[vAlignFormatPopUp selectItemAtIndex:2];
+			[self setExtraOption:vAlignFormatPopUp];
+			NSView *myView = [subtitleFormatPopUp superview];
+			[[myView viewWithTag:107] setStringValue:@"60"];
+			[self setExtraOption:[myView viewWithTag:107]];
+			[[myView viewWithTag:108] setStringValue:@"60"];
+			[self setExtraOption:[myView viewWithTag:108]];
+			[[myView viewWithTag:109] setStringValue:@"20"];
+			[self setExtraOption:[myView viewWithTag:109]];
+			[[myView viewWithTag:110] setStringValue:@"30"];
+			[self setExtraOption:[myView viewWithTag:110]];
+			[[myView viewWithTag:114] setStringValue:@"24"];
+			[self setExtraOption:[myView viewWithTag:114]];
 
 			[nameField setStringValue:NSLocalizedString(@"Untitled", nil)];
 			[extensionField setStringValue:@""];
@@ -413,21 +434,9 @@
 
 	if (!savePath)
 	{
-		NSString *applicationSupportFolder;
-		NSInteger installMode = [[[NSUserDefaults standardUserDefaults] objectForKey:@"MCInstallMode"] integerValue];
-		
-		if (installMode == 0)
-		{
-			[NSApp runModalForWindow:installModePanel];
-			[installModePanel orderOut:self];
-				
-			installMode = [installModePopup indexOfSelectedItem] + 1;
-		}
-			
-		if (installMode == 1)
-			applicationSupportFolder = @"/Library/Application Support";
-		else if (installMode == 2)
-			applicationSupportFolder = [@"~/Library/Application Support" stringByExpandingTildeInPath];
+		MCInstallPanel *installPanel = [[[MCInstallPanel alloc] init] autorelease];
+		[installPanel setTaskText:NSLocalizedString(@"Install Presets for:", nil)];
+		NSString *applicationSupportFolder = [installPanel installLocation];
 			
 		NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 		NSString *folder = [applicationSupportFolder stringByAppendingPathComponent:@"Media Converter"];
@@ -933,24 +942,9 @@
 	[NSThread detachNewThreadSelector:@selector(setupPopups) toTarget:self withObject:nil];
 }
 
-//////////////////////////
-// Install Mode actions //
-//////////////////////////
-
-#pragma mark -
-#pragma mark •• Install Mode actions
-
-- (IBAction)endSettingMode:(id)sender
+- (IBAction)rebuildFonts:(id)sender
 {
-	if ([suppressButton state] == NSOnState)
-	{
-		NSInteger mode = [installModePopup indexOfSelectedItem] + 1;
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:mode] forKey:@"MCInstallMode"];
-		[(NSPopUpButton *)[generalView viewWithTag:3] selectItemAtIndex:mode];
-		[suppressButton setState:NSOffState];
-	}
-
-	[NSApp abortModal];
+	[self updateFontListForWindow:[self window]];
 }
 
 /////////////////////
@@ -1510,108 +1504,10 @@
 	[vAlignFormatPopUp setArray:verticalAlignments];
 	
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
-	NSString *spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
-	
+	NSString *fontPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCFontFolderPath"];
+		
 	NSMutableArray *fontDictionaries = [NSMutableArray array];
-		
-	if (![defaultManager fileExistsAtPath:spumuxPath])
-	{
-		MCProgress *progressPanel = [[MCProgress alloc] init];
-		[progressPanel setTask:NSLocalizedString(@"Adding fonts (one time)", nil)];
-		[progressPanel setStatus:NSLocalizedString(@"Checking font: %@", nil)];
-		[progressPanel setIcon:[NSImage imageNamed:@"Media Converter"]];
-		[progressPanel setMaximumValue:[NSNumber numberWithDouble:0]];
-		[progressPanel setCanCancel:NO];
-		[progressPanel beginSheetForWindow:[self window]];
-	
-		[defaultManager createDirectoryAtPath:spumuxPath attributes:nil];
-		
-		NSMutableArray *fontFolderPaths = [NSMutableArray arrayWithObjects:@"/System/Library/Fonts", @"/Library/Fonts", nil];
-		NSString *homeFontsFolder = [[NSHomeDirectory() stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Fonts"];
-		
-		if ([defaultManager fileExistsAtPath:homeFontsFolder])
-		{
-			[fontFolderPaths addObject:homeFontsFolder];
-			
-			NSString *msFonts = [homeFontsFolder stringByAppendingPathComponent:@"Microsoft"];
-			
-			if ([defaultManager fileExistsAtPath:homeFontsFolder])
-				[fontFolderPaths addObject:msFonts];
-		}
-		
-		NSArray *fontPaths = [MCCommonMethods getFullPathsForFolders:fontFolderPaths withType:@"ttf"];
-		[progressPanel setMaximumValue:[NSNumber numberWithDouble:[fontPaths count] + 4]];
-			
-		NSInteger i;
-		for (i = 0; i < [fontPaths count]; i ++)
-		{
-			NSString *fontPath = [fontPaths objectAtIndex:i];
-			NSString *fontName = [fontPath lastPathComponent];
-			
-			[progressPanel setStatus:[NSString stringWithFormat:NSLocalizedString(@"Checking font: %@", nil), fontName]];
-
-			NSString *newFontPath = [spumuxPath stringByAppendingPathComponent:fontName];
-					
-			if (![defaultManager fileExistsAtPath:newFontPath])
-			{
-				[defaultManager createSymbolicLinkAtPath:newFontPath pathContent:fontPath];
-					
-				if (![converter testFontWithName:fontName])
-					[defaultManager removeFileAtPath:newFontPath handler:0];
-			}
-			
-			[progressPanel setValue:[NSNumber numberWithDouble:i + 1]];
-		}
-		
-		[converter extractImportantFontsToPath:spumuxPath statusStart:[fontPaths count]];
-		
-		[progressPanel endSheet];
-		[progressPanel release];
-		progressPanel = nil;
-		
-		NSArray *defaultFonts = [NSArray arrayWithObjects:	@"AppleGothic.ttf", @"Hei.ttf", 
-															@"Osaka.ttf", @"HelveticaCYPlain.ttf", 
-															@"AlBayan.ttf", @"Lucida Sans Unicode.ttf",
-															@"Raanana.ttf", @"Ayuthaya.ttf",
-															@"LiHei Pro.ttf", @"MshtakanRegular.ttf",
-															nil];
-															
-		NSArray *defaultLanguages = [NSArray arrayWithObjects:	NSLocalizedString(@"Korean", nil), NSLocalizedString(@"Simplified Chinese", nil), 
-																NSLocalizedString(@"Japanese", nil), NSLocalizedString(@"Cyrilic", nil), 
-																NSLocalizedString(@"Arabic", nil), NSLocalizedString(@"Greek", nil),
-																NSLocalizedString(@"Hebrew", nil), NSLocalizedString(@"Thai", nil),
-																NSLocalizedString(@"Traditional Chinese", nil), NSLocalizedString(@"Armenian", nil),
-																nil];
-		
-		NSString *errorMessage = NSLocalizedString(@"Not found:", nil);
-		BOOL shouldWarn = NO;
-		
-		NSInteger z;
-		for (z = 0; z < [defaultFonts count]; z ++)
-		{
-			NSString *font = [defaultFonts objectAtIndex:z];
-			
-			if (![defaultManager fileExistsAtPath:[spumuxPath stringByAppendingPathComponent:font]])
-			{
-				NSString *language = [defaultLanguages objectAtIndex:z];
-			
-				shouldWarn = YES;
-				
-				NSString *warningString = [NSString stringWithFormat:@"%@ (%@)", font, language];
-				
-				if ([errorMessage isEqualTo:@""])
-					errorMessage = warningString;
-				else
-					errorMessage = [NSString stringWithFormat:@"%@\n%@", errorMessage, warningString];
-			}
-		}
-		
-		if (shouldWarn == YES)
-			[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed to add some default language fonts", nil) withInformationText:NSLocalizedString(@"You can savely ignore this message if you don't use these languages (see details).", nil) withParentWindow:[self window] withDetails:errorMessage];
-		
-	}
-		
-	NSArray *fonts = [defaultManager subpathsAtPath:spumuxPath];
+	NSArray *fonts = [defaultManager subpathsAtPath:fontPath];
 	[fontPopup removeAllItems];
 
 	NSInteger y;
@@ -1650,5 +1546,143 @@
 	
 	[pool release];
 }
+
+- (void)updateFontListForWindow:(NSWindow *)window
+{
+	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+	NSString *savedFontPath = [standardDefaults objectForKey:@"MCFontFolderPath"];
+	
+	if (savedFontPath != nil)
+		[MCCommonMethods removeItemAtPath:savedFontPath];
+
+	MCConverter *converter = [[MCConverter alloc] init];
+
+	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
+	MCInstallPanel *installPanel = [[[MCInstallPanel alloc] init] autorelease];
+	[installPanel setTaskText:NSLocalizedString(@"Install Subtitle Fonts for:", nil)];
+	NSString *applicationSupportFolder = [installPanel installLocation];
+	NSString *fontPath = [[applicationSupportFolder stringByAppendingPathComponent:@"Media Converter"] stringByAppendingPathComponent:@"Fonts"];
+	[standardDefaults setObject:fontPath forKey:@"MCFontFolderPath"];
+	
+	MCProgress *progressPanel = [[MCProgress alloc] init];
+	[progressPanel setTask:NSLocalizedString(@"Adding fonts (one time)", nil)];
+	[progressPanel setStatus:NSLocalizedString(@"Checking font: %@", nil)];
+	[progressPanel setIcon:[NSImage imageNamed:@"Media Converter"]];
+	[progressPanel setMaximumValue:[NSNumber numberWithDouble:0]];
+	[progressPanel setCanCancel:NO];
+		
+	if (window != nil)
+		[progressPanel beginSheetForWindow:window];
+	else
+		[progressPanel performSelectorOnMainThread:@selector(beginWindow) withObject:nil waitUntilDone:NO];
+	
+	[defaultManager createDirectoryAtPath:fontPath attributes:nil];
+		
+	NSString *spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
+	NSString *uniqueSpumuxPath = [MCCommonMethods uniquePathNameFromPath:spumuxPath withSeperator:@"_"];
+		
+	if ([defaultManager fileExistsAtPath:spumuxPath])
+		[MCCommonMethods moveItemAtPath:spumuxPath toPath:uniqueSpumuxPath error:nil];
+		
+	[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:fontPath];
+		
+	NSMutableArray *fontFolderPaths = [NSMutableArray arrayWithObjects:@"/System/Library/Fonts", @"/Library/Fonts", nil];
+	NSString *homeFontsFolder = [[NSHomeDirectory() stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Fonts"];
+		
+	if ([defaultManager fileExistsAtPath:homeFontsFolder])
+	{
+		[fontFolderPaths addObject:homeFontsFolder];
+			
+		NSString *msFonts = [homeFontsFolder stringByAppendingPathComponent:@"Microsoft"];
+			
+		if ([defaultManager fileExistsAtPath:homeFontsFolder])
+			[fontFolderPaths addObject:msFonts];
+	}
+		
+	NSArray *fontPaths = [MCCommonMethods getFullPathsForFolders:fontFolderPaths withType:@"ttf"];
+	[progressPanel setMaximumValue:[NSNumber numberWithDouble:[fontPaths count] + 4]];
+			
+	NSInteger i;
+	for (i = 0; i < [fontPaths count]; i ++)
+	{
+		NSString *currentFontPath = [fontPaths objectAtIndex:i];
+		NSString *fontName = [currentFontPath lastPathComponent];
+			
+		[progressPanel setStatus:[NSString stringWithFormat:NSLocalizedString(@"Checking font: %@", nil), fontName]];
+
+		NSString *newFontPath = [fontPath stringByAppendingPathComponent:fontName];
+					
+		if (![defaultManager fileExistsAtPath:newFontPath])
+		{
+			[defaultManager createSymbolicLinkAtPath:newFontPath pathContent:currentFontPath];
+					
+			if (![converter testFontWithName:fontName])
+				[defaultManager removeFileAtPath:newFontPath handler:0];
+		}
+			
+		[progressPanel setValue:[NSNumber numberWithDouble:i + 1]];
+	}
+		
+	[MCCommonMethods removeItemAtPath:spumuxPath];
+		
+	if ([defaultManager fileExistsAtPath:uniqueSpumuxPath])
+		[MCCommonMethods moveItemAtPath:uniqueSpumuxPath toPath:spumuxPath error:nil];
+		
+	[converter extractImportantFontsToPath:fontPath statusStart:[fontPaths count]];
+		
+	[progressPanel endSheet];
+	[progressPanel release];
+	progressPanel = nil;
+		
+	NSArray *defaultFonts = [NSArray arrayWithObjects:		@"AppleGothic.ttf", @"Hei.ttf", 
+															@"Osaka.ttf", @"HelveticaCYPlain.ttf", 
+															@"AlBayan.ttf", @"Lucida Sans Unicode.ttf",
+															@"Raanana.ttf", @"Ayuthaya.ttf",
+															@"LiHei Pro.ttf", @"MshtakanRegular.ttf",
+															nil];
+															
+	NSArray *defaultLanguages = [NSArray arrayWithObjects:		NSLocalizedString(@"Korean", nil), NSLocalizedString(@"Simplified Chinese", nil), 
+																NSLocalizedString(@"Japanese", nil), NSLocalizedString(@"Cyrilic", nil), 
+																NSLocalizedString(@"Arabic", nil), NSLocalizedString(@"Greek", nil),
+																NSLocalizedString(@"Hebrew", nil), NSLocalizedString(@"Thai", nil),
+																NSLocalizedString(@"Traditional Chinese", nil), NSLocalizedString(@"Armenian", nil),
+																nil];
+		
+	NSString *errorMessage = NSLocalizedString(@"Not found:", nil);
+	BOOL shouldWarn = NO;
+		
+	NSInteger z;
+	for (z = 0; z < [defaultFonts count]; z ++)
+	{
+		NSString *font = [defaultFonts objectAtIndex:z];
+			
+		if (![defaultManager fileExistsAtPath:[fontPath stringByAppendingPathComponent:font]])
+		{
+			NSString *language = [defaultLanguages objectAtIndex:z];
+			
+			shouldWarn = YES;
+				
+			NSString *warningString = [NSString stringWithFormat:@"%@ (%@)", font, language];
+				
+			if ([errorMessage isEqualTo:@""])
+				errorMessage = warningString;
+			else
+				errorMessage = [NSString stringWithFormat:@"%@\n%@", errorMessage, warningString];
+		}
+	}
+		
+	if (shouldWarn == YES)
+		[MCCommonMethods standardAlertWithMessageText:NSLocalizedString(@"Failed to add some default language fonts", nil) withInformationText:NSLocalizedString(@"You can savely ignore this message if you don't use these languages (see details).", nil) withParentWindow:window withDetails:errorMessage];
+	
+	[converter release];
+	converter = nil;
+}
+
+- (void)installModeChanged:(NSNotification *)notification
+{
+	NSInteger mode = [[notification object] integerValue];
+	[(NSPopUpButton *)[generalView viewWithTag:3] selectItemAtIndex:mode];
+}
+
 
 @end
