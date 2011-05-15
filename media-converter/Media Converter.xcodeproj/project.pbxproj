@@ -23,48 +23,56 @@
 		FE2B6AA51337C2E9001459D4 /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9D1337C2E9001459D4 /* kateenc */; };
 		FE2B6AA61337C2E9001459D4 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9E1337C2E9001459D4 /* katedec */; };
 		FE2B6AA71337C2E9001459D4 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9F1337C2E9001459D4 /* oggz-info */; };
-		FE2B6AA81337C2E9001459D4 /* oggz-dump in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AA01337C2E9001459D4 /* oggz-dump */; };
 		FE2B6AA91337C2E9001459D4 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AA11337C2E9001459D4 /* oggz-merge */; };
-		FE2B6AAA1337C2E9001459D4 /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9A1337C2E9001459D4 /* mkvmerge */; };
-		FE2B6AAB1337C2E9001459D4 /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9B1337C2E9001459D4 /* mkvextract */; };
-		FE2B6AAC1337C2E9001459D4 /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9C1337C2E9001459D4 /* mkvinfo */; };
-		FE2B6AAD1337C2E9001459D4 /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9D1337C2E9001459D4 /* kateenc */; };
-		FE2B6AAE1337C2E9001459D4 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9E1337C2E9001459D4 /* katedec */; };
-		FE2B6AAF1337C2E9001459D4 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9F1337C2E9001459D4 /* oggz-info */; };
-		FE2B6AB01337C2E9001459D4 /* oggz-dump in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AA01337C2E9001459D4 /* oggz-dump */; };
-		FE2B6AB11337C2E9001459D4 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AA11337C2E9001459D4 /* oggz-merge */; };
 		FE2B6ABD1337C321001459D4 /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB51337C321001459D4 /* mkvmerge */; };
 		FE2B6ABE1337C321001459D4 /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB61337C321001459D4 /* mkvextract */; };
 		FE2B6ABF1337C321001459D4 /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB71337C321001459D4 /* mkvinfo */; };
 		FE2B6AC01337C321001459D4 /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB81337C321001459D4 /* kateenc */; };
 		FE2B6AC11337C321001459D4 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB91337C321001459D4 /* katedec */; };
 		FE2B6AC21337C321001459D4 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ABA1337C321001459D4 /* oggz-info */; };
-		FE2B6AC31337C321001459D4 /* oggz-dump in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ABB1337C321001459D4 /* oggz-dump */; };
 		FE2B6AC41337C321001459D4 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ABC1337C321001459D4 /* oggz-merge */; };
-		FE2B6AC51337C321001459D4 /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB51337C321001459D4 /* mkvmerge */; };
-		FE2B6AC61337C321001459D4 /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB61337C321001459D4 /* mkvextract */; };
-		FE2B6AC71337C321001459D4 /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB71337C321001459D4 /* mkvinfo */; };
-		FE2B6AC81337C321001459D4 /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB81337C321001459D4 /* kateenc */; };
-		FE2B6AC91337C321001459D4 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AB91337C321001459D4 /* katedec */; };
-		FE2B6ACA1337C321001459D4 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ABA1337C321001459D4 /* oggz-info */; };
-		FE2B6ACB1337C321001459D4 /* oggz-dump in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ABB1337C321001459D4 /* oggz-dump */; };
-		FE2B6ACC1337C321001459D4 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ABC1337C321001459D4 /* oggz-merge */; };
-		FE2B6AD61337C34F001459D4 /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ACE1337C34F001459D4 /* mkvmerge */; };
-		FE2B6AD71337C34F001459D4 /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ACF1337C34F001459D4 /* mkvextract */; };
-		FE2B6AD81337C34F001459D4 /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD01337C34F001459D4 /* mkvinfo */; };
-		FE2B6AD91337C34F001459D4 /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD11337C34F001459D4 /* kateenc */; };
-		FE2B6ADA1337C34F001459D4 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD21337C34F001459D4 /* katedec */; };
-		FE2B6ADB1337C34F001459D4 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD31337C34F001459D4 /* oggz-info */; };
-		FE2B6ADC1337C34F001459D4 /* oggz-dump in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD41337C34F001459D4 /* oggz-dump */; };
-		FE2B6ADD1337C34F001459D4 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD51337C34F001459D4 /* oggz-merge */; };
 		FE2B6ADE1337C34F001459D4 /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ACE1337C34F001459D4 /* mkvmerge */; };
 		FE2B6ADF1337C34F001459D4 /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6ACF1337C34F001459D4 /* mkvextract */; };
 		FE2B6AE01337C34F001459D4 /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD01337C34F001459D4 /* mkvinfo */; };
 		FE2B6AE11337C34F001459D4 /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD11337C34F001459D4 /* kateenc */; };
 		FE2B6AE21337C34F001459D4 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD21337C34F001459D4 /* katedec */; };
 		FE2B6AE31337C34F001459D4 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD31337C34F001459D4 /* oggz-info */; };
-		FE2B6AE41337C34F001459D4 /* oggz-dump in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD41337C34F001459D4 /* oggz-dump */; };
 		FE2B6AE51337C34F001459D4 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD51337C34F001459D4 /* oggz-merge */; };
+		FE43CAAE1380646B00792EBA /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAAD1380646B00792EBA /* qt-faststart */; };
+		FE43CAB01380648D00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAAF1380648D00792EBA /* oggz-rip */; };
+		FE43CAB2138064AA00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB1138064AA00792EBA /* oggz-rip */; };
+		FE43CAC2138064C400792EBA /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB4138064C400792EBA /* MP4Box */; };
+		FE43CAC3138064C400792EBA /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB5138064C400792EBA /* ffmpeg */; };
+		FE43CAC4138064C400792EBA /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB6138064C400792EBA /* fondu */; };
+		FE43CAC5138064C400792EBA /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB7138064C400792EBA /* katedec */; };
+		FE43CAC6138064C400792EBA /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB8138064C400792EBA /* kateenc */; };
+		FE43CAC7138064C400792EBA /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB9138064C400792EBA /* mkvextract */; };
+		FE43CAC8138064C400792EBA /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE43CABA138064C400792EBA /* mkvinfo */; };
+		FE43CAC9138064C400792EBA /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE43CABB138064C400792EBA /* mkvmerge */; };
+		FE43CACB138064C400792EBA /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE43CABD138064C400792EBA /* oggz-info */; };
+		FE43CACC138064C400792EBA /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE43CABE138064C400792EBA /* oggz-merge */; };
+		FE43CACD138064C400792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CABF138064C400792EBA /* oggz-rip */; };
+		FE43CACE138064C400792EBA /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAC0138064C400792EBA /* qt-faststart */; };
+		FE43CACF138064C400792EBA /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAC1138064C400792EBA /* spumux */; };
+		FE43CBDC13807B0A00792EBA /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBCF13807B0A00792EBA /* MP4Box */; };
+		FE43CBDD13807B0A00792EBA /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD013807B0A00792EBA /* ffmpeg */; };
+		FE43CBDE13807B0A00792EBA /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD113807B0A00792EBA /* fondu */; };
+		FE43CBDF13807B0A00792EBA /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD213807B0A00792EBA /* katedec */; };
+		FE43CBE013807B0A00792EBA /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD313807B0A00792EBA /* kateenc */; };
+		FE43CBE113807B0A00792EBA /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD413807B0A00792EBA /* mkvextract */; };
+		FE43CBE213807B0A00792EBA /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD513807B0A00792EBA /* mkvinfo */; };
+		FE43CBE313807B0A00792EBA /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD613807B0A00792EBA /* mkvmerge */; };
+		FE43CBE413807B0A00792EBA /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD713807B0A00792EBA /* oggz-info */; };
+		FE43CBE513807B0A00792EBA /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD813807B0A00792EBA /* oggz-merge */; };
+		FE43CBE613807B0A00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBD913807B0A00792EBA /* oggz-rip */; };
+		FE43CBE713807B0A00792EBA /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBDA13807B0A00792EBA /* qt-faststart */; };
+		FE43CBE813807B0A00792EBA /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FE43CBDB13807B0A00792EBA /* spumux */; };
+		FE43CBE913807B2B00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE9D4A25133B5D20003C42A4 /* oggz-rip */; };
+		FE43CBEB13807B5D00792EBA /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEE12EB18F20047FD26 /* movtowav */; };
+		FE43CBEC13807BD200792EBA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953412EC4CC7007273B3 /* Growl.framework */; };
+		FE43CBF213807BDC00792EBA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926212EC4CC4007273B3 /* Growl.framework */; };
+		FE43CBF813807BE300792EBA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925C12EC4CC4007273B3 /* Growl.framework */; };
+		FE43CBF913807BE900792EBA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926512EC4CC4007273B3 /* Growl.framework */; };
 		FE4E9894132105CB00B440F4 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
 		FE4E9899132105DA00B440F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
 		FE4E9B0213210D3100B440F4 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
@@ -101,21 +109,27 @@
 		FE808C1C12EB19AC0047FD26 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
 		FE808C1D12EB19AC0047FD26 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
 		FE808C1F12EB19AC0047FD26 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
-		FE9D4A26133B5D20003C42A4 /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE9D4A25133B5D20003C42A4 /* oggz-rip */; };
-		FE9D4A27133B5D20003C42A4 /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE9D4A25133B5D20003C42A4 /* oggz-rip */; };
+		FE8E42A813801FAA00C87AAB /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE8E429B13801FAA00C87AAB /* ffmpeg */; };
+		FE8E42A913801FAA00C87AAB /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FE8E429C13801FAA00C87AAB /* fondu */; };
+		FE8E42AA13801FAA00C87AAB /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE8E429D13801FAA00C87AAB /* katedec */; };
+		FE8E42AB13801FAA00C87AAB /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE8E429E13801FAA00C87AAB /* kateenc */; };
+		FE8E42AC13801FAA00C87AAB /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE8E429F13801FAA00C87AAB /* mkvextract */; };
+		FE8E42AD13801FAA00C87AAB /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A013801FAA00C87AAB /* mkvinfo */; };
+		FE8E42AE13801FAA00C87AAB /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A113801FAA00C87AAB /* mkvmerge */; };
+		FE8E42AF13801FAA00C87AAB /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A213801FAA00C87AAB /* MP4Box */; };
+		FE8E42B113801FAA00C87AAB /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A413801FAA00C87AAB /* oggz-info */; };
+		FE8E42B213801FAA00C87AAB /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A513801FAA00C87AAB /* oggz-merge */; };
+		FE8E42B313801FAA00C87AAB /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A613801FAA00C87AAB /* oggz-rip */; };
+		FE8E42B413801FAA00C87AAB /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A713801FAA00C87AAB /* spumux */; };
+		FE8E42DE1380209E00C87AAB /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925F12EC4CC4007273B3 /* Growl.framework */; };
+		FE8E42F01380221F00C87AAB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925F12EC4CC4007273B3 /* Growl.framework */; };
 		FE9DC01B12E99B2B007D3E9F /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
 		FEA2098D132F5FCC0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA2098B132F5FCC0089B135 /* MP4Box */; };
 		FEA2098E132F5FCC0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA2098C132F5FCC0089B135 /* spumux */; };
-		FEA2098F132F5FCC0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA2098B132F5FCC0089B135 /* MP4Box */; };
-		FEA20990132F5FCC0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA2098C132F5FCC0089B135 /* spumux */; };
 		FEA20993132F5FDD0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA20991132F5FDD0089B135 /* MP4Box */; };
 		FEA20994132F5FDD0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA20992132F5FDD0089B135 /* spumux */; };
-		FEA20995132F5FDD0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA20991132F5FDD0089B135 /* MP4Box */; };
-		FEA20996132F5FDD0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA20992132F5FDD0089B135 /* spumux */; };
 		FEA20999132F5FEC0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA20997132F5FEC0089B135 /* MP4Box */; };
 		FEA2099A132F5FEC0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA20998132F5FEC0089B135 /* spumux */; };
-		FEA2099B132F5FEC0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA20997132F5FEC0089B135 /* MP4Box */; };
-		FEA2099C132F5FEC0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA20998132F5FEC0089B135 /* spumux */; };
 		FEA3B06B13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
 		FEA3B06C13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
 		FEA3B06D13630DC800AD6085 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
@@ -139,7 +153,6 @@
 		FEA8CE5713227D0F00C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
 		FEA8CE5813227D0F00C10516 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
 		FEA8CE5913227D0F00C10516 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
-		FEA8CE5A13227D0F00C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF212EB18F20047FD26 /* ffmpeg */; };
 		FEA8CE5B13227D0F00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF312EB18F20047FD26 /* movtowav */; };
 		FEA8CE5C13227D0F00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BF412EB18F20047FD26 /* movtoy4m */; };
 		FEA8CE5D13227D0F00C10516 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
@@ -178,7 +191,6 @@
 		FEA8CE7F13227D0F00C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
 		FEA8CE8013227D0F00C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
 		FEA8CE8213227D0F00C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		FEA8CE8313227D0F00C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
 		FEA8CE9013227D2100C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		FEA8CE9113227D2100C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		FEA8CE9213227D2100C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
@@ -220,7 +232,6 @@
 		FEA8CEBA13227D2100C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
 		FEA8CEBB13227D2100C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
 		FEA8CEBD13227D2100C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		FEA8CEBE13227D2100C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
 		FEA8CECB13227D2400C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		FEA8CECC13227D2400C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		FEA8CECD13227D2400C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
@@ -262,7 +273,6 @@
 		FEA8CEF513227D2400C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
 		FEA8CEF613227D2400C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
 		FEA8CEF813227D2400C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		FEA8CEF913227D2400C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
 		FEA8CF0613227D3900C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		FEA8CF0713227D3900C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		FEA8CF0813227D3900C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
@@ -304,7 +314,6 @@
 		FEA8CF3013227D3900C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
 		FEA8CF3113227D3900C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
 		FEA8CF3313227D3900C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		FEA8CF3413227D3900C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
 		FEA8CF4113227D3C00C10516 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		FEA8CF4213227D3C00C10516 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		FEA8CF4313227D3C00C10516 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
@@ -346,22 +355,17 @@
 		FEA8CF6B13227D3C00C10516 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
 		FEA8CF6C13227D3C00C10516 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
 		FEA8CF6E13227D3C00C10516 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		FEA8CF6F13227D3C00C10516 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
 		FEA8CF9C13227FF900C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953412EC4CC7007273B3 /* Growl.framework */; };
 		FEA8CFA21322800900C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926212EC4CC4007273B3 /* Growl.framework */; };
 		FEA8CFA81322802B00C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925C12EC4CC4007273B3 /* Growl.framework */; };
 		FEA8CFAE1322803500C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926512EC4CC4007273B3 /* Growl.framework */; };
-		FEA8CFB41322804300C10516 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925F12EC4CC4007273B3 /* Growl.framework */; };
 		FEA8CFFA132283BC00C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BED12EB18F20047FD26 /* ffmpeg */; };
 		FEA8CFFB132283BD00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEE12EB18F20047FD26 /* movtowav */; };
 		FEA8CFFC132283BE00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEF12EB18F20047FD26 /* movtoy4m */; };
 		FEA8CFFD132283C900C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE812EB18F20047FD26 /* ffmpeg */; };
 		FEA8CFFE132283CA00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE912EB18F20047FD26 /* movtowav */; };
 		FEA8CFFF132283CB00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEA12EB18F20047FD26 /* movtoy4m */; };
-		FEA8D000132283E900C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BED12EB18F20047FD26 /* ffmpeg */; };
-		FEA8D001132283EA00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEE12EB18F20047FD26 /* movtowav */; };
 		FEA8D002132283EA00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEF12EB18F20047FD26 /* movtoy4m */; };
-		FEA8D003132283FD00C10516 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE812EB18F20047FD26 /* ffmpeg */; };
 		FEA8D004132283FD00C10516 /* movtowav in Resources */ = {isa = PBXBuildFile; fileRef = FE808BE912EB18F20047FD26 /* movtowav */; };
 		FEA8D005132283FE00C10516 /* movtoy4m in Resources */ = {isa = PBXBuildFile; fileRef = FE808BEA12EB18F20047FD26 /* movtoy4m */; };
 		FEA8D4B513229AB200C10516 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
@@ -377,20 +381,14 @@
 		FEA8D5021322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
 		FEA8D5031322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
 		FEADF2B2132BB73F00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B1132BB73F00A99179 /* qt-faststart */; };
-		FEADF2B3132BB73F00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B1132BB73F00A99179 /* qt-faststart */; };
 		FEADF2B5132BB74D00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B4132BB74D00A99179 /* qt-faststart */; };
-		FEADF2B6132BB74D00A99179 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEADF2B4132BB74D00A99179 /* qt-faststart */; };
 		FEB2647213278730002C46AE /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEB2647113278730002C46AE /* qt-faststart */; };
-		FEB2647313278730002C46AE /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FEB2647113278730002C46AE /* qt-faststart */; };
 		FEB4E2B01313B09100F608D0 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
 		FEBC384512F163B300F0A20A /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
 		FEBC386712F169BE00F0A20A /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
 		FED0E3F51349803F00F06BA6 /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FED0E3F41349803F00F06BA6 /* fondu */; };
-		FED0E3F61349803F00F06BA6 /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FED0E3F41349803F00F06BA6 /* fondu */; };
 		FED0E3F81349804C00F06BA6 /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FED0E3F71349804C00F06BA6 /* fondu */; };
-		FED0E3F91349804C00F06BA6 /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FED0E3F71349804C00F06BA6 /* fondu */; };
 		FED0E3FB1349805E00F06BA6 /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FED0E3FA1349805E00F06BA6 /* fondu */; };
-		FED0E3FC1349805E00F06BA6 /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FED0E3FA1349805E00F06BA6 /* fondu */; };
 		FED68D0F13265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
 		FED68D1013265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
 		FED68D1113265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
@@ -487,7 +485,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FEA8CFB41322804300C10516 /* Growl.framework in Copy Frameworks */,
+				FE8E42DE1380209E00C87AAB /* Growl.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -524,7 +522,6 @@
 		FE2B6A9D1337C2E9001459D4 /* kateenc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kateenc; sourceTree = "<group>"; };
 		FE2B6A9E1337C2E9001459D4 /* katedec */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = katedec; sourceTree = "<group>"; };
 		FE2B6A9F1337C2E9001459D4 /* oggz-info */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-info"; sourceTree = "<group>"; };
-		FE2B6AA01337C2E9001459D4 /* oggz-dump */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-dump"; sourceTree = "<group>"; };
 		FE2B6AA11337C2E9001459D4 /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-merge"; sourceTree = "<group>"; };
 		FE2B6AB51337C321001459D4 /* mkvmerge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvmerge; sourceTree = "<group>"; };
 		FE2B6AB61337C321001459D4 /* mkvextract */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvextract; sourceTree = "<group>"; };
@@ -532,7 +529,6 @@
 		FE2B6AB81337C321001459D4 /* kateenc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = kateenc; sourceTree = "<group>"; };
 		FE2B6AB91337C321001459D4 /* katedec */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = katedec; sourceTree = "<group>"; };
 		FE2B6ABA1337C321001459D4 /* oggz-info */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-info"; sourceTree = "<group>"; };
-		FE2B6ABB1337C321001459D4 /* oggz-dump */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-dump"; sourceTree = "<group>"; };
 		FE2B6ABC1337C321001459D4 /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-merge"; sourceTree = "<group>"; };
 		FE2B6ACE1337C34F001459D4 /* mkvmerge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvmerge; sourceTree = "<group>"; };
 		FE2B6ACF1337C34F001459D4 /* mkvextract */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvextract; sourceTree = "<group>"; };
@@ -540,8 +536,36 @@
 		FE2B6AD11337C34F001459D4 /* kateenc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kateenc; sourceTree = "<group>"; };
 		FE2B6AD21337C34F001459D4 /* katedec */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = katedec; sourceTree = "<group>"; };
 		FE2B6AD31337C34F001459D4 /* oggz-info */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-info"; sourceTree = "<group>"; };
-		FE2B6AD41337C34F001459D4 /* oggz-dump */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-dump"; sourceTree = "<group>"; };
 		FE2B6AD51337C34F001459D4 /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-merge"; sourceTree = "<group>"; };
+		FE43CAAD1380646B00792EBA /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "qt-faststart"; sourceTree = "<group>"; };
+		FE43CAAF1380648D00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-rip"; sourceTree = "<group>"; };
+		FE43CAB1138064AA00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-rip"; sourceTree = "<group>"; };
+		FE43CAB4138064C400792EBA /* MP4Box */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = MP4Box; sourceTree = "<group>"; };
+		FE43CAB5138064C400792EBA /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = ffmpeg; sourceTree = "<group>"; };
+		FE43CAB6138064C400792EBA /* fondu */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = fondu; sourceTree = "<group>"; };
+		FE43CAB7138064C400792EBA /* katedec */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = katedec; sourceTree = "<group>"; };
+		FE43CAB8138064C400792EBA /* kateenc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = kateenc; sourceTree = "<group>"; };
+		FE43CAB9138064C400792EBA /* mkvextract */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvextract; sourceTree = "<group>"; };
+		FE43CABA138064C400792EBA /* mkvinfo */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvinfo; sourceTree = "<group>"; };
+		FE43CABB138064C400792EBA /* mkvmerge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvmerge; sourceTree = "<group>"; };
+		FE43CABD138064C400792EBA /* oggz-info */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-info"; sourceTree = "<group>"; };
+		FE43CABE138064C400792EBA /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-merge"; sourceTree = "<group>"; };
+		FE43CABF138064C400792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-rip"; sourceTree = "<group>"; };
+		FE43CAC0138064C400792EBA /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "qt-faststart"; sourceTree = "<group>"; };
+		FE43CAC1138064C400792EBA /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = spumux; sourceTree = "<group>"; };
+		FE43CBCF13807B0A00792EBA /* MP4Box */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = MP4Box; sourceTree = "<group>"; };
+		FE43CBD013807B0A00792EBA /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = ffmpeg; sourceTree = "<group>"; };
+		FE43CBD113807B0A00792EBA /* fondu */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = fondu; sourceTree = "<group>"; };
+		FE43CBD213807B0A00792EBA /* katedec */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = katedec; sourceTree = "<group>"; };
+		FE43CBD313807B0A00792EBA /* kateenc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = kateenc; sourceTree = "<group>"; };
+		FE43CBD413807B0A00792EBA /* mkvextract */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvextract; sourceTree = "<group>"; };
+		FE43CBD513807B0A00792EBA /* mkvinfo */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvinfo; sourceTree = "<group>"; };
+		FE43CBD613807B0A00792EBA /* mkvmerge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = mkvmerge; sourceTree = "<group>"; };
+		FE43CBD713807B0A00792EBA /* oggz-info */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-info"; sourceTree = "<group>"; };
+		FE43CBD813807B0A00792EBA /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-merge"; sourceTree = "<group>"; };
+		FE43CBD913807B0A00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-rip"; sourceTree = "<group>"; };
+		FE43CBDA13807B0A00792EBA /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "qt-faststart"; sourceTree = "<group>"; };
+		FE43CBDB13807B0A00792EBA /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = spumux; sourceTree = "<group>"; };
 		FE4E9893132105CB00B440F4 /* MCProgress.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MCProgress.xib; path = Resources/MCProgress.xib; sourceTree = "<group>"; };
 		FE4E9898132105DA00B440F4 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FE4E989C132105E700B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -590,6 +614,18 @@
 		FE808C1012EB19AC0047FD26 /* -1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-1.png"; sourceTree = "<group>"; };
 		FE808C1112EB19AC0047FD26 /* 0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 0.png; sourceTree = "<group>"; };
 		FE808C1312EB19AC0047FD26 /* 100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 100.png; sourceTree = "<group>"; };
+		FE8E429B13801FAA00C87AAB /* ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = ffmpeg; sourceTree = "<group>"; };
+		FE8E429C13801FAA00C87AAB /* fondu */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = fondu; sourceTree = "<group>"; };
+		FE8E429D13801FAA00C87AAB /* katedec */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = katedec; sourceTree = "<group>"; };
+		FE8E429E13801FAA00C87AAB /* kateenc */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = kateenc; sourceTree = "<group>"; };
+		FE8E429F13801FAA00C87AAB /* mkvextract */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvextract; sourceTree = "<group>"; };
+		FE8E42A013801FAA00C87AAB /* mkvinfo */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvinfo; sourceTree = "<group>"; };
+		FE8E42A113801FAA00C87AAB /* mkvmerge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvmerge; sourceTree = "<group>"; };
+		FE8E42A213801FAA00C87AAB /* MP4Box */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = MP4Box; sourceTree = "<group>"; };
+		FE8E42A413801FAA00C87AAB /* oggz-info */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-info"; sourceTree = "<group>"; };
+		FE8E42A513801FAA00C87AAB /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-merge"; sourceTree = "<group>"; };
+		FE8E42A613801FAA00C87AAB /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-rip"; sourceTree = "<group>"; };
+		FE8E42A713801FAA00C87AAB /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = spumux; sourceTree = "<group>"; };
 		FE9D4A25133B5D20003C42A4 /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-rip"; sourceTree = "<group>"; };
 		FE9DC01A12E99B2B007D3E9F /* Empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Empty.png; path = Images/Empty.png; sourceTree = "<group>"; };
 		FEA2098B132F5FCC0089B135 /* MP4Box */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = MP4Box; sourceTree = "<group>"; };
@@ -659,8 +695,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE43CBEC13807BD200792EBA /* Growl.framework in Frameworks */,
 				FEA8CE8213227D0F00C10516 /* Cocoa.framework in Frameworks */,
-				FEA8CE8313227D0F00C10516 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,8 +704,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE43CBF213807BDC00792EBA /* Growl.framework in Frameworks */,
 				FEA8CEBD13227D2100C10516 /* Cocoa.framework in Frameworks */,
-				FEA8CEBE13227D2100C10516 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,8 +713,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE43CBF813807BE300792EBA /* Growl.framework in Frameworks */,
 				FEA8CEF813227D2400C10516 /* Cocoa.framework in Frameworks */,
-				FEA8CEF913227D2400C10516 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,8 +722,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE43CBF913807BE900792EBA /* Growl.framework in Frameworks */,
 				FEA8CF3313227D3900C10516 /* Cocoa.framework in Frameworks */,
-				FEA8CF3413227D3900C10516 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,8 +731,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE8E42F01380221F00C87AAB /* Growl.framework in Frameworks */,
 				FEA8CF6E13227D3C00C10516 /* Cocoa.framework in Frameworks */,
-				FEA8CF6F13227D3C00C10516 /* Growl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -857,6 +893,46 @@
 			path = "Frameworks/Universal 64-bit";
 			sourceTree = "<group>";
 		};
+		FE43CAB3138064C400792EBA /* PowerPC 64-bit */ = {
+			isa = PBXGroup;
+			children = (
+				FE43CAB4138064C400792EBA /* MP4Box */,
+				FE43CAB5138064C400792EBA /* ffmpeg */,
+				FE43CAB6138064C400792EBA /* fondu */,
+				FE43CAB7138064C400792EBA /* katedec */,
+				FE43CAB8138064C400792EBA /* kateenc */,
+				FE43CAB9138064C400792EBA /* mkvextract */,
+				FE43CABA138064C400792EBA /* mkvinfo */,
+				FE43CABB138064C400792EBA /* mkvmerge */,
+				FE43CABD138064C400792EBA /* oggz-info */,
+				FE43CABE138064C400792EBA /* oggz-merge */,
+				FE43CABF138064C400792EBA /* oggz-rip */,
+				FE43CAC0138064C400792EBA /* qt-faststart */,
+				FE43CAC1138064C400792EBA /* spumux */,
+			);
+			path = "PowerPC 64-bit";
+			sourceTree = "<group>";
+		};
+		FE43CBCE13807B0A00792EBA /* Universal 64-bit */ = {
+			isa = PBXGroup;
+			children = (
+				FE43CBCF13807B0A00792EBA /* MP4Box */,
+				FE43CBD013807B0A00792EBA /* ffmpeg */,
+				FE43CBD113807B0A00792EBA /* fondu */,
+				FE43CBD213807B0A00792EBA /* katedec */,
+				FE43CBD313807B0A00792EBA /* kateenc */,
+				FE43CBD413807B0A00792EBA /* mkvextract */,
+				FE43CBD513807B0A00792EBA /* mkvinfo */,
+				FE43CBD613807B0A00792EBA /* mkvmerge */,
+				FE43CBD713807B0A00792EBA /* oggz-info */,
+				FE43CBD813807B0A00792EBA /* oggz-merge */,
+				FE43CBD913807B0A00792EBA /* oggz-rip */,
+				FE43CBDA13807B0A00792EBA /* qt-faststart */,
+				FE43CBDB13807B0A00792EBA /* spumux */,
+			);
+			path = "Universal 64-bit";
+			sourceTree = "<group>";
+		};
 		FE4E9C0013218B7900B440F4 /* Help Folders */ = {
 			isa = PBXGroup;
 			children = (
@@ -897,6 +973,9 @@
 				FE808BE712EB18F20047FD26 /* Intel */,
 				FE808BEC12EB18F20047FD26 /* PowerPC */,
 				FE808BF112EB18F20047FD26 /* Universal */,
+				FE8E428B13801F4C00C87AAB /* Intel 64-bit */,
+				FE43CAB3138064C400792EBA /* PowerPC 64-bit */,
+				FE43CBCE13807B0A00792EBA /* Universal 64-bit */,
 			);
 			path = Binaries;
 			sourceTree = "<group>";
@@ -916,7 +995,6 @@
 				FE2B6A9D1337C2E9001459D4 /* kateenc */,
 				FE2B6A9E1337C2E9001459D4 /* katedec */,
 				FE2B6A9F1337C2E9001459D4 /* oggz-info */,
-				FE2B6AA01337C2E9001459D4 /* oggz-dump */,
 				FE9D4A25133B5D20003C42A4 /* oggz-rip */,
 				FE2B6AA11337C2E9001459D4 /* oggz-merge */,
 				FED0E3F41349803F00F06BA6 /* fondu */,
@@ -939,8 +1017,8 @@
 				FE2B6AB81337C321001459D4 /* kateenc */,
 				FE2B6AB91337C321001459D4 /* katedec */,
 				FE2B6ABA1337C321001459D4 /* oggz-info */,
-				FE2B6ABB1337C321001459D4 /* oggz-dump */,
 				FE2B6ABC1337C321001459D4 /* oggz-merge */,
+				FE43CAB1138064AA00792EBA /* oggz-rip */,
 				FED0E3F71349804C00F06BA6 /* fondu */,
 			);
 			path = PowerPC;
@@ -961,8 +1039,8 @@
 				FE2B6AD11337C34F001459D4 /* kateenc */,
 				FE2B6AD21337C34F001459D4 /* katedec */,
 				FE2B6AD31337C34F001459D4 /* oggz-info */,
-				FE2B6AD41337C34F001459D4 /* oggz-dump */,
 				FE2B6AD51337C34F001459D4 /* oggz-merge */,
+				FE43CAAF1380648D00792EBA /* oggz-rip */,
 				FED0E3FA1349805E00F06BA6 /* fondu */,
 			);
 			path = Universal;
@@ -977,6 +1055,26 @@
 			);
 			name = ProgressIndicator;
 			path = Images/ProgressIndicator;
+			sourceTree = "<group>";
+		};
+		FE8E428B13801F4C00C87AAB /* Intel 64-bit */ = {
+			isa = PBXGroup;
+			children = (
+				FE8E429B13801FAA00C87AAB /* ffmpeg */,
+				FE8E429C13801FAA00C87AAB /* fondu */,
+				FE8E429D13801FAA00C87AAB /* katedec */,
+				FE8E429E13801FAA00C87AAB /* kateenc */,
+				FE8E429F13801FAA00C87AAB /* mkvextract */,
+				FE8E42A013801FAA00C87AAB /* mkvinfo */,
+				FE8E42A113801FAA00C87AAB /* mkvmerge */,
+				FE8E42A213801FAA00C87AAB /* MP4Box */,
+				FE8E42A413801FAA00C87AAB /* oggz-info */,
+				FE8E42A513801FAA00C87AAB /* oggz-merge */,
+				FE8E42A613801FAA00C87AAB /* oggz-rip */,
+				FE43CAAD1380646B00792EBA /* qt-faststart */,
+				FE8E42A713801FAA00C87AAB /* spumux */,
+			);
+			path = "Intel 64-bit";
 			sourceTree = "<group>";
 		};
 		FEF7FB70131A87B100E244C9 /* Main */ = {
@@ -1289,14 +1387,13 @@
 				FE2B6AE11337C34F001459D4 /* kateenc in Resources */,
 				FE2B6AE21337C34F001459D4 /* katedec in Resources */,
 				FE2B6AE31337C34F001459D4 /* oggz-info in Resources */,
-				FE2B6AE41337C34F001459D4 /* oggz-dump in Resources */,
 				FE2B6AE51337C34F001459D4 /* oggz-merge in Resources */,
-				FE9D4A27133B5D20003C42A4 /* oggz-rip in Resources */,
 				FED0E3FB1349805E00F06BA6 /* fondu in Resources */,
 				FE58A69F135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A0135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06F13630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EBB1376C352001816F2 /* MCInstallPanel.xib in Resources */,
+				FE43CAB01380648D00792EBA /* oggz-rip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1309,7 +1406,6 @@
 				FEA8CE5713227D0F00C10516 /* Empty.png in Resources */,
 				FEA8CE5813227D0F00C10516 /* Dropzone.pdf in Resources */,
 				FEA8CE5913227D0F00C10516 /* Media Converter.icns in Resources */,
-				FEA8CE5A13227D0F00C10516 /* ffmpeg in Resources */,
 				FEA8CE5B13227D0F00C10516 /* movtowav in Resources */,
 				FEA8CE5C13227D0F00C10516 /* movtoy4m in Resources */,
 				FEA8CE5D13227D0F00C10516 /* -1.png in Resources */,
@@ -1329,24 +1425,24 @@
 				FEA8CE6B13227D0F00C10516 /* MediaConverterHelp in Resources */,
 				FEA8D5031322AD4E00C10516 /* Donation in Resources */,
 				FEF466471324E2000079DBCF /* Credits.rtf in Resources */,
-				FEADF2B6132BB74D00A99179 /* qt-faststart in Resources */,
-				FEA2098F132F5FCC0089B135 /* MP4Box in Resources */,
-				FEA20990132F5FCC0089B135 /* spumux in Resources */,
 				FEFA3D1A1333F651009B543D /* Languages.plist in Resources */,
-				FE2B6AD61337C34F001459D4 /* mkvmerge in Resources */,
-				FE2B6AD71337C34F001459D4 /* mkvextract in Resources */,
-				FE2B6AD81337C34F001459D4 /* mkvinfo in Resources */,
-				FE2B6AD91337C34F001459D4 /* kateenc in Resources */,
-				FE2B6ADA1337C34F001459D4 /* katedec in Resources */,
-				FE2B6ADB1337C34F001459D4 /* oggz-info in Resources */,
-				FE2B6ADC1337C34F001459D4 /* oggz-dump in Resources */,
-				FE2B6ADD1337C34F001459D4 /* oggz-merge in Resources */,
-				FE9D4A26133B5D20003C42A4 /* oggz-rip in Resources */,
-				FED0E3FC1349805E00F06BA6 /* fondu in Resources */,
 				FE58A6A1135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A2135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06C13630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EB81376C352001816F2 /* MCInstallPanel.xib in Resources */,
+				FE43CBDC13807B0A00792EBA /* MP4Box in Resources */,
+				FE43CBDD13807B0A00792EBA /* ffmpeg in Resources */,
+				FE43CBDE13807B0A00792EBA /* fondu in Resources */,
+				FE43CBDF13807B0A00792EBA /* katedec in Resources */,
+				FE43CBE013807B0A00792EBA /* kateenc in Resources */,
+				FE43CBE113807B0A00792EBA /* mkvextract in Resources */,
+				FE43CBE213807B0A00792EBA /* mkvinfo in Resources */,
+				FE43CBE313807B0A00792EBA /* mkvmerge in Resources */,
+				FE43CBE413807B0A00792EBA /* oggz-info in Resources */,
+				FE43CBE513807B0A00792EBA /* oggz-merge in Resources */,
+				FE43CBE613807B0A00792EBA /* oggz-rip in Resources */,
+				FE43CBE713807B0A00792EBA /* qt-faststart in Resources */,
+				FE43CBE813807B0A00792EBA /* spumux in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1389,13 +1485,13 @@
 				FE2B6AC01337C321001459D4 /* kateenc in Resources */,
 				FE2B6AC11337C321001459D4 /* katedec in Resources */,
 				FE2B6AC21337C321001459D4 /* oggz-info in Resources */,
-				FE2B6AC31337C321001459D4 /* oggz-dump in Resources */,
 				FE2B6AC41337C321001459D4 /* oggz-merge in Resources */,
 				FED0E3F81349804C00F06BA6 /* fondu in Resources */,
 				FE58A6A3135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A4135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B07013630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EBA1376C352001816F2 /* MCInstallPanel.xib in Resources */,
+				FE43CAB2138064AA00792EBA /* oggz-rip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1438,13 +1534,13 @@
 				FE2B6AA51337C2E9001459D4 /* kateenc in Resources */,
 				FE2B6AA61337C2E9001459D4 /* katedec in Resources */,
 				FE2B6AA71337C2E9001459D4 /* oggz-info in Resources */,
-				FE2B6AA81337C2E9001459D4 /* oggz-dump in Resources */,
 				FE2B6AA91337C2E9001459D4 /* oggz-merge in Resources */,
 				FED0E3F51349803F00F06BA6 /* fondu in Resources */,
 				FE58A6A5135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A6135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06D13630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EBD1376C352001816F2 /* MCInstallPanel.xib in Resources */,
+				FE43CBE913807B2B00792EBA /* oggz-rip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1472,28 +1568,28 @@
 				FEA8CF1A13227D3900C10516 /* MCPresets.icns in Resources */,
 				FEA8CF1B13227D3900C10516 /* Add Preset.png in Resources */,
 				FEA8CF1C13227D3900C10516 /* MediaConverterHelp in Resources */,
-				FEA8D000132283E900C10516 /* ffmpeg in Resources */,
-				FEA8D001132283EA00C10516 /* movtowav in Resources */,
 				FEA8D002132283EA00C10516 /* movtoy4m in Resources */,
 				FEA8D5011322AD4E00C10516 /* Donation in Resources */,
 				FEF466451324E2000079DBCF /* Credits.rtf in Resources */,
-				FEADF2B3132BB73F00A99179 /* qt-faststart in Resources */,
-				FEA2099B132F5FEC0089B135 /* MP4Box in Resources */,
-				FEA2099C132F5FEC0089B135 /* spumux in Resources */,
 				FEFA3D181333F651009B543D /* Languages.plist in Resources */,
-				FE2B6AC51337C321001459D4 /* mkvmerge in Resources */,
-				FE2B6AC61337C321001459D4 /* mkvextract in Resources */,
-				FE2B6AC71337C321001459D4 /* mkvinfo in Resources */,
-				FE2B6AC81337C321001459D4 /* kateenc in Resources */,
-				FE2B6AC91337C321001459D4 /* katedec in Resources */,
-				FE2B6ACA1337C321001459D4 /* oggz-info in Resources */,
-				FE2B6ACB1337C321001459D4 /* oggz-dump in Resources */,
-				FE2B6ACC1337C321001459D4 /* oggz-merge in Resources */,
-				FED0E3F91349804C00F06BA6 /* fondu in Resources */,
 				FE58A6A7135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6A8135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06B13630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EB91376C352001816F2 /* MCInstallPanel.xib in Resources */,
+				FE43CAC2138064C400792EBA /* MP4Box in Resources */,
+				FE43CAC3138064C400792EBA /* ffmpeg in Resources */,
+				FE43CAC4138064C400792EBA /* fondu in Resources */,
+				FE43CAC5138064C400792EBA /* katedec in Resources */,
+				FE43CAC6138064C400792EBA /* kateenc in Resources */,
+				FE43CAC7138064C400792EBA /* mkvextract in Resources */,
+				FE43CAC8138064C400792EBA /* mkvinfo in Resources */,
+				FE43CAC9138064C400792EBA /* mkvmerge in Resources */,
+				FE43CACB138064C400792EBA /* oggz-info in Resources */,
+				FE43CACC138064C400792EBA /* oggz-merge in Resources */,
+				FE43CACD138064C400792EBA /* oggz-rip in Resources */,
+				FE43CACE138064C400792EBA /* qt-faststart in Resources */,
+				FE43CACF138064C400792EBA /* spumux in Resources */,
+				FE43CBEB13807B5D00792EBA /* movtowav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1521,28 +1617,28 @@
 				FEA8CF5513227D3C00C10516 /* MCPresets.icns in Resources */,
 				FEA8CF5613227D3C00C10516 /* Add Preset.png in Resources */,
 				FEA8CF5713227D3C00C10516 /* MediaConverterHelp in Resources */,
-				FEA8D003132283FD00C10516 /* ffmpeg in Resources */,
 				FEA8D004132283FD00C10516 /* movtowav in Resources */,
 				FEA8D005132283FE00C10516 /* movtoy4m in Resources */,
 				FEA8D4FF1322AD4E00C10516 /* Donation in Resources */,
 				FEF466431324E2000079DBCF /* Credits.rtf in Resources */,
-				FEB2647313278730002C46AE /* qt-faststart in Resources */,
-				FEA20995132F5FDD0089B135 /* MP4Box in Resources */,
-				FEA20996132F5FDD0089B135 /* spumux in Resources */,
 				FEFA3D1C1333F651009B543D /* Languages.plist in Resources */,
-				FE2B6AAA1337C2E9001459D4 /* mkvmerge in Resources */,
-				FE2B6AAB1337C2E9001459D4 /* mkvextract in Resources */,
-				FE2B6AAC1337C2E9001459D4 /* mkvinfo in Resources */,
-				FE2B6AAD1337C2E9001459D4 /* kateenc in Resources */,
-				FE2B6AAE1337C2E9001459D4 /* katedec in Resources */,
-				FE2B6AAF1337C2E9001459D4 /* oggz-info in Resources */,
-				FE2B6AB01337C2E9001459D4 /* oggz-dump in Resources */,
-				FE2B6AB11337C2E9001459D4 /* oggz-merge in Resources */,
-				FED0E3F61349803F00F06BA6 /* fondu in Resources */,
 				FE58A6A9135EBE8400A99750 /* SubTest.mpg in Resources */,
 				FE58A6AA135EBE8400A99750 /* SubTest.srt in Resources */,
 				FEA3B06E13630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EBC1376C352001816F2 /* MCInstallPanel.xib in Resources */,
+				FE8E42A813801FAA00C87AAB /* ffmpeg in Resources */,
+				FE8E42A913801FAA00C87AAB /* fondu in Resources */,
+				FE8E42AA13801FAA00C87AAB /* katedec in Resources */,
+				FE8E42AB13801FAA00C87AAB /* kateenc in Resources */,
+				FE8E42AC13801FAA00C87AAB /* mkvextract in Resources */,
+				FE8E42AD13801FAA00C87AAB /* mkvinfo in Resources */,
+				FE8E42AE13801FAA00C87AAB /* mkvmerge in Resources */,
+				FE8E42AF13801FAA00C87AAB /* MP4Box in Resources */,
+				FE8E42B113801FAA00C87AAB /* oggz-info in Resources */,
+				FE8E42B213801FAA00C87AAB /* oggz-merge in Resources */,
+				FE8E42B313801FAA00C87AAB /* oggz-rip in Resources */,
+				FE8E42B413801FAA00C87AAB /* spumux in Resources */,
+				FE43CAAE1380646B00792EBA /* qt-faststart in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
