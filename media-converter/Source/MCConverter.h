@@ -107,7 +107,7 @@
 //Subtitle actions
 //outputType: 0 = mp4, 1 = mkv, 2 = ogg (kate)
 - (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type;
-- (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath;
+- (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath shouldRename:(BOOL)rename;
 - (NSArray *)trackDictionariesFromPath:(NSString *)path withType:(NSString *)type;
 
 //MP4 Subtitle methods
