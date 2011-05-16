@@ -683,7 +683,7 @@
 		encodedOutputFile = outFileWithExtension;
 		
 		if ([subtitleType isEqualTo:@"srt"])
-			[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension]];
+			[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension] shouldRename:YES];
 	}
 	
 	if ([subtitleType isEqualTo:@"dvd"])
@@ -1292,7 +1292,7 @@
 
 	//Extract subtitles from input mp4 / mkv / ogg, when possible
 	NSString *subPath = [temporaryFolder stringByAppendingPathComponent:@"Subtitles"];
-	[self extractSubtitlesFromMovieAtPath:inFile toPath:subPath];
+	[self extractSubtitlesFromMovieAtPath:inFile toPath:subPath shouldRename:(![type isEqualTo:@"dvd"])];
 	
 	NSArray *folderContents = [MCCommonMethods getFullPathsForFolders:[NSArray arrayWithObject:temporaryFolder] withType:@"srt"];
 	NSMutableArray *subtitlePaths = [NSMutableArray array];
@@ -1348,7 +1348,7 @@
 	return YES;
 }
 
-- (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath
+- (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath shouldRename:(BOOL)rename
 {
 	BOOL result = YES;
 	NSArray *supportedFileTypes = [NSArray arrayWithObjects:@"srt", @"ttxt", @"kate", nil];
@@ -1433,7 +1433,7 @@
 							language = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCSubtitleLanguage"];
 						
 						NSDictionary *languageDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Languages" ofType:@"plist"]];
-						if ([[languageDict allKeysForObject:language] count] == 0)
+						if ([[languageDict allKeysForObject:language] count] == 0 && rename == YES)
 						{
 							if ([[oldToNewLanguageCodes allKeys] containsObject:language])
 								language = [oldToNewLanguageCodes objectForKey:language];
@@ -1944,7 +1944,7 @@
 
 		NSString *subPath = [subtitles objectAtIndex:i];
 		NSString *fontSize = [extraOptions objectForKey:@"Subtitle Font Size"];
-		
+		NSLog(@"Sub %i: %@", i + 1, subPath);
 		NSString *fontPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCFontFolderPath"];
 		NSString *language = [[subPath stringByDeletingPathExtension] pathExtension];
 		
@@ -1995,10 +1995,15 @@
 			movieHeight = [sizeParts objectAtIndex:1];
 		}
 		
+		NSString *region = @"NTSC";
+		
+		if ([movieHeight isEqualTo:@"576"])
+			region = @"PAL";
+		
 		NSString *xmlPath = [MCCommonMethods uniquePathNameFromPath:[temporaryFolder stringByAppendingPathComponent:@"sub.xml"] withSeperator:@"-"];
 		NSString *xmlContent = [NSString stringWithFormat:
-		@"<subpictures format=\"NTSC\"><stream><textsub filename=\"%@\" characterset=\"UTF-8\" fontsize=\"%@\" font=\"%@\" horizontal-alignment=\"%@\" vertical-alignment=\"%@\" left-margin=\"%@\" right-margin=\"%@\" top-margin=\"%@\" bottom-margin=\"%@\" subtitle-fps=\"%@\" movie-fps=\"%@\" movie-width=\"%@\" movie-height=\"%@\" force=\"yes\"/></stream></subpictures>"
-		, subPath, fontSize, [font stringByAppendingPathExtension:@"ttf"], hAlign, vAlign, lMargin, rMargin, tMargin, bMargin, fps, fps, movieWidth, movieHeight];
+		@"<subpictures format=\"%@\"><stream><textsub filename=\"%@\" characterset=\"UTF-8\" fontsize=\"%@\" font=\"%@\" horizontal-alignment=\"%@\" vertical-alignment=\"%@\" left-margin=\"%@\" right-margin=\"%@\" top-margin=\"%@\" bottom-margin=\"%@\" subtitle-fps=\"%@\" movie-fps=\"%@\" movie-width=\"%@\" movie-height=\"%@\" force=\"yes\"/></stream></subpictures>"
+		, region, subPath, fontSize, [font stringByAppendingPathExtension:@"ttf"], hAlign, vAlign, lMargin, rMargin, tMargin, bMargin, fps, fps, movieWidth, movieHeight];
 		
 		NSString *error = nil;
 		[MCCommonMethods writeString:xmlContent toFile:xmlPath errorString:&error];
