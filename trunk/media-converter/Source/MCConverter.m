@@ -31,18 +31,18 @@
 	NSArray *oldLanguageCodes = [NSArray arrayWithObjects:	@"alb", @"arm", @"baq", @"bur", @"chi", @"ger", @"fre", @"geo", @"gre", 
 															@"ice", @"scr", @"mac", @"may", @"dut", @"per", @"rum", @"scc", @"slo", 
 															@"tib", @"cze", @"wel", @"al", @"am", @"ba", @"cn", @"cz", @"dk", @"jp", 
-															@"gr", @"zht", @"zhs", @"zh_TW", @"zh_CN", @"chs", @"cht", nil];
+															@"gr", @"zh_TW", @"zh_CN", @"chs", @"cht", nil];
 															
 	NSArray	*newLanguageCodes = [NSArray arrayWithObjects:	@"sqi", @"hye", @"eus", @"mya", @"zho", @"deu", @"fra", @"kat", @"ell", 
 															@"isl", @"hrv", @"mkd", @"msa", @"nld", @"fas", @"ron", @"srp", @"slk", 
-															@"bod", @"ces", @"cym", @"sq", @"hy", @"bs", @"zh", @"cs", @"da", @"ja", 
-															@"el", @"zh", @"zh", @"zh", @"zh", @"zh", @"zh", nil];
+															@"bod", @"ces", @"cym", @"sq", @"hy", @"bs", @"zhs", @"cs", @"da", @"ja", 
+															@"el", @"zht", @"zhs", @"zhs", @"zht", nil];
 															
 	oldToNewLanguageCodes = [NSDictionary dictionaryWithObjects:newLanguageCodes forKeys:oldLanguageCodes];
 	
 	cyrillicLanguages = [NSArray arrayWithObjects:			@"abk", @"ab", @"ava", @"av", @"aze", @"az", @"bak", @"ba", @"bel", @"be",
 															@"bul", @"bg", @"che", @"ce", @" chu", @"cu", @"chv", @"cv", @"kaz", @"kk",
-															@"kom", @"kv", @"kur", @"ku", @"mkd", @"mk", @"mon", @"mn", @"sme", @"se",
+															@"kom", @"kv", @"mkd", @"mk", @"mon", @"mn", @"sme", @"se",
 															@"ron", @"ro", @"rus", @"ru", @"srp", @"sr", @"tgk", @"tg", @"tat", @"tt", @"tuk",
 															@"tk", @"ukr", @"uk", @"uzb", @"uz", nil];
 															
@@ -1385,6 +1385,10 @@
 			{
 				NSString *newPath = currentPath;
 				NSString *language = [[currentPath stringByDeletingPathExtension] pathExtension];
+				language = [[language componentsSeparatedByString:@"-"] objectAtIndex:0];
+				
+				if (![language isEqualTo:@"zh_TW"] | ![language isEqualTo:@"zh_CN"])
+					language = [[language componentsSeparatedByString:@"_"] objectAtIndex:0];
 
 				if ([fileExtension isEqualTo:@"srt"])
 				{
@@ -1394,7 +1398,13 @@
 						//NSString *originalString = [NSString stringWithContentsOfFile:currentPath];
 						
 						NSString *originalString = [MCCommonMethods stringWithContentsOfFile:currentPath encoding:NSUTF8StringEncoding error:nil];
-						NSString *language = [[currentPath stringByDeletingPathExtension] pathExtension];
+						
+						NSDictionary *languageDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Languages" ofType:@"plist"]];
+						if ([[languageDict allKeysForObject:language] count] == 0)
+						{
+							if ([[oldToNewLanguageCodes allKeys] containsObject:language])
+								language = [oldToNewLanguageCodes objectForKey:language];
+						}
 
 						if (!originalString)
 						{
@@ -1402,17 +1412,17 @@
 							
 							if ([cyrillicLanguages containsObject:language])
 								encoding = 0x0000000B;
-							else if ([language isEqualTo:@"zho"] | [language isEqualTo:@"zh"] | [language isEqualTo:@"zht"] | [language isEqualTo:@"zh_TW"] | [language isEqualTo:@"cht"])
+							else if ([language isEqualTo:@"zh"] | [language isEqualTo:@"zht"])
 								encoding = 0x80000632;
-							else if ([language isEqualTo:@"cn"] | [language isEqualTo:@"zhs"] | [language isEqualTo:@"zh_CN"] | [language isEqualTo:@"chs"])
+							else if ([language isEqualTo:@"cn"] | [language isEqualTo:@"zhs"])
 								encoding = 0x80000421;
-							else if ([language isEqualTo:@"ara"] | [language isEqualTo:@"ar"] | [language isEqualTo:@"som"] | [language isEqualTo:@"so"])
+							else if ([language isEqualTo:@"ara"] | [language isEqualTo:@"ar"] | [language isEqualTo:@"som"] | [language isEqualTo:@"so"] | [language isEqualTo:@"kur"] | [language isEqualTo:@"ku"])
 								encoding = 0x80000506;
-							else if ([language isEqualTo:@"ell"] | [language isEqualTo:@"el"] | [language isEqualTo:@"gr"])
+							else if ([language isEqualTo:@"ell"] | [language isEqualTo:@"el"])
 								encoding = 0x0000000D;
 							else if ([language isEqualTo:@"heb"] | [language isEqualTo:@"he"] | [language isEqualTo:@"yid"] | [language isEqualTo:@"yi"])
 								encoding = 0x80000505;
-							else if ([language isEqualTo:@"jpn"] | [language isEqualTo:@"ja"] | [language isEqualTo:@"jp"])
+							else if ([language isEqualTo:@"jpn"] | [language isEqualTo:@"ja"])
 								encoding = 0x00000003;
 							else if ([language isEqualTo:@"tur"] | [language isEqualTo:@"tr"])
 								encoding = 0x0000000E;
@@ -1432,11 +1442,10 @@
 						if ([language isEqualTo:@""])
 							language = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCSubtitleLanguage"];
 						
-						NSDictionary *languageDict = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Languages" ofType:@"plist"]];
-						if ([[languageDict allKeysForObject:language] count] == 0 && rename == YES)
+						if (rename == YES)
 						{
-							if ([[oldToNewLanguageCodes allKeys] containsObject:language])
-								language = [oldToNewLanguageCodes objectForKey:language];
+							if ([language isEqualTo:@"zht"] | [language isEqualTo:@"zhs"])
+								language = @"zh";
 						}
 						
 						NSString *tmpUTFFileName = [MCCommonMethods uniquePathNameFromPath:[[outPath stringByAppendingPathExtension:language] stringByAppendingPathExtension:@"srt"] withSeperator:@"_"];
@@ -1944,16 +1953,17 @@
 
 		NSString *subPath = [subtitles objectAtIndex:i];
 		NSString *fontSize = [extraOptions objectForKey:@"Subtitle Font Size"];
-		NSLog(@"Sub %i: %@", i + 1, subPath);
+
 		NSString *fontPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCFontFolderPath"];
 		NSString *language = [[subPath stringByDeletingPathExtension] pathExtension];
+		language = [[language componentsSeparatedByString:@"_"] objectAtIndex:0];
 		
 		NSString *font = nil;
 		if ([cyrillicLanguages containsObject:language])
 			font = @"HelveticaCYPlain";
-		else if ([language isEqualTo:@"zho"] | [language isEqualTo:@"zh"] | [language isEqualTo:@"chs"])
+		else if ([language isEqualTo:@"cn"] | [language isEqualTo:@"zhs"])
 			font = @"Hei";
-		else if ([language isEqualTo:@"ara"] | [language isEqualTo:@"ar"] | [language isEqualTo:@"som"] | [language isEqualTo:@"so"])
+		else if ([language isEqualTo:@"ara"] | [language isEqualTo:@"ar"] | [language isEqualTo:@"som"] | [language isEqualTo:@"so"] | [language isEqualTo:@"kur"] | [language isEqualTo:@"ku"])
 			font = @"AlBayan";
 		else if ([language isEqualTo:@"ell"] | [language isEqualTo:@"el"])
 			font = @"Lucida Sans Unicode";
@@ -1965,11 +1975,11 @@
 			font = @"Ayuthaya";
 		else if ([language isEqualTo:@"kor"] | [language isEqualTo:@"ko"])
 			font = @"AppleGothic";
-		else if ([language isEqualTo:@"cht"] | [language isEqualTo:@"zht"])
+		else if ([language isEqualTo:@"zh"] | [language isEqualTo:@"zht"])
 			font = @"LiHei Pro";
 		else if ([language isEqualTo:@"hye"] | [language isEqualTo:@"hy"])
 			font = @"MshtakanRegular";
-		
+
 		if (font == nil | ![defaultManager fileExistsAtPath:[fontPath stringByAppendingPathComponent:[font stringByAppendingPathExtension:@"ttf"]]])
 			font = [extraOptions objectForKey:@"Subtitle Font"];
 
