@@ -1958,15 +1958,14 @@
 		NSString *language = [[subPath stringByDeletingPathExtension] pathExtension];
 		language = [[language componentsSeparatedByString:@"_"] objectAtIndex:0];
 		
+		//Note Kudish doesn't seem to work, don't know why :-(
 		NSString *font = nil;
-		if ([cyrillicLanguages containsObject:language])
-			font = @"HelveticaCYPlain";
+		if ([cyrillicLanguages containsObject:language] | [language isEqualTo:@"ell"] | [language isEqualTo:@"el"])
+			font = @"Helvetica";
 		else if ([language isEqualTo:@"cn"] | [language isEqualTo:@"zhs"])
 			font = @"Hei";
 		else if ([language isEqualTo:@"ara"] | [language isEqualTo:@"ar"] | [language isEqualTo:@"som"] | [language isEqualTo:@"so"] | [language isEqualTo:@"kur"] | [language isEqualTo:@"ku"])
 			font = @"AlBayan";
-		else if ([language isEqualTo:@"ell"] | [language isEqualTo:@"el"])
-			font = @"Lucida Sans Unicode";
 		else if ([language isEqualTo:@"heb"] | [language isEqualTo:@"he"] | [language isEqualTo:@"yid"] | [language isEqualTo:@"yi"])
 			font = @"Raanana";
 		else if ([language isEqualTo:@"jpn"] | [language isEqualTo:@"ja"])
@@ -1976,7 +1975,7 @@
 		else if ([language isEqualTo:@"kor"] | [language isEqualTo:@"ko"])
 			font = @"AppleGothic";
 		else if ([language isEqualTo:@"zh"] | [language isEqualTo:@"zht"])
-			font = @"LiHei Pro";
+			font = @"儷黑 Pro";
 		else if ([language isEqualTo:@"hye"] | [language isEqualTo:@"hy"])
 			font = @"MshtakanRegular";
 
@@ -2330,9 +2329,9 @@
 - (void)extractImportantFontsToPath:(NSString *)path statusStart:(NSInteger)start
 {
 	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
-	NSMutableArray *fonts = [NSMutableArray arrayWithObjects:@"/Library/Fonts/HelveticaCY.dfont", @"/System/Library/Fonts/Helvetica.dfont", nil];
-	NSMutableArray *copyFonts = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
-	NSMutableArray *newCopyFontNames = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
+	NSMutableArray *fonts = [NSMutableArray arrayWithObjects:@"/System/Library/Fonts/Helvetica.dfont", nil];
+	NSMutableArray *copyFonts = [NSMutableArray arrayWithObjects:@"Helvetica.ttf", nil];
+	NSMutableArray *newCopyFontNames = [NSMutableArray arrayWithObjects:@"Helvetica.ttf", nil];
 	
 	if ([MCCommonMethods OSVersion] < 0x1060)
 	{
@@ -2341,9 +2340,9 @@
 		[newCopyFontNames addObjectsFromArray:[NSArray arrayWithObjects:@"Hei.ttf", @"Osaka.ttf", nil]];
 	}
 	#else
-	NSMutableArray *fonts = [NSMutableArray arrayWithObjects:@"/Library/Fonts/HelveticaCY.dfont", @"/System/Library/Fonts/Helvetica.dfont", nil];
-	NSMutableArray *copyFonts = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
-	NSMutableArray *newCopyFontNames = [NSMutableArray arrayWithObjects:@"HelveticaCYPlain.ttf", @"Helvetica.ttf", nil];
+	NSMutableArray *fonts = [NSMutableArray arrayWithObjects:@"/System/Library/Fonts/Helvetica.dfont", nil];
+	NSMutableArray *copyFonts = [NSMutableArray arrayWithObjects:@"Helvetica.ttf", nil];
+	NSMutableArray *newCopyFontNames = [NSMutableArray arrayWithObjects:@"Helvetica.ttf", nil];
 	
 	if ([MCCommonMethods OSVersion] < 0x1050)
 	{
