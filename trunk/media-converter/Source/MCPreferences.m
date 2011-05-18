@@ -1635,15 +1635,15 @@
 	progressPanel = nil;
 		
 	NSArray *defaultFonts = [NSArray arrayWithObjects:		@"AppleGothic.ttf", @"Hei.ttf", 
-															@"Osaka.ttf", @"HelveticaCYPlain.ttf", 
-															@"AlBayan.ttf", @"Lucida Sans Unicode.ttf",
+															@"Osaka.ttf", 
+															@"AlBayan.ttf",
 															@"Raanana.ttf", @"Ayuthaya.ttf",
-															@"LiHei Pro.ttf", @"MshtakanRegular.ttf",
+															@"儷黑 Pro.ttf", @"MshtakanRegular.ttf",
 															nil];
 															
 	NSArray *defaultLanguages = [NSArray arrayWithObjects:		NSLocalizedString(@"Korean", nil), NSLocalizedString(@"Simplified Chinese", nil), 
-																NSLocalizedString(@"Japanese", nil), NSLocalizedString(@"Cyrilic", nil), 
-																NSLocalizedString(@"Arabic", nil), NSLocalizedString(@"Greek", nil),
+																NSLocalizedString(@"Japanese", nil), 
+																NSLocalizedString(@"Arabic", nil),
 																NSLocalizedString(@"Hebrew", nil), NSLocalizedString(@"Thai", nil),
 																NSLocalizedString(@"Traditional Chinese", nil), NSLocalizedString(@"Armenian", nil),
 																nil];
