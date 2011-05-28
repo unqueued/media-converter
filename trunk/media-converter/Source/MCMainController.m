@@ -190,6 +190,7 @@
 			{
 				NSString *path = [[presets objectAtIndex:i] objectForKey:@"Path"];
 				NSMutableDictionary *preset = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+				[preset setObject:@"1.2" forKey:@"Version"];
 
 				NSArray *encoderOptions = [preset objectForKey:@"Encoder Options"];
 				NSMutableDictionary *extraOptions = [preset objectForKey:@"Extra Options"];
