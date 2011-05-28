@@ -139,10 +139,28 @@
 		<integer>1</integer>
 		<key>Keep Aspect</key>
 		<integer>1</integer>
+		<key>Subtitle Bottom Margin</key>
+		<string>30</string>
+		<key>Subtitle Font</key>
+		<string>Helvetica</string>
+		<key>Subtitle Font Size</key>
+		<string>24</string>
+		<key>Subtitle Horizontal Alignment</key>
+		<string>center</string>
+		<key>Subtitle Left Margin</key>
+		<string>60</string>
+		<key>Subtitle Right Margin</key>
+		<string>60</string>
+		<key>Subtitle Top Margin</key>
+		<string>20</string>
+		<key>Subtitle Type</key>
+		<string>mp4</string>
+		<key>Subtitle Vertical Alignment</key>
+		<string>bottom</string>
 	</dict>
 	<key>Name</key>
 	<string>iPod / iPhone (H.264)</string>
 	<key>Version</key>
-	<string>1.0</string>
+	<string>1.2</string>
 </dict>
 </plist>
