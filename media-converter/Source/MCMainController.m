@@ -81,6 +81,9 @@
 	
 	if (!hasSupportFolder | [presets count] == 0)
 	{
+		//Set last check to 1.2 since we're won't need update the presets
+		[standardDefaults setObject:[NSNumber numberWithCGFloat:1.2] forKey:@"MCLastCheck"];
+	
 		if (!hasSupportFolder)
 		{
 			NSString *presetsFolder = [[NSBundle mainBundle] pathForResource:@"Presets" ofType:@""];	
