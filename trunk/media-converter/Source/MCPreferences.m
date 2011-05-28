@@ -697,7 +697,7 @@
 		}
 	
 		[presetDictionary setObject:[nameField stringValue] forKey:@"Name"];
-		[presetDictionary setObject:@"1.0" forKey:@"Version"];
+		[presetDictionary setObject:@"1.2" forKey:@"Version"];
 		[presetDictionary setObject:[extensionField stringValue] forKey:@"Extension"];
 		[presetDictionary setObject:[(MCOptionsDelegate *)[advancedTableView delegate] options] forKey:@"Encoder Options"];
 		[presetDictionary setObject:extraOptions forKey:@"Extra Options"];
