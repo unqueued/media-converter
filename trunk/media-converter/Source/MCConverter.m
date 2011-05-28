@@ -2440,10 +2440,13 @@
 	NSArray *arguments = [NSArray arrayWithObject:urlString];
 	[MCCommonMethods launchNSTaskAtPath:curlPath withArguments:arguments outputError:NO outputString:YES output:&string inputPipe:nil predefinedTask:nil];
 	
-	if ([string rangeOfString:@"<title>"].length > 0 && [string rangeOfString:@"</title>"].length > 0)
+	if ([string rangeOfString:@"<meta name=\"title\" content=\""].length > 0)
 	{
-		NSString *titleString = [[[[string componentsSeparatedByString:@"<title>"] objectAtIndex:1] componentsSeparatedByString:@"</title>"] objectAtIndex:0];
-		titleString = [titleString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		NSString *titleString = [[[[string componentsSeparatedByString:@"<meta name=\"title\" content=\""] objectAtIndex:1] componentsSeparatedByString:@"\""] objectAtIndex:0];
+		
+		return titleString;
+		
+		/*titleString = [titleString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 		NSArray *parts = [titleString componentsSeparatedByString:@"-"];
 		
 		NSInteger i;
@@ -2458,7 +2461,7 @@
 				titleString = [partString substringWithRange:NSMakeRange(1, [partString length] - 1)];
 		}
 		
-		return (NSString*)CFXMLCreateStringByUnescapingEntities(kCFAllocatorDefault, (CFStringRef)titleString, NULL);
+		return (NSString*)CFXMLCreateStringByUnescapingEntities(kCFAllocatorDefault, (CFStringRef)titleString, NULL);*/
 	}
 	
 	return [urlString lastPathComponent];
