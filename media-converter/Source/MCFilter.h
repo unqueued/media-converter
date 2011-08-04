@@ -19,6 +19,8 @@
 	NSMutableDictionary *filterOptions;
 }
 
+- (id)initView;
+
 - (void)setOptions:(NSDictionary *)options;
 - (void)setupView;
 - (void)resetView;
