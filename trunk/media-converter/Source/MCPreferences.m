@@ -1435,7 +1435,7 @@
 		[presetsTableView selectRowIndexes:[NSIndexSet indexSetWithIndex:destIndex] byExtendingSelection:YES];
 	
 	[[NSUserDefaults standardUserDefaults] setObject:presetsData forKey:@"MCPresets"];
-	[delegate performSelector:@selector(update)];
+	[delegate performSelector:@selector(updatePresets)];
 }
 
 ///////////////////
@@ -1646,7 +1646,7 @@
 	
 	[presetsTableView reloadData];
 	
-	[delegate performSelector:@selector(update)];
+	[delegate performSelector:@selector(updatePresets)];
 }
 
 - (BOOL)updateForKey:(NSString *)key withProperty:(id)property
