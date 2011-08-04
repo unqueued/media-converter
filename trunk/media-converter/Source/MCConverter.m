@@ -9,6 +9,7 @@
 #import "NSNumber_Extensions.h"
 #import "NSString_Extensions.h"
 #import "NSArray_Extensions.h"
+#import "MCFilter.h"
 
 @implementation MCConverter
 
@@ -46,7 +47,6 @@
 															@"ron", @"ro", @"rus", @"ru", @"srp", @"sr", @"tgk", @"tg", @"tat", @"tt", @"tuk",
 															@"tk", @"ukr", @"uk", @"uzb", @"uz", nil];
 															
-	
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	[defaultCenter addObserver:self selector:@selector(cancelEncoding) name:@"MCStopConverter" object:nil];
 	[defaultCenter postNotificationName:@"MCCancelNotificationChanged" object:@"MCStopConverter"];
@@ -58,6 +58,12 @@
 {
 	[convertedFiles release];
 	convertedFiles = nil;
+	
+	if (defaultSettings != nil)
+	{
+		[defaultSettings release];
+		defaultSettings = nil;
+	}
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
@@ -71,12 +77,14 @@
 #pragma mark -
 #pragma mark •• Encode actions
 
-- (NSInteger)batchConvert:(NSArray *)files toDestination:(NSString *)destination withOptions:(NSDictionary *)options errorString:(NSString **)error
+- (NSInteger)batchConvert:(NSArray *)files toDestination:(NSString *)destination withOptions:(NSDictionary *)options withDefaults:(NSDictionary *)defaults errorString:(NSString **)error
 {
 	//Set the options
 	convertDestination = destination;
 	convertExtension = [options objectForKey:@"Extension"];
 	convertOptions = options;
+	
+	defaultSettings = [defaults mutableCopy];
 	
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	
@@ -244,8 +252,8 @@
 		[options setObject:nil forKey:@"-aspect"];
 		
 		//Must be a better way since multiple videofilters can be set
-		if ([[options objectForKey:@"-vf"] rangeOfString:@"setdar"].length > 0)
-			[options setObject:nil forKey:@"-vf"];
+		//if ([[options objectForKey:@"-vf"] rangeOfString:@"setdar"].length > 0)
+		//	[options setObject:nil forKey:@"-vf"];
 	
 		NSString *newSizeString;
 
@@ -323,10 +331,18 @@
 		
 				NSInteger padSize = [self getPadSize:calculateSize withAspect:NSMakeSize(aspectWidth, aspectHeight) withTopBars:topBars];
 
-				if (topBars)
+				/*if (topBars)
 					padOptions = [NSArray arrayWithObjects:@"-vf", [NSString stringWithFormat:@"scale=%i:%i,pad=%i:%i:0:%i:black", (NSInteger)width, (NSInteger)height - (padSize * 2), (NSInteger)width, (NSInteger)height, padSize], nil];
 				else
-					padOptions = [NSArray arrayWithObjects:@"-vf", [NSString stringWithFormat:@"scale=%i:%i,pad=%i:%i:%i:0:black", (NSInteger)width - (padSize * 2), (NSInteger)height, (NSInteger)width, (NSInteger)height, padSize], nil];
+					padOptions = [NSArray arrayWithObjects:@"-vf", [NSString stringWithFormat:@"scale=%i:%i,pad=%i:%i:%i:0:black", (NSInteger)width - (padSize * 2), (NSInteger)height, (NSInteger)width, (NSInteger)height, padSize], nil];*/
+			
+				NSString *padString;
+				if (topBars)
+					padString = [NSString stringWithFormat:@"scale=%i:%i,pad=%i:%i:0:%i:black", (NSInteger)width, (NSInteger)height - (padSize * 2), (NSInteger)width, (NSInteger)height, padSize];
+				else
+					padString = [NSString stringWithFormat:@"scale=%i:%i,pad=%i:%i:%i:0:black", (NSInteger)width - (padSize * 2), (NSInteger)height, (NSInteger)width, (NSInteger)height, padSize];
+				
+				[options setObject:padString forKey:@"-vf"];
 			}
 		}
 	}
@@ -345,7 +361,11 @@
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Converting subtitles: %@…", nil), displayName]];
 		temporarySubtitleFile = [[temporaryFolder stringByAppendingPathComponent:@"tmpmovie"] stringByAppendingPathExtension:subtitleType];
-		[self createMovieWithSubtitlesAtPath:temporarySubtitleFile inputFile:path ouputType:subtitleType];
+		BOOL createdFile = [self createMovieWithSubtitlesAtPath:temporarySubtitleFile inputFile:path ouputType:subtitleType currentOptions:options];
+		
+		//When the're no subtitle files the above method will fail
+		if (createdFile == NO)
+			subtitleType = @"none";
 	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSLocalizedString(@"Encoding: ", Localized) stringByAppendingString:displayName]];
@@ -406,6 +426,14 @@
 		[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
 	
 		NSMutableArray *args = [NSMutableArray array];
+		
+		NSString *timeLimit = [options objectForKey:@"-t"];
+		if (timeLimit != nil)
+		{
+			[args addObject:@"-t"];
+			[args addObject:timeLimit];
+		}
+		
 		[args addObjectsFromArray:quicktimeOptions];
 		[args addObjectsFromArray:wavOptions];
 		[args addObjectsFromArray:inputOptions];
@@ -423,7 +451,7 @@
 			{
 				threads = object;
 			}
-			else
+			else if (![key isEqualTo:@"-t"])
 			{
 				[args addObject:key];
 			
@@ -453,6 +481,141 @@
 		[args addObjectsFromArray:padOptions];
 		[args addObject:@"-metadata"];
 		[args addObject:[NSString stringWithFormat:@"frontend=Media Encoder %@", version]];
+		
+		NSString *vfFilterString = @"";
+		NSArray *vfFilters = [options objectsForKey:@"-vf"];
+		NSString *movieString = @"";
+		BOOL useHardSubtitles = ([subtitleType isEqualTo:@"hard"]);
+		NSString *overlayString = @"";
+		NSArray *filters = [convertOptions objectForKey:@"Video Filters"];
+		
+		NSInteger outCount = 0;
+		NSString *outString = @"[out]";
+		NSString *inString = @"[in]";
+		
+		if ([vfFilters count] > 0)
+		{
+			NSInteger y;
+			for (y = 0; y < [vfFilters count]; y ++)
+			{
+				if (y > 0)
+				{
+					inString = [NSString stringWithFormat:@"[out%i]", outCount - 1];
+				}
+				
+				if (y == [vfFilters count] - 1 && !(useHardSubtitles | [filters count] > 0))
+				{
+					outString = @"[out]";
+				}
+				else
+				{
+					outString = [NSString stringWithFormat:@"[out%i]", outCount];
+					outCount =+ 1;
+				}
+			
+				NSString *vfFilter = [vfFilters objectAtIndex:y];
+				vfFilterString = [NSString stringWithFormat:@"%@%@%@%@", vfFilterString, inString, vfFilter, outString];
+				
+				if (y == [vfFilters count] - 1 && (useHardSubtitles | [filters count] > 0))
+					vfFilterString = [NSString stringWithFormat:@"%@;", vfFilterString];
+			}
+		}
+		
+		
+		if ([filters count] > 0)
+		{
+			NSString *newImagePath = [temporaryFolder stringByAppendingPathComponent:@"overlay.png"];
+			
+			NSString *sizeString = [options objectForKey:@"-s"];
+			CGFloat width;
+			CGFloat height;
+
+			if (sizeString)
+			{
+				NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
+				width = [[sizeParts objectAtIndex:0] cgfloatValue];
+				height = [[sizeParts objectAtIndex:1] cgfloatValue];
+			}
+			else
+			{
+				width = (CGFloat)inputWidth;
+				height = (CGFloat)inputHeight;
+			}
+			
+			NSImage *overlayImage = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
+			
+			NSInteger z;
+			for (z = 0; z < [filters count]; z ++)
+			{
+				NSDictionary *filterDictionary = [filters objectAtIndex:z];
+				MCFilter *filter = [[NSClassFromString([filterDictionary objectForKey:@"Type"]) alloc] init];
+				[filter setOptions:[filterDictionary objectForKey:@"Options"]];
+				
+				NSImage *filterImage = [filter imageWithSize:NSMakeSize(width, height)];
+
+				if (filterImage != nil)
+				{
+					[overlayImage lockFocus];
+					[filterImage drawInRect:NSMakeRect(0, 0, width, height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+					[overlayImage unlockFocus];
+				}
+			}
+			
+			NSData *tiffData = [overlayImage TIFFRepresentation];
+			NSBitmapImageRep *bitmap = [NSBitmapImageRep imageRepWithData:tiffData];
+			NSData *imageData = [bitmap representationUsingType:NSPNGFileType properties:nil];
+			
+			NSError *writeError;
+			BOOL succes = [imageData writeToFile:newImagePath options:NSAtomicWrite error:&writeError];
+			
+			[overlayImage release];
+			
+			if (succes == NO && writeError != nil)
+				NSLog(@"Error: %@", writeError);
+				
+			if ([vfFilters count] > 0)
+				inString = outString;
+			
+			NSString *outString = @"[out]";
+			NSString *myString = @"[wm]";
+			
+			if ([subtitleType isEqualTo:@"hard"])
+			{
+				outString = [NSString stringWithFormat:@"[out%i];", outCount];
+				myString = @"[wm0]";
+			}
+			
+			movieString = [NSString stringWithFormat:@"movie=%@ %@;", newImagePath, myString];
+			overlayString = [NSString stringWithFormat:@"%@%@ overlay=0:0:1 select=gte(t\\,10)*lte(t\\,20) %@", inString, myString, outString];
+		}
+		
+		if ([subtitleType isEqualTo:@"hard"])
+		{
+			NSString *inString = @"[in]";
+			NSString *myString = @"[wm]";
+			
+			if ([filters count] > 0)
+			{
+				inString = [NSString stringWithFormat:@"[out%i]", outCount];
+				myString = @"[wm1]";
+			}
+			else if ([vfFilters count] > 0)
+			{
+				inString = [NSString stringWithFormat:@"[out%i]", outCount - 1];
+				myString = @"[wm1]";
+			}
+		
+			movieString = [NSString stringWithFormat:@"%@movie=%@ %@;", movieString, temporarySubtitleFile, myString];
+			overlayString = [NSString stringWithFormat:@"%@%@%@ overlay=0:0:1 select=gte(t\\,10)*lte(t\\,20) [out]", overlayString, inString, myString];
+		}
+		
+		if ([filters count] > 0 | [subtitleType isEqualTo:@"hard"] | [vfFilters count] > 0)
+		{
+			[args addObject:@"-vf"];
+			[args addObject:[NSString stringWithFormat:@"%@%@%@", vfFilterString, movieString, overlayString]];
+
+			[options setObject:nil forKey:@"-vf"];
+		}
 		
 		if (passes == 2)
 			[ffmpeg setCurrentDirectoryPath:@"/tmp"];
@@ -501,7 +664,7 @@
 
 			[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:savedFontPath];
 		
-			[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd"];
+			[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd" currentOptions:nil];
 		}
 
 		if (useQuickTime == YES)
@@ -1082,14 +1245,14 @@
 	if ([inputString rangeOfString:@"Video:"].length > 0)
 	{
 		NSArray *resolutionArray = [[[[[inputString componentsSeparatedByString:@"Video:"] objectAtIndex:1] componentsSeparatedByString:@"\n"] objectAtIndex:0] componentsSeparatedByString:@"x"];
-		NSArray *fpsArray = [[[inputString componentsSeparatedByString:@" tbc"] objectAtIndex:0] componentsSeparatedByString:@","];
+		NSArray *fpsArray = [[[inputString componentsSeparatedByString:@" tbr"] objectAtIndex:0] componentsSeparatedByString:@","];
 		
 		NSArray *beforeX = [[resolutionArray objectAtIndex:0] componentsSeparatedByString:@" "];
 		NSArray *afterX = [[resolutionArray objectAtIndex:1] componentsSeparatedByString:@" "];
 		
 		inputWidth = [[beforeX objectAtIndex:[beforeX count] - 1] integerValue];
 		inputHeight = [[afterX objectAtIndex:0] integerValue];
-		inputFps = [[fpsArray objectAtIndex:[fpsArray count] - 1] integerValue];
+		inputFps = [[fpsArray objectAtIndex:[fpsArray count] - 1] cgfloatValue];
 	
 		if (inputFps == 25 && [inputString rangeOfString:@"Video: dvvideo"].length > 0)
 		{
@@ -1285,13 +1448,13 @@
 #pragma mark •• Subtitle actions
 
 //outputType: 0 = mp4, 1 = mkv, 2 = ogg (kate)
-- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type
+- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type currentOptions:(NSArray *)options
 {
 	BOOL result;
 	BOOL firstSubtitle = YES;
 
 	//Extract subtitles from input mp4 / mkv / ogg, when possible
-	NSString *subPath = [temporaryFolder stringByAppendingPathComponent:@"Subtitles"];
+	NSString *subPath = [temporaryFolder stringByAppendingPathComponent:[[inFile lastPathComponent] stringByDeletingPathExtension]];
 	[self extractSubtitlesFromMovieAtPath:inFile toPath:subPath shouldRename:(![type isEqualTo:@"dvd"])];
 	
 	NSArray *folderContents = [MCCommonMethods getFullPathsForFolders:[NSArray arrayWithObject:temporaryFolder] withType:@"srt"];
@@ -1337,13 +1500,37 @@
 	if ([subtitlePaths count] > 0)
 	{
 		if ([type isEqualTo:@"mkv"])
+		{
 			[self addSubtitlesToMKVMovie:subtitlePaths outPath:path forLanguages:languages];
+		}
 		else if ([type isEqualTo:@"kate"])
+		{
 			[self addSubtitlesToOGGMovie:subtitlePaths outPath:path forLanguages:languages];
+		}
+		else if ([type isEqualTo:@"hard"])
+		{
+			NSString *defaultLanguage = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCSubtitleLanguage"];
+		
+			NSString *subtitlePath = [[[temporaryFolder stringByAppendingPathComponent:[inFile lastPathComponent]] stringByDeletingPathExtension] stringByAppendingPathExtension:@"srt"];
+
+			if (![[MCCommonMethods defaultManager] fileExistsAtPath:subtitlePath])
+				subtitlePath = [[[[temporaryFolder stringByAppendingPathComponent:[inFile lastPathComponent]] stringByDeletingPathExtension] stringByAppendingPathExtension:defaultLanguage] stringByAppendingPathExtension:@"srt"];
+
+			if (![[MCCommonMethods defaultManager] fileExistsAtPath:subtitlePath])
+				return NO;
+
+			[self createSubtitleMovieAtPath:path withOptions:options subtitleFile:subtitlePath];
+		}
+	}
+	else if (![type isEqualTo:@"dvd"])
+	{
+		return NO;
 	}
 	
 	if ([type isEqualTo:@"dvd"])
+	{
 		[self addDVDSubtitlesToOutputStreamFromTask:ffmpeg withSubtitles:subtitlePaths toPath:path];
+	}
 	
 	return YES;
 }
@@ -1485,6 +1672,197 @@
 		return [self trackDictionariesFromOGGMovieAtPath:path];
 		
 	return nil;
+}
+
+//Hardcoded Subtitle methods
+
+#pragma mark -
+#pragma mark ••• Hardcoded Subtitle methods
+
+- (void)createSubtitleMovieAtPath:(NSString *)path withOptions:(NSArray *)options subtitleFile:(NSString *)file
+{
+	NSSize movieSize;
+	
+	NSString *sizeString = [options objectForKey:@"-s"];
+	if (sizeString != nil)
+	{
+		NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
+		movieSize = NSMakeSize([[sizeParts objectAtIndex:0] cgfloatValue], [[sizeParts objectAtIndex:1] cgfloatValue]);
+	}
+	else
+	{
+		movieSize = NSMakeSize((CGFloat)inputWidth, (CGFloat)inputHeight);
+	}
+	
+	CGFloat fps;
+	NSString *fpsString = [options objectForKey:@"-fps"];
+	if (fpsString != nil)
+		fps = [fpsString cgfloatValue];
+	else
+		fps = inputFps;
+
+	NSString *srtFile = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
+
+	NSInteger i = 1;
+	//Calculate time to fill the empty spaces between subtitles
+	CGFloat currentTime = 0;
+
+	CGFloat secondPerFrame = 1.00 / fps;
+
+	//Replace returns with html return
+	//Windows return 0d 0a
+	srtFile = [self stringByReplacingOccurrencesOfString:@"\r\n" withString:@"<br>" inString:srtFile];
+	//Unix-like (including Mac OS X) return 0a
+	srtFile = [self stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>" inString:srtFile];
+	//Old Mac (Mac OS 9 and earlier) return 0d -- just in case ;-)
+	srtFile = [self stringByReplacingOccurrencesOfString:@"\r" withString:@"<br>" inString:srtFile];
+	
+	//A srt file should start with a new line or carriage return + new line, but doesn't always so fix it then
+	if (![[srtFile substringWithRange:NSMakeRange(0, 4)] isEqualTo:@"<br>"])
+		srtFile = [NSString stringWithFormat:@"<br>%@", srtFile];
+	
+	//Create a empty image used between subtitles (do some bogus drawing so it can be saved or served to pipe
+	NSImage *emptyImage = [[NSImage alloc] initWithSize:movieSize];
+		
+	[emptyImage lockFocus];
+	NSBezierPath *emptyPath = [NSBezierPath bezierPathWithRect:NSMakeRect(0,0,0,0)];
+	[emptyPath fill]; 
+	[emptyImage unlockFocus];
+		
+	NSData *tiffData = [emptyImage TIFFRepresentation];
+	NSBitmapImageRep *bitmap = [NSBitmapImageRep imageRepWithData:tiffData];
+	NSData *emptyImageData = [bitmap representationUsingType:NSPNGFileType properties:nil];
+	
+	NSString *emptyImagePath = [temporaryFolder stringByAppendingPathComponent:@"empty.png"];
+	[emptyImageData writeToFile:emptyImagePath atomically:YES];
+	
+	[emptyImage release];
+	
+	//Create a filehandle to write all movie data to
+	[[NSFileManager defaultManager] createFileAtPath:path contents:[NSData data] attributes:nil];
+	NSFileHandle *outHandle = [NSFileHandle fileHandleForUpdatingAtPath:path];
+	
+	BOOL timeLimit = ([options objectForKey:@"-t"] != nil);
+	
+	while ([srtFile rangeOfString:[NSString stringWithFormat:@"<br>%i<br>", i]].length > 0)
+	{
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		
+		NSArray *components = [srtFile componentsSeparatedByString:[NSString stringWithFormat:@"<br>%i<br>", i]];
+		
+		NSInteger startIndex = 0;
+		if ([components count] > 1)
+			startIndex = 1;
+		
+		if ([srtFile rangeOfString:[NSString stringWithFormat:@"<br>%i<br>", i + 1]].length > 0)
+		{
+			components = [[components objectAtIndex:startIndex] componentsSeparatedByString:[NSString stringWithFormat:@"<br>%i<br>", i + 1]];
+			startIndex = 0;
+		}
+		else
+		{
+			startIndex = 1;
+		}	
+		
+		NSString *subSentence = [components objectAtIndex:startIndex];
+		NSArray *sentences = [subSentence componentsSeparatedByString:@"<br>"];
+		NSString *timeString = [sentences objectAtIndex:0];
+		NSArray *times = [timeString componentsSeparatedByString:@" --> "];
+		
+		if (timeLimit && ([self secondsFromFormatedString:[times objectAtIndex:0]] > [[options objectForKey:@"-t"] cgfloatValue]))
+			break;
+		
+		CGFloat subStart = [self secondsFromFormatedString:[times objectAtIndex:0]] / secondPerFrame;
+		CGFloat subEnd = [self secondsFromFormatedString:[times objectAtIndex:1]] / secondPerFrame;
+		NSInteger subDuration = subEnd - subStart;
+		NSInteger emptyDuration = subStart - currentTime;
+		
+		ffmpeg = [[NSTask alloc] init];
+		[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
+		[ffmpeg setArguments:[NSArray arrayWithObjects:@"-loop_input", @"-r", [NSString stringWithFormat:@"%f", fps], @"-vframes", [NSString stringWithFormat:@"%i", emptyDuration], @"-i", emptyImagePath, @"-vcodec", @"copy", @"-f", @"avi", @"-", nil]];
+		[ffmpeg setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		[ffmpeg setStandardOutput:outHandle];
+		[ffmpeg launch];
+		
+		currentTime = currentTime + emptyDuration;
+		
+		[ffmpeg waitUntilExit];
+		[ffmpeg release];
+		ffmpeg = nil;
+		
+		[outHandle seekToEndOfFile];
+		
+		NSString *string = [[subSentence componentsSeparatedByString:[NSString stringWithFormat:@"%@<br>", timeString]] objectAtIndex:1];
+
+		while ([string length] > 4 && [[string substringWithRange:NSMakeRange([string length] - 4, 4)] isEqualTo:@"<br>"])
+			string = [string substringWithRange:NSMakeRange(0, [string length] - 4)];
+		
+		NSImage *subImage = [[NSImage alloc] initWithSize:movieSize];
+		
+		[defaultSettings addEntriesFromDictionary:[convertOptions objectForKey:@"Extra Options"]];
+		
+		NSImage *image = [MCCommonMethods overlayImageWithObject:string withSettings:defaultSettings inputImage:subImage];
+		
+		[subImage release];
+		subImage = nil;
+		
+		tiffData = [image TIFFRepresentation];
+		bitmap = [NSBitmapImageRep imageRepWithData:tiffData];
+		NSData *imageData = [bitmap representationUsingType:NSPNGFileType properties:nil];
+		
+		NSString *imagePath = [temporaryFolder stringByAppendingPathComponent:@"not-empty.png"];
+		[imageData writeToFile:imagePath atomically:YES];
+
+		ffmpeg = [[NSTask alloc] init];
+		[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
+		[ffmpeg setArguments:[NSArray arrayWithObjects:@"-loop_input", @"-r", [NSString stringWithFormat:@"%f", fps], @"-vframes", [NSString stringWithFormat:@"%i", subDuration], @"-i", imagePath, @"-vcodec", @"copy", @"-f", @"avi", @"-", nil]];
+		[ffmpeg setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		[ffmpeg setStandardOutput:outHandle];
+		[ffmpeg launch];
+		
+		currentTime = currentTime + subDuration;
+		
+		[ffmpeg waitUntilExit];
+		[ffmpeg release];
+		ffmpeg = nil;
+		
+		[outHandle seekToEndOfFile];
+		
+		i = i + 1;
+		
+		[pool release];
+	}
+	
+	//Make a last empty image
+	ffmpeg = [[NSTask alloc] init];
+	[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
+	[ffmpeg setArguments:[NSArray arrayWithObjects:@"-loop_input", @"-r", [NSString stringWithFormat:@"%f", fps], @"-vframes", @"1", @"-i", emptyImagePath, @"-vcodec", @"copy", @"-f", @"avi", @"-", nil]];
+	[ffmpeg setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+	[ffmpeg setStandardOutput:outHandle];
+	[ffmpeg launch];
+	[ffmpeg waitUntilExit];
+	[ffmpeg release];
+	ffmpeg = nil;
+}
+
+- (CGFloat)secondsFromFormatedString:(NSString *)string
+{
+	NSArray *parts = [string componentsSeparatedByString:@":"];
+	CGFloat hourSeconds = [[parts objectAtIndex:0] floatValue] * 60 * 60;
+	CGFloat minuteSeconds = [[parts objectAtIndex:1] floatValue] * 60;
+	CGFloat seconds = [[parts objectAtIndex:2] floatValue];
+	CGFloat miliseconds = [[[[parts objectAtIndex:2] componentsSeparatedByString:@","] objectAtIndex:1] floatValue];
+	
+	return hourSeconds + minuteSeconds + seconds + (miliseconds / 1000);
+}
+
+- (NSString *)stringByReplacingOccurrencesOfString:(NSString *)target withString:(NSString *)replacement inString:(NSString *)string
+{
+	NSMutableString *mutString = [string mutableCopy];
+	
+	[mutString replaceOccurrencesOfString:target withString:replacement options:NSLiteralSearch	range:NSMakeRange(0, [string length])];
+	
+	return mutString;
 }
 
 //MP4 Subtitle methods
