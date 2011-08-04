@@ -81,7 +81,7 @@
         //a list of types that we can accept
     NSString *desiredType = [paste availableTypeFromArray:types];
     NSData *carriedData = [paste dataForType:desiredType];
-//NSLog(@"Type: %@", [paste types]);
+
     if (nil == carriedData)
     {
         //the operation failed for some reason
