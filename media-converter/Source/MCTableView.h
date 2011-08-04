@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface MCTableView : NSTableView{}
+@interface MCTableView : NSTableView
+{
+	NSString *notificationName;
+}
 
-- (void)duplicate:(id)sender;
+- (void)setReloadNotificationName:(NSString *)name;
 
 @end
