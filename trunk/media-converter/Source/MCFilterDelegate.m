@@ -49,11 +49,11 @@
 	//Setup filters and popup
 	NSMutableArray *filterItems = [NSMutableArray array];
 	
-	MCFilter *watermarkFilter = [[MCWatermarkFilter alloc] init];
+	MCFilter *watermarkFilter = [[MCWatermarkFilter alloc] initView];
 	[filters addObject:watermarkFilter];
 	[filterItems insertObject:[NSDictionary dictionaryWithObjectsAndKeys:[MCWatermarkFilter localizedName], @"Name", [watermarkFilter name], @"Format", nil] atIndex:0];
 	
-	MCFilter *textFilter = [[MCTextFilter alloc] init];
+	MCFilter *textFilter = [[MCTextFilter alloc] initView];
 	[filters addObject:textFilter];
 	[filterItems insertObject:[NSDictionary dictionaryWithObjectsAndKeys:[MCTextFilter localizedName], @"Name", [textFilter name], @"Format", nil] atIndex:1];
 	

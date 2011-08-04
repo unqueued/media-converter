@@ -43,7 +43,7 @@
 		
 		filterOptions = [[NSMutableDictionary alloc] initWithObjects:filterDefaultValues forKeys:filterMappings];
 			
-		[NSBundle loadNibNamed:@"MCWatermarkFilter" owner:self];
+		//[NSBundle loadNibNamed:@"MCWatermarkFilter" owner:self];
 	}
 
 	return self;

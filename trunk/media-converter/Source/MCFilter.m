@@ -11,6 +11,14 @@
 
 @implementation MCFilter
 
+- (id)initView
+{
+	if (self = [self init])
+		[NSBundle loadNibNamed:[self name] owner:self];
+	
+	return self;
+}
+
 - (void)dealloc
 {
 	[filterOptions release];
