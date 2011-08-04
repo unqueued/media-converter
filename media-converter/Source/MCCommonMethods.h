@@ -72,4 +72,6 @@ typedef float CGFloat;
 + (NSArray *)defaultHorizontalPopupArray;
 + (NSArray *)defaultVerticalPopupArray;
 
++ (NSMutableArray *)popupArrayWithNames:(NSArray *)names forFormats:(NSArray *)formats;
+
 @end
