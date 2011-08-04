@@ -18,6 +18,9 @@
 	IBOutlet id presetPopUp;
 	IBOutlet id locationsPanel;
 	IBOutlet id locationsTextField;
+	
+	IBOutlet id actionButton;
+	
 	MCProgress *progressPanel;
 	MCConverter *converter;
 	NSArray *inputFiles;
@@ -36,6 +39,7 @@
 //Menu actions
 - (IBAction)openFiles:(id)sender;
 - (IBAction)openURLs:(id)sender;
+- (IBAction)saveDocumentAs:(id)sender;
 - (IBAction)openPreferences:(id)sender;
 - (IBAction)goToSite:(id)sender;
 - (IBAction)downloadSource:(id)sender;
