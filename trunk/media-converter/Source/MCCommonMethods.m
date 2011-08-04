@@ -901,12 +901,28 @@
 
 + (NSArray *)defaultVerticalPopupArray
 {
-	NSMutableArray *verticalAlignments = [NSMutableArray array];
-	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Top", nil), @"Name", @"top", @"Format", nil] atIndex:0];
-	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Center", nil), @"Name", @"center", @"Format", nil] atIndex:1];
-	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Bottom", nil), @"Name", @"bottom", @"Format", nil] atIndex:2];
+	NSArray *names = [NSArray arrayWithObjects:NSLocalizedString(@"Top", nil), NSLocalizedString(@"Center", nil), NSLocalizedString(@"Bottom", nil), nil];
+	NSArray *formats = [NSArray arrayWithObjects:@"top", @"center", @"bottom", nil];
 	
-	return verticalAlignments;
+	return [MCCommonMethods popupArrayWithNames:names forFormats:formats];
+}
+
++ (NSMutableArray *)popupArrayWithNames:(NSArray *)names forFormats:(NSArray *)formats
+{
+	NSMutableArray *newArray = [NSMutableArray array];
+
+	NSInteger i;
+	for (i = 0; i < [formats count]; i ++)
+	{
+		NSString *format = [formats objectAtIndex:i];
+		NSString *name = [names objectAtIndex:i];
+		
+		NSDictionary *popupDictionary = [NSDictionary dictionaryWithObjectsAndKeys:name, @"Name", format, @"Format", nil];
+		
+		[newArray addObject:popupDictionary];
+	}
+	
+	return newArray;
 }
 
 @end

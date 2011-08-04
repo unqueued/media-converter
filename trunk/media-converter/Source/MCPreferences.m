@@ -1701,49 +1701,53 @@
 	MCConverter *converter = [[MCConverter alloc] init];
 	[containerPopUp setArray:[converter getFormats]];
 	
-	NSMutableArray *videoCodecs = [NSMutableArray arrayWithArray:[converter getVideoCodecs]];
-	[videoCodecs insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Disable", nil), @"Name", @"none", @"Format", nil] atIndex:0];
-	[videoCodecs insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Passthrough", nil), @"Name", @"copy", @"Format", nil] atIndex:1];
-	[videoCodecs insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"Name", @"", @"Format", nil] atIndex:2];
-	[videoFormatPopUp setArray:videoCodecs];
-	
+	NSArray *videoCodecs = [NSArray arrayWithArray:[converter getVideoCodecs]];
 	NSMutableArray *audioCodecs = [NSMutableArray arrayWithArray:[converter getAudioCodecs]];
-	[audioCodecs insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Disable", nil), @"Name", @"none", @"Format", nil] atIndex:0];
-	[audioCodecs insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Passthrough", nil), @"Name", @"copy", @"Format", nil] atIndex:1];
-	[audioCodecs insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"Name", @"", @"Format", nil] atIndex:2];
-	[audioFormatPopUp setArray:audioCodecs];
+	NSArray *codecsNames = [NSArray arrayWithObjects:NSLocalizedString(@"Disable", nil), NSLocalizedString(@"Passthrough", nil), @"", nil];
+	NSArray *codecsFormats = [NSArray arrayWithObjects:@"none", @"copy", @"", nil];
 	
-	NSMutableArray *subtitleTypes = [NSMutableArray array];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Disable", nil), @"Name", @"none", @"Format", nil] atIndex:0];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"Name", @"", @"Format", nil] atIndex:1];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Hardcoded", nil), @"Name", @"hard", @"Format", nil] atIndex:2];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"DVD MPEG2", nil), @"Name", @"dvd", @"Format", nil] atIndex:3];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"MPEG4 / 3GP", nil), @"Name", @"mp4", @"Format", nil] atIndex:4];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Matroska (SRT)", nil), @"Name", @"mkv", @"Format", nil] atIndex:5];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Ogg (Kate)", nil), @"Name", @"kate", @"Format", nil] atIndex:6];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"SRT (External)", nil), @"Name", @"srt", @"Format", nil] atIndex:7];
+	NSMutableArray *videoPopupItems = [MCCommonMethods popupArrayWithNames:codecsNames forFormats:codecsFormats];
+	NSMutableArray *audioPopupItems = [NSMutableArray arrayWithArray:videoPopupItems];
 	
-	[subtitleFormatPopUp setArray:subtitleTypes];
+	[videoPopupItems addObjectsFromArray:videoCodecs];
+	[audioPopupItems addObjectsFromArray:audioCodecs];
 	
-	NSMutableArray *horizontalAlignments = [NSMutableArray array];
-	[horizontalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Left", nil), @"Name", @"left", @"Format", nil] atIndex:0];
-	[horizontalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Center", nil), @"Name", @"center", @"Format", nil] atIndex:1];
-	[horizontalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Right", nil), @"Name", @"right", @"Format", nil] atIndex:2];
+	[videoFormatPopUp setArray:videoPopupItems];
+	[audioFormatPopUp setArray:audioPopupItems];
+	
+	NSArray *subtitleNames = [NSArray arrayWithObjects:		NSLocalizedString(@"Disable", nil), 
+															@"",
+															NSLocalizedString(@"Hardcoded", nil),
+															NSLocalizedString(@"DVD MPEG2", nil),
+															NSLocalizedString(@"MPEG4 / 3GP", nil),
+															NSLocalizedString(@"Matroska (SRT)", nil),
+															NSLocalizedString(@"Ogg (Kate)", nil),
+															NSLocalizedString(@"SRT (External)", nil),
+	nil];
+	
+	NSArray *subtitleFormats = [NSArray arrayWithObjects:	@"none",
+															@"",
+															@"hard",
+															@"dvd",
+															@"mp4",
+															@"mkv",
+															@"kate",
+															@"srt",
+	nil];
+	
+	[subtitleFormatPopUp setArray:[MCCommonMethods popupArrayWithNames:subtitleNames forFormats:subtitleFormats]];
+	
+	NSArray *horizontalAlignments = [MCCommonMethods defaultHorizontalPopupArray];
 	[hAlignFormatPopUp setArray:horizontalAlignments];
 	[hardcodedHAlignPopup setArray:horizontalAlignments];
 	
-	NSMutableArray *verticalAlignments = [NSMutableArray array];
-	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Top", nil), @"Name", @"top", @"Format", nil] atIndex:0];
-	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Center", nil), @"Name", @"center", @"Format", nil] atIndex:1];
-	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Bottom", nil), @"Name", @"bottom", @"Format", nil] atIndex:2];
+	NSArray *verticalAlignments = [MCCommonMethods defaultVerticalPopupArray];
 	[vAlignFormatPopUp setArray:verticalAlignments];
 	[hardcodedVAlignPopup setArray:verticalAlignments];
 	
-	NSMutableArray *textVisibilities = [NSMutableArray array];
-	[textVisibilities insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Text Border", nil), @"Name", @"border", @"Format", nil] atIndex:0];
-	[textVisibilities insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Surounding Box", nil), @"Name", @"box", @"Format", nil] atIndex:1];
-	[textVisibilities insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"None", nil), @"Name", @"none", @"Format", nil] atIndex:2];
-	[hardcodedVisiblePopup setArray:textVisibilities];
+	NSArray *textVisibleNames = [NSArray arrayWithObjects:NSLocalizedString(@"Text Border", nil), NSLocalizedString(@"Surounding Box", nil), NSLocalizedString(@"None", nil), nil];
+	NSArray *textVisibleFormats = [NSArray arrayWithObjects:@"border", @"box", @"none", nil];
+	[hardcodedVisiblePopup setArray:[MCCommonMethods popupArrayWithNames:textVisibleNames forFormats:textVisibleFormats]];
 	
 	[hardcodedFontPopup removeAllItems];
 	[hardcodedFontPopup addItemWithTitle:NSLocalizedString(@"Loading…", nil)];
