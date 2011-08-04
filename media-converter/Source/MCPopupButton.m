@@ -14,7 +14,11 @@
 - (id)init
 {
 	if ([super init])
+	{
 		startIndex = 0;
+		delayed = NO;
+		delayedObject = nil;
+	}
 		
 	return self;
 }
@@ -73,9 +77,42 @@
 	}
 }
 
-- (NSArray *)getArray
+- (id)objectValue
+{		
+	return [array objectAtIndex:[self indexOfSelectedItem]];
+}
+
+- (void)setObjectValue:(id)obj
 {
-	return array;
+	if (delayed == YES)
+	{
+		delayedObject = obj;
+	}
+	else
+	{
+		if (obj == nil | [array indexOfObject:obj] == NSNotFound)
+			[self selectItemAtIndex:0];
+		else
+			[self selectItemAtIndex:[array indexOfObject:obj]];
+	}
+}
+
+- (NSInteger)indexOfObjectValue:(id)obj
+{
+	return [array indexOfObject:obj];
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+	[super controlTextDidChange:aNotification];
+}
+
+- (void)setDelayed:(BOOL)del
+{
+	delayed = del;
+	
+	if (del == NO && delayedObject != nil)
+		[self setObjectValue:delayedObject];
 }
 
 @end

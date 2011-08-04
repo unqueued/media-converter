@@ -13,9 +13,14 @@
 {
 	NSMutableArray *array;
 	NSInteger startIndex;
+	BOOL delayed;
+	id delayedObject;
 }
 
 - (void)setArray:(NSArray *)ar;
-- (NSArray *)getArray;
+- (id)objectValue;
+- (void)setObjectValue:(id)obj;
+- (NSInteger)indexOfObjectValue:(id)obj;
+- (void)setDelayed:(BOOL)del;
 
 @end
