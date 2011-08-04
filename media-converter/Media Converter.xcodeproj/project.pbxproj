@@ -13,10 +13,58 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		FE0EF520130A7E630076FE30 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
 		FE0EFC80130A928B0076FE30 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FE10B97613C1CCD000194E45 /* MCWatermarkFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */; };
+		FE10B97713C1CCD000194E45 /* MCWatermarkFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */; };
+		FE10B97813C1CCD000194E45 /* MCWatermarkFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */; };
+		FE10B97913C1CCD000194E45 /* MCWatermarkFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */; };
+		FE10B97A13C1CCD000194E45 /* MCWatermarkFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */; };
+		FE10B97B13C1CCD000194E45 /* MCWatermarkFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */; };
+		FE10B98013C1CCDC00194E45 /* MCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97F13C1CCDC00194E45 /* MCFilter.m */; };
+		FE10B98113C1CCDC00194E45 /* MCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97F13C1CCDC00194E45 /* MCFilter.m */; };
+		FE10B98213C1CCDC00194E45 /* MCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97F13C1CCDC00194E45 /* MCFilter.m */; };
+		FE10B98313C1CCDC00194E45 /* MCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97F13C1CCDC00194E45 /* MCFilter.m */; };
+		FE10B98413C1CCDC00194E45 /* MCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97F13C1CCDC00194E45 /* MCFilter.m */; };
+		FE10B98513C1CCDC00194E45 /* MCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97F13C1CCDC00194E45 /* MCFilter.m */; };
+		FE10B99E13C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */; };
+		FE10B99F13C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */; };
+		FE10B9A013C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */; };
+		FE10B9A113C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */; };
+		FE10B9A213C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */; };
+		FE10B9A313C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */; };
 		FE1A925012EC4C4A007273B3 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
 		FE1A976612EC4CC7007273B3 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
 		FE1A979C12EC4D32007273B3 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A953112EC4CC7007273B3 /* Growl.framework */; };
 		FE1A97A612EC4D42007273B3 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FE23AC8B13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
+		FE23AC8C13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
+		FE23AC8D13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
+		FE23AC8E13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
+		FE23AC8F13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
+		FE23AC9013E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
+		FE23AE8C13E04E9800B4E457 /* MCTextFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */; };
+		FE23AE8D13E04E9800B4E457 /* MCTextFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */; };
+		FE23AE8E13E04E9800B4E457 /* MCTextFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */; };
+		FE23AE8F13E04E9800B4E457 /* MCTextFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */; };
+		FE23AE9013E04E9800B4E457 /* MCTextFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */; };
+		FE23AE9113E04E9800B4E457 /* MCTextFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */; };
+		FE23AEE313E04FA200B4E457 /* MCTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AEE213E04FA200B4E457 /* MCTextFilter.m */; };
+		FE23AEE413E04FA200B4E457 /* MCTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AEE213E04FA200B4E457 /* MCTextFilter.m */; };
+		FE23AEE513E04FA200B4E457 /* MCTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AEE213E04FA200B4E457 /* MCTextFilter.m */; };
+		FE23AEE613E04FA200B4E457 /* MCTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AEE213E04FA200B4E457 /* MCTextFilter.m */; };
+		FE23AEE713E04FA200B4E457 /* MCTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AEE213E04FA200B4E457 /* MCTextFilter.m */; };
+		FE23AEE813E04FA200B4E457 /* MCTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AEE213E04FA200B4E457 /* MCTextFilter.m */; };
+		FE24912D13E8020D00D744A7 /* MCColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24912C13E8020D00D744A7 /* MCColorWell.m */; };
+		FE24912E13E8020D00D744A7 /* MCColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24912C13E8020D00D744A7 /* MCColorWell.m */; };
+		FE24912F13E8020D00D744A7 /* MCColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24912C13E8020D00D744A7 /* MCColorWell.m */; };
+		FE24913013E8020D00D744A7 /* MCColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24912C13E8020D00D744A7 /* MCColorWell.m */; };
+		FE24913113E8020D00D744A7 /* MCColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24912C13E8020D00D744A7 /* MCColorWell.m */; };
+		FE24913213E8020D00D744A7 /* MCColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24912C13E8020D00D744A7 /* MCColorWell.m */; };
+		FE24915613E8046400D744A7 /* MCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24915513E8046400D744A7 /* MCTextView.m */; };
+		FE24915713E8046400D744A7 /* MCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24915513E8046400D744A7 /* MCTextView.m */; };
+		FE24915813E8046400D744A7 /* MCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24915513E8046400D744A7 /* MCTextView.m */; };
+		FE24915913E8046400D744A7 /* MCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24915513E8046400D744A7 /* MCTextView.m */; };
+		FE24915A13E8046400D744A7 /* MCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24915513E8046400D744A7 /* MCTextView.m */; };
+		FE24915B13E8046400D744A7 /* MCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24915513E8046400D744A7 /* MCTextView.m */; };
 		FE2B6AA21337C2E9001459D4 /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9A1337C2E9001459D4 /* mkvmerge */; };
 		FE2B6AA31337C2E9001459D4 /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9B1337C2E9001459D4 /* mkvextract */; };
 		FE2B6AA41337C2E9001459D4 /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6A9C1337C2E9001459D4 /* mkvinfo */; };
@@ -73,6 +121,12 @@
 		FE43CBF213807BDC00792EBA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926212EC4CC4007273B3 /* Growl.framework */; };
 		FE43CBF813807BE300792EBA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925C12EC4CC4007273B3 /* Growl.framework */; };
 		FE43CBF913807BE900792EBA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A926512EC4CC4007273B3 /* Growl.framework */; };
+		FE48BD6C13A631A600C98912 /* Sintel-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */; };
+		FE48BD6D13A631A600C98912 /* Sintel-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */; };
+		FE48BD6E13A631A600C98912 /* Sintel-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */; };
+		FE48BD6F13A631A600C98912 /* Sintel-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */; };
+		FE48BD7013A631A600C98912 /* Sintel-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */; };
+		FE48BD7113A631A600C98912 /* Sintel-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */; };
 		FE4E9894132105CB00B440F4 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
 		FE4E9899132105DA00B440F4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
 		FE4E9B0213210D3100B440F4 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
@@ -96,6 +150,12 @@
 		FE77D8AA13192FA400731569 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
 		FE77D9BE131940B000731569 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
 		FE77D9E2131941C500731569 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FE7AAEE113B602E8008DC4F7 /* MCFilterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */; };
+		FE7AAEE213B602E8008DC4F7 /* MCFilterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */; };
+		FE7AAEE313B602E8008DC4F7 /* MCFilterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */; };
+		FE7AAEE413B602E8008DC4F7 /* MCFilterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */; };
+		FE7AAEE513B602E8008DC4F7 /* MCFilterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */; };
+		FE7AAEE613B602E8008DC4F7 /* MCFilterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */; };
 		FE8086DD12EB01F20047FD26 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
 		FE8086DF12EB092D0047FD26 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
 		FE8086F312EB09E30047FD26 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
@@ -123,6 +183,12 @@
 		FE8E42B413801FAA00C87AAB /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FE8E42A713801FAA00C87AAB /* spumux */; };
 		FE8E42DE1380209E00C87AAB /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925F12EC4CC4007273B3 /* Growl.framework */; };
 		FE8E42F01380221F00C87AAB /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE1A925F12EC4CC4007273B3 /* Growl.framework */; };
+		FE9086D413B3EB0800844F19 /* Gear with arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9086D313B3EB0800844F19 /* Gear with arrow.png */; };
+		FE9086D513B3EB0800844F19 /* Gear with arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9086D313B3EB0800844F19 /* Gear with arrow.png */; };
+		FE9086D613B3EB0800844F19 /* Gear with arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9086D313B3EB0800844F19 /* Gear with arrow.png */; };
+		FE9086D713B3EB0800844F19 /* Gear with arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9086D313B3EB0800844F19 /* Gear with arrow.png */; };
+		FE9086D813B3EB0800844F19 /* Gear with arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9086D313B3EB0800844F19 /* Gear with arrow.png */; };
+		FE9086D913B3EB0800844F19 /* Gear with arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9086D313B3EB0800844F19 /* Gear with arrow.png */; };
 		FE9DC01B12E99B2B007D3E9F /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
 		FEA2098D132F5FCC0089B135 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FEA2098B132F5FCC0089B135 /* MP4Box */; };
 		FEA2098E132F5FCC0089B135 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FEA2098C132F5FCC0089B135 /* spumux */; };
@@ -507,6 +573,12 @@
 		FE0EF51F130A7E630076FE30 /* MCPopupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCPopupButton.m; path = Source/MCPopupButton.m; sourceTree = "<group>"; };
 		FE0EFC7E130A928B0076FE30 /* MCCheckBoxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCheckBoxCell.h; path = Source/MCCheckBoxCell.h; sourceTree = "<group>"; };
 		FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCheckBoxCell.m; path = Source/MCCheckBoxCell.m; sourceTree = "<group>"; };
+		FE10B97413C1CCD000194E45 /* MCWatermarkFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCWatermarkFilter.h; path = Source/MCWatermarkFilter.h; sourceTree = "<group>"; };
+		FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCWatermarkFilter.m; path = Source/MCWatermarkFilter.m; sourceTree = "<group>"; };
+		FE10B97E13C1CCDC00194E45 /* MCFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCFilter.h; path = Source/MCFilter.h; sourceTree = "<group>"; };
+		FE10B97F13C1CCDC00194E45 /* MCFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCFilter.m; path = Source/MCFilter.m; sourceTree = "<group>"; };
+		FE10B99D13C1D1A200194E45 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MCWatermarkFilter.xib; sourceTree = "<group>"; };
+		FE10B9AE13C1D1DC00194E45 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MCWatermarkFilter.xib; sourceTree = "<group>"; };
 		FE1A924F12EC4C4A007273B3 /* complete.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = complete.aif; path = Sounds/complete.aif; sourceTree = "<group>"; };
 		FE1A925C12EC4CC4007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		FE1A925F12EC4CC4007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
@@ -516,6 +588,16 @@
 		FE1A953412EC4CC7007273B3 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Growl.framework; sourceTree = "<group>"; };
 		FE1A97A412EC4D42007273B3 /* MCGrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGrowlController.h; path = Source/MCGrowlController.h; sourceTree = "<group>"; };
 		FE1A97A512EC4D42007273B3 /* MCGrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCGrowlController.m; path = Source/MCGrowlController.m; sourceTree = "<group>"; };
+		FE23AC8913E02CF300B4E457 /* MCActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCActionButton.h; path = Source/MCActionButton.h; sourceTree = "<group>"; };
+		FE23AC8A13E02CF300B4E457 /* MCActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCActionButton.m; path = Source/MCActionButton.m; sourceTree = "<group>"; };
+		FE23AE8B13E04E9800B4E457 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MCTextFilter.xib; sourceTree = "<group>"; };
+		FE23AE9413E04EA400B4E457 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MCTextFilter.xib; sourceTree = "<group>"; };
+		FE23AEE113E04FA200B4E457 /* MCTextFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTextFilter.h; path = Source/MCTextFilter.h; sourceTree = "<group>"; };
+		FE23AEE213E04FA200B4E457 /* MCTextFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCTextFilter.m; path = Source/MCTextFilter.m; sourceTree = "<group>"; };
+		FE24912B13E8020D00D744A7 /* MCColorWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCColorWell.h; path = Source/MCColorWell.h; sourceTree = "<group>"; };
+		FE24912C13E8020D00D744A7 /* MCColorWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCColorWell.m; path = Source/MCColorWell.m; sourceTree = "<group>"; };
+		FE24915413E8046400D744A7 /* MCTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTextView.h; path = Source/MCTextView.h; sourceTree = "<group>"; };
+		FE24915513E8046400D744A7 /* MCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCTextView.m; path = Source/MCTextView.m; sourceTree = "<group>"; };
 		FE2B6A9A1337C2E9001459D4 /* mkvmerge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvmerge; sourceTree = "<group>"; };
 		FE2B6A9B1337C2E9001459D4 /* mkvextract */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvextract; sourceTree = "<group>"; };
 		FE2B6A9C1337C2E9001459D4 /* mkvinfo */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = mkvinfo; sourceTree = "<group>"; };
@@ -566,6 +648,7 @@
 		FE43CBD913807B0A00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-rip"; sourceTree = "<group>"; };
 		FE43CBDA13807B0A00792EBA /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "qt-faststart"; sourceTree = "<group>"; };
 		FE43CBDB13807B0A00792EBA /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = spumux; sourceTree = "<group>"; };
+		FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Sintel-frame.jpg"; path = "Images/Sintel-frame.jpg"; sourceTree = "<group>"; };
 		FE4E9893132105CB00B440F4 /* MCProgress.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MCProgress.xib; path = Resources/MCProgress.xib; sourceTree = "<group>"; };
 		FE4E9898132105DA00B440F4 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FE4E989C132105E700B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -590,6 +673,8 @@
 		FE77D9BD131940B000731569 /* MCCrippledButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCrippledButton.m; path = Source/MCCrippledButton.m; sourceTree = "<group>"; };
 		FE77D9E0131941C500731569 /* MCCommandController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCCommandController.h; path = Source/MCCommandController.h; sourceTree = "<group>"; };
 		FE77D9E1131941C500731569 /* MCCommandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCCommandController.m; path = Source/MCCommandController.m; sourceTree = "<group>"; };
+		FE7AAEDF13B602E8008DC4F7 /* MCFilterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCFilterDelegate.h; path = Source/MCFilterDelegate.h; sourceTree = "<group>"; };
+		FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCFilterDelegate.m; path = Source/MCFilterDelegate.m; sourceTree = "<group>"; };
 		FE8086DC12EB01F20047FD26 /* Dropzone.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Dropzone.pdf; path = Images/Dropzone.pdf; sourceTree = "<group>"; };
 		FE8086DE12EB092D0047FD26 /* Media Converter.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Media Converter.icns"; path = "Images/Media Converter.icns"; sourceTree = "<group>"; };
 		FE8086F112EB09E30047FD26 /* MCDropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCDropView.m; path = Source/MCDropView.m; sourceTree = "<group>"; };
@@ -626,6 +711,7 @@
 		FE8E42A513801FAA00C87AAB /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-merge"; sourceTree = "<group>"; };
 		FE8E42A613801FAA00C87AAB /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-rip"; sourceTree = "<group>"; };
 		FE8E42A713801FAA00C87AAB /* spumux */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = spumux; sourceTree = "<group>"; };
+		FE9086D313B3EB0800844F19 /* Gear with arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Gear with arrow.png"; path = "Images/Gear with arrow.png"; sourceTree = "<group>"; };
 		FE9D4A25133B5D20003C42A4 /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-rip"; sourceTree = "<group>"; };
 		FE9DC01A12E99B2B007D3E9F /* Empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Empty.png; path = Images/Empty.png; sourceTree = "<group>"; };
 		FEA2098B132F5FCC0089B135 /* MP4Box */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = MP4Box; sourceTree = "<group>"; };
@@ -824,6 +910,28 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE10B97113C1CC9E00194E45 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				FE10B97E13C1CCDC00194E45 /* MCFilter.h */,
+				FE10B97F13C1CCDC00194E45 /* MCFilter.m */,
+				FE10B97413C1CCD000194E45 /* MCWatermarkFilter.h */,
+				FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */,
+				FE23AEE113E04FA200B4E457 /* MCTextFilter.h */,
+				FE23AEE213E04FA200B4E457 /* MCTextFilter.m */,
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		FE10B99913C1D15B00194E45 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */,
+				FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */,
+			);
+			name = Filters;
 			sourceTree = "<group>";
 		};
 		FE1A925A12EC4CB6007273B3 /* Included Frameworks */ = {
@@ -1103,6 +1211,9 @@
 				FE77D8A913192FA400731569 /* MCAddDelegate.m */,
 				FE77D9E0131941C500731569 /* MCCommandController.h */,
 				FE77D9E1131941C500731569 /* MCCommandController.m */,
+				FE7AAEDF13B602E8008DC4F7 /* MCFilterDelegate.h */,
+				FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */,
+				FE10B97113C1CC9E00194E45 /* Filters */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -1125,6 +1236,8 @@
 		FEF7FB73131A885200E244C9 /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
+				FE24912B13E8020D00D744A7 /* MCColorWell.h */,
+				FE24912C13E8020D00D744A7 /* MCColorWell.m */,
 				FE0EF51E130A7E630076FE30 /* MCPopupButton.h */,
 				FE0EF51F130A7E630076FE30 /* MCPopupButton.m */,
 				FE0EFC7E130A928B0076FE30 /* MCCheckBoxCell.h */,
@@ -1139,6 +1252,10 @@
 				FEA8D4B413229AB200C10516 /* MCTableView.m */,
 				FED68D0D13265A1000332D8E /* MCOptionsTableView.h */,
 				FED68D0E13265A1000332D8E /* MCOptionsTableView.m */,
+				FE23AC8913E02CF300B4E457 /* MCActionButton.h */,
+				FE23AC8A13E02CF300B4E457 /* MCActionButton.m */,
+				FE24915413E8046400D744A7 /* MCTextView.h */,
+				FE24915513E8046400D744A7 /* MCTextView.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -1146,6 +1263,8 @@
 		FEF7FBB9131A897E00E244C9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FE9086D313B3EB0800844F19 /* Gear with arrow.png */,
+				FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */,
 				FE4E9B3613210E6200B440F4 /* Add Preset.png */,
 				FE4E9B0013210D3100B440F4 /* MCPresets.icns */,
 				FE808C0F12EB19AC0047FD26 /* ProgressIndicator */,
@@ -1175,6 +1294,7 @@
 				FE4E9893132105CB00B440F4 /* MCProgress.xib */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				FEF5CD8512EEB83B00981441 /* MCPreferences.xib */,
+				FE10B99913C1D15B00194E45 /* Filters */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -1394,6 +1514,10 @@
 				FEA3B06F13630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EBB1376C352001816F2 /* MCInstallPanel.xib in Resources */,
 				FE43CAB01380648D00792EBA /* oggz-rip in Resources */,
+				FE48BD6C13A631A600C98912 /* Sintel-frame.jpg in Resources */,
+				FE9086D913B3EB0800844F19 /* Gear with arrow.png in Resources */,
+				FE10B9A013C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
+				FE23AE8F13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1443,6 +1567,10 @@
 				FE43CBE613807B0A00792EBA /* oggz-rip in Resources */,
 				FE43CBE713807B0A00792EBA /* qt-faststart in Resources */,
 				FE43CBE813807B0A00792EBA /* spumux in Resources */,
+				FE48BD6D13A631A600C98912 /* Sintel-frame.jpg in Resources */,
+				FE9086D813B3EB0800844F19 /* Gear with arrow.png in Resources */,
+				FE10B9A313C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
+				FE23AE8C13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1492,6 +1620,10 @@
 				FEA3B07013630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EBA1376C352001816F2 /* MCInstallPanel.xib in Resources */,
 				FE43CAB2138064AA00792EBA /* oggz-rip in Resources */,
+				FE48BD6E13A631A600C98912 /* Sintel-frame.jpg in Resources */,
+				FE9086D713B3EB0800844F19 /* Gear with arrow.png in Resources */,
+				FE10B9A213C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
+				FE23AE9113E04E9800B4E457 /* MCTextFilter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1541,6 +1673,10 @@
 				FEA3B06D13630DC800AD6085 /* youtube-dl.sh in Resources */,
 				FEA63EBD1376C352001816F2 /* MCInstallPanel.xib in Resources */,
 				FE43CBE913807B2B00792EBA /* oggz-rip in Resources */,
+				FE48BD6F13A631A600C98912 /* Sintel-frame.jpg in Resources */,
+				FE9086D413B3EB0800844F19 /* Gear with arrow.png in Resources */,
+				FE10B99E13C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
+				FE23AE8D13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1590,6 +1726,10 @@
 				FE43CACE138064C400792EBA /* qt-faststart in Resources */,
 				FE43CACF138064C400792EBA /* spumux in Resources */,
 				FE43CBEB13807B5D00792EBA /* movtowav in Resources */,
+				FE48BD7013A631A600C98912 /* Sintel-frame.jpg in Resources */,
+				FE9086D613B3EB0800844F19 /* Gear with arrow.png in Resources */,
+				FE10B99F13C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
+				FE23AE8E13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1639,6 +1779,10 @@
 				FE8E42B313801FAA00C87AAB /* oggz-rip in Resources */,
 				FE8E42B413801FAA00C87AAB /* spumux in Resources */,
 				FE43CAAE1380646B00792EBA /* qt-faststart in Resources */,
+				FE48BD7113A631A600C98912 /* Sintel-frame.jpg in Resources */,
+				FE9086D513B3EB0800844F19 /* Gear with arrow.png in Resources */,
+				FE10B9A113C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
+				FE23AE9013E04E9800B4E457 /* MCTextFilter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1673,6 +1817,13 @@
 				FEF466F7132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D0F13265A1000332D8E /* MCOptionsTableView.m in Sources */,
 				FEA63EA81376C28D001816F2 /* MCInstallPanel.m in Sources */,
+				FE7AAEE213B602E8008DC4F7 /* MCFilterDelegate.m in Sources */,
+				FE10B97B13C1CCD000194E45 /* MCWatermarkFilter.m in Sources */,
+				FE10B98513C1CCDC00194E45 /* MCFilter.m in Sources */,
+				FE23AC8E13E02CF300B4E457 /* MCActionButton.m in Sources */,
+				FE23AEE613E04FA200B4E457 /* MCTextFilter.m in Sources */,
+				FE24913013E8020D00D744A7 /* MCColorWell.m in Sources */,
+				FE24915913E8046400D744A7 /* MCTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1704,6 +1855,13 @@
 				FEF466F8132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1013265A1000332D8E /* MCOptionsTableView.m in Sources */,
 				FEA63EA51376C28D001816F2 /* MCInstallPanel.m in Sources */,
+				FE7AAEE113B602E8008DC4F7 /* MCFilterDelegate.m in Sources */,
+				FE10B97813C1CCD000194E45 /* MCWatermarkFilter.m in Sources */,
+				FE10B98413C1CCDC00194E45 /* MCFilter.m in Sources */,
+				FE23AC8B13E02CF300B4E457 /* MCActionButton.m in Sources */,
+				FE23AEE313E04FA200B4E457 /* MCTextFilter.m in Sources */,
+				FE24912D13E8020D00D744A7 /* MCColorWell.m in Sources */,
+				FE24915613E8046400D744A7 /* MCTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1735,6 +1893,13 @@
 				FEF466F5132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1113265A1000332D8E /* MCOptionsTableView.m in Sources */,
 				FEA63EA71376C28D001816F2 /* MCInstallPanel.m in Sources */,
+				FE7AAEE613B602E8008DC4F7 /* MCFilterDelegate.m in Sources */,
+				FE10B97A13C1CCD000194E45 /* MCWatermarkFilter.m in Sources */,
+				FE10B98313C1CCDC00194E45 /* MCFilter.m in Sources */,
+				FE23AC9013E02CF300B4E457 /* MCActionButton.m in Sources */,
+				FE23AEE813E04FA200B4E457 /* MCTextFilter.m in Sources */,
+				FE24913213E8020D00D744A7 /* MCColorWell.m in Sources */,
+				FE24915713E8046400D744A7 /* MCTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1766,6 +1931,13 @@
 				FEF466F3132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1213265A1000332D8E /* MCOptionsTableView.m in Sources */,
 				FEA63EAA1376C28D001816F2 /* MCInstallPanel.m in Sources */,
+				FE7AAEE313B602E8008DC4F7 /* MCFilterDelegate.m in Sources */,
+				FE10B97613C1CCD000194E45 /* MCWatermarkFilter.m in Sources */,
+				FE10B98013C1CCDC00194E45 /* MCFilter.m in Sources */,
+				FE23AC8C13E02CF300B4E457 /* MCActionButton.m in Sources */,
+				FE23AEE413E04FA200B4E457 /* MCTextFilter.m in Sources */,
+				FE24912E13E8020D00D744A7 /* MCColorWell.m in Sources */,
+				FE24915813E8046400D744A7 /* MCTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1797,6 +1969,13 @@
 				FEF466F6132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1313265A1000332D8E /* MCOptionsTableView.m in Sources */,
 				FEA63EA61376C28D001816F2 /* MCInstallPanel.m in Sources */,
+				FE7AAEE413B602E8008DC4F7 /* MCFilterDelegate.m in Sources */,
+				FE10B97713C1CCD000194E45 /* MCWatermarkFilter.m in Sources */,
+				FE10B98113C1CCDC00194E45 /* MCFilter.m in Sources */,
+				FE23AC8D13E02CF300B4E457 /* MCActionButton.m in Sources */,
+				FE23AEE513E04FA200B4E457 /* MCTextFilter.m in Sources */,
+				FE24912F13E8020D00D744A7 /* MCColorWell.m in Sources */,
+				FE24915A13E8046400D744A7 /* MCTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1828,6 +2007,13 @@
 				FEF466F4132527860079DBCF /* MCAlert.m in Sources */,
 				FED68D1413265A1000332D8E /* MCOptionsTableView.m in Sources */,
 				FEA63EA91376C28D001816F2 /* MCInstallPanel.m in Sources */,
+				FE7AAEE513B602E8008DC4F7 /* MCFilterDelegate.m in Sources */,
+				FE10B97913C1CCD000194E45 /* MCWatermarkFilter.m in Sources */,
+				FE10B98213C1CCDC00194E45 /* MCFilter.m in Sources */,
+				FE23AC8F13E02CF300B4E457 /* MCActionButton.m in Sources */,
+				FE23AEE713E04FA200B4E457 /* MCTextFilter.m in Sources */,
+				FE24913113E8020D00D744A7 /* MCColorWell.m in Sources */,
+				FE24915B13E8046400D744A7 /* MCTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1850,6 +2036,24 @@
 				FE4E989C132105E700B440F4 /* Dutch */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE10B99D13C1D1A200194E45 /* Dutch */,
+				FE10B9AE13C1D1DC00194E45 /* English */,
+			);
+			name = MCWatermarkFilter.xib;
+			sourceTree = "<group>";
+		};
+		FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FE23AE8B13E04E9800B4E457 /* Dutch */,
+				FE23AE9413E04EA400B4E457 /* English */,
+			);
+			name = MCTextFilter.xib;
 			sourceTree = "<group>";
 		};
 		FE4E9897132105DA00B440F4 /* Localizable.strings */ = {
