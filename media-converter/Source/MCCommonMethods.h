@@ -58,5 +58,18 @@ typedef float CGFloat;
 + (BOOL)isYouTubeURLAtPath:(NSString *)path;
 //Check for a version 2.5... or higher Python
 + (BOOL)isPythonUpgradeInstalled;
+//Create a image with text
++ (NSImage *)overlayImageWithObject:(id)object withSettings:(NSDictionary *)settings inputImage:(NSImage *)image;
+//Calculate height for a string (used by subs)
++ (NSRect)frameForStringDrawing:(NSAttributedString *)myString forWidth:(float)myWidth;
+
++ (NSMutableAttributedString *)initOnMainThreadWithHTML:(NSString *)html;
+- (NSMutableAttributedString *)initWithHTML:(NSString *)html;
+
++ (void)setViewOptions:(NSArray *)views infoObject:(id)info fallbackInfo:(id)fallback mappingsObject:(NSArray *)mappings startCount:(NSInteger)start;
++ (void)setProperty:(id)property forControl:(id)control;
+
++ (NSArray *)defaultHorizontalPopupArray;
++ (NSArray *)defaultVerticalPopupArray;
 
 @end
