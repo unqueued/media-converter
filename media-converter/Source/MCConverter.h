@@ -50,6 +50,8 @@
 	NSString *temporaryFolder;
 	NSFileHandle *currentFileHandle;
 	
+	NSMutableDictionary *defaultSettings;
+	
 	//Encodings
 	NSArray *cyrillicLanguages;
 	
@@ -63,7 +65,7 @@
 //Encode actions
 
 //Convert a bunch of files with ffmpeg/movtoyuv/QuickTime
-- (NSInteger)batchConvert:(NSArray *)files toDestination:(NSString *)destination withOptions:(NSDictionary *)options errorString:(NSString **)error;
+- (NSInteger)batchConvert:(NSArray *)files toDestination:(NSString *)destination withOptions:(NSDictionary *)options withDefaults:(NSDictionary *)defaults errorString:(NSString **)error;
 //Encode the file, use wav file if quicktime created it, use pipe (from movtoy4m)
 - (NSInteger)encodeFileAtPath:(NSString *)path errorString:(NSString **)error;
 //Encode sound to wav
@@ -104,9 +106,13 @@
 //Framework actions
 - (NSArray *)succesArray;
 
+- (void)createSubtitleMovieAtPath:(NSString *)path withOptions:(NSArray *)options subtitleFile:(NSString *)file;
+- (CGFloat)secondsFromFormatedString:(NSString *)string;
+- (NSString *)stringByReplacingOccurrencesOfString:(NSString *)target withString:(NSString *)replacement inString:(NSString *)string;
+
 //Subtitle actions
 //outputType: 0 = mp4, 1 = mkv, 2 = ogg (kate)
-- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type;
+- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type currentOptions:(NSArray *)options;
 - (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath shouldRename:(BOOL)rename;
 - (NSArray *)trackDictionariesFromPath:(NSString *)path withType:(NSString *)type;
 
