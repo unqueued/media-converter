@@ -11,6 +11,7 @@
 #import "NSNumber_Extensions.h"
 #import "NSArray_Extensions.h"
 #import "MCAlert.h"
+#import "MCActionButton.h"
 
 @implementation MCMainController
 
@@ -55,6 +56,10 @@
 
 - (void)awakeFromNib
 {
+	[actionButton setDelegate:self];
+	[actionButton addMenuWithTitle:NSLocalizedString(@"Edit Preset…", nil) withSelector:@selector(edit:)];
+	[actionButton addMenuWithTitle:NSLocalizedString(@"Save Preset…", nil) withSelector:@selector(saveDocumentAs:)];
+
 	NSString *error = NSLocalizedString(@"An unkown error occured", nil);
 
 	if ([MCCommonMethods OSVersion] < 0x1050)
@@ -326,6 +331,40 @@
 - (IBAction)setPresetPopup:(id)sender
 {
 	[[NSUserDefaults standardUserDefaults] setObject:[sender objectValue] forKey:@"MCSelectedPreset"];
+}
+
+- (IBAction)edit:(id)sender
+{
+	if (preferences == nil)
+	{
+		preferences = [[MCPreferences alloc] init];
+		[preferences setDelegate:self];
+	}
+	
+	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+	NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
+	
+	NSDictionary *presetDictionary = [presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]];
+	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[presetDictionary objectForKey:@"Name"], @"Name", [presetDictionary objectForKey:@"Path"], @"Path", nil];
+	
+	[preferences editPresetForWindow:mainWindow withDictionary:dictionary];
+}
+
+- (IBAction)saveDocumentAs:(id)sender
+{
+	if (preferences == nil)
+	{
+		preferences = [[MCPreferences alloc] init];
+		[preferences setDelegate:self];
+	}
+	
+	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+	NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
+	
+	NSDictionary *presetDictionary = [presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]];
+	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[presetDictionary objectForKey:@"Name"], @"Name", [presetDictionary objectForKey:@"Path"], @"Path", nil];
+
+	[preferences savePresetForWindow:mainWindow withDictionary:dictionary];
 }
 
 //////////////////
@@ -678,7 +717,87 @@
 	NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
 	NSDictionary *options = [NSDictionary dictionaryWithContentsOfFile:[[presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]] objectForKey:@"Path"]];
 	
-	NSInteger result = [converter batchConvert:inputFiles toDestination:path withOptions:options errorString:&errorString];
+	NSArray *extraOptionMappings = [[NSArray alloc] initWithObjects:	
+																//Video
+																@"Keep Aspect",									//101
+																@"Auto Aspect",									//102
+																@"Auto Size",									//103
+																
+																//Subtitles
+																@"Subtitle Type",								//104
+																@"Subtitle Default Language",					//105
+																// Hardcoded
+																@"Font",										//106
+																@"Font Size",									//107
+																@"Color",										//108
+																@"Horizontal Alignment",						//109
+																@"Vertical Alignment",							//110
+																@"Left Margin",									//111
+																@"Right Margin",								//112
+																@"Top Margin",									//113
+																@"Bottom Margin",								//114
+																@"Method",										//115
+																@"Box Color",									//116
+																@"Box Marge",									//117
+																@"Box Alpha Value",								//118
+																@"Border Color",								//119
+																@"Border Size",									//120
+																// DVD
+																@"Subtitle Font",								//121
+																@"Subtitle Font Size",							//122
+																@"Subtitle Horizontal Alignment",				//123
+																@"Subtitle Vertical Alignment",					//124
+																@"Subtitle Left Margin",						//125
+																@"Subtitle Right Margin",						//126
+																@"Subtitle Top Margin",							//127
+																@"Subtitle Bottom Margin",						//128
+																
+																//Advanced
+																@"Two Pass",									//129
+																@"Start Atom",									//130
+		nil];
+		
+		NSArray *extraOptionDefaultValues = [[NSArray alloc] initWithObjects:	
+																//Video
+																[NSNumber numberWithBool:NO],										// Keep Aspect
+																[NSNumber numberWithBool:NO],										// Auto Aspect
+																[NSNumber numberWithBool:NO],										// Auto Size
+																
+																//Subtitles
+																@"Subtitle Type",													// Subtitle Type
+																@"Subtitle Default Language",										// Subtitle Default Language
+																// Hardcoded
+																@"Helvetica",														//  Font
+																[NSNumber numberWithCGFloat:24],									//  Font Size
+																[NSArchiver archivedDataWithRootObject:[NSColor whiteColor]],		//  Color
+																@"center",															//  Horizontal Alignment
+																@"bottom",															//  Vertical Alignment
+																[NSNumber numberWithInteger:0],										//  Left Margin
+																[NSNumber numberWithInteger:0],										//  Right Margin
+																[NSNumber numberWithInteger:0],										//  Top Margin
+																[NSNumber numberWithInteger:0],										//  Bottom Margin
+																@"border",															//  Method
+																[NSArchiver archivedDataWithRootObject:[NSColor darkGrayColor]],	//  Box Color
+																[NSNumber numberWithInteger:10],									//  Box Marge
+																[NSNumber numberWithDouble:0.50],									//  Box Alpha Value
+																[NSArchiver archivedDataWithRootObject:[NSColor blackColor]],		//  Border Color
+																[NSNumber numberWithInteger:4],										//  Border Size
+																// DVD
+																@"Helvetica",														// Subtitle Font
+																[NSNumber numberWithCGFloat:24],									// Subtitle Font Size
+																@"center",															// Subtitle Horizontal Alignment
+																@"bottom",															// Subtitle Vertical Alignment
+																[NSNumber numberWithInteger:60],									// Subtitle Left Margin
+																[NSNumber numberWithInteger:60],									// Subtitle Right Margin
+																[NSNumber numberWithInteger:20],									// Subtitle Top Margin
+																[NSNumber numberWithInteger:30],									// Subtitle Bottom Margin
+																
+																//Advanced
+																[NSNumber numberWithBool:NO],										// Two Pass
+																[NSNumber numberWithBool:NO],										// Start Atom
+		nil];
+	
+	NSInteger result = [converter batchConvert:inputFiles toDestination:path withOptions:options withDefaults:[NSDictionary	dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings] errorString:&errorString];
 
 	//NSArray *succeededFiles = [NSArray arrayWithArray:[converter succesArray]];
 	
@@ -803,6 +922,14 @@
 - (void)closeWindow
 {
 	[NSApp terminate:self];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+	if ([mainWindow attachedSheet] && (aSelector == @selector(openFiles:) | aSelector == @selector(openURLs:) | aSelector == @selector(saveDocumentAs:) | aSelector == @selector(edit:)))
+		return NO;
+	
+	return [super respondsToSelector:aSelector];
 }
 
 @end
