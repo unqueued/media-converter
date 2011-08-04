@@ -18,8 +18,9 @@
 + (void)initialize
 {
 	NSDictionary *infoDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
-
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults]; // standard user defaults
+	
+	//Setup some defaults for the preferences (used when options aren't set)
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *defaultKeys = [NSArray arrayWithObjects:	@"MCUseSoundEffects",
 														@"MCInstallMode",
 														@"MCSaveMethod",
@@ -56,21 +57,27 @@
 
 - (void)awakeFromNib
 {
+	//Setup action button
 	[actionButton setDelegate:self];
 	[actionButton addMenuWithTitle:NSLocalizedString(@"Edit Preset…", nil) withSelector:@selector(edit:)];
 	[actionButton addMenuWithTitle:NSLocalizedString(@"Save Preset…", nil) withSelector:@selector(saveDocumentAs:)];
-
+	
+	//Placeholder error string
 	NSString *error = NSLocalizedString(@"An unkown error occured", nil);
-
+	
+	//NSTexturedRoundedBezelStyle doesn't look right in 10.4 and earlies
 	if ([MCCommonMethods OSVersion] < 0x1050)
 		[presetPopUp setBezelStyle:NSRoundedBezelStyle];
-
+	
+	//Make ourselves delegate so we'll receive actions as firstResponder
 	[NSApp setDelegate:self];
-
+	
+	//Quit the application when the main window is closed (seems to be accepted in Mac OS X)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:NSWindowWillCloseNotification object:mainWindow];
 
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
-
+	
+	//Setup Preset popup in the main window
 	[presetPopUp removeAllItems];
 	
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
@@ -84,6 +91,7 @@
 	
 	BOOL hasSupportFolder = ([defaultManager fileExistsAtPath:folder] | [defaultManager fileExistsAtPath:userFolder]);
 	
+	//Popupulate preset folder after creating it
 	if (!hasSupportFolder | [presets count] == 0)
 	{
 		if (!hasSupportFolder)
@@ -145,11 +153,14 @@
 
 		[standardDefaults setObject:savedPresets forKey:@"MCPresets"];
 	}
-
-	[self update];
 	
+	//Now really update preset popup
+	[self updatePresets];
+	
+	//Create our Growl object
 	[[MCGrowlController alloc] init];
 	
+	//Check version to update some presets and phyton if needed (after asking of cource)
 	[self performSelectorOnMainThread:@selector(versionUpdateCheck) withObject:nil waitUntilDone:NO];
 }
 
@@ -161,7 +172,8 @@
 	if (lastCheck < 1.2)
 	{
 		NSInteger returnCode;
-	
+		
+		//Check for phyton and ask to upgrade it if needed
 		if (![MCCommonMethods isPythonUpgradeInstalled])
 		{
 			NSAlert *alert = [[[NSAlert alloc] init] autorelease];
@@ -177,6 +189,7 @@
 				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.python.org/download"]];
 		}
 		
+		//Ask if the user wants to update the presets for using subtitles
 		NSAlert *upgradeAlert = [[[NSAlert alloc] init] autorelease];
 		[upgradeAlert addButtonWithTitle:NSLocalizedString(@"Update", nil)];
 		[upgradeAlert addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
@@ -186,6 +199,7 @@
 		
 		returnCode = [upgradeAlert runModal];
 		
+		//Update presets when the user chose "Update"
 		if (returnCode == NSAlertFirstButtonReturn)
 		{
 			NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
@@ -235,18 +249,22 @@
 		
 		preferences = [[MCPreferences alloc] init];
 		[preferences setDelegate:self];
+		
+		//Update fonts (spumux needs ttf files, we save them in the Application Support folder and make a symbolic link before starting spumux (~/.spumux))
 		[preferences updateFontListForWindow:nil];
 		
+		//Update "MCLastCheck" so we'll won't check again
 		[standardDefaults setObject:[NSNumber numberWithCGFloat:1.2] forKey:@"MCLastCheck"];
 		
 		[preferences release];
 		preferences = nil;
 		
+		//Make sure our main window is in front
 		[mainWindow makeKeyAndOrderFront:nil];
 	}
 }
 
-- (void)update
+- (void)updatePresets
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 	NSString *currentTitle = [presetPopUp titleOfSelectedItem];
@@ -374,6 +392,18 @@
 #pragma mark -
 #pragma mark •• Menu actions
 
+//Open preferences
+- (IBAction)openPreferences:(id)sender
+{
+	if (preferences == nil)
+	{
+		preferences = [[MCPreferences alloc] init];
+		[preferences setDelegate:self];
+	}
+	
+	[preferences showPreferences];
+}
+
 - (IBAction)openFiles:(id)sender
 {
 	NSOpenPanel *sheet = [NSOpenPanel openPanel];
@@ -410,18 +440,6 @@
 	}
 	
 	[locationsTextField setString:@""];
-}
-
-//Open preferences
-- (IBAction)openPreferences:(id)sender
-{
-	if (preferences == nil)
-	{
-		preferences = [[MCPreferences alloc] init];
-		[preferences setDelegate:self];
-	}
-	
-	[preferences showPreferences];
 }
 
 - (IBAction)goToSite:(id)sender

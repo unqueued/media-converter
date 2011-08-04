@@ -31,16 +31,16 @@
 
 //Main actions
 - (void)versionUpdateCheck;
-- (void)update;
+- (void)updatePresets;
 
 //Interface actions
 - (IBAction)setPresetPopup:(id)sender;
 
 //Menu actions
+- (IBAction)openPreferences:(id)sender;
 - (IBAction)openFiles:(id)sender;
 - (IBAction)openURLs:(id)sender;
 - (IBAction)saveDocumentAs:(id)sender;
-- (IBAction)openPreferences:(id)sender;
 - (IBAction)goToSite:(id)sender;
 - (IBAction)downloadSource:(id)sender;
 - (IBAction)makeDonation:(id)sender;
@@ -61,7 +61,7 @@
 //Convert files to path
 - (void)convertFiles:(NSString *)path;
 
-//Show an alert if needed (protected or no default files
+//Show an alert if needed (protected or no default files)
 - (void)showAlert:(NSNumber *)protectedFiles;
 - (NSString *)getRealPath:(NSString *)inPath;
 - (void)closeWindow;
