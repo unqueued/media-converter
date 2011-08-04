@@ -26,6 +26,7 @@
 	IBOutlet id nameField;
 	IBOutlet id extensionField;
 	IBOutlet id presetsTableView;
+	IBOutlet id presetsActionButton;
 	IBOutlet id presetsPanel;
 	IBOutlet id containerPopUp;
 	IBOutlet id videoFormatPopUp;
@@ -44,6 +45,27 @@
 	IBOutlet id advancedBarButton;
 	IBOutlet id advancedCompleteButton;
 	IBOutlet id saveButton;
+	IBOutlet id imageIcon;
+	IBOutlet id imageName;
+	
+	IBOutlet id hardcodedFontPopup;
+	IBOutlet id hardcodedHAlignPopup;
+	IBOutlet id hardcodedVAlignPopup;
+	IBOutlet id hardcodedVisiblePopup;
+	
+	IBOutlet id hardcodedTransparencyText;
+	IBOutlet id hardcodedMethodTabView;
+	
+	IBOutlet id hardcodedPreviewImage;
+	IBOutlet id hardcodedPreview;
+	
+	IBOutlet id subtitleSettingsView;
+	IBOutlet id hardcodedSettingsView;
+	IBOutlet id DVDSettingsView;
+	
+	IBOutlet id filterTableView;
+	IBOutlet id filterDelegate;
+	
 	//Advanced
 	IBOutlet id commandPanel;
 	
@@ -52,13 +74,19 @@
 	NSMutableDictionary *itemsList;
 	
 	//Variables
+	BOOL loaded;
 	NSArray *viewMappings;
 	NSArray *preferenceMappings;
 	NSArray *extraOptionMappings;
+	NSArray *extraOptionDefaultValues;
 	NSMutableArray *presetsData;
 	
 	NSString *currentPresetPath;
 	NSMutableDictionary *extraOptions;
+	
+	NSModalSession session;
+	
+	BOOL previewOpened;
 	
 	id delegate;
 }
@@ -76,8 +104,13 @@
 //Add actions
 - (IBAction)endAddSheet:(id)sender;
 //Presets actions
+//Also external
+- (void)editPresetForWindow:(NSWindow *)window withDictionary:(NSDictionary *)dictionary;
+- (void)savePresetForWindow:(NSWindow *)window withDictionary:(NSDictionary *)dictionary;
+
+- (IBAction)edit:(id)sender;
 - (IBAction)addPreset:(id)sender;
-- (IBAction)removePreset:(id)sender;
+- (IBAction)delete:(id)sender;
 - (IBAction)duplicate:(id)sender;
 - (NSInteger)installThemesWithNames:(NSArray *)names presetDictionaries:(NSArray *)dictionaries;
 - (void)openPresetFiles:(NSArray *)paths;
@@ -88,11 +121,25 @@
 - (IBAction)setAspect:(id)sender;
 - (IBAction)setExtraOption:(id)sender;
 - (IBAction)setSubtitleKind:(id)sender;
+
+- (void)savePreset;
+
+- (IBAction)showPreview:(id)sender;
+- (void)reloadHardcodedPreview;
+- (IBAction)setHarcodedVisibility:(id)sender;
+
+- (IBAction)chooseImage:(id)sender;
+- (IBAction)setImageHAlignment:(id)sender;
+- (IBAction)setImageVAlignment:(id)sender;
+
 - (IBAction)goToPresetSite:(id)sender;
-- (IBAction)savePreset:(id)sender;
+- (IBAction)saveDocumentAs:(id)sender;
 //Advanced actions
 - (IBAction)chooseFFMPEG:(id)sender;
 - (IBAction)rebuildFonts:(id)sender;
+
+- (IBAction)ok:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 //Toolbar actions
 - (NSToolbarItem *)createToolbarItemWithName:(NSString *)name;
@@ -106,7 +153,7 @@
 //Other actions
 //MatPeterson http://www.cocoadev.com/index.pl?NSWindow
 - (void)resizeWindowOnSpotWithRect:(NSRect)aRect;
-- (void)setViewOptions:(NSArray *)views infoObject:(id)info mappingsObject:(NSArray *)mappings startCount:(NSInteger)start;
+- (void)setViewOptions:(NSArray *)views infoObject:(id)info fallbackInfo:(id)fallback mappingsObject:(NSArray *)mappings startCount:(NSInteger)start;
 - (void)clearOptionsInViews:(NSArray *)views;
 - (void)setProperty:(id)property forControl:(id)control;
 - (void)reloadPresets;

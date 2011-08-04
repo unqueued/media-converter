@@ -15,6 +15,9 @@
 #import "MCCheckBoxCell.h"
 #import "NSNumber_Extensions.h"
 #import "MCInstallPanel.h"
+#import "MCActionButton.h"
+#import "MCFilterDelegate.h"
+#import "MCFilter.h"
 
 @implementation MCPreferences
 
@@ -41,25 +44,89 @@
 																@"-ar",		//8
 		nil];
 		
-		extraOptionMappings = [[NSArray alloc] initWithObjects:	@"Keep Aspect",						//101
-																@"Auto Aspect",						//102
-																@"Auto Size",						//103
-																@"Subtitle Type",					//104
-																@"Subtitle Horizontal Alignment",	//105
-																@"Subtitle Vertical Alignment",		//106
-																@"Subtitle Left Margin",			//107
-																@"Subtitle Right Margin",			//108
-																@"Subtitle Top Margin",				//109
-																@"Subtitle Bottom Margin",			//110
-																@"Two Pass",						//111
-																@"Start Atom",						//112
-																@"Subtitle Font",					//113
-																@"Subtitle Font Size",				//114
-																@"Subtitle Default Language",		//115
+		extraOptionMappings = [[NSArray alloc] initWithObjects:	
+																//Video
+																@"Keep Aspect",									//101
+																@"Auto Aspect",									//102
+																@"Auto Size",									//103
+																
+																//Subtitles
+																@"Subtitle Type",								//104
+																@"Subtitle Default Language",					//105
+																// Hardcoded
+																@"Font",										//106
+																@"Font Size",									//107
+																@"Color",										//108
+																@"Horizontal Alignment",						//109
+																@"Vertical Alignment",							//110
+																@"Left Margin",									//111
+																@"Right Margin",								//112
+																@"Top Margin",									//113
+																@"Bottom Margin",								//114
+																@"Method",										//115
+																@"Box Color",									//116
+																@"Box Marge",									//117
+																@"Box Alpha Value",								//118
+																@"Border Color",								//119
+																@"Border Size",									//120
+																// DVD
+																@"Subtitle Font",								//121
+																@"Subtitle Font Size",							//122
+																@"Subtitle Horizontal Alignment",				//123
+																@"Subtitle Vertical Alignment",					//124
+																@"Subtitle Left Margin",						//125
+																@"Subtitle Right Margin",						//126
+																@"Subtitle Top Margin",							//127
+																@"Subtitle Bottom Margin",						//128
+																
+																//Advanced
+																@"Two Pass",									//129
+																@"Start Atom",									//130
+		nil];
+		
+		extraOptionDefaultValues = [[NSArray alloc] initWithObjects:	
+																//Video
+																[NSNumber numberWithBool:NO],										// Keep Aspect
+																[NSNumber numberWithBool:NO],										// Auto Aspect
+																[NSNumber numberWithBool:NO],										// Auto Size
+																
+																//Subtitles
+																@"Subtitle Type",													// Subtitle Type
+																@"Subtitle Default Language",										// Subtitle Default Language
+																// Hardcoded
+																@"Helvetica",														// Font
+																[NSNumber numberWithCGFloat:24],									// Font Size
+																[NSArchiver archivedDataWithRootObject:[NSColor whiteColor]],		// Color
+																@"center",															// Horizontal Alignment
+																@"bottom",															// Vertical Alignment
+																[NSNumber numberWithInteger:0],										// Left Margin
+																[NSNumber numberWithInteger:0],										// Right Margin
+																[NSNumber numberWithInteger:0],										// Top Margin
+																[NSNumber numberWithInteger:0],										// Bottom Margin
+																@"border",															// Method
+																[NSArchiver archivedDataWithRootObject:[NSColor darkGrayColor]],	// Box Color
+																[NSNumber numberWithInteger:10],									// Box Marge
+																[NSNumber numberWithDouble:0.50],									// Box Alpha Value
+																[NSArchiver archivedDataWithRootObject:[NSColor blackColor]],		// Border Color
+																[NSNumber numberWithInteger:4],										// Border Size
+																// DVD
+																@"Helvetica",														// Subtitle Font
+																[NSNumber numberWithCGFloat:24],									// Subtitle Font Size
+																@"center",															// Subtitle Horizontal Alignment
+																@"bottom",															// Subtitle Vertical Alignment
+																[NSNumber numberWithInteger:60],									// Subtitle Left Margin
+																[NSNumber numberWithInteger:60],									// Subtitle Right Margin
+																[NSNumber numberWithInteger:20],									// Subtitle Top Margin
+																[NSNumber numberWithInteger:30],									// Subtitle Bottom Margin
+																
+																//Advanced
+																[NSNumber numberWithBool:NO],										// Two Pass
+																[NSNumber numberWithBool:NO],										// Start Atom
 		nil];
 		
 		itemsList = [[NSMutableDictionary alloc] init];
 		presetsData = [[NSMutableArray alloc] init];
+		loaded = NO;
 		
 		[NSBundle loadNibNamed:@"MCPreferences" owner:self];
 	}
@@ -95,6 +162,7 @@
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableViewSelectionDidChange:) name:@"MCListSelected" object:presetsTableView];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(installModeChanged:) name:@"MCInstallModeChanged" object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePreview:) name:@"MCUpdatePreview" object:nil];
 	
 	//General
 	NSString *temporaryFolder = [standardDefaults objectForKey:@"MCSaveLocation"];
@@ -119,20 +187,25 @@
 	
 	[subtitleLanguagePopup setArray:subtitleLanguages];
 	
-	//[self setupPopups];
-	[NSThread detachNewThreadSelector:@selector(setupPopups) toTarget:self withObject:nil];
+	[self setupPopups];
+	//[NSThread detachNewThreadSelector:@selector(setupPopups) toTarget:self withObject:nil];
 	[self reloadPresets];
 	
 	[presetsTableView registerForDraggedTypes:[NSArray arrayWithObject:@"NSGeneralPboardType"]];
 	
 	[presetsTableView setTarget:self];
-	[presetsTableView setDoubleAction:@selector(editPreset)];
+	[presetsTableView setDoubleAction:@selector(edit:)];
 	
 	[addTableView setTarget:self];
 	[addTableView setDoubleAction:@selector(endAddSheet:)];
 	
+	[presetsActionButton setDelegate:self];
+	[presetsActionButton addMenuWithTitle:NSLocalizedString(@"Edit Preset…", nil) withSelector:@selector(edit:)];
+	[presetsActionButton addMenuWithTitle:NSLocalizedString(@"Duplicate Preset", nil) withSelector:@selector(duplicate:)];
+	[presetsActionButton addMenuWithTitle:NSLocalizedString(@"Save Preset…", nil) withSelector:@selector(saveDocumentAs:)];
+	
 	//Load the options for our views
-	[self setViewOptions:[NSArray arrayWithObjects:generalView, presetsView, advancedView, nil] infoObject:[NSUserDefaults standardUserDefaults] mappingsObject:preferenceMappings startCount:0];
+	[self setViewOptions:[NSArray arrayWithObjects:generalView, presetsView, advancedView, nil] infoObject:[NSUserDefaults standardUserDefaults] fallbackInfo:nil mappingsObject:preferenceMappings startCount:0];
 	
 	[self setupToolbar];
 	[toolbar setSelectedItemIdentifier:[standardDefaults objectForKey:@"MCSavedPrefView"]];
@@ -143,6 +216,8 @@
 
 	NSWindow *myWindow = [self window];
 	[myWindow setFrameUsingName:@"Preferences"];
+	
+	loaded = YES;
 }
 
 - (void)saveFrame
@@ -249,57 +324,74 @@
 #pragma mark -
 #pragma mark •• - Presets
 
-- (void)editPreset
+- (IBAction)edit:(id)sender
 {
-	NSInteger selRow = [presetsTableView selectedRow];
+	NSInteger selectedRow = [presetsTableView selectedRow];
 	
-	if (selRow > -1)
+	if (selectedRow > - 1)
 	{
-		NSDictionary *currentData = [presetsData objectAtIndex:[presetsTableView selectedRow]];
-
-		currentPresetPath = [[currentData objectForKey:@"Path"] retain];
-
-		NSDictionary *presetDictionary = [NSDictionary dictionaryWithContentsOfFile:currentPresetPath];
-	
-		[nameField setStringValue:[presetDictionary objectForKey:@"Name"]];
-		[extensionField setStringValue:[presetDictionary objectForKey:@"Extension"]];
+		NSDictionary *dictionary = [presetsData objectAtIndex:selectedRow];
 		
-		NSArray *options = [presetDictionary objectForKey:@"Encoder Options"];
-
-		[self setViewOptions:[NSArray arrayWithObject:[presetsPanel contentView]] infoObject:options mappingsObject:viewMappings startCount:0];
-	
-		extraOptions = [[NSMutableDictionary alloc] initWithDictionary:[presetDictionary objectForKey:@"Extra Options"]];
-		
-		[self setViewOptions:[NSArray arrayWithObject:[presetsPanel contentView]] infoObject:extraOptions mappingsObject:extraOptionMappings startCount:100];
-	
-		[self setSubtitleKind:nil];
-		
-		NSString *aspectString = [options objectForKey:@"-vf"];
-		
-		if (aspectString)
-		{
-			if ([aspectString rangeOfString:@"setdar="].length > 0 && [[aspectString componentsSeparatedByString:@"setdar="] count] > 1)
-				[aspectRatioField setStringValue:[[aspectString componentsSeparatedByString:@"setdar="] objectAtIndex:1]];
-			else
-				aspectString = nil;
-		}
-
-		[aspectRatioButton setState:[[NSNumber numberWithBool:(aspectString != nil)] integerValue]];
-		
-		if ([options containsObject:[NSDictionary dictionaryWithObject:@"1" forKey:@"-ac"]])
-			[modePopup selectItemAtIndex:0];
-		else if ([options containsObject:[NSDictionary dictionaryWithObject:@"2" forKey:@"-ac"]])
-			[modePopup selectItemAtIndex:1];
-		else
-			[modePopup selectItemAtIndex:3];
-	
-		[(MCOptionsDelegate *)[advancedTableView delegate] setOptions:options];
-		[advancedTableView reloadData];
-	
-		[advancedCompleteButton setTitle:NSLocalizedString(@"Save", nil)];
-	
-		[NSApp beginSheet:presetsPanel modalForWindow:[self window] modalDelegate:self didEndSelector:nil contextInfo:NULL];
+		[self editPresetForWindow:[self window] withDictionary:dictionary];
 	}
+}
+
+- (void)editPresetForWindow:(NSWindow *)window withDictionary:(NSDictionary *)dictionary;
+{
+	currentPresetPath = [[dictionary objectForKey:@"Path"] retain];
+
+	NSDictionary *presetDictionary = [NSDictionary dictionaryWithContentsOfFile:currentPresetPath];
+
+	[nameField setStringValue:[presetDictionary objectForKey:@"Name"]];
+	[extensionField setStringValue:[presetDictionary objectForKey:@"Extension"]];
+	
+	NSArray *options = [presetDictionary objectForKey:@"Encoder Options"];
+
+	[self setViewOptions:[NSArray arrayWithObject:[presetsPanel contentView]] infoObject:options fallbackInfo:nil mappingsObject:viewMappings startCount:0];
+
+	extraOptions = [[NSMutableDictionary alloc] initWithDictionary:[presetDictionary objectForKey:@"Extra Options"]];
+		
+	[self setViewOptions:[NSArray arrayWithObjects:[presetsPanel contentView], DVDSettingsView, hardcodedSettingsView, nil] infoObject:extraOptions fallbackInfo:[NSDictionary dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings] mappingsObject:extraOptionMappings startCount:100];
+	
+	NSMutableArray *filters;
+	
+	if ([[presetDictionary allKeys] containsObject:@"Video Filters"])
+		filters = [NSMutableArray arrayWithArray:[presetDictionary objectForKey:@"Video Filters"]];
+	else
+		filters = [NSMutableArray array];
+	
+	[[filterTableView delegate] setFilterOptions:filters];
+	
+	[self setSubtitleKind:nil];
+	[self setHarcodedVisibility:nil];
+		
+	NSString *aspectString = [options objectForKey:@"-vf"];
+		
+	if (aspectString)
+	{
+		if ([aspectString rangeOfString:@"setdar="].length > 0 && [[aspectString componentsSeparatedByString:@"setdar="] count] > 1)
+			[aspectRatioField setStringValue:[[aspectString componentsSeparatedByString:@"setdar="] objectAtIndex:1]];
+		else
+			aspectString = nil;
+	}
+
+	[aspectRatioButton setState:[[NSNumber numberWithBool:(aspectString != nil)] integerValue]];
+		
+	if ([options containsObject:[NSDictionary dictionaryWithObject:@"1" forKey:@"-ac"]])
+		[modePopup selectItemAtIndex:0];
+	else if ([options containsObject:[NSDictionary dictionaryWithObject:@"2" forKey:@"-ac"]])
+		[modePopup selectItemAtIndex:1];
+	else
+		[modePopup selectItemAtIndex:3];
+	
+	[(MCOptionsDelegate *)[advancedTableView delegate] setOptions:options];
+	[advancedTableView reloadData];
+	
+	[advancedCompleteButton setTitle:NSLocalizedString(@"Save", nil)];
+	
+	[self updatePreview:nil];
+	
+	[NSApp beginSheet:presetsPanel modalForWindow:window modalDelegate:self didEndSelector:nil contextInfo:NULL];
 }
 
 - (IBAction)addPreset:(id)sender
@@ -628,7 +720,7 @@
 	[self installThemesWithNames:names presetDictionaries:dictionaries];
 }
 
-- (IBAction)removePreset:(id)sender
+- (IBAction)delete:(id)sender
 {
 	NSString *alertMessage;
 	NSString *alertDetails;
@@ -701,6 +793,7 @@
 		[presetDictionary setObject:[extensionField stringValue] forKey:@"Extension"];
 		[presetDictionary setObject:[(MCOptionsDelegate *)[advancedTableView delegate] options] forKey:@"Encoder Options"];
 		[presetDictionary setObject:extraOptions forKey:@"Extra Options"];
+		[presetDictionary setObject:[[filterTableView delegate] filterOptions] forKey:@"Video Filters"];
 		
 		NSInteger result = [self installThemesWithNames:[NSArray arrayWithObject:name] presetDictionaries:[NSArray arrayWithObject:presetDictionary]];
 		
@@ -772,16 +865,12 @@
 {
 	NSInteger index = [sender tag] - 1;
 	NSString *option = [viewMappings objectAtIndex:index];
-	NSString *settings = nil;
+	NSString *settings = [sender objectValue];
 	
 	NSMutableArray *advancedOptions = [(MCOptionsDelegate *)[advancedTableView delegate] options];
 	
 	if ([sender isKindOfClass:[MCPopupButton class]])
 	{
-		NSInteger selectedIndex = [(MCPopupButton *)sender indexOfSelectedItem];
-		NSArray *rawTypes = [(MCPopupButton *)sender getArray];
-		settings = [rawTypes objectAtIndex:selectedIndex];
-
 		if ([settings isEqualTo:@"none"])
 		{
 			NSString *object = [advancedOptions objectForKey:option];
@@ -853,44 +942,142 @@
 {
 	NSInteger index = [sender tag] - 101;
 	NSString *option = [extraOptionMappings objectAtIndex:index];
-	NSString *settings = nil;
-	
-	if ([sender isKindOfClass:[MCPopupButton class]])
-	{
-		NSInteger selectedIndex = [(MCPopupButton *)sender indexOfSelectedItem];
-		NSArray *rawTypes = [(MCPopupButton *)sender getArray];
-		settings = [rawTypes objectAtIndex:selectedIndex];
-	}
-	else
-	{
-		if ([sender objectValue])
-			settings = [sender objectValue];
-	}
 
-	[extraOptions setObject:settings forKey:option];
+	[extraOptions setObject:[sender objectValue] forKey:option];
 	[advancedTableView reloadData];
+	
+	if ([sender tag] > 105 && [sender tag] < 121)
+	{
+		[self updatePreview:nil];
+	}
+}
+
+- (void)reloadHardcodedPreview
+{
+	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings];
+	[settings addEntriesFromDictionary:extraOptions];
+			
+	NSImage *previewImage = [MCCommonMethods overlayImageWithObject:@"This is a scene from the movie Sintel watch it at: www.sintel.org<br><i>second line in italic</i>" withSettings:settings inputImage:[NSImage imageNamed:@"Sintel-frame"]];
+	[hardcodedPreviewImage setImage:previewImage];
+	[hardcodedPreviewImage display];
+}
+
+- (void)updatePreview:(NSNotification *)notif
+{
+	id sendingObject = [notif object];
+
+	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings];
+	[settings addEntriesFromDictionary:extraOptions];
+	
+	NSImage *previewImage = [[[NSImage imageNamed:@"Sintel-frame"] copy] autorelease];
+	NSSize imageSize = [previewImage size];
+	NSImage *filterImage = [filterDelegate previewImageWithSize:imageSize];
+	
+	[previewImage lockFocus];
+	[filterImage drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	
+	if (sendingObject)
+		[[sendingObject imageWithSize:imageSize]  drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	
+	[previewImage unlockFocus];
+	
+	if ([[settings objectForKey:@"Subtitle Type"] isEqualTo:@"hard"])
+		previewImage = [MCCommonMethods overlayImageWithObject:@"This is a scene from the movie Sintel watch it at: www.sintel.org<br><i>second line in italic</i>" withSettings:settings inputImage:previewImage];
+	
+	[hardcodedPreviewImage setImage:previewImage];
+	[hardcodedPreviewImage display];
+}
+
+- (IBAction)setHarcodedVisibility:(id)sender
+{
+	NSInteger selectedIndex = [(MCPopupButton *)hardcodedVisiblePopup indexOfSelectedItem];
+	
+	//Seems when editing a preset from the main window, we have to try until we're woken from the NIB
+	while (selectedIndex == -1)
+		selectedIndex = [(MCPopupButton *)hardcodedVisiblePopup indexOfSelectedItem];
+	
+	if (selectedIndex < 2)
+		[hardcodedMethodTabView selectTabViewItemAtIndex:selectedIndex];
+		
+	[hardcodedMethodTabView setHidden:(selectedIndex == 2)];
+
+	if (sender != nil)
+		[self setExtraOption:sender];
 }
 
 - (IBAction)setSubtitleKind:(id)sender
 {
-	NSInteger selectedIndex = [(MCPopupButton *)subtitleFormatPopUp indexOfSelectedItem];
-	NSArray *rawTypes = [(MCPopupButton *)subtitleFormatPopUp getArray];
-	NSString *settings = [rawTypes objectAtIndex:selectedIndex];
-	
 	if (sender)
-		[extraOptions setObject:settings forKey:@"Subtitle Type"];
+		[extraOptions setObject:[sender objectValue] forKey:@"Subtitle Type"];
+	
+	NSString *settings = [extraOptions objectForKey:@"Subtitle Type"];
+
+	if (settings == nil)
+		settings = @"";
 	
 	BOOL isDVD = ([settings isEqualTo:@"dvd"]);
+	BOOL isHardcoded = ([settings isEqualTo:@"hard"]);
 	
-	NSView *myView = [subtitleFormatPopUp superview];
-	[[myView viewWithTag:113] setEnabled:isDVD];
-	[[myView viewWithTag:114] setEnabled:isDVD];
-	[[myView viewWithTag:105] setEnabled:isDVD];
-	[[myView viewWithTag:106] setEnabled:isDVD];
-	[[myView viewWithTag:107] setEnabled:isDVD];
-	[[myView viewWithTag:108] setEnabled:isDVD];
-	[[myView viewWithTag:109] setEnabled:isDVD];
-	[[myView viewWithTag:110] setEnabled:isDVD];
+	//[advancedSubSettingsBox setHidden:(!isDVD)];
+	//[advancedSubSettingsButton setHidden:(!isHardcoded)];
+	
+	NSInteger i;
+	NSArray *subviews = [subtitleSettingsView subviews];
+	for (i = 0; i < [subviews count]; i ++)
+	{
+		NSView *currentView = [subviews objectAtIndex:i];
+		[currentView removeFromSuperview];
+	}
+	
+	if (isDVD | isHardcoded)
+	{
+		NSView *subview;
+		if (isDVD)
+			subview = DVDSettingsView;
+		else
+			subview = hardcodedSettingsView;
+			
+		[subview setFrame:NSMakeRect(0, [subtitleSettingsView frame].size.height - [subview frame].size.height, [subview frame].size.width, [subview frame].size.height)];
+		[subtitleSettingsView addSubview:subview];
+	}
+}
+
+- (IBAction)showPreview:(id)sender
+{	
+	if ([hardcodedPreview isVisible])
+		[hardcodedPreview orderOut:nil];
+	else
+		[hardcodedPreview orderFront:nil];
+	
+}
+
+- (IBAction)chooseImage:(id)sender
+{
+	NSOpenPanel *sheet = [NSOpenPanel openPanel];
+	[sheet setCanChooseFiles:YES];
+	[sheet setCanChooseDirectories:NO];
+	[sheet setAllowsMultipleSelection:NO];
+	
+	NSInteger result = [sheet runModalForDirectory:nil file:nil types:[NSArray arrayWithObject:@"png"]];
+	
+	if (result == NSOKButton)
+	{
+		NSString *filePath = [sheet filename];
+		[imageIcon setHidden:NO];
+		[imageIcon setImage:[[NSWorkspace sharedWorkspace] iconForFile:filePath]];
+		[imageName setStringValue:[[MCCommonMethods defaultManager] displayNameAtPath:filePath]];
+		[extraOptions setObject:filePath forKey:@"Overlay Image"];
+	}
+}
+
+- (IBAction)setImageHAlignment:(id)sender
+{
+	[extraOptions setObject:[NSNumber numberWithInteger:[sender indexOfSelectedItem]] forKey:@"Overlay Horizontal Alignment"];
+}
+
+- (IBAction)setImageVAlignment:(id)sender
+{
+	[extraOptions setObject:[NSNumber numberWithInteger:[sender indexOfSelectedItem]] forKey:@"Overlay Vertical Alignment"];
 }
 
 - (IBAction)goToPresetSite:(id)sender
@@ -898,16 +1085,39 @@
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://media-converter.sourceforge.net/presets.html"]];
 }
 
-- (IBAction)savePreset:(id)sender
+- (IBAction)saveDocumentAs:(id)sender
 {
-	NSDictionary *dictionary = [presetsData objectAtIndex:[presetsTableView selectedRow]];
+	NSInteger selectedRow = [presetsTableView selectedRow];
+	
+	if (selectedRow > - 1)
+	{
+		NSDictionary *dictionary = [presetsData objectAtIndex:selectedRow];
+		
+		[self savePresetForWindow:[self window] withDictionary:dictionary];
+	}
+}
+
+- (void)savePreset
+{
+	NSInteger selectedRow = [presetsTableView selectedRow];
+	
+	if (selectedRow > - 1)
+	{
+		NSDictionary *dictionary = [presetsData objectAtIndex:selectedRow];
+		
+		[self savePresetForWindow:[self window] withDictionary:dictionary];
+	}
+}
+
+- (void)savePresetForWindow:(NSWindow *)window withDictionary:(NSDictionary *)dictionary
+{
 	NSString *name = [dictionary objectForKey:@"Name"];
 
 	NSSavePanel *sheet = [NSSavePanel savePanel];
 	[sheet setRequiredFileType:@"mcpreset"];
 	[sheet setCanSelectHiddenExtension:YES];
 	[sheet setMessage:NSLocalizedString(@"Choose a location to save the preset file", nil)];
-	[sheet beginSheetForDirectory:nil file:[name stringByAppendingPathExtension:@"mcpreset"] modalForWindow:[self window] modalDelegate:self didEndSelector:@selector(saveDocumentPanelDidEnd:returnCode:contextInfo:) contextInfo:nil];
+	[sheet beginSheetForDirectory:nil file:[name stringByAppendingPathExtension:@"mcpreset"] modalForWindow:window modalDelegate:self didEndSelector:@selector(saveDocumentPanelDidEnd:returnCode:contextInfo:) contextInfo:dictionary];
 }
 
 - (void)saveDocumentPanelDidEnd:(NSSavePanel *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
@@ -916,8 +1126,7 @@
 
 	if (returnCode == NSOKButton) 
 	{
-		NSDictionary *dictionary = [presetsData objectAtIndex:[presetsTableView selectedRow]];
-		NSDictionary *presetDictionary = [NSDictionary dictionaryWithContentsOfFile:[dictionary objectForKey:@"Path"]];
+		NSDictionary *presetDictionary = [NSDictionary dictionaryWithContentsOfFile:[(NSDictionary *)contextInfo objectForKey:@"Path"]];
 		
 		NSString *error = NSLocalizedString(@"An unkown error occured", nil);
 		BOOL result = [MCCommonMethods writeDictionary:presetDictionary toFile:[sheet filename] errorString:&error];
@@ -945,6 +1154,16 @@
 - (IBAction)rebuildFonts:(id)sender
 {
 	[self updateFontListForWindow:[self window]];
+}
+
+- (IBAction)ok:(id)sender
+{
+	[NSApp stopModalWithCode:NSOKButton];
+}
+
+- (IBAction)cancel:(id)sender
+{
+	[NSApp stopModalWithCode:NSCancelButton];
 }
 
 /////////////////////
@@ -1034,6 +1253,28 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
 	[saveButton setEnabled:([presetsTableView selectedRow] != -1 && [presetsTableView numberOfSelectedRows] == 1)];
+	
+	NSString *newTitle;
+	if ([presetsTableView numberOfSelectedRows] > 1)
+		newTitle = NSLocalizedString(@"Duplicate Presets", nil);
+	else
+		newTitle = NSLocalizedString(@"Duplicate Preset", nil);
+		
+	[presetsActionButton setTitle:newTitle atIndex:1];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+	if (loaded == YES)
+	{
+		if (([presetsTableView selectedRow] == -1 | [presetsTableView numberOfSelectedRows] > 1) && (aSelector == @selector(edit:) | aSelector == @selector(saveDocumentAs:)))
+			return NO;
+		
+		if (([presetsTableView selectedRow] == -1) && (aSelector == @selector(duplicate:) | (aSelector == @selector(delete:))))
+			return NO;
+	}
+		
+	return [super respondsToSelector:aSelector];
 }
 
 //Count the number of rows, not really needed anywhere
@@ -1225,7 +1466,7 @@
 }
 #endif
 
-- (void)setViewOptions:(NSArray *)views infoObject:(id)info mappingsObject:(NSArray *)mappings startCount:(NSInteger)start
+- (void)setViewOptions:(NSArray *)views infoObject:(id)info fallbackInfo:(id)fallback mappingsObject:(NSArray *)mappings startCount:(NSInteger)start
 {
 	NSEnumerator *iter = [[[NSEnumerator alloc] init] autorelease];
 	NSControl *cntl;
@@ -1234,7 +1475,7 @@
 	for (x = 0; x < [views count]; x ++)
 	{
 		NSView *currentView;
-	
+		
 		if ([[views objectAtIndex:x] isKindOfClass:[NSView class]])
 			currentView = [views objectAtIndex:x];
 		else
@@ -1244,10 +1485,10 @@
 		while ((cntl = [iter nextObject]) != NULL)
 		{
 			NSInteger tag = [cntl tag] - start;
-		
+
 			if ([cntl isKindOfClass:[NSTabView class]])
 			{
-				[self setViewOptions:[(NSTabView *)cntl tabViewItems] infoObject:info mappingsObject:mappings startCount:start];
+				[self setViewOptions:[(NSTabView *)cntl tabViewItems] infoObject:info fallbackInfo:fallback mappingsObject:mappings startCount:start];
 			}
 			else if (tag > 0)
 			{
@@ -1255,7 +1496,11 @@
 
 				if (index < [mappings count])
 				{
-					id property = [info objectForKey:[mappings objectAtIndex:index]];
+					NSString *currentKey = [mappings objectAtIndex:index];
+					id property = [info objectForKey:currentKey];
+					
+					if (property == nil && fallback != nil)
+						property = [fallback objectForKey:currentKey];
 					
 					[self setProperty:property forControl:cntl];
 
@@ -1270,14 +1515,7 @@
 {
 	if (property)
 	{
-		if ([control isKindOfClass:[MCPopupButton class]])
-		{
-			NSArray *namesArray = [(MCPopupButton *)control getArray];
-			NSInteger index = [namesArray indexOfObject:property];
-			
-			[(MCPopupButton *)control selectItemAtIndex:index];
-		}
-		else if ([control isKindOfClass:[NSTextField class]])
+		if ([control isKindOfClass:[NSTextField class]])
 		{
 			[control setStringValue:property];
 		}
@@ -1289,8 +1527,9 @@
 		{
 			[control setObjectValue:property];
 		}
-						
-		[control setEnabled:YES];
+					
+		if (![control isKindOfClass:[MCPopupButton class]])
+			[control setEnabled:YES];
 	}
 	else if ([control isKindOfClass:[MCPopupButton class]])
 	{
@@ -1341,17 +1580,10 @@
 				
 				if (index < [viewMappings count])
 				{
-					if ([cntl isKindOfClass:[MCPopupButton class]])
-					{
-						[(MCPopupButton *)cntl selectItemAtIndex:0];
-					}
-					else 
-					{
-						if ([cntl isKindOfClass:[NSTextField class]])
-							[cntl setEnabled:NO];
+					if ([cntl isKindOfClass:[NSTextField class]])
+						[cntl setEnabled:NO];
 							
-						[cntl setObjectValue:nil];
-					}
+					[cntl setObjectValue:nil];
 				}
 				else if (index > 100)
 				{
@@ -1359,7 +1591,7 @@
 					
 					if (index < [extraOptionMappings count])
 					{
-						if ([cntl isKindOfClass:[MCPopupButton class]] | [cntl isKindOfClass:[NSPopUpButton class]])
+						if ([cntl isKindOfClass:[NSPopUpButton class]])
 							[(NSPopUpButton *)cntl selectItemAtIndex:0];
 						else
 							[cntl setObjectValue:nil];
@@ -1484,11 +1716,13 @@
 	NSMutableArray *subtitleTypes = [NSMutableArray array];
 	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Disable", nil), @"Name", @"none", @"Format", nil] atIndex:0];
 	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"Name", @"", @"Format", nil] atIndex:1];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"DVD MPEG2", nil), @"Name", @"dvd", @"Format", nil] atIndex:2];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"MPEG4 / 3GP", nil), @"Name", @"mp4", @"Format", nil] atIndex:3];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Matroska (SRT)", nil), @"Name", @"mkv", @"Format", nil] atIndex:4];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Ogg (Kate)", nil), @"Name", @"kate", @"Format", nil] atIndex:5];
-	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"SRT (External)", nil), @"Name", @"srt", @"Format", nil] atIndex:5];
+	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Hardcoded", nil), @"Name", @"hard", @"Format", nil] atIndex:2];
+	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"DVD MPEG2", nil), @"Name", @"dvd", @"Format", nil] atIndex:3];
+	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"MPEG4 / 3GP", nil), @"Name", @"mp4", @"Format", nil] atIndex:4];
+	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Matroska (SRT)", nil), @"Name", @"mkv", @"Format", nil] atIndex:5];
+	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Ogg (Kate)", nil), @"Name", @"kate", @"Format", nil] atIndex:6];
+	[subtitleTypes insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"SRT (External)", nil), @"Name", @"srt", @"Format", nil] atIndex:7];
+	
 	[subtitleFormatPopUp setArray:subtitleTypes];
 	
 	NSMutableArray *horizontalAlignments = [NSMutableArray array];
@@ -1496,12 +1730,74 @@
 	[horizontalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Center", nil), @"Name", @"center", @"Format", nil] atIndex:1];
 	[horizontalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Right", nil), @"Name", @"right", @"Format", nil] atIndex:2];
 	[hAlignFormatPopUp setArray:horizontalAlignments];
+	[hardcodedHAlignPopup setArray:horizontalAlignments];
 	
 	NSMutableArray *verticalAlignments = [NSMutableArray array];
 	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Top", nil), @"Name", @"top", @"Format", nil] atIndex:0];
 	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Center", nil), @"Name", @"center", @"Format", nil] atIndex:1];
 	[verticalAlignments insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Bottom", nil), @"Name", @"bottom", @"Format", nil] atIndex:2];
 	[vAlignFormatPopUp setArray:verticalAlignments];
+	[hardcodedVAlignPopup setArray:verticalAlignments];
+	
+	NSMutableArray *textVisibilities = [NSMutableArray array];
+	[textVisibilities insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Text Border", nil), @"Name", @"border", @"Format", nil] atIndex:0];
+	[textVisibilities insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Surounding Box", nil), @"Name", @"box", @"Format", nil] atIndex:1];
+	[textVisibilities insertObject:[NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"None", nil), @"Name", @"none", @"Format", nil] atIndex:2];
+	[hardcodedVisiblePopup setArray:textVisibilities];
+	
+	[hardcodedFontPopup removeAllItems];
+	[hardcodedFontPopup addItemWithTitle:NSLocalizedString(@"Loading…", nil)];
+	[hardcodedFontPopup setEnabled:NO];
+	[hardcodedFontPopup setDelayed:YES];
+	
+	[fontPopup removeAllItems];
+	[fontPopup addItemWithTitle:NSLocalizedString(@"Loading…", nil)];
+	[fontPopup setEnabled:NO];
+	[fontPopup setDelayed:YES];
+	
+	[NSThread detachNewThreadSelector:@selector(setupSlowPopups) toTarget:self withObject:nil];
+	
+	[converter release];
+	converter = nil;
+	
+	[pool release];
+}
+
+- (void)setupSlowPopups
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+	NSArray *fontFamilies = [[NSFontManager sharedFontManager] availableFontFamilies];
+	NSMutableArray *hardcodedFontDictionaries = [NSMutableArray array];
+	[hardcodedFontPopup removeAllItems];
+
+	NSInteger i;
+	for (i = 0; i < [fontFamilies count]; i ++)
+	{
+		NSString *fontName = [fontFamilies objectAtIndex:i];
+		NSFont *newFont = [NSFont fontWithName:fontName size:12.0];
+				
+		if (newFont)
+		{
+			NSAttributedString *titleString;
+			NSMutableDictionary *titleAttr = [NSMutableDictionary dictionary];
+			[titleAttr setObject:newFont forKey:NSFontAttributeName];
+			titleString = [[NSAttributedString alloc] initWithString:[newFont displayName] attributes:titleAttr];
+
+			[hardcodedFontDictionaries addObject:[NSDictionary dictionaryWithObjectsAndKeys:titleString, @"Name", fontName, @"Format", nil]];
+				
+			[titleString release];
+			titleString = nil;
+		}
+		else
+		{
+			[hardcodedFontDictionaries addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:NSLocalizedString(@"%@ (no preview)", nil), fontName], @"Name", fontName, @"Format", nil]];
+		}
+	}
+
+	[hardcodedFontPopup setArray:hardcodedFontDictionaries];
+	[hardcodedFontPopup setDelayed:NO];
+	[hardcodedFontPopup setEnabled:YES];
 	
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
 	NSString *fontPath = [[NSUserDefaults standardUserDefaults] objectForKey:@"MCFontFolderPath"];
@@ -1540,9 +1836,8 @@
 	}
 
 	[fontPopup setArray:fontDictionaries];
-	
-	[converter release];
-	converter = nil;
+	[fontPopup setDelayed:NO];
+	[fontPopup setEnabled:YES];
 	
 	[pool release];
 }
@@ -1683,6 +1978,5 @@
 	NSInteger mode = [[notification object] integerValue];
 	[(NSPopUpButton *)[generalView viewWithTag:3] selectItemAtIndex:mode];
 }
-
 
 @end
