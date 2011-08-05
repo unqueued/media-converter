@@ -86,6 +86,12 @@
 		FE2B6AE21337C34F001459D4 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD21337C34F001459D4 /* katedec */; };
 		FE2B6AE31337C34F001459D4 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD31337C34F001459D4 /* oggz-info */; };
 		FE2B6AE51337C34F001459D4 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE2B6AD51337C34F001459D4 /* oggz-merge */; };
+		FE2CE87213EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
+		FE2CE87313EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
+		FE2CE87413EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
+		FE2CE87513EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
+		FE2CE87613EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
+		FE2CE87713EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
 		FE43CAAE1380646B00792EBA /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAAD1380646B00792EBA /* qt-faststart */; };
 		FE43CAB01380648D00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAAF1380648D00792EBA /* oggz-rip */; };
 		FE43CAB2138064AA00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB1138064AA00792EBA /* oggz-rip */; };
@@ -619,6 +625,8 @@
 		FE2B6AD21337C34F001459D4 /* katedec */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = katedec; sourceTree = "<group>"; };
 		FE2B6AD31337C34F001459D4 /* oggz-info */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-info"; sourceTree = "<group>"; };
 		FE2B6AD51337C34F001459D4 /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-merge"; sourceTree = "<group>"; };
+		FE2CE87013EBF8EB00538F2B /* MCHUGButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCHUGButtonCell.h; path = Source/MCHUGButtonCell.h; sourceTree = "<group>"; };
+		FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCHUGButtonCell.m; path = Source/MCHUGButtonCell.m; sourceTree = "<group>"; };
 		FE43CAAD1380646B00792EBA /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "qt-faststart"; sourceTree = "<group>"; };
 		FE43CAAF1380648D00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-rip"; sourceTree = "<group>"; };
 		FE43CAB1138064AA00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-rip"; sourceTree = "<group>"; };
@@ -1256,6 +1264,8 @@
 				FE23AC8A13E02CF300B4E457 /* MCActionButton.m */,
 				FE24915413E8046400D744A7 /* MCTextView.h */,
 				FE24915513E8046400D744A7 /* MCTextView.m */,
+				FE2CE87013EBF8EB00538F2B /* MCHUGButtonCell.h */,
+				FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -1824,6 +1834,7 @@
 				FE23AEE613E04FA200B4E457 /* MCTextFilter.m in Sources */,
 				FE24913013E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915913E8046400D744A7 /* MCTextView.m in Sources */,
+				FE2CE87413EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1862,6 +1873,7 @@
 				FE23AEE313E04FA200B4E457 /* MCTextFilter.m in Sources */,
 				FE24912D13E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915613E8046400D744A7 /* MCTextView.m in Sources */,
+				FE2CE87313EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1900,6 +1912,7 @@
 				FE23AEE813E04FA200B4E457 /* MCTextFilter.m in Sources */,
 				FE24913213E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915713E8046400D744A7 /* MCTextView.m in Sources */,
+				FE2CE87213EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1938,6 +1951,7 @@
 				FE23AEE413E04FA200B4E457 /* MCTextFilter.m in Sources */,
 				FE24912E13E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915813E8046400D744A7 /* MCTextView.m in Sources */,
+				FE2CE87513EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1976,6 +1990,7 @@
 				FE23AEE513E04FA200B4E457 /* MCTextFilter.m in Sources */,
 				FE24912F13E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915A13E8046400D744A7 /* MCTextView.m in Sources */,
+				FE2CE87713EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2014,6 +2029,7 @@
 				FE23AEE713E04FA200B4E457 /* MCTextFilter.m in Sources */,
 				FE24913113E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915B13E8046400D744A7 /* MCTextView.m in Sources */,
+				FE2CE87613EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
