@@ -92,6 +92,12 @@
 		FE2CE87513EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
 		FE2CE87613EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
 		FE2CE87713EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
+		FE2CEB0A13EC910600538F2B /* MCHUGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CEB0913EC910600538F2B /* MCHUGButton.m */; };
+		FE2CEB0B13EC910600538F2B /* MCHUGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CEB0913EC910600538F2B /* MCHUGButton.m */; };
+		FE2CEB0C13EC910600538F2B /* MCHUGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CEB0913EC910600538F2B /* MCHUGButton.m */; };
+		FE2CEB0D13EC910600538F2B /* MCHUGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CEB0913EC910600538F2B /* MCHUGButton.m */; };
+		FE2CEB0E13EC910600538F2B /* MCHUGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CEB0913EC910600538F2B /* MCHUGButton.m */; };
+		FE2CEB0F13EC910600538F2B /* MCHUGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CEB0913EC910600538F2B /* MCHUGButton.m */; };
 		FE43CAAE1380646B00792EBA /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAAD1380646B00792EBA /* qt-faststart */; };
 		FE43CAB01380648D00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAAF1380648D00792EBA /* oggz-rip */; };
 		FE43CAB2138064AA00792EBA /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE43CAB1138064AA00792EBA /* oggz-rip */; };
@@ -150,6 +156,18 @@
 		FE58A6A8135EBE8400A99750 /* SubTest.srt in Resources */ = {isa = PBXBuildFile; fileRef = FE58A69E135EBE8400A99750 /* SubTest.srt */; };
 		FE58A6A9135EBE8400A99750 /* SubTest.mpg in Resources */ = {isa = PBXBuildFile; fileRef = FE58A69D135EBE8400A99750 /* SubTest.mpg */; };
 		FE58A6AA135EBE8400A99750 /* SubTest.srt in Resources */ = {isa = PBXBuildFile; fileRef = FE58A69E135EBE8400A99750 /* SubTest.srt */; };
+		FE59A53113ED22B5001414DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
+		FE59A53213ED22B5001414DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
+		FE59A53313ED22B5001414DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
+		FE59A53413ED22B5001414DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
+		FE59A53513ED22B5001414DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
+		FE59A53613ED22B5001414DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
+		FE59A54813ED2576001414DC /* Sintel-frame-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */; };
+		FE59A54913ED2576001414DC /* Sintel-frame-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */; };
+		FE59A54A13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */; };
+		FE59A54B13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */; };
+		FE59A54C13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */; };
+		FE59A54D13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */; };
 		FE5F7D47131D960900BF0236 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
 		FE77D66F13192E8800731569 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
 		FE77D88C13192F1400731569 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
@@ -627,6 +645,8 @@
 		FE2B6AD51337C34F001459D4 /* oggz-merge */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-merge"; sourceTree = "<group>"; };
 		FE2CE87013EBF8EB00538F2B /* MCHUGButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCHUGButtonCell.h; path = Source/MCHUGButtonCell.h; sourceTree = "<group>"; };
 		FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCHUGButtonCell.m; path = Source/MCHUGButtonCell.m; sourceTree = "<group>"; };
+		FE2CEB0813EC910600538F2B /* MCHUGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCHUGButton.h; path = Source/MCHUGButton.h; sourceTree = "<group>"; };
+		FE2CEB0913EC910600538F2B /* MCHUGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCHUGButton.m; path = Source/MCHUGButton.m; sourceTree = "<group>"; };
 		FE43CAAD1380646B00792EBA /* qt-faststart */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "qt-faststart"; sourceTree = "<group>"; };
 		FE43CAAF1380648D00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "oggz-rip"; sourceTree = "<group>"; };
 		FE43CAB1138064AA00792EBA /* oggz-rip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o"; path = "oggz-rip"; sourceTree = "<group>"; };
@@ -671,6 +691,8 @@
 		FE4E9C1D1321926800B440F4 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Dutch; path = Dutch.lproj/MediaConverterHelp; sourceTree = "<group>"; };
 		FE58A69D135EBE8400A99750 /* SubTest.mpg */ = {isa = PBXFileReference; lastKnownFileType = video.mpeg; name = SubTest.mpg; path = Resources/SubTest.mpg; sourceTree = "<group>"; };
 		FE58A69E135EBE8400A99750 /* SubTest.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = SubTest.srt; path = Resources/SubTest.srt; sourceTree = "<group>"; };
+		FE59A53013ED22B5001414DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Sintel-frame-dark.jpg"; path = "Images/Sintel-frame-dark.jpg"; sourceTree = "<group>"; };
 		FE5F7D46131D960900BF0236 /* Presets.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Presets.tiff; path = Images/Presets.tiff; sourceTree = "<group>"; };
 		FE77D66E13192E8800731569 /* Create Preset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Create Preset.png"; path = "Images/Create Preset.png"; sourceTree = "<group>"; };
 		FE77D88A13192F1400731569 /* ImageAndTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageAndTextCell.h; path = Source/ImageAndTextCell.h; sourceTree = "<group>"; };
@@ -782,6 +804,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				FE1A976612EC4CC7007273B3 /* Growl.framework in Frameworks */,
+				FE59A53313ED22B5001414DC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,6 +814,7 @@
 			files = (
 				FE43CBEC13807BD200792EBA /* Growl.framework in Frameworks */,
 				FEA8CE8213227D0F00C10516 /* Cocoa.framework in Frameworks */,
+				FE59A53213ED22B5001414DC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -800,6 +824,7 @@
 			files = (
 				FE43CBF213807BDC00792EBA /* Growl.framework in Frameworks */,
 				FEA8CEBD13227D2100C10516 /* Cocoa.framework in Frameworks */,
+				FE59A53113ED22B5001414DC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -809,6 +834,7 @@
 			files = (
 				FE43CBF813807BE300792EBA /* Growl.framework in Frameworks */,
 				FEA8CEF813227D2400C10516 /* Cocoa.framework in Frameworks */,
+				FE59A53413ED22B5001414DC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,6 +844,7 @@
 			files = (
 				FE43CBF913807BE900792EBA /* Growl.framework in Frameworks */,
 				FEA8CF3313227D3900C10516 /* Cocoa.framework in Frameworks */,
+				FE59A53613ED22B5001414DC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -827,6 +854,7 @@
 			files = (
 				FE8E42F01380221F00C87AAB /* Growl.framework in Frameworks */,
 				FEA8CF6E13227D3C00C10516 /* Cocoa.framework in Frameworks */,
+				FE59A53513ED22B5001414DC /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,6 +874,7 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FE59A53013ED22B5001414DC /* QuartzCore.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -1266,6 +1295,8 @@
 				FE24915513E8046400D744A7 /* MCTextView.m */,
 				FE2CE87013EBF8EB00538F2B /* MCHUGButtonCell.h */,
 				FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */,
+				FE2CEB0813EC910600538F2B /* MCHUGButton.h */,
+				FE2CEB0913EC910600538F2B /* MCHUGButton.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -1275,6 +1306,7 @@
 			children = (
 				FE9086D313B3EB0800844F19 /* Gear with arrow.png */,
 				FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */,
+				FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */,
 				FE4E9B3613210E6200B440F4 /* Add Preset.png */,
 				FE4E9B0013210D3100B440F4 /* MCPresets.icns */,
 				FE808C0F12EB19AC0047FD26 /* ProgressIndicator */,
@@ -1455,6 +1487,7 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Media Converter" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -1528,6 +1561,7 @@
 				FE9086D913B3EB0800844F19 /* Gear with arrow.png in Resources */,
 				FE10B9A013C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
 				FE23AE8F13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
+				FE59A54A13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1581,6 +1615,7 @@
 				FE9086D813B3EB0800844F19 /* Gear with arrow.png in Resources */,
 				FE10B9A313C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
 				FE23AE8C13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
+				FE59A54913ED2576001414DC /* Sintel-frame-dark.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1634,6 +1669,7 @@
 				FE9086D713B3EB0800844F19 /* Gear with arrow.png in Resources */,
 				FE10B9A213C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
 				FE23AE9113E04E9800B4E457 /* MCTextFilter.xib in Resources */,
+				FE59A54813ED2576001414DC /* Sintel-frame-dark.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1687,6 +1723,7 @@
 				FE9086D413B3EB0800844F19 /* Gear with arrow.png in Resources */,
 				FE10B99E13C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
 				FE23AE8D13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
+				FE59A54B13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1740,6 +1777,7 @@
 				FE9086D613B3EB0800844F19 /* Gear with arrow.png in Resources */,
 				FE10B99F13C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
 				FE23AE8E13E04E9800B4E457 /* MCTextFilter.xib in Resources */,
+				FE59A54D13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1793,6 +1831,7 @@
 				FE9086D513B3EB0800844F19 /* Gear with arrow.png in Resources */,
 				FE10B9A113C1D1A200194E45 /* MCWatermarkFilter.xib in Resources */,
 				FE23AE9013E04E9800B4E457 /* MCTextFilter.xib in Resources */,
+				FE59A54C13ED2576001414DC /* Sintel-frame-dark.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1835,6 +1874,7 @@
 				FE24913013E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915913E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87413EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
+				FE2CEB0C13EC910600538F2B /* MCHUGButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1874,6 +1914,7 @@
 				FE24912D13E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915613E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87313EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
+				FE2CEB0B13EC910600538F2B /* MCHUGButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1913,6 +1954,7 @@
 				FE24913213E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915713E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87213EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
+				FE2CEB0A13EC910600538F2B /* MCHUGButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1952,6 +1994,7 @@
 				FE24912E13E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915813E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87513EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
+				FE2CEB0D13EC910600538F2B /* MCHUGButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1991,6 +2034,7 @@
 				FE24912F13E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915A13E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87713EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
+				FE2CEB0F13EC910600538F2B /* MCHUGButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2030,6 +2074,7 @@
 				FE24913113E8020D00D744A7 /* MCColorWell.m in Sources */,
 				FE24915B13E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87613EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
+				FE2CEB0E13EC910600538F2B /* MCHUGButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,7 +2249,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -2218,7 +2263,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
 				PREBINDING = NO;
-				SDKROOT = macosx10.4;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};

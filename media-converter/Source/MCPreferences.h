@@ -87,6 +87,7 @@
 	NSModalSession session;
 	
 	BOOL previewOpened;
+	BOOL darkBackground;
 	
 	id delegate;
 }
@@ -127,6 +128,7 @@
 - (IBAction)showPreview:(id)sender;
 - (void)reloadHardcodedPreview;
 - (IBAction)setHarcodedVisibility:(id)sender;
+- (IBAction)toggleDarkBackground:(id)sender;
 
 - (IBAction)chooseImage:(id)sender;
 - (IBAction)setImageHAlignment:(id)sender;
