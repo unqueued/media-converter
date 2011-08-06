@@ -11,6 +11,16 @@
 
 @implementation MCHUGButtonCell
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if ([super initWithCoder:aDecoder])
+	{
+		[self setButtonType:NSMomentaryPushInButton];
+	}
+		
+    return self;
+}
+
 -(void)drawWithFrame:(NSRect)frame inView:(NSView *)controlView
 {
 	
@@ -84,7 +94,7 @@
 
     // Drawing code here.
 	NSBezierPath *path = [[[NSBezierPath alloc] init] autorelease];
-	NSRect buttonRect = NSMakeRect(frame.origin.x + 1, frame.origin.y + 1, frame.size.width - 2, frame.size.height - 2);
+	NSRect buttonRect = NSMakeRect(frame.origin.x + 1, (frame.size.height - 18) / 2, frame.size.width - 2, 18);
 	
 	[path appendBezierPathWithRoundedRect:buttonRect xRadius:10 yRadius:10];
 
@@ -105,19 +115,6 @@
 	//NSColor *startColor = [NSColor colorWithDeviceRed:0.341176470588235 green:0.341176470588235 blue:0.341176470588235 alpha:0.5];
 	//NSColor *endColor = [NSColor colorWithDeviceRed:0.219607843137255 green:0.219607843137255 blue:0.219607843137255 alpha:0.3];
 	
-	NSColor *startColor = [NSColor colorWithDeviceRed:0 green:0 blue:0 alpha:0.0];
-	NSColor *endColor = [NSColor colorWithDeviceRed:0.12156862745098 green:0.12156862745098 blue:0.12156862745098 alpha:0.5];
-			
-	NSGradient *gradient = [[[NSGradient alloc] initWithStartingColor:startColor endingColor:endColor] autorelease];
-	
-	
-	//[path fill];
-		
-	// Make a half-height rectangle
-	//buttonRect = NSMakeRect(buttonRect.origin.x, buttonRect.origin.y, buttonRect.size.width, buttonRect.size.height / 3);
-	//path = [NSBezierPath bezierPathWithRect:buttonRect];
-	[gradient drawInBezierPath:path angle:-90];
-	
 	[[NSColor whiteColor] set];
 	
 	[path setLineWidth:1.2];
@@ -125,7 +122,25 @@
 	[[NSColor colorWithDeviceRed:0.341176470588235 green:0.341176470588235 blue:0.341176470588235 alpha:0.5] set];
 	[path fill];
 	
+	if ([self state] == NSOnState)
+	{
+	NSColor *startColor = [NSColor colorWithDeviceRed:0 green:0 blue:0 alpha:0.0];
+	NSColor *endColor = [NSColor colorWithDeviceRed:0.12156862745098 green:0.12156862745098 blue:0.12156862745098 alpha:0.5];
+			
+	NSGradient *gradient = [[[NSGradient alloc] initWithStartingColor:startColor endingColor:endColor] autorelease];
+	
+	//[path fill];
+		
+	// Make a half-height rectangle
+	//buttonRect = NSMakeRect(buttonRect.origin.x, buttonRect.origin.y, buttonRect.size.width, buttonRect.size.height / 3);
+	//path = [NSBezierPath bezierPathWithRect:buttonRect];
 	[gradient drawInBezierPath:path angle:-90];
+	}
+	else
+	{
+		[[NSColor colorWithDeviceRed:0.8 green:0.8 blue:0.8 alpha:0.5] set];
+		[path fill];
+	}
 	
 	[newImage unlockFocus];
 	
