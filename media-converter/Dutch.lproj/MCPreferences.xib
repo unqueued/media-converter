@@ -12,10 +12,10 @@
     </object>
     <object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
       <bool key="EncodedWithXMLCoder">YES</bool>
+      <integer value="966"/>
       <integer value="1242"/>
       <integer value="4"/>
       <integer value="973"/>
-      <integer value="966"/>
     </object>
     <object class="NSArray" key="IBDocument.PluginDependencies">
       <bool key="EncodedWithXMLCoder">YES</bool>
@@ -3097,7 +3097,7 @@
               <object class="NSButtonCell" key="NSCell" id="672677125">
                 <int key="NSCellFlags">-2080244224</int>
                 <int key="NSCellFlags2">134348800</int>
-                <string key="NSContents">Donkere achtergrond</string>
+                <string key="NSContents">Verander achtergrond</string>
                 <object class="NSFont" key="NSSupport">
                   <string key="NSName">LucidaGrande-Bold</string>
                   <double key="NSSize">11</double>

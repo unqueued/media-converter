@@ -25,5 +25,6 @@
 }
 
 - (IBAction)chooseWatermarkImage:(id)sender;
+- (void)setImage:(NSImage *)image withIdentifyer:(NSString *)identifyer;
 
 @end

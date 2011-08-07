@@ -3094,7 +3094,7 @@
               <object class="NSButtonCell" key="NSCell" id="980179553">
                 <int key="NSCellFlags">-2080244224</int>
                 <int key="NSCellFlags2">134348800</int>
-                <string key="NSContents">Dark Background</string>
+                <string key="NSContents">Toggle Background</string>
                 <reference key="NSSupport" ref="26"/>
                 <reference key="NSControlView" ref="722990629"/>
                 <int key="NSButtonFlags">146161919</int>

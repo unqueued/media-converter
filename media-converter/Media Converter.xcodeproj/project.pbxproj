@@ -485,6 +485,12 @@
 		FED68D1213265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
 		FED68D1313265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
 		FED68D1413265A1000332D8E /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
+		FEE2BE7313EEA25500C1C035 /* MCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2BE7213EEA25500C1C035 /* MCImageView.m */; };
+		FEE2BE7413EEA25500C1C035 /* MCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2BE7213EEA25500C1C035 /* MCImageView.m */; };
+		FEE2BE7513EEA25500C1C035 /* MCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2BE7213EEA25500C1C035 /* MCImageView.m */; };
+		FEE2BE7613EEA25500C1C035 /* MCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2BE7213EEA25500C1C035 /* MCImageView.m */; };
+		FEE2BE7713EEA25500C1C035 /* MCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2BE7213EEA25500C1C035 /* MCImageView.m */; };
+		FEE2BE7813EEA25500C1C035 /* MCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2BE7213EEA25500C1C035 /* MCImageView.m */; };
 		FEF466421324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
 		FEF466431324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
 		FEF466441324E2000079DBCF /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
@@ -777,6 +783,8 @@
 		FED0E3FA1349805E00F06BA6 /* fondu */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = fondu; sourceTree = "<group>"; };
 		FED68D0D13265A1000332D8E /* MCOptionsTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCOptionsTableView.h; path = Source/MCOptionsTableView.h; sourceTree = "<group>"; };
 		FED68D0E13265A1000332D8E /* MCOptionsTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCOptionsTableView.m; path = Source/MCOptionsTableView.m; sourceTree = "<group>"; };
+		FEE2BE7113EEA25500C1C035 /* MCImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCImageView.h; path = Source/MCImageView.h; sourceTree = "<group>"; };
+		FEE2BE7213EEA25500C1C035 /* MCImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCImageView.m; path = Source/MCImageView.m; sourceTree = "<group>"; };
 		FEF466411324E2000079DBCF /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		FEF466651324E4510079DBCF /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = Dutch; path = Dutch.lproj/Credits.rtf; sourceTree = "<group>"; };
 		FEF466F1132527860079DBCF /* MCAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCAlert.h; path = Source/MCAlert.h; sourceTree = "<group>"; };
@@ -1297,6 +1305,8 @@
 				FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */,
 				FE2CEB0813EC910600538F2B /* MCHUGButton.h */,
 				FE2CEB0913EC910600538F2B /* MCHUGButton.m */,
+				FEE2BE7113EEA25500C1C035 /* MCImageView.h */,
+				FEE2BE7213EEA25500C1C035 /* MCImageView.m */,
 			);
 			name = Subclasses;
 			sourceTree = "<group>";
@@ -1875,6 +1885,7 @@
 				FE24915913E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87413EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 				FE2CEB0C13EC910600538F2B /* MCHUGButton.m in Sources */,
+				FEE2BE7513EEA25500C1C035 /* MCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1915,6 +1926,7 @@
 				FE24915613E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87313EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 				FE2CEB0B13EC910600538F2B /* MCHUGButton.m in Sources */,
+				FEE2BE7613EEA25500C1C035 /* MCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1955,6 +1967,7 @@
 				FE24915713E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87213EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 				FE2CEB0A13EC910600538F2B /* MCHUGButton.m in Sources */,
+				FEE2BE7413EEA25500C1C035 /* MCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1995,6 +2008,7 @@
 				FE24915813E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87513EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 				FE2CEB0D13EC910600538F2B /* MCHUGButton.m in Sources */,
+				FEE2BE7713EEA25500C1C035 /* MCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2035,6 +2049,7 @@
 				FE24915A13E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87713EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 				FE2CEB0F13EC910600538F2B /* MCHUGButton.m in Sources */,
+				FEE2BE7813EEA25500C1C035 /* MCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2075,6 +2090,7 @@
 				FE24915B13E8046400D744A7 /* MCTextView.m in Sources */,
 				FE2CE87613EBF8EB00538F2B /* MCHUGButtonCell.m in Sources */,
 				FE2CEB0E13EC910600538F2B /* MCHUGButton.m in Sources */,
+				FEE2BE7313EEA25500C1C035 /* MCImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

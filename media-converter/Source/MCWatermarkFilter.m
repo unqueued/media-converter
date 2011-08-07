@@ -80,25 +80,35 @@
 	if (result == NSOKButton)
 	{
 		NSString *filePath = [sheet filename];
-		//[watermarkImageIcon setHidden:NO];
-		//[watermarkImageIcon setImage:[[NSWorkspace sharedWorkspace] iconForFile:filePath]];
-		[watermarkImageName setStringValue:[[MCCommonMethods defaultManager] displayNameAtPath:filePath]];
+		NSString *identifyer = [[MCCommonMethods defaultManager] displayNameAtPath:filePath];
 		NSImage *image = [[[NSImage alloc] initWithContentsOfFile:filePath] autorelease];
-		[watermarkImage setImage:image];
-		NSSize imageSize = [image size];
-		aspectRatio = imageSize.width / imageSize.height;
-
-		[watermarkWidthField setObjectValue:[NSNumber numberWithCGFloat:imageSize.width]];
-		[watermarkHeightField setObjectValue:[NSNumber numberWithCGFloat:imageSize.height]];
 		
-		[filterOptions setObject:[NSNumber numberWithCGFloat:imageSize.width] forKey:@"Width"];
-		[filterOptions setObject:[NSNumber numberWithCGFloat:imageSize.height] forKey:@"Height"];
-		
-		[filterOptions setObject:[NSData dataWithContentsOfFile:filePath] forKey:@"Overlay Image"];
-		[filterOptions setObject:[[MCCommonMethods defaultManager] displayNameAtPath:filePath] forKey:@"Identifyer"];
+		[self setImage:image withIdentifyer:identifyer];
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:self];
 	}
+}
+
+- (void)setImage:(NSImage *)image withIdentifyer:(NSString *)identifyer
+{
+	[watermarkImageName setStringValue:identifyer];
+	[watermarkImage setImage:image];
+	
+	NSSize imageSize = [image size];
+	aspectRatio = imageSize.width / imageSize.height;
+
+	[watermarkWidthField setObjectValue:[NSNumber numberWithCGFloat:imageSize.width]];
+	[watermarkHeightField setObjectValue:[NSNumber numberWithCGFloat:imageSize.height]];
+		
+	[filterOptions setObject:[NSNumber numberWithCGFloat:imageSize.width] forKey:@"Width"];
+	[filterOptions setObject:[NSNumber numberWithCGFloat:imageSize.height] forKey:@"Height"];
+	
+	NSData *tiffData = [image TIFFRepresentation];
+	NSBitmapImageRep *bitmap = [NSBitmapImageRep imageRepWithData:tiffData];
+	NSData *imageData = [bitmap representationUsingType:NSPNGFileType properties:nil];
+		
+	[filterOptions setObject:imageData forKey:@"Overlay Image"];
+	[filterOptions setObject:identifyer forKey:@"Identifyer"];
 }
 
 - (NSString *)identifyer
