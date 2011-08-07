@@ -18,6 +18,7 @@
 #import "MCActionButton.h"
 #import "MCFilterDelegate.h"
 #import "MCFilter.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation MCPreferences
 
@@ -127,6 +128,7 @@
 		itemsList = [[NSMutableDictionary alloc] init];
 		presetsData = [[NSMutableArray alloc] init];
 		loaded = NO;
+		darkBackground = NO;
 		
 		[NSBundle loadNibNamed:@"MCPreferences" owner:self];
 	}
@@ -969,7 +971,11 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings];
 	[settings addEntriesFromDictionary:extraOptions];
 	
-	NSImage *previewImage = [[[NSImage imageNamed:@"Sintel-frame"] copy] autorelease];
+	NSString *backgroundName = @"Sintel-frame";
+	if (darkBackground == YES)
+		backgroundName = @"Sintel-frame-dark";
+	
+	NSImage *previewImage = [[[NSImage imageNamed:backgroundName] copy] autorelease];
 	NSSize imageSize = [previewImage size];
 	NSImage *filterImage = [filterDelegate previewImageWithSize:imageSize];
 	
@@ -1003,6 +1009,13 @@
 
 	if (sender != nil)
 		[self setExtraOption:sender];
+}
+
+- (IBAction)toggleDarkBackground:(id)sender
+{
+	darkBackground = !darkBackground;
+	
+	[self updatePreview:nil];
 }
 
 - (IBAction)setSubtitleKind:(id)sender
