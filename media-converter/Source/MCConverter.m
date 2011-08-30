@@ -368,493 +368,494 @@
 			subtitleType = @"none";
 	}
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSLocalizedString(@"Encoding: ", Localized) stringByAppendingString:displayName]];
-	
-	NSInteger taskStatus;
+	NSInteger taskStatus = 1;
 	NSMutableString *ffmpegErrorString = nil;
 	
-	NSInteger pass;
-	for (pass = 0; pass < passes; pass ++)
+	if (!userCanceled)
 	{
-		ffmpeg = [[NSTask alloc] init];
-		NSPipe *pipe2;
-		NSPipe *errorPipe;
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSLocalizedString(@"Encoding: ", Localized) stringByAppendingString:displayName]];
+	
+		NSInteger pass;
+		for (pass = 0; pass < passes; pass ++)
+		{
+			ffmpeg = [[NSTask alloc] init];
+			NSPipe *pipe2;
+			NSPipe *errorPipe;
 		
-		if (isYoutubeURL)
-			[self downloadYouTubeURL:path toTask:ffmpeg outPipe:nil];
+			if (isYoutubeURL)
+				[self downloadYouTubeURL:path toTask:ffmpeg outPipe:nil];
 
-		//Check if we need to use movtoy4m to decode
-		if (useQuickTime == YES)
-		{
-			quicktimeOptions = [NSArray arrayWithObjects:@"-f", @"yuv4mpegpipe", @"-i", @"-", nil];
-	
-			movtoy4m = [[NSTask alloc] init];
-			pipe2 = [[NSPipe alloc] init];
-			[movtoy4m setLaunchPath:[[NSBundle mainBundle] pathForResource:@"movtoy4m" ofType:@""]];
-			[movtoy4m setArguments:[NSArray arrayWithObjects:@"-w",[NSString stringWithFormat:@"%i", inputWidth],@"-h",[NSString stringWithFormat:@"%i", inputHeight],@"-F",[NSString stringWithFormat:@"%f:1", inputFps],@"-a",[NSString stringWithFormat:@"%i:%i", inputWidth, inputHeight], path, nil]];
-			[movtoy4m setStandardOutput:pipe2];
-		
-			if ([defaults boolForKey:@"MCDebug"] == NO)
+			//Check if we need to use movtoy4m to decode
+			if (useQuickTime == YES)
 			{
-				errorPipe = [[NSPipe alloc] init];
-				[movtoy4m setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+				quicktimeOptions = [NSArray arrayWithObjects:@"-f", @"yuv4mpegpipe", @"-i", @"-", nil];
+	
+				movtoy4m = [[NSTask alloc] init];
+				pipe2 = [[NSPipe alloc] init];
+				[movtoy4m setLaunchPath:[[NSBundle mainBundle] pathForResource:@"movtoy4m" ofType:@""]];
+				[movtoy4m setArguments:[NSArray arrayWithObjects:@"-w",[NSString stringWithFormat:@"%i", inputWidth],@"-h",[NSString stringWithFormat:@"%i", inputHeight],@"-F",[NSString stringWithFormat:@"%f:1", inputFps],@"-a",[NSString stringWithFormat:@"%i:%i", inputWidth, inputHeight], path, nil]];
+				[movtoy4m setStandardOutput:pipe2];
+		
+				if ([defaults boolForKey:@"MCDebug"] == NO)
+				{
+					errorPipe = [[NSPipe alloc] init];
+					[movtoy4m setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+				}
+	
+				[ffmpeg setStandardInput:pipe2];
+				[MCCommonMethods logCommandIfNeeded:movtoy4m];
+				[movtoy4m launch];
 			}
 	
-			[ffmpeg setStandardInput:pipe2];
-			[MCCommonMethods logCommandIfNeeded:movtoy4m];
-			[movtoy4m launch];
-		}
-	
-		if (useWav == YES)
-		{
-			wavOptions = [NSArray arrayWithObjects:@"-i", [outputFile stringByAppendingString:@" (tmp).wav"], nil];
-		}
+			if (useWav == YES)
+			{
+				wavOptions = [NSArray arrayWithObjects:@"-i", [outputFile stringByAppendingString:@" (tmp).wav"], nil];
+			}
 		
-		if (isYoutubeURL)
-		{
-			inputOptions = [NSArray arrayWithObjects:@"-i", @"-", nil];
-		}
-		else if (useWav == NO | useQuickTime == NO)
-		{
-			inputOptions = [NSArray arrayWithObjects:@"-i", path, nil];
-		}
+			if (isYoutubeURL)
+			{
+				inputOptions = [NSArray arrayWithObjects:@"-i", @"-", nil];
+			}
+			else if (useWav == NO | useQuickTime == NO)
+			{
+				inputOptions = [NSArray arrayWithObjects:@"-i", path, nil];
+			}
 
-		NSPipe *pipe = [[NSPipe alloc] init];
-		NSFileHandle *handle;
-		NSData *data;
+			NSPipe *pipe = [[NSPipe alloc] init];
+			NSFileHandle *handle;
+			NSData *data;
 	
-		[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
+			[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
 	
-		NSMutableArray *args = [NSMutableArray array];
+			NSMutableArray *args = [NSMutableArray array];
 		
-		NSString *timeLimit = [options objectForKey:@"-t"];
-		if (timeLimit != nil)
-		{
-			[args addObject:@"-t"];
-			[args addObject:timeLimit];
-		}
-		
-		[args addObjectsFromArray:quicktimeOptions];
-		[args addObjectsFromArray:wavOptions];
-		[args addObjectsFromArray:inputOptions];
-	
-		NSString *threads = @"1";
-	
-		NSInteger x;
-		for (x = 0; x < [options count]; x ++)
-		{
-			NSDictionary *dict = [options objectAtIndex:x];
-			NSString *key = [[dict allKeys] objectAtIndex:0];
-			NSString *object = [dict objectForKey:key];
-		
-			if ([key isEqualTo:@"-threads"])
+			NSString *timeLimit = [options objectForKey:@"-t"];
+			if (timeLimit != nil)
 			{
-				threads = object;
+				[args addObject:@"-t"];
+				[args addObject:timeLimit];
 			}
-			else if (![key isEqualTo:@"-t"])
-			{
-				[args addObject:key];
-			
-				if (![object isEqualTo:@""])
-					[args addObject:object];
-			}
-		}
 		
-		if ([subtitleType isEqualTo:@"mkv"])
-		{
-			[args addObject:@"-scodec"];
-			[args addObject:@"copy"];
-		}
-		else if ([subtitleType isEqualTo:@"none"])
-		{
-			[args addObject:@"-sn"];
-		}
+			[args addObjectsFromArray:quicktimeOptions];
+			[args addObjectsFromArray:wavOptions];
+			[args addObjectsFromArray:inputOptions];
 	
-		NSArray *threadObjects = [NSArray arrayWithObjects:@"-threads", threads, nil];
-		NSString *pathExtension = [outFileWithExtension pathExtension];
-		if ([pathExtension isEqualTo:@"mov"] | [pathExtension isEqualTo:@"m4v"] | [pathExtension isEqualTo:@"mp4"])
-			[args addObjectsFromArray:threadObjects];
-		else
-			[args insertObjects:threadObjects atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]];
+			NSString *threads = @"1";
 	
-		NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-		[args addObjectsFromArray:padOptions];
-		[args addObject:@"-metadata"];
-		[args addObject:[NSString stringWithFormat:@"frontend=Media Encoder %@", version]];
-		
-		NSString *vfFilterString = @"";
-		NSArray *vfFilters = [options objectsForKey:@"-vf"];
-		NSString *movieString = @"";
-		BOOL useHardSubtitles = ([subtitleType isEqualTo:@"hard"]);
-		NSString *overlayString = @"";
-		NSArray *filters = [convertOptions objectForKey:@"Video Filters"];
-		
-		NSInteger outCount = 0;
-		NSString *outString = @"[out]";
-		NSString *inString = @"[in]";
-		
-		if ([vfFilters count] > 0)
-		{
-			NSInteger y;
-			for (y = 0; y < [vfFilters count]; y ++)
+			NSInteger x;
+			for (x = 0; x < [options count]; x ++)
 			{
-				if (y > 0)
+				NSDictionary *dict = [options objectAtIndex:x];
+				NSString *key = [[dict allKeys] objectAtIndex:0];
+				NSString *object = [dict objectForKey:key];
+		
+				if ([key isEqualTo:@"-threads"])
 				{
-					inString = [NSString stringWithFormat:@"[out%i]", outCount - 1];
+					threads = object;
 				}
-				
-				if (y == [vfFilters count] - 1 && !(useHardSubtitles | [filters count] > 0))
+				else if (![key isEqualTo:@"-t"])
 				{
-					outString = @"[out]";
-				}
-				else
-				{
-					outString = [NSString stringWithFormat:@"[out%i]", outCount];
-					outCount =+ 1;
-				}
+					[args addObject:key];
 			
-				NSString *vfFilter = [vfFilters objectAtIndex:y];
-				vfFilterString = [NSString stringWithFormat:@"%@%@%@%@", vfFilterString, inString, vfFilter, outString];
-				
-				if (y == [vfFilters count] - 1 && (useHardSubtitles | [filters count] > 0))
-					vfFilterString = [NSString stringWithFormat:@"%@;", vfFilterString];
+					if (![object isEqualTo:@""])
+						[args addObject:object];
+				}
 			}
-		}
 		
-		
-		if ([filters count] > 0)
-		{
-			NSString *newImagePath = [temporaryFolder stringByAppendingPathComponent:@"overlay.png"];
-			
-			NSString *sizeString = [options objectForKey:@"-s"];
-			CGFloat width;
-			CGFloat height;
-
-			if (sizeString)
+			if ([subtitleType isEqualTo:@"mkv"])
 			{
-				NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
-				width = [[sizeParts objectAtIndex:0] cgfloatValue];
-				height = [[sizeParts objectAtIndex:1] cgfloatValue];
+				[args addObject:@"-scodec"];
+				[args addObject:@"copy"];
 			}
+			else if ([subtitleType isEqualTo:@"none"])
+			{
+				[args addObject:@"-sn"];
+			}
+	
+			NSArray *threadObjects = [NSArray arrayWithObjects:@"-threads", threads, nil];
+			NSString *pathExtension = [outFileWithExtension pathExtension];
+			if ([pathExtension isEqualTo:@"mov"] | [pathExtension isEqualTo:@"m4v"] | [pathExtension isEqualTo:@"mp4"])
+				[args addObjectsFromArray:threadObjects];
 			else
+				[args insertObjects:threadObjects atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]];
+	
+			NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+			[args addObjectsFromArray:padOptions];
+			[args addObject:@"-metadata"];
+			[args addObject:[NSString stringWithFormat:@"frontend=Media Encoder %@", version]];
+		
+			NSString *vfFilterString = @"";
+			NSArray *vfFilters = [options objectsForKey:@"-vf"];
+			NSString *movieString = @"";
+			BOOL useHardSubtitles = ([subtitleType isEqualTo:@"hard"]);
+			NSString *overlayString = @"";
+			NSArray *filters = [convertOptions objectForKey:@"Video Filters"];
+		
+			NSInteger outCount = 0;
+			NSString *outString = @"[out]";
+			NSString *inString = @"[in]";
+		
+			if ([vfFilters count] > 0)
 			{
-				width = (CGFloat)inputWidth;
-				height = (CGFloat)inputHeight;
-			}
-			
-			NSImage *overlayImage = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
-			
-			NSInteger z;
-			for (z = 0; z < [filters count]; z ++)
-			{
-				NSDictionary *filterDictionary = [filters objectAtIndex:z];
-				MCFilter *filter = [[NSClassFromString([filterDictionary objectForKey:@"Type"]) alloc] init];
-				[filter setOptions:[filterDictionary objectForKey:@"Options"]];
-				
-				NSImage *filterImage = [filter imageWithSize:NSMakeSize(width, height)];
-
-				if (filterImage != nil)
+				NSInteger y;
+				for (y = 0; y < [vfFilters count]; y ++)
 				{
-					[overlayImage lockFocus];
-					[filterImage drawInRect:NSMakeRect(0, 0, width, height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-					[overlayImage unlockFocus];
+					if (y > 0)
+						inString = [NSString stringWithFormat:@"[out%i]", outCount - 1];
+				
+					if (y == [vfFilters count] - 1 && !(useHardSubtitles | [filters count] > 0))
+					{
+						outString = @"[out]";
+					}
+					else
+					{
+						outString = [NSString stringWithFormat:@"[out%i]", outCount];
+						outCount =+ 1;
+					}
+			
+					NSString *vfFilter = [vfFilters objectAtIndex:y];
+					vfFilterString = [NSString stringWithFormat:@"%@%@%@%@", vfFilterString, inString, vfFilter, outString];
+				
+					if (y == [vfFilters count] - 1 && (useHardSubtitles | [filters count] > 0))
+						vfFilterString = [NSString stringWithFormat:@"%@;", vfFilterString];
 				}
 			}
-			
-			NSData *tiffData = [overlayImage TIFFRepresentation];
-			NSBitmapImageRep *bitmap = [NSBitmapImageRep imageRepWithData:tiffData];
-			NSData *imageData = [bitmap representationUsingType:NSPNGFileType properties:nil];
-			
-			NSError *writeError;
-			BOOL succes = [imageData writeToFile:newImagePath options:NSAtomicWrite error:&writeError];
-			
-			[overlayImage release];
-			
-			if (succes == NO && writeError != nil)
-				NSLog(@"Error: %@", writeError);
-				
-			if ([vfFilters count] > 0)
-				inString = outString;
-			
-			NSString *outString = @"[out]";
-			NSString *myString = @"[wm]";
-			
-			if ([subtitleType isEqualTo:@"hard"])
-			{
-				outString = [NSString stringWithFormat:@"[out%i];", outCount];
-				myString = @"[wm0]";
-			}
-			
-			movieString = [NSString stringWithFormat:@"movie=%@ %@;", newImagePath, myString];
-			overlayString = [NSString stringWithFormat:@"%@%@ overlay=0:0:1 select=gte(t\\,10)*lte(t\\,20) %@", inString, myString, outString];
-		}
 		
-		if ([subtitleType isEqualTo:@"hard"])
-		{
-			NSString *inString = @"[in]";
-			NSString *myString = @"[wm]";
-			
+		
 			if ([filters count] > 0)
 			{
-				inString = [NSString stringWithFormat:@"[out%i]", outCount];
-				myString = @"[wm1]";
-			}
-			else if ([vfFilters count] > 0)
-			{
-				inString = [NSString stringWithFormat:@"[out%i]", outCount - 1];
-				myString = @"[wm1]";
-			}
-		
-			movieString = [NSString stringWithFormat:@"%@movie=%@ %@;", movieString, temporarySubtitleFile, myString];
-			overlayString = [NSString stringWithFormat:@"%@%@%@ overlay=0:0:1 select=gte(t\\,10)*lte(t\\,20) [out]", overlayString, inString, myString];
-		}
-		
-		if ([filters count] > 0 | [subtitleType isEqualTo:@"hard"] | [vfFilters count] > 0)
-		{
-			[args addObject:@"-vf"];
-			[args addObject:[NSString stringWithFormat:@"%@%@%@", vfFilterString, movieString, overlayString]];
-
-			[options setObject:nil forKey:@"-vf"];
-		}
-		
-		if (passes == 2)
-			[ffmpeg setCurrentDirectoryPath:@"/tmp"];
-		
-		if (passes == 2 && pass == 0)
-		{
-			[args addObjectsFromArray:[NSArray arrayWithObjects:@"-an", @"-pass", @"1", @"-y", @"/dev/null", nil]];
-		}
-		else if (passes == 2 && pass == 1)
-		{
-			[args addObjectsFromArray:[NSArray arrayWithObjects:@"-pass", @"2", nil]];
+				NSString *newImagePath = [temporaryFolder stringByAppendingPathComponent:@"overlay.png"];
 			
-			if (![subtitleType isEqualTo:@"dvd"])
-				[args addObject:outFileWithExtension];
-			else	
-				[args addObject:@"-"];
-		}
-		else
-		{
-			if (![subtitleType isEqualTo:@"dvd"])
-				[args addObject:outFileWithExtension];
-			else
-				[args addObject:@"-"];
-		}
-		
-		[ffmpeg setArguments:args];
-		//ffmpeg uses stderr to show the progress
-		[ffmpeg setStandardError:pipe];
-		
-		NSPipe *outputPipe = [[NSPipe alloc] init];
-		[ffmpeg setStandardOutput:outputPipe];
-		handle = [pipe fileHandleForReading];
-	
-		ffmpegErrorString = [[NSMutableString alloc] initWithString:[MCCommonMethods logCommandIfNeeded:ffmpeg]];
-		[ffmpeg launch];
-		
-		if ([subtitleType isEqualTo:@"dvd"])
-		{
-			spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
-			uniqueSpumuxPath = [MCCommonMethods uniquePathNameFromPath:spumuxPath withSeperator:@"_"];
-		
-			if ([defaultManager fileExistsAtPath:spumuxPath])
-				[MCCommonMethods moveItemAtPath:spumuxPath toPath:uniqueSpumuxPath error:nil];
-			
-			NSString *savedFontPath = [defaults objectForKey:@"MCFontFolderPath"];
+				NSString *sizeString = [options objectForKey:@"-s"];
+				CGFloat width;
+				CGFloat height;
 
-			[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:savedFontPath];
-		
-			[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd" currentOptions:nil];
-		}
-
-		if (useQuickTime == YES)
-			status = 3;
-		else
-			status = 2;
-
-		NSString *string = nil;
-	
-		//Get the time we want to encode
-		NSString *timeString = [options objectForKey:@"-t"];
-	
-		if (timeString)
-			inputTotalTime = [timeString integerValue];
-			
-		inputTotalTime = inputTotalTime * passes;
-		
-		BOOL started = NO;
-
-		//Here we go
-		while([data = [handle availableData] length]) 
-		{
-			NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
-	
-			if (string)
-			{
-				[string release];
-				string = nil;
-			}
-	
-			//The string containing ffmpeg's output
-			string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	
-			if ([defaults boolForKey:@"MCDebug"] == YES)
-				NSLog(@"%@", string);
-		
-			//Format the time sting ffmpeg outputs and format it to percent
-			if ([string rangeOfString:@"time="].length > 0)
-			{
-				started = YES;
-		
-				NSString *currentTimeString = [[[[string componentsSeparatedByString:@"time="] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:0];
-				CGFloat percent = ([currentTimeString cgfloatValue] + (inputTotalTime / 2 * pass)) / inputTotalTime * 100;
-				
-				NSString *currentPass = @"";
-						
-				if (passes == 2)
-					currentPass = [NSString stringWithFormat: @"pass %i - ", pass + 1];
-				
-				if (inputTotalTime > 0)
+				if (sizeString)
 				{
-					if (percent < 101)
-					{
-						[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:[NSString stringWithFormat: @" (%@%.0f%@)", currentPass, percent, @"%"]];
-						[[NSNotificationCenter defaultCenter] postNotificationName:@"MCValueChanged" object:[NSNumber numberWithDouble:percent + (double)number * 100]];
-					}
+					NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
+					width = [[sizeParts objectAtIndex:0] cgfloatValue];
+					height = [[sizeParts objectAtIndex:1] cgfloatValue];
 				}
 				else
 				{
-					[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:[NSString stringWithFormat:@" (%@?%)", currentPass]];
+					width = (CGFloat)inputWidth;
+					height = (CGFloat)inputHeight;
 				}
+			
+				NSImage *overlayImage = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
+			
+				NSInteger z;
+				for (z = 0; z < [filters count]; z ++)
+				{
+					NSDictionary *filterDictionary = [filters objectAtIndex:z];
+					MCFilter *filter = [[NSClassFromString([filterDictionary objectForKey:@"Type"]) alloc] init];
+					[filter setOptions:[filterDictionary objectForKey:@"Options"]];
+				
+					NSImage *filterImage = [filter imageWithSize:NSMakeSize(width, height)];
+
+					if (filterImage != nil)
+					{
+						[overlayImage lockFocus];
+						[filterImage drawInRect:NSMakeRect(0, 0, width, height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+						[overlayImage unlockFocus];
+					}
+				}
+			
+				NSData *tiffData = [overlayImage TIFFRepresentation];
+				NSBitmapImageRep *bitmap = [NSBitmapImageRep imageRepWithData:tiffData];
+				NSData *imageData = [bitmap representationUsingType:NSPNGFileType properties:nil];
+			
+				NSError *writeError;
+				BOOL succes = [imageData writeToFile:newImagePath options:NSAtomicWrite error:&writeError];
+			
+				[overlayImage release];
+				
+				if (succes == NO && writeError != nil)
+					NSLog(@"Error: %@", writeError);
+				
+				if ([vfFilters count] > 0)
+					inString = outString;
+			
+				NSString *outString = @"[out]";
+				NSString *myString = @"[wm]";
+			
+				if ([subtitleType isEqualTo:@"hard"])
+				{
+					outString = [NSString stringWithFormat:@"[out%i];", outCount];
+					myString = @"[wm0]";
+				}
+			
+				movieString = [NSString stringWithFormat:@"movie=%@ %@;", newImagePath, myString];
+				overlayString = [NSString stringWithFormat:@"%@%@ overlay=0:0:1 select=gte(t\\,10)*lte(t\\,20) %@", inString, myString, outString];
 			}
-
-			data = nil;
 		
-			if (started == NO)
-				[ffmpegErrorString appendString:string];
-	
-			[innerPool release];
-			innerPool = nil;
-		}
-
-		//After there's no output wait for ffmpeg to stop
-		[ffmpeg waitUntilExit];
-
-		//Check if the encoding succeeded, if not remove the mpg file ,NOT POSSIBLE :-(
-		taskStatus = [ffmpeg terminationStatus];
-
-		//Release ffmpeg
-		[ffmpeg release];
-		ffmpeg = nil;
-	
-		//If we used a wav file, delete it
-		if (useWav == YES)
-			[MCCommonMethods removeItemAtPath:[outputFile stringByAppendingString:@" (tmp).wav"]];
-	
-		if (useQuickTime == YES)
-		{	
-			[movtoy4m release];
-			movtoy4m = nil;
-		
-			[pipe2 release];
-			pipe2 = nil;
-		}
-	
-		[pipe release];
-		pipe = nil;
-		
-		if (taskStatus != 0)
-		{
-			break;
-		}
-		else
-		{
-			[ffmpegErrorString release];
-			ffmpegErrorString = nil;
-		}
-		
-		[string release];
-		string = nil;
-	}
-	
-	//Do some other stuff with the movie if encoding succeeded
-	if (taskStatus == 0)
-	{
-		if ([[extraOptions objectForKey:@"Start Atom"] boolValue] == YES)
-		{
-			status = 4;
-			qtfaststart = [[NSTask alloc] init];
-			[qtfaststart setLaunchPath:[[NSBundle mainBundle] pathForResource:@"qt-faststart" ofType:@""]];
-			NSString *extension = [outFileWithExtension pathExtension];
-			NSString *extensionlessFile = [outFileWithExtension stringByDeletingPathExtension];
-			NSString *tempFile = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@ (tmp).%@", extensionlessFile, extension] withSeperator:@" "];
-			[qtfaststart setArguments:[NSArray arrayWithObjects:outFileWithExtension, tempFile, nil]];
-			[qtfaststart launch];
-			[qtfaststart waitUntilExit];
-			taskStatus = [qtfaststart terminationStatus];
-		
-			if (taskStatus == 0)
+			if ([subtitleType isEqualTo:@"hard"])
 			{
-				[MCCommonMethods removeItemAtPath:outFileWithExtension];
-				[MCCommonMethods moveItemAtPath:tempFile toPath:outFileWithExtension error:nil];
+				NSString *inString = @"[in]";
+				NSString *myString = @"[wm]";
+			
+				if ([filters count] > 0)
+				{
+					inString = [NSString stringWithFormat:@"[out%i]", outCount];
+					myString = @"[wm1]";
+				}
+				else if ([vfFilters count] > 0)
+				{
+					inString = [NSString stringWithFormat:@"[out%i]", outCount - 1];
+					myString = @"[wm1]";
+				}
+		
+				movieString = [NSString stringWithFormat:@"%@movie=%@ %@;", movieString, temporarySubtitleFile, myString];
+				overlayString = [NSString stringWithFormat:@"%@%@%@ overlay=0:0:1 select=gte(t\\,10)*lte(t\\,20) [out]", overlayString, inString, myString];
+			}
+		
+			if ([filters count] > 0 | [subtitleType isEqualTo:@"hard"] | [vfFilters count] > 0)
+			{
+				[args addObject:@"-vf"];
+				[args addObject:[NSString stringWithFormat:@"%@%@%@", vfFilterString, movieString, overlayString]];
+
+				[options setObject:nil forKey:@"-vf"];
+			}
+		
+			if (passes == 2)
+				[ffmpeg setCurrentDirectoryPath:@"/tmp"];
+		
+			if (passes == 2 && pass == 0)
+			{
+				[args addObjectsFromArray:[NSArray arrayWithObjects:@"-an", @"-pass", @"1", @"-y", @"/dev/null", nil]];
+			}
+			else if (passes == 2 && pass == 1)
+			{
+				[args addObjectsFromArray:[NSArray arrayWithObjects:@"-pass", @"2", nil]];
+			
+				if (![subtitleType isEqualTo:@"dvd"])
+					[args addObject:outFileWithExtension];
+				else	
+					[args addObject:@"-"];
 			}
 			else
 			{
-				if (ffmpegErrorString)
-				{
-					[ffmpegErrorString release];
-					ffmpegErrorString = nil;
-				}
+				if (![subtitleType isEqualTo:@"dvd"])
+					[args addObject:outFileWithExtension];
+				else
+					[args addObject:@"-"];
+			}
+		
+			[ffmpeg setArguments:args];
+			//ffmpeg uses stderr to show the progress
+			[ffmpeg setStandardError:pipe];
+		
+			NSPipe *outputPipe = [[NSPipe alloc] init];
+			[ffmpeg setStandardOutput:outputPipe];
+			handle = [pipe fileHandleForReading];
+	
+			ffmpegErrorString = [[NSMutableString alloc] initWithString:[MCCommonMethods logCommandIfNeeded:ffmpeg]];
+			[ffmpeg launch];
+		
+			if ([subtitleType isEqualTo:@"dvd"])
+			{
+				spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
+				uniqueSpumuxPath = [MCCommonMethods uniquePathNameFromPath:spumuxPath withSeperator:@"_"];
+		
+				if ([defaultManager fileExistsAtPath:spumuxPath])
+					[MCCommonMethods moveItemAtPath:spumuxPath toPath:uniqueSpumuxPath error:nil];
 			
-				ffmpegErrorString = [[NSMutableString alloc] initWithString:@"Failed to set moov atom to the start of the file"];
+				NSString *savedFontPath = [defaults objectForKey:@"MCFontFolderPath"];
+
+				[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:savedFontPath];
+		
+				[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd" currentOptions:nil];
+			}
+
+			if (useQuickTime == YES)
+				status = 3;
+			else
+				status = 2;
+
+			NSString *string = nil;
+	
+			//Get the time we want to encode
+			NSString *timeString = [options objectForKey:@"-t"];
+	
+			if (timeString)
+				inputTotalTime = [timeString integerValue];
+			
+			inputTotalTime = inputTotalTime * passes;
+		
+			BOOL started = NO;
+
+			//Here we go
+			while([data = [handle availableData] length]) 
+			{
+				NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+	
+				if (string)
+				{
+					[string release];
+					string = nil;
+				}
+	
+				//The string containing ffmpeg's output
+				string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	
+				if ([defaults boolForKey:@"MCDebug"] == YES)
+					NSLog(@"%@", string);
+		
+				//Format the time sting ffmpeg outputs and format it to percent
+				if ([string rangeOfString:@"time="].length > 0)
+				{
+					started = YES;
+		
+					NSString *currentTimeString = [[[[string componentsSeparatedByString:@"time="] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:0];
+					CGFloat percent = ([currentTimeString cgfloatValue] + (inputTotalTime / 2 * pass)) / inputTotalTime * 100;
+				
+					NSString *currentPass = @"";
+						
+					if (passes == 2)
+						currentPass = [NSString stringWithFormat: @"pass %i - ", pass + 1];
+				
+					if (inputTotalTime > 0)
+					{
+						if (percent < 101)
+						{
+							[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:[NSString stringWithFormat: @" (%@%.0f%@)", currentPass, percent, @"%"]];
+							[[NSNotificationCenter defaultCenter] postNotificationName:@"MCValueChanged" object:[NSNumber numberWithDouble:percent + (double)number * 100]];
+						}
+					}
+					else
+					{
+						[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:[NSString stringWithFormat:@" (%@?%)", currentPass]];
+					}
+				}
+
+				data = nil;
+		
+				if (started == NO)
+					[ffmpegErrorString appendString:string];
+	
+				[innerPool release];
+				innerPool = nil;
+			}
+
+			//After there's no output wait for ffmpeg to stop
+			[ffmpeg waitUntilExit];
+
+			//Check if the encoding succeeded, if not remove the mpg file ,NOT POSSIBLE :-(
+			taskStatus = [ffmpeg terminationStatus];
+
+			//Release ffmpeg
+			[ffmpeg release];
+			ffmpeg = nil;
+	
+			//If we used a wav file, delete it
+			if (useWav == YES)
+				[MCCommonMethods removeItemAtPath:[outputFile stringByAppendingString:@" (tmp).wav"]];
+	
+			if (useQuickTime == YES)
+			{	
+				[movtoy4m release];
+				movtoy4m = nil;
+		
+				[pipe2 release];
+				pipe2 = nil;
+			}
+	
+			[pipe release];
+			pipe = nil;
+		
+			if (taskStatus != 0)
+			{
+				break;
+			}
+			else
+			{
+				[ffmpegErrorString release];
+				ffmpegErrorString = nil;
 			}
 		
-			[qtfaststart release];
-			qtfaststart = nil;
+			[string release];
+			string = nil;
 		}
 	
-		if (temporarySubtitleFile && [defaultManager fileExistsAtPath:temporarySubtitleFile])
+		//Do some other stuff with the movie if encoding succeeded
+		if (taskStatus == 0)
 		{
-			if ([subtitleType isEqualTo:@"mp4"])
+			if ([[extraOptions objectForKey:@"Start Atom"] boolValue] == YES)
 			{
-				[self addTracksFromMP4Movie:temporarySubtitleFile toPath:outFileWithExtension];
-			}
-			else if ([subtitleType isEqualTo:@"kate"])
-			{
-				NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
-				BOOL result = [self addTracksFromOGGMovies:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
-	
-				if (result)
+				status = 4;
+				qtfaststart = [[NSTask alloc] init];
+				[qtfaststart setLaunchPath:[[NSBundle mainBundle] pathForResource:@"qt-faststart" ofType:@""]];
+				NSString *extension = [outFileWithExtension pathExtension];
+				NSString *extensionlessFile = [outFileWithExtension stringByDeletingPathExtension];
+				NSString *tempFile = [MCCommonMethods uniquePathNameFromPath:[NSString stringWithFormat:@"%@ (tmp).%@", extensionlessFile, extension] withSeperator:@" "];
+				[qtfaststart setArguments:[NSArray arrayWithObjects:outFileWithExtension, tempFile, nil]];
+				[qtfaststart launch];
+				[qtfaststart waitUntilExit];
+				taskStatus = [qtfaststart terminationStatus];
+			
+				if (taskStatus == 0)
 				{
 					[MCCommonMethods removeItemAtPath:outFileWithExtension];
-					[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
+					[MCCommonMethods moveItemAtPath:tempFile toPath:outFileWithExtension error:nil];
 				}
-			}
-			else if ([subtitleType isEqualTo:@"mkv"])
-			{
-				NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
-				BOOL result = [self addTracksFromMKVMovie:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
-	
-				if (result)
+				else
 				{
-					[MCCommonMethods removeItemAtPath:outFileWithExtension];
-					[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
+					if (ffmpegErrorString)
+					{
+						[ffmpegErrorString release];
+						ffmpegErrorString = nil;
+					}
+			
+					ffmpegErrorString = [[NSMutableString alloc] initWithString:@"Failed to set moov atom to the start of the file"];
+				}
+		
+				[qtfaststart release];
+				qtfaststart = nil;
+			}
+	
+			if (temporarySubtitleFile && [defaultManager fileExistsAtPath:temporarySubtitleFile])
+			{
+				if ([subtitleType isEqualTo:@"mp4"])
+				{
+					[self addTracksFromMP4Movie:temporarySubtitleFile toPath:outFileWithExtension];
+				}
+				else if ([subtitleType isEqualTo:@"kate"])
+				{
+					NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
+					BOOL result = [self addTracksFromOGGMovies:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
+	
+					if (result)
+					{
+						[MCCommonMethods removeItemAtPath:outFileWithExtension];
+						[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
+					}
+				}
+				else if ([subtitleType isEqualTo:@"mkv"])
+				{
+					NSString *temporaryFile = [temporaryFolder stringByAppendingPathComponent:[outFileWithExtension lastPathComponent]];
+					BOOL result = [self addTracksFromMKVMovie:[NSArray arrayWithObjects:outFileWithExtension, temporarySubtitleFile, nil] toPath:temporaryFile];
+	
+					if (result)
+					{
+						[MCCommonMethods removeItemAtPath:outFileWithExtension];
+						[MCCommonMethods moveItemAtPath:temporaryFile toPath:outFileWithExtension error:nil];
+					}
 				}
 			}
+		
+			encodedOutputFile = outFileWithExtension;
+		
+			if ([subtitleType isEqualTo:@"srt"])
+				[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension] shouldRename:YES];
 		}
-		
-		encodedOutputFile = outFileWithExtension;
-		
-		if ([subtitleType isEqualTo:@"srt"])
-			[self extractSubtitlesFromMovieAtPath:path toPath:[outFileWithExtension stringByDeletingPathExtension] shouldRename:YES];
-	}
 	
-	if ([subtitleType isEqualTo:@"dvd"])
-	{
-		[MCCommonMethods removeItemAtPath:spumuxPath];
-		
-		if ([defaultManager fileExistsAtPath:uniqueSpumuxPath])
-			[MCCommonMethods moveItemAtPath:uniqueSpumuxPath toPath:spumuxPath error:nil];
+		if ([subtitleType isEqualTo:@"dvd"])
+		{
+			[MCCommonMethods removeItemAtPath:spumuxPath];
+			
+			if ([defaultManager fileExistsAtPath:uniqueSpumuxPath])
+				[MCCommonMethods moveItemAtPath:uniqueSpumuxPath toPath:spumuxPath error:nil];
+		}
 	}
 	
 	[MCCommonMethods removeItemAtPath:temporaryFolder];
@@ -1748,6 +1749,12 @@
 	{
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
+		if (userCanceled)
+		{
+			[pool release];
+			break;
+		}
+		
 		NSArray *components = [srtFile componentsSeparatedByString:[NSString stringWithFormat:@"<br>%i<br>", i]];
 		
 		NSInteger startIndex = 0;
@@ -1771,6 +1778,16 @@
 		
 		if (timeLimit && ([self secondsFromFormatedString:[times objectAtIndex:0]] > [[options objectForKey:@"-t"] cgfloatValue]))
 			break;
+			
+		CGFloat totalTime = inputTotalTime;
+		CGFloat currentTime = [self secondsFromFormatedString:[times objectAtIndex:0]];
+		
+		if (timeLimit)
+			totalTime = [[options objectForKey:@"-t"] cgfloatValue];
+			
+		NSString *percentString = [NSString stringWithFormat:@" (%.0f%@)", currentTime / (totalTime / 100), @"%"];
+
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:percentString];
 		
 		CGFloat subStart = [self secondsFromFormatedString:[times objectAtIndex:0]] / secondPerFrame;
 		CGFloat subEnd = [self secondsFromFormatedString:[times objectAtIndex:1]] / secondPerFrame;
@@ -1833,16 +1850,19 @@
 		[pool release];
 	}
 	
-	//Make a last empty image
-	ffmpeg = [[NSTask alloc] init];
-	[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
-	[ffmpeg setArguments:[NSArray arrayWithObjects:@"-loop_input", @"-r", [NSString stringWithFormat:@"%f", fps], @"-vframes", @"1", @"-i", emptyImagePath, @"-vcodec", @"copy", @"-f", @"avi", @"-", nil]];
-	[ffmpeg setStandardError:[NSFileHandle fileHandleWithNullDevice]];
-	[ffmpeg setStandardOutput:outHandle];
-	[ffmpeg launch];
-	[ffmpeg waitUntilExit];
-	[ffmpeg release];
-	ffmpeg = nil;
+	if (!userCanceled)
+	{
+		//Make a last empty image
+		ffmpeg = [[NSTask alloc] init];
+		[ffmpeg setLaunchPath:[MCCommonMethods ffmpegPath]];
+		[ffmpeg setArguments:[NSArray arrayWithObjects:@"-loop_input", @"-r", [NSString stringWithFormat:@"%f", fps], @"-vframes", @"1", @"-i", emptyImagePath, @"-vcodec", @"copy", @"-f", @"avi", @"-", nil]];
+		[ffmpeg setStandardError:[NSFileHandle fileHandleWithNullDevice]];
+		[ffmpeg setStandardOutput:outHandle];
+		[ffmpeg launch];
+		[ffmpeg waitUntilExit];
+		[ffmpeg release];
+		ffmpeg = nil;
+	}
 }
 
 - (CGFloat)secondsFromFormatedString:(NSString *)string
