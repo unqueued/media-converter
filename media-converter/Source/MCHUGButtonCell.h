@@ -9,11 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface MCHUGButtonCell : NSButtonCell
-{
-
-}
-
-- (NSImage *)buttonImageInFrame:(NSRect)frame;
+@interface MCHUGButtonCell : NSButtonCell{}
 
 @end
