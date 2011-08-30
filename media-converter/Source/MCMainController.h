@@ -14,22 +14,24 @@
 
 @interface MCMainController : NSObject
 {
+	//IB Outlets
 	IBOutlet id mainWindow;
 	IBOutlet id presetPopUp;
 	IBOutlet id locationsPanel;
 	IBOutlet id locationsTextField;
-	
 	IBOutlet id actionButton;
 	
+	//Custom objects
 	MCProgress *progressPanel;
 	MCConverter *converter;
+	MCPreferences *preferences;
+	
+	//Other variables
 	NSArray *inputFiles;
 	BOOL cancelAddingFiles;
-	
-	MCPreferences *preferences;
 }
 
-//Main actions
+//Update actions
 - (void)versionUpdateCheck;
 - (void)updatePresets;
 
