@@ -12,7 +12,6 @@
 
 @interface MCWatermarkFilter : MCFilter
 {
-	IBOutlet id watermarkImageIcon;
 	IBOutlet id watermarkImage;
 	IBOutlet id watermarkImageName;
 	IBOutlet id watermarkWidthField;

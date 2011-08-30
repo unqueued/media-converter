@@ -27,18 +27,20 @@
 																@"Width",								//7
 																@"Height",								//8
 																@"Keep Aspect",							//9
+																@"Alpha Value",							//10
 		nil];
 		
 		filterDefaultValues = [[NSArray alloc] initWithObjects:	//Watermark
 																	@"right",										// Horizontal Alignment
 																	@"top",											// Vertical Alignment
-																	[NSNumber numberWithInteger:10],				// Left Margin
-																	[NSNumber numberWithInteger:10],				// Right Margin
-																	[NSNumber numberWithInteger:10],				// Top Margin
-																	[NSNumber numberWithInteger:10],				// Bottom Margin
+																	[NSNumber numberWithInteger:30],				// Left Margin
+																	[NSNumber numberWithInteger:30],				// Right Margin
+																	[NSNumber numberWithInteger:30],				// Top Margin
+																	[NSNumber numberWithInteger:30],				// Bottom Margin
 																	[NSNumber numberWithInteger:0],					// Width
 																	[NSNumber numberWithInteger:0],					// Height
 																	[NSNumber numberWithBool:YES],					// Keep Aspect
+																	[NSNumber numberWithDouble:1.00],				// Alpha Value
 		nil];
 		
 		filterOptions = [[NSMutableDictionary alloc] initWithObjects:filterDefaultValues forKeys:filterMappings];
@@ -85,7 +87,7 @@
 		
 		[self setImage:image withIdentifyer:identifyer];
 		
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:self];
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:nil];
 	}
 }
 
@@ -109,6 +111,8 @@
 		
 	[filterOptions setObject:imageData forKey:@"Overlay Image"];
 	[filterOptions setObject:identifyer forKey:@"Identifyer"];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:nil];
 }
 
 - (NSString *)identifyer
@@ -153,18 +157,16 @@
 		
 		[super setFilterOption:watermarkWidthField];
 		[super setFilterOption:watermarkHeightField];
+		
+		return;
 	}
 	else if ([sender isEqualTo:watermarkAspectCheckBox])
 	{
 		if ([watermarkAspectCheckBox state] == NSOnState)
 			[self setFilterOption:watermarkWidthField];
-			
-		[super setFilterOption:sender];
 	}
-	else
-	{
-		[super setFilterOption:sender];
-	}
+
+	[super setFilterOption:sender];
 }
 
 - (NSImage *)imageWithSize:(NSSize)size
