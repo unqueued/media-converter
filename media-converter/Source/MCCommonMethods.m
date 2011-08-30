@@ -592,6 +592,7 @@
 	CGFloat rightMargin = [[settings objectForKey:@"Right Margin"] cgfloatValue];
 	CGFloat topMargin = [[settings objectForKey:@"Top Margin"] cgfloatValue];
 	CGFloat bottomMargin = [[settings objectForKey:@"Bottom Margin"] cgfloatValue];
+	double alphaValue = [[settings objectForKey:@"Alpha Value"] doubleValue];
 
 	BOOL border;
 	BOOL box;
@@ -610,7 +611,14 @@
 		}
 		else
 		{
-			NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+			NSString *boldFont = [fontName stringByAppendingString:@"-Bold"];
+			
+			NSFont *font = nil;
+			
+			font = [NSFont fontWithName:boldFont size:fontSize];
+			
+			if (font == nil)
+				[NSFont fontWithName:fontName size:fontSize];
 		
 			attrStr = [MCCommonMethods initOnMainThreadWithHTML:(NSString *)object];
 
@@ -734,6 +742,13 @@
 		
 		if (!box)
 			boxMarge = 0;
+			
+		NSGraphicsContext* currentContent = [NSGraphicsContext currentContext];
+		CGContextRef cgContext = (CGContextRef)[currentContent graphicsPort];
+
+		[currentContent saveGraphicsState];
+		[currentContent setCompositingOperation:NSCompositeSourceOver];
+		CGContextSetAlpha(cgContext, alphaValue);
 	
 		[attrStr drawInRect:NSMakeRect(x + boxMarge, y + boxMarge, width - (boxMarge * 2), height)];
 		
@@ -751,7 +766,7 @@
 	}
 	else
 	{
-		[(NSImage *)object drawInRect:NSMakeRect(x, y, width, height) fromRect:NSZeroRect operation:NSCompositeCopy fraction:1.0];
+		[(NSImage *)object drawInRect:NSMakeRect(x, y, width, height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:alphaValue];
 	}
 		
 	[subImage unlockFocus];
