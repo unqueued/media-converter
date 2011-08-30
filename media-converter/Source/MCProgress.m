@@ -128,7 +128,7 @@
 	NSString *newStatusText;
 
 	if ([[statusText stringValue] length] > 60)
-		newStatusText = [NSString stringWithFormat:@"%@…",  [[statusText stringValue] substringToIndex:58 - [percent length]]];
+		newStatusText = [NSString stringWithFormat:@"%@…",  [[statusText stringValue] substringToIndex:56 - [percent length]]];
 	else
 		newStatusText = [statusText stringValue];
 
