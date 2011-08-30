@@ -31,22 +31,23 @@
 																@"Box Color",							//10
 																@"Box Marge",							//11
 																@"Box Alpha Value",						//12
+																@"Alpha Value",							//13
 		nil];
 		
 		filterDefaultValues = [[NSArray alloc] initWithObjects:		//Text
-																	@"right",															// Horizontal Alignment
+																	@"left",															// Horizontal Alignment
 																	@"top",																// Vertical Alignment
-																	[NSNumber numberWithInteger:10],									// Left Margin
-																	[NSNumber numberWithInteger:10],									// Right Margin
-																	[NSNumber numberWithInteger:10],									// Top Margin
-																	[NSNumber numberWithInteger:10],									// Bottom Margin
+																	[NSNumber numberWithInteger:30],									// Left Margin
+																	[NSNumber numberWithInteger:30],									// Right Margin
+																	[NSNumber numberWithInteger:30],									// Top Margin
+																	[NSNumber numberWithInteger:0],										// Bottom Margin
 																	@"border",															// Subtitle Method
 																	[NSArchiver archivedDataWithRootObject:[NSColor blackColor]],		// Subtitle Border Color
 																	[NSNumber numberWithInteger:4],										// Subtitle Border Size
 																	[NSArchiver archivedDataWithRootObject:[NSColor darkGrayColor]],	// Subtitle Box Color
 																	[NSNumber numberWithInteger:10],									// Subtitle Box Marge
 																	[NSNumber numberWithDouble:0.50],									// Subtitle Box Alpha Value
-																
+																	[NSNumber numberWithDouble:1.00],									// Alpha Value
 		nil];
 		
 		filterOptions = [[NSMutableDictionary alloc] initWithObjects:filterDefaultValues forKeys:filterMappings];
@@ -109,7 +110,7 @@
 		
 	[filterOptions setObject:identString forKey:@"Identifyer"];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:nil];
 }
 
 - (NSString *)identifyer
@@ -145,11 +146,6 @@
 	NSAttributedString *attrString = [NSUnarchiver unarchiveObjectWithData:textData];
 
 	return [MCCommonMethods overlayImageWithObject:attrString withSettings:filterOptions inputImage:emptyImage];
-}
-
-- (void)setFilterOption:(id)sender
-{	
-	[super setFilterOption:sender];
 }
 
 @end
