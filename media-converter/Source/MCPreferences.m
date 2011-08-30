@@ -70,19 +70,20 @@
 																@"Box Alpha Value",								//118
 																@"Border Color",								//119
 																@"Border Size",									//120
+																@"Alpha Value",									//121
 																// DVD
-																@"Subtitle Font",								//121
-																@"Subtitle Font Size",							//122
-																@"Subtitle Horizontal Alignment",				//123
-																@"Subtitle Vertical Alignment",					//124
-																@"Subtitle Left Margin",						//125
-																@"Subtitle Right Margin",						//126
-																@"Subtitle Top Margin",							//127
-																@"Subtitle Bottom Margin",						//128
+																@"Subtitle Font",								//122
+																@"Subtitle Font Size",							//123
+																@"Subtitle Horizontal Alignment",				//124
+																@"Subtitle Vertical Alignment",					//125
+																@"Subtitle Left Margin",						//126
+																@"Subtitle Right Margin",						//127
+																@"Subtitle Top Margin",							//128
+																@"Subtitle Bottom Margin",						//129
 																
 																//Advanced
-																@"Two Pass",									//129
-																@"Start Atom",									//130
+																@"Two Pass",									//130
+																@"Start Atom",									//131
 		nil];
 		
 		extraOptionDefaultValues = [[NSArray alloc] initWithObjects:	
@@ -110,6 +111,7 @@
 																[NSNumber numberWithDouble:0.50],									// Box Alpha Value
 																[NSArchiver archivedDataWithRootObject:[NSColor blackColor]],		// Border Color
 																[NSNumber numberWithInteger:4],										// Border Size
+																[NSNumber numberWithDouble:1.0],									// Alpha Value
 																// DVD
 																@"Helvetica",														// Subtitle Font
 																[NSNumber numberWithCGFloat:24],									// Subtitle Font Size
@@ -139,20 +141,13 @@
 - (void)dealloc
 {
 	//Release our stuff
-	[presetsData release];
-	presetsData = nil;
-
 	[preferenceMappings release];
-	preferenceMappings = nil;
-	
+	[viewMappings release];
 	[extraOptionMappings release];
-	extraOptionMappings = nil;
-	
+	[extraOptionDefaultValues release];
 	[itemsList release];
-	itemsList = nil;
-
+	[presetsData release];
 	[toolbar release];
-	toolbar = nil;
 
 	[super dealloc];
 }
@@ -362,7 +357,7 @@
 	else
 		filters = [NSMutableArray array];
 	
-	[[filterTableView delegate] setFilterOptions:filters];
+	[(MCFilterDelegate *)[filterTableView delegate] setFilterOptions:filters];
 	
 	[self setSubtitleKind:nil];
 	[self setHarcodedVisibility:nil];
@@ -799,20 +794,19 @@
 		
 		NSInteger result = [self installThemesWithNames:[NSArray arrayWithObject:name] presetDictionaries:[NSArray arrayWithObject:presetDictionary]];
 		
-		if (result != NSOKButton)
-			return;
+		if (result == NSOKButton)
+			[self reloadPresets];
 		
-		[self reloadPresets];
-	
-		if (currentPresetPath)
-		{
-			[currentPresetPath release];
-			currentPresetPath = nil;
-		}
-	
-		[extraOptions release];
-		extraOptions = nil;
 	}
+	
+	if (currentPresetPath)
+	{
+		[currentPresetPath release];
+		currentPresetPath = nil;
+	}
+	
+	[extraOptions release];
+	extraOptions = nil;
 	
 	[NSApp endSheet:presetsPanel];
 	[presetsPanel orderOut:self];
@@ -948,10 +942,8 @@
 	[extraOptions setObject:[sender objectValue] forKey:option];
 	[advancedTableView reloadData];
 	
-	if ([sender tag] > 105 && [sender tag] < 121)
-	{
+	if ([sender tag] > 105 && [sender tag] < 122)
 		[self updatePreview:nil];
-	}
 }
 
 - (void)reloadHardcodedPreview
@@ -959,15 +951,13 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings];
 	[settings addEntriesFromDictionary:extraOptions];
 			
-	NSImage *previewImage = [MCCommonMethods overlayImageWithObject:@"This is a scene from the movie Sintel watch it at: www.sintel.org<br><i>second line in italic</i>" withSettings:settings inputImage:[NSImage imageNamed:@"Sintel-frame"]];
+	NSImage *previewImage = [MCCommonMethods overlayImageWithObject:NSLocalizedString(@"This is a scene from the movie Sintel watch it at: www.sintel.org<br><i>second line in italic</i>", nil) withSettings:settings inputImage:[NSImage imageNamed:@"Sintel-frame"]];
 	[hardcodedPreviewImage setImage:previewImage];
 	[hardcodedPreviewImage display];
 }
 
 - (void)updatePreview:(NSNotification *)notif
 {
-	id sendingObject = [notif object];
-
 	NSMutableDictionary *settings = [NSMutableDictionary dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings];
 	[settings addEntriesFromDictionary:extraOptions];
 	
@@ -982,13 +972,10 @@
 	[previewImage lockFocus];
 	[filterImage drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	
-	if (sendingObject)
-		[[sendingObject imageWithSize:imageSize]  drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	
 	[previewImage unlockFocus];
 	
 	if ([[settings objectForKey:@"Subtitle Type"] isEqualTo:@"hard"])
-		previewImage = [MCCommonMethods overlayImageWithObject:@"This is a scene from the movie Sintel watch it at: www.sintel.org<br><i>second line in italic</i>" withSettings:settings inputImage:previewImage];
+		previewImage = [MCCommonMethods overlayImageWithObject:NSLocalizedString(@"This is a scene from the movie Sintel watch it at: www.sintel.org<br><i>second line in italic</i>", nil) withSettings:settings inputImage:previewImage];
 	
 	[hardcodedPreviewImage setImage:previewImage];
 	[hardcodedPreviewImage display];
@@ -1031,16 +1018,12 @@
 	BOOL isDVD = ([settings isEqualTo:@"dvd"]);
 	BOOL isHardcoded = ([settings isEqualTo:@"hard"]);
 	
-	//[advancedSubSettingsBox setHidden:(!isDVD)];
-	//[advancedSubSettingsButton setHidden:(!isHardcoded)];
-	
-	NSInteger i;
 	NSArray *subviews = [subtitleSettingsView subviews];
-	for (i = 0; i < [subviews count]; i ++)
-	{
-		NSView *currentView = [subviews objectAtIndex:i];
-		[currentView removeFromSuperview];
-	}
+	
+	if ([subviews containsObject:DVDSettingsView])
+		[DVDSettingsView removeFromSuperview];
+	else if ([subviews containsObject:hardcodedSettingsView])
+		[hardcodedSettingsView removeFromSuperview];
 	
 	if (isDVD | isHardcoded)
 	{
@@ -1049,14 +1032,16 @@
 			subview = DVDSettingsView;
 		else
 			subview = hardcodedSettingsView;
-			
+
 		[subview setFrame:NSMakeRect(0, [subtitleSettingsView frame].size.height - [subview frame].size.height, [subview frame].size.width, [subview frame].size.height)];
 		[subtitleSettingsView addSubview:subview];
+		
+		[[self window] recalculateKeyViewLoop];
 	}
 }
 
 - (IBAction)showPreview:(id)sender
-{	
+{
 	if ([hardcodedPreview isVisible])
 		[hardcodedPreview orderOut:nil];
 	else

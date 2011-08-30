@@ -53,7 +53,6 @@
 	IBOutlet id hardcodedVAlignPopup;
 	IBOutlet id hardcodedVisiblePopup;
 	
-	IBOutlet id hardcodedTransparencyText;
 	IBOutlet id hardcodedMethodTabView;
 	
 	IBOutlet id hardcodedPreviewImage;
@@ -108,6 +107,8 @@
 //Also external
 - (void)editPresetForWindow:(NSWindow *)window withDictionary:(NSDictionary *)dictionary;
 - (void)savePresetForWindow:(NSWindow *)window withDictionary:(NSDictionary *)dictionary;
+
+- (void)updatePreview:(NSNotification *)notif;
 
 - (IBAction)edit:(id)sender;
 - (IBAction)addPreset:(id)sender;
