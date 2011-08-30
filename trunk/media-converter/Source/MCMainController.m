@@ -760,19 +760,20 @@
 																@"Box Alpha Value",								//118
 																@"Border Color",								//119
 																@"Border Size",									//120
+																@"Alpha Value",									//121
 																// DVD
-																@"Subtitle Font",								//121
-																@"Subtitle Font Size",							//122
-																@"Subtitle Horizontal Alignment",				//123
-																@"Subtitle Vertical Alignment",					//124
-																@"Subtitle Left Margin",						//125
-																@"Subtitle Right Margin",						//126
-																@"Subtitle Top Margin",							//127
-																@"Subtitle Bottom Margin",						//128
+																@"Subtitle Font",								//122
+																@"Subtitle Font Size",							//123
+																@"Subtitle Horizontal Alignment",				//124
+																@"Subtitle Vertical Alignment",					//125
+																@"Subtitle Left Margin",						//126
+																@"Subtitle Right Margin",						//127
+																@"Subtitle Top Margin",							//128
+																@"Subtitle Bottom Margin",						//129
 																
 																//Advanced
-																@"Two Pass",									//129
-																@"Start Atom",									//130
+																@"Two Pass",									//130
+																@"Start Atom",									//131
 		nil];
 		
 		NSArray *extraOptionDefaultValues = [[NSArray alloc] initWithObjects:	
@@ -785,21 +786,22 @@
 																@"Subtitle Type",													// Subtitle Type
 																@"Subtitle Default Language",										// Subtitle Default Language
 																// Hardcoded
-																@"Helvetica",														//  Font
-																[NSNumber numberWithCGFloat:24],									//  Font Size
-																[NSArchiver archivedDataWithRootObject:[NSColor whiteColor]],		//  Color
-																@"center",															//  Horizontal Alignment
-																@"bottom",															//  Vertical Alignment
-																[NSNumber numberWithInteger:0],										//  Left Margin
-																[NSNumber numberWithInteger:0],										//  Right Margin
-																[NSNumber numberWithInteger:0],										//  Top Margin
-																[NSNumber numberWithInteger:0],										//  Bottom Margin
-																@"border",															//  Method
-																[NSArchiver archivedDataWithRootObject:[NSColor darkGrayColor]],	//  Box Color
-																[NSNumber numberWithInteger:10],									//  Box Marge
-																[NSNumber numberWithDouble:0.50],									//  Box Alpha Value
-																[NSArchiver archivedDataWithRootObject:[NSColor blackColor]],		//  Border Color
-																[NSNumber numberWithInteger:4],										//  Border Size
+																@"Helvetica",														// Font
+																[NSNumber numberWithCGFloat:24],									// Font Size
+																[NSArchiver archivedDataWithRootObject:[NSColor whiteColor]],		// Color
+																@"center",															// Horizontal Alignment
+																@"bottom",															// Vertical Alignment
+																[NSNumber numberWithInteger:0],										// Left Margin
+																[NSNumber numberWithInteger:0],										// Right Margin
+																[NSNumber numberWithInteger:0],										// Top Margin
+																[NSNumber numberWithInteger:0],										// Bottom Margin
+																@"border",															// Method
+																[NSArchiver archivedDataWithRootObject:[NSColor darkGrayColor]],	// Box Color
+																[NSNumber numberWithInteger:10],									// Box Marge
+																[NSNumber numberWithDouble:0.50],									// Box Alpha Value
+																[NSArchiver archivedDataWithRootObject:[NSColor blackColor]],		// Border Color
+																[NSNumber numberWithInteger:4],										// Border Size
+																[NSNumber numberWithDouble:1.0],									// Alpha Value
 																// DVD
 																@"Helvetica",														// Subtitle Font
 																[NSNumber numberWithCGFloat:24],									// Subtitle Font Size
