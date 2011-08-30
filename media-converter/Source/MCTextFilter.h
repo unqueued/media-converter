@@ -17,8 +17,6 @@
 	IBOutlet id textVerticalPopup;
 	IBOutlet id textVisiblePopup;
 	IBOutlet id textMethodTabView;
-	IBOutlet id textTransparencyText;
-	
 }
 
 - (IBAction)setTextVisibility:(id)sender;
