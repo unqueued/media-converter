@@ -32,12 +32,15 @@
 	[filterOptions release];
 	filterOptions = nil;
 	
-	filterOptions = [[NSMutableDictionary alloc] initWithDictionary:options];
+	NSDictionary *fallBackDictionary = [NSMutableDictionary dictionaryWithObjects:filterDefaultValues forKeys:filterMappings];
+	filterOptions = [[NSMutableDictionary alloc] initWithDictionary:fallBackDictionary];
+	[filterOptions addEntriesFromDictionary:options];
 }
 
 - (void)setupView
 {
-	[MCCommonMethods setViewOptions:[NSArray arrayWithObject:filterView] infoObject:filterOptions fallbackInfo:nil mappingsObject:filterMappings startCount:0];
+	NSDictionary *fallBackDictionary = [NSMutableDictionary dictionaryWithObjects:filterDefaultValues forKeys:filterMappings];
+	[MCCommonMethods setViewOptions:[NSArray arrayWithObject:filterView] infoObject:filterOptions fallbackInfo:fallBackDictionary mappingsObject:filterMappings startCount:0];
 }
 
 - (void)resetView
@@ -95,7 +98,7 @@
 
 	[filterOptions setObject:[sender objectValue] forKey:option];
 
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:nil];
 }
 
 @end
