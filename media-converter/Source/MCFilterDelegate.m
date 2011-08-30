@@ -66,6 +66,7 @@
 	[tableView setTarget:self];
 	[tableView setDoubleAction:@selector(edit:)];
 	[tableView setReloadNotificationName:@"MCUpdatePreview"];
+	[tableView registerForDraggedTypes:[NSArray arrayWithObject:@"NSGeneralPboardType"]];
 }
 
 - (IBAction)addFilter:(id)sender
@@ -89,6 +90,8 @@
 		[tableData addObject:filter];
 		[tableView reloadData];
 	}
+	
+	openFilter = nil;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:nil];
 }
@@ -155,14 +158,14 @@
 		NSDictionary *filterOptions = [tableData objectAtIndex:selectedRow];
 		NSString *type = [filterOptions objectForKey:@"Type"];
 	
-		openFilter = filterOptions;
+		openFilterOptions = filterOptions;
 	
 		[filterPopup setObjectValue:type];
 		[self selectFilter:nil];
 	
-		MCFilter *filter = [filters objectAtIndex:[filterPopup indexOfSelectedItem]];
-		[filter setOptions:[filterOptions objectForKey:@"Options"]];
-		[filter setupView];
+		openFilter = [filters objectAtIndex:[filterPopup indexOfSelectedItem]];
+		[openFilter setOptions:[filterOptions objectForKey:@"Options"]];
+		[openFilter setupView];
 	
 		[filterCloseButton setTitle:NSLocalizedString(@"Save", nil)];
 	
@@ -184,6 +187,7 @@
 		[tableView reloadData];
 	}
 	
+	openFilterOptions = nil;
 	openFilter = nil;
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:nil];
 }
@@ -199,10 +203,10 @@
 			[currentView removeFromSuperview];
 	}
 	
-	MCFilter *filter = [filters objectAtIndex:[filterPopup indexOfSelectedItem]];
-	[filter resetView];
-	[filter setupView];
-	NSView *newView = [filter filterView];
+	openFilter = [filters objectAtIndex:[filterPopup indexOfSelectedItem]];
+	[openFilter resetView];
+	[openFilter setupView];
+	NSView *newView = [openFilter filterView];
 
 	NSRect filterViewFrame = [newView frame];
 	NSRect windowFrame = [filterWindow frame];
@@ -220,7 +224,7 @@
 	[newView setFrame:NSMakeRect(0, 60, filterViewFrame.size.width, filterViewFrame.size.height)];
 	
 	[[filterWindow contentView] addSubview:newView];
-	
+	[filterWindow recalculateKeyViewLoop];
 }
 
 - (void)setFilterOptions:(id)options
@@ -248,43 +252,6 @@
 		[previewPanel orderFront:nil];
 }
 
-- (void)updatePreview
-{
-	NSImage *newPreviewImage = [[[NSImage imageNamed:@"Sintel-frame"] copy] autorelease];
-
-	NSInteger i;
-	for (i = 0; i < [tableData count]; i ++)
-	{
-		NSDictionary *filterOptions = [tableData objectAtIndex:i];
-		NSString *type = [filterOptions objectForKey:@"Type"];
-		
-		MCFilter *filter;
-		if (filterOptions != openFilter)
-		{
-			filter = [[NSClassFromString(type) alloc] init];
-				
-			[filter setOptions:[filterOptions objectForKey:@"Options"]];
-		}
-		else
-		{
-			filter = [filters objectAtIndex:[filterPopup indexOfObjectValue:type]];
-		}
-			
-		
-		NSImage *filterImage = [filter imageWithSize:NSMakeSize(1024, 436)];
-		NSSize imageSize = [filterImage size];
-		
-		[newPreviewImage lockFocus];
-		[filterImage drawInRect:NSMakeRect(0, 0, imageSize.width, imageSize.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[newPreviewImage unlockFocus];
-	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MCUpdatePreview" object:newPreviewImage];
-	
-	//[previewImageView setImage:newPreviewImage];
-	//[previewImageView display];
-}
-
 - (NSImage *)previewImageWithSize:(NSSize)size
 {
 	NSImage *newPreviewImage = [[NSImage alloc] initWithSize:size];
@@ -293,13 +260,12 @@
 	for (i = 0; i < [tableData count]; i ++)
 	{
 		NSDictionary *filterOptions = [tableData objectAtIndex:i];
-		NSString *type = [filterOptions objectForKey:@"Type"];
-		
-		MCFilter *filter;
-		if (filterOptions != openFilter)
+	
+		if (filterOptions != openFilterOptions)
 		{
-			filter = [[NSClassFromString(type) alloc] init];
-				
+			NSString *type = [filterOptions objectForKey:@"Type"];
+		
+			MCFilter *filter = [[[NSClassFromString(type) alloc] init] autorelease];
 			[filter setOptions:[filterOptions objectForKey:@"Options"]];
 			
 			NSImage *filterImage = [filter imageWithSize:size];
@@ -308,6 +274,15 @@
 			[filterImage drawInRect:NSMakeRect(0, 0, size.width, size.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 			[newPreviewImage unlockFocus];
 		}
+	}
+	
+	if (openFilter != nil)
+	{
+		NSImage *filterImage = [openFilter imageWithSize:size];
+		
+		[newPreviewImage lockFocus];
+		[filterImage drawInRect:NSMakeRect(0, 0, size.width, size.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[newPreviewImage unlockFocus];
 	}
 	
 	return [newPreviewImage autorelease];
@@ -355,10 +330,80 @@
     return YES;
 }
 
-- (NSArray *)allSelectedItemsInTableView:(NSTableView *)table fromArray:(NSArray *)array
+//Needed to be able to drag rows
+- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
+{
+	NSInteger result = NSDragOperationNone;
+	
+	NSPasteboard *pboard = [info draggingPasteboard];
+	NSData *data = [pboard dataForType:@"NSGeneralPboardType"];
+	NSArray *rows = [NSUnarchiver unarchiveObjectWithData:data];
+	NSInteger firstIndex = [[rows objectAtIndex:0] integerValue];
+	
+	if (row > firstIndex - 1 && row < firstIndex + [rows count] + 1)
+		return result;
+
+    if (op == NSTableViewDropAbove) {
+        result = NSDragOperationMove;
+    }
+
+    return (result);
+}
+
+- (BOOL)tableView:(NSTableView*)tv acceptDrop:(id <NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)op
+{
+	NSPasteboard *pboard = [info draggingPasteboard];
+
+	if ([[pboard types] containsObject:@"NSGeneralPboardType"])
+	{
+		NSData *data = [pboard dataForType:@"NSGeneralPboardType"];
+		NSArray *rows = [NSUnarchiver unarchiveObjectWithData:data];
+		NSInteger firstIndex = [[rows objectAtIndex:0] integerValue];
+	
+		NSMutableArray *filterList = [NSMutableArray array];
+		
+		NSInteger x;
+		for (x = 0;x < [rows count];x++)
+		{
+			[filterList addObject:[tableData objectAtIndex:[[rows objectAtIndex:x] integerValue]]];
+		}
+		
+		if (firstIndex < row)
+		{
+			for (x = 0;x < [filterList count];x++)
+			{
+				NSInteger index = row - 1;
+				
+				[self moveRowAtIndex:[tableData indexOfObject:[filterList objectAtIndex:x]] toIndex:index];
+			}
+		}
+		else
+		{
+			for (x = [filterList count] - 1;x < [filterList count];x--)
+			{
+				NSInteger index = row;
+				
+				[self moveRowAtIndex:[tableData indexOfObject:[filterList objectAtIndex:x]] toIndex:index];
+			}
+		}
+	}
+	
+    return YES;
+}
+
+- (BOOL)tableView:(NSTableView *)view writeRows:(NSArray *)rows toPasteboard:(NSPasteboard *)pboard
+{
+	NSData *data = [NSArchiver archivedDataWithRootObject:rows];
+	[pboard declareTypes: [NSArray arrayWithObjects:@"NSGeneralPboardType", nil] owner:nil];
+	[pboard setData:data forType:@"NSGeneralPboardType"];
+   
+	return YES;
+}
+
+- (NSArray*)allSelectedItemsInTableView:(NSTableView *)aTableView fromArray:(NSArray *)array
 {
 	NSMutableArray *items = [NSMutableArray array];
-	NSIndexSet *indexSet = [table selectedRowIndexes];
+	NSIndexSet *indexSet = [tableView selectedRowIndexes];
 	
 	NSUInteger current_index = [indexSet firstIndex];
     while (current_index != NSNotFound)
@@ -370,6 +415,57 @@
     }
 
 	return items;
+}
+
+- (void)moveRowAtIndex:(NSInteger)index toIndex:(NSInteger)destIndex
+{
+	NSArray *allSelectedItems = [self allSelectedItemsInTableView:tableView fromArray:tableData];
+	NSData *data = [NSArchiver archivedDataWithRootObject:[tableData objectAtIndex:index]];
+	BOOL isSelected = [allSelectedItems containsObject:[tableData objectAtIndex:index]];
+		
+	if (isSelected)
+		[tableView deselectRow:index];
+	
+	if (destIndex < index)
+	{
+		NSInteger x;
+		for (x = index; x > destIndex; x --)
+		{
+			id object = [tableData objectAtIndex:x - 1];
+	
+			[tableData replaceObjectAtIndex:x withObject:object];
+		
+			if ([allSelectedItems containsObject:object])
+			{
+				[tableView deselectRow:x - 1];
+				[tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:x] byExtendingSelection:YES];
+			}
+		}
+	}
+	else
+	{
+		NSInteger x;
+		for (x = index;x<destIndex;x++)
+		{
+			id object = [tableData objectAtIndex:x + 1];
+	
+			[tableData replaceObjectAtIndex:x withObject:object];
+		
+			if ([allSelectedItems containsObject:object])
+			{
+				[tableView deselectRow:x + 1];
+				[tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:x] byExtendingSelection:YES];
+			
+			}
+		}
+	}
+	
+	[tableData replaceObjectAtIndex:destIndex withObject:[NSUnarchiver unarchiveObjectWithData:data]];
+				
+	[tableView reloadData];
+	
+	if (isSelected)
+		[tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:destIndex] byExtendingSelection:YES];
 }
 
 @end
