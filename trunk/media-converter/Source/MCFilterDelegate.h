@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MCFilter.h"
 
 
 @interface MCFilterDelegate : NSObject
@@ -23,7 +24,8 @@
 	
 	//Filters
 	NSMutableArray *filters;
-	id openFilter;
+	id openFilterOptions;
+	MCFilter *openFilter;
 }
 
 - (IBAction)addFilter:(id)sender;
@@ -38,5 +40,7 @@
 - (NSImage *)previewImageWithSize:(NSSize)size;
 
 - (NSArray *)allSelectedItemsInTableView:(NSTableView *)table fromArray:(NSArray *)array;
+
+- (void)setFilterOptions:(id)options;
 
 @end
