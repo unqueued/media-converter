@@ -32,15 +32,7 @@
 {
 	NSPasteboard *pboard = [sender draggingPasteboard];
 	
-    if ( [[pboard types] containsObject:NSFilenamesPboardType] )
-	{
-		//  NSArray *files = [pboard propertyListForType:NSFilenamesPboardType];
-        //NSLog(@"%@", files);
-        // Perform operation using the list of files
-    }
-	
-	
-    NSPasteboard *paste = [sender draggingPasteboard];
+   NSPasteboard *paste = [sender draggingPasteboard];
     NSArray *types = [NSArray arrayWithObjects:NSTIFFPboardType, NSFilenamesPboardType, nil];
     NSString *desiredType = [paste availableTypeFromArray:types];
     NSData *carriedData = [paste dataForType:desiredType];
@@ -65,7 +57,7 @@
 			NSString *identifyer = [[MCCommonMethods defaultManager] displayNameAtPath:path];
             NSImage *newImage = [[NSImage alloc] initWithContentsOfFile:path];
 			
-            if (nil == newImage)
+            if (newImage == nil)
                 return NO;
             else
 				[delegate setImage:newImage withIdentifyer:identifyer];
