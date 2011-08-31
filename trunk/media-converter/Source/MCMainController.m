@@ -164,6 +164,45 @@
 	[self performSelectorOnMainThread:@selector(versionUpdateCheck) withObject:nil waitUntilDone:NO];
 }
 
+//Files dropped on the application icon, opened with... or other external open methods
+//Check for preset files, the other files are checked if they can be convertered
+- (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
+{
+	NSMutableArray *presetFiles = [NSMutableArray array];
+	NSMutableArray *otherFiles = [NSMutableArray array];
+	
+	NSInteger i;
+	for (i = 0; i < [filenames count]; i ++)
+	{
+		NSString *file = [filenames objectAtIndex:i];
+		NSString *extension = [file pathExtension];
+		
+		if ([[extension lowercaseString] isEqualTo:@"mcpreset"])
+			[presetFiles addObject:file];
+		else
+			[otherFiles addObject:file];
+	}
+	
+	if ([presetFiles count] > 0)
+	{
+		[self openPreferences:nil];
+		[preferences openPresetFiles:filenames];
+	}
+	
+	if ([otherFiles count] > 0)
+	{
+		[self checkFiles:otherFiles];
+	}
+}
+
+////////////////////
+// Update actions //
+////////////////////
+
+#pragma mark -
+#pragma mark •• Update actions
+
+//Some things changed in version 1.2, check if we need to update things
 - (void)versionUpdateCheck
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
@@ -264,6 +303,8 @@
 	}
 }
 
+//When the application starts or when a change has been made related to the presets update the preset menu
+//in the main window
 - (void)updatePresets
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
@@ -310,35 +351,6 @@
 	}
 }
 
-- (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames
-{
-	NSMutableArray *presetFiles = [NSMutableArray array];
-	NSMutableArray *otherFiles = [NSMutableArray array];
-	
-	NSInteger i;
-	for (i = 0; i < [filenames count]; i ++)
-	{
-		NSString *file = [filenames objectAtIndex:i];
-		NSString *extension = [file pathExtension];
-		
-		if ([[extension lowercaseString] isEqualTo:@"mcpreset"])
-			[presetFiles addObject:file];
-		else
-			[otherFiles addObject:file];
-	}
-	
-	if ([presetFiles count] > 0)
-	{
-		[self openPreferences:nil];
-		[preferences openPresetFiles:filenames];
-	}
-	
-	if ([otherFiles count] > 0)
-	{
-		[self checkFiles:otherFiles];
-	}
-}
-
 ///////////////////////
 // Interface actions //
 ///////////////////////
@@ -346,11 +358,13 @@
 #pragma mark -
 #pragma mark •• Interface actions
 
+//Save the current preset to the preferences
 - (IBAction)setPresetPopup:(id)sender
 {
 	[[NSUserDefaults standardUserDefaults] setObject:[sender objectValue] forKey:@"MCSelectedPreset"];
 }
 
+//Edit the preset
 - (IBAction)edit:(id)sender
 {
 	if (preferences == nil)
@@ -368,6 +382,7 @@
 	[preferences editPresetForWindow:mainWindow withDictionary:dictionary];
 }
 
+//Save the preset
 - (IBAction)saveDocumentAs:(id)sender
 {
 	if (preferences == nil)
@@ -392,7 +407,7 @@
 #pragma mark -
 #pragma mark •• Menu actions
 
-//Open preferences
+//Open the preferences
 - (IBAction)openPreferences:(id)sender
 {
 	if (preferences == nil)
@@ -404,6 +419,7 @@
 	[preferences showPreferences];
 }
 
+//Open media files
 - (IBAction)openFiles:(id)sender
 {
 	NSOpenPanel *sheet = [NSOpenPanel openPanel];
@@ -423,9 +439,16 @@
 	}
 }
 
+//Open internet URL files
 - (IBAction)openURLs:(id)sender
 {
 	[NSApp beginSheet:locationsPanel modalForWindow:mainWindow modalDelegate:self didEndSelector:@selector(openURLsPanelDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+//Stop locations panel with return code
+- (IBAction)endOpenLocations:(id)sender
+{
+	[NSApp endSheet:locationsPanel returnCode:[sender tag]];
 }
 
 - (void)openURLsPanelDidEnd:(NSWindow *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
@@ -442,26 +465,22 @@
 	[locationsTextField setString:@""];
 }
 
+//Visit the site
 - (IBAction)goToSite:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://media-converter.sourceforge.net"]];
 }
 
+//Get the application or external applications source (links to a folder)
 - (IBAction)downloadSource:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/projects/media-converter/files/media-converter/1.1/"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/projects/media-converter/files/media-converter/1.2/"]];
 }
 
+//Opens internal donation html page
 - (IBAction)makeDonation:(id)sender
 {
 	[[NSWorkspace sharedWorkspace] openFile:[[[NSBundle mainBundle] pathForResource:@"Donation" ofType:@""] stringByAppendingPathComponent:@"donate.html"]];
-}
-
-//Locations actions
-
-- (IBAction)endOpenLocations:(id)sender
-{
-	[NSApp endSheet:locationsPanel returnCode:[sender tag]];
 }
 
 //////////////////
