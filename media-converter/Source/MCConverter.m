@@ -1784,12 +1784,12 @@
 			break;
 			
 		CGFloat totalTime = inputTotalTime;
-		CGFloat currentTime = [self secondsFromFormatedString:[times objectAtIndex:0]];
+		CGFloat progressTime = [self secondsFromFormatedString:[times objectAtIndex:0]];
 		
 		if (timeLimit)
 			totalTime = [[options objectForKey:@"-t"] cgfloatValue];
 			
-		NSString *percentString = [NSString stringWithFormat:@" (%.0f%@)", currentTime / (totalTime / 100), @"%"];
+		NSString *percentString = [NSString stringWithFormat:@" (%.0f%@)", progressTime / (totalTime / 100), @"%"];
 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusByAddingPercentChanged" object:percentString];
 		
