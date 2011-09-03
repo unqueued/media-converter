@@ -43,4 +43,6 @@
 
 - (void)setFilterOptions:(id)options;
 
+- (void)moveRowAtIndex:(NSInteger)index toIndex:(NSInteger)destIndex;
+
 @end
