@@ -762,7 +762,7 @@
 	
 			[pipe release];
 			pipe = nil;
-		
+
 			if (taskStatus != 0)
 			{
 				break;
@@ -812,7 +812,7 @@
 				[qtfaststart release];
 				qtfaststart = nil;
 			}
-	
+
 			if (temporarySubtitleFile && [defaultManager fileExistsAtPath:temporarySubtitleFile])
 			{
 				if ([subtitleType isEqualTo:@"mp4"])
@@ -1522,6 +1522,10 @@
 
 			[self createSubtitleMovieAtPath:path withOptions:options subtitleFile:subtitlePath];
 		}
+	}
+	else if ([type isEqualTo:@"mp4"])
+	{
+		return [[NSFileManager defaultManager] fileExistsAtPath:path];
 	}
 	else if (![type isEqualTo:@"dvd"])
 	{
