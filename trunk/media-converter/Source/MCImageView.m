@@ -30,9 +30,7 @@
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	NSPasteboard *pboard = [sender draggingPasteboard];
-	
-   NSPasteboard *paste = [sender draggingPasteboard];
+	NSPasteboard *paste = [sender draggingPasteboard];
     NSArray *types = [NSArray arrayWithObjects:NSTIFFPboardType, NSFilenamesPboardType, nil];
     NSString *desiredType = [paste availableTypeFromArray:types];
     NSData *carriedData = [paste dataForType:desiredType];
