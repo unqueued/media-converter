@@ -611,20 +611,17 @@
 		}
 		else
 		{
-			NSString *boldFont = [fontName stringByAppendingString:@"-Bold"];
+			NSFontManager *fontManager = [NSFontManager sharedFontManager];
 			
-			NSFont *font = nil;
+			//Basic bold font
+			NSFont *font = [NSFont fontWithName:@"Helvetica-Bold" size:fontSize];
 			
-			font = [NSFont fontWithName:boldFont size:fontSize];
-			
-			if (font == nil)
-				[NSFont fontWithName:fontName size:fontSize];
-		
+			//Try to convert the font, should work, if not fall back on Helvetica Bold
+			font = [fontManager convertFont:font toFamily:fontName];
+				
 			attrStr = [MCCommonMethods initOnMainThreadWithHTML:(NSString *)object];
 
 			NSRange range;
-			NSFontManager *fontManager = [NSFontManager sharedFontManager];
-
 			range = NSMakeRange(0,0);
 		
 			while(NSMaxRange(range) < [attrStr length])
