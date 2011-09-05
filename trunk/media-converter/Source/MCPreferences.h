@@ -144,6 +144,8 @@
 - (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;
 
+- (NSImage *)previewBackgroundWithImage:(NSImage *)image forSize:(NSSize)size;
+
 //Toolbar actions
 - (NSToolbarItem *)createToolbarItemWithName:(NSString *)name;
 - (void)setupToolbar;

@@ -965,7 +965,8 @@
 	if (darkBackground == YES)
 		backgroundName = @"Sintel-frame-dark";
 	
-	NSImage *previewImage = [[[NSImage imageNamed:backgroundName] copy] autorelease];
+	//NSImage *previewImage = [[ copy] autorelease];
+	NSImage *previewImage = [self previewBackgroundWithImage:[NSImage imageNamed:backgroundName] forSize:[hardcodedPreviewImage frame].size];
 	NSSize imageSize = [previewImage size];
 	NSImage *filterImage = [filterDelegate previewImageWithSize:imageSize];
 	
@@ -979,6 +980,38 @@
 	
 	[hardcodedPreviewImage setImage:previewImage];
 	[hardcodedPreviewImage display];
+}
+
+- (NSImage *)previewBackgroundWithImage:(NSImage *)image forSize:(NSSize)size
+{
+	NSSize imageSize = [image size];
+	CGFloat imageAspect = imageSize.width / imageSize.height;
+	CGFloat outputAspect = size.width / size.height;
+	NSImage *outputImage = [[NSImage alloc] initWithSize:size];
+	
+	// Height is smaller
+	if (outputAspect > imageAspect)
+	{
+		CGFloat y = ((size.width / imageAspect) - size.height) / 2;
+		
+		[outputImage lockFocus];
+		
+		[image drawInRect:NSMakeRect(0, 0 - y, size.width, size.height + y) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		
+		[outputImage unlockFocus];
+	}
+	else
+	{
+		CGFloat x = ((size.height * imageAspect) - size.width) / 2;
+
+		[outputImage lockFocus];
+		
+		[image drawInRect:NSMakeRect(0 - x, 0, size.width + x, size.height) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		
+		[outputImage unlockFocus];
+	}
+	
+	return [outputImage autorelease];
 }
 
 - (IBAction)setHarcodedVisibility:(id)sender
