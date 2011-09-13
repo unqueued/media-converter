@@ -65,7 +65,7 @@
 	//Placeholder error string
 	NSString *error = NSLocalizedString(@"An unkown error occured", nil);
 	
-	//NSTexturedRoundedBezelStyle doesn't look right in 10.4 and earlies
+	//NSTexturedRoundedBezelStyle doesn't look right in 10.4 and earlier
 	if ([MCCommonMethods OSVersion] < 0x1050)
 		[presetPopUp setBezelStyle:NSRoundedBezelStyle];
 	
@@ -434,9 +434,7 @@
 	[sheet orderOut:self];
 
 	if (returnCode == NSOKButton)
-	{
 		[self checkFiles:[sheet filenames]];
-	}
 }
 
 //Open internet URL files

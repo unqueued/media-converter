@@ -13,6 +13,7 @@
 
 - (id)initWithFrame:(NSRect)frameRect
 {
+	// register for file paths and strings (urls e.g. http:xxx)
 	if ((self = [super initWithFrame:frameRect]) != nil)
 		[self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, NSStringPboardType, nil]];
 	
@@ -24,10 +25,6 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [self unregisterDraggedTypes];
     [super dealloc];
-}
-
-- (void)drawRect:(NSRect)rect
-{
 }
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
@@ -49,8 +46,7 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-    if ((NSDragOperationGeneric & [sender draggingSourceOperationMask]) 
-                    == NSDragOperationGeneric)
+    if ((NSDragOperationGeneric & [sender draggingSourceOperationMask]) == NSDragOperationGeneric)
     {
         //this means that the sender is offering the type of operation we want
         //return that we want the NSDragOperationGeneric operation that they 
@@ -67,6 +63,7 @@
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
+	// Check for attached sheet, can't drag and drop then
 	if (![[self window] attachedSheet])
 		return YES;
 		
@@ -89,13 +86,13 @@
     }
     else
     {
-        if ([desiredType isEqualToString:NSFilenamesPboardType])
+        if ([desiredType isEqualToString:NSFilenamesPboardType]) // path
         {
             //we have a list of file names in an NSData object
             NSArray *fileArray = [paste propertyListForType:@"NSFilenamesPboardType"];
 			[mainController checkFiles:fileArray];
         }
-		else if ([desiredType isEqualToString:NSStringPboardType])
+		else if ([desiredType isEqualToString:NSStringPboardType]) // url string
 		{
 			NSString *urlString = [paste stringForType:NSStringPboardType];
 			[mainController checkFiles:[NSArray arrayWithObject:urlString]];
