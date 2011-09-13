@@ -2,6 +2,8 @@
 //  MCInstallPanel.h
 //  Media Converter
 //
+//  Install panel where the user can choose between '/Library/Application Support' or '~/Library/Application Support'
+//
 //  Created by Maarten Foukhar on 08-05-11.
 //  Copyright 2011 Kiwi Fruitware. All rights reserved.
 //
@@ -20,7 +22,7 @@
 - (NSString *)installLocation;
 - (void)setTaskText:(NSString *)text;
 
-//Install Mode actions
+/* Install Mode actions */
 - (IBAction)endSettingMode:(id)sender;
 
 @end

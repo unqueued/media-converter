@@ -156,10 +156,11 @@
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableViewSelectionDidChange:) name:@"MCListSelected" object:presetsTableView];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(installModeChanged:) name:@"MCInstallModeChanged" object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePreview:) name:@"MCUpdatePreview" object:nil];
+	[defaultCenter addObserver:self selector:@selector(tableViewSelectionDidChange:) name:@"MCListSelected" object:presetsTableView];
+	[defaultCenter addObserver:self selector:@selector(installModeChanged:) name:@"MCInstallModeChanged" object:nil];
+	[defaultCenter addObserver:self selector:@selector(updatePreview:) name:@"MCUpdatePreview" object:nil];
 	
 	//General
 	NSString *temporaryFolder = [standardDefaults objectForKey:@"MCSaveLocation"];
@@ -207,8 +208,7 @@
 	[self setupToolbar];
 	[toolbar setSelectedItemIdentifier:[standardDefaults objectForKey:@"MCSavedPrefView"]];
 	[self toolbarAction:[toolbar selectedItemIdentifier]];
-	
-	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+
 	[defaultCenter addObserver:self selector:@selector(saveFrame) name:NSWindowWillCloseNotification object:nil];
 
 	NSWindow *myWindow = [self window];

@@ -2,6 +2,8 @@
 //  MCProgress.h
 //  Media Converter
 //
+//  Window controller for handling progress (via notifications). (Original: KWProgress - Burn)
+//
 //  Copyright 2011 Kiwi Fruitware. All rights reserved.
 //
 
@@ -19,17 +21,18 @@
 	
 	//Variables
 	NSArray *notificationNames;
-	
 	NSString *cancelNotification;
 	id notifObject;
 	NSImage *application;
 	NSModalSession session;
 }
-//Main actions
+
+/* Main actions */
 - (IBAction)cancelProgress:(id)sender;
 - (void)beginSheetForWindow:(NSWindow *)window;
 - (void)beginWindow;
 - (void)endSheet;
+/* Notification actions */
 - (void)setTask:(NSString *)task;
 - (void)setStatus:(NSString *)status;
 - (void)setStatusByAddingPercent:(NSString *)percent;
@@ -38,7 +41,7 @@
 - (void)setIcon:(NSImage *)image;
 - (void)setCancelNotification:(NSString *)notification;
 - (void)setCanCancel:(BOOL)cancel;
-
+/* Main thread actions */
 - (void)setIndeterminateOnMainThread:(NSNumber *)number;
 - (void)setMaxiumValueOnMainThread:(NSNumber *)number;
 - (void)setDoubleValueOnMainThread:(NSNumber *)number;

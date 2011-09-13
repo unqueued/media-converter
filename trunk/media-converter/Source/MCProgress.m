@@ -113,6 +113,13 @@
 	}
 }
 
+//////////////////////////
+// Notification actions //
+//////////////////////////
+
+#pragma mark -
+#pragma mark •• Notification actions
+
 - (void)setTask:(NSString *)task
 {
 	[taskText performSelectorOnMainThread:@selector(setStringValue:) withObject:task waitUntilDone:YES];
@@ -240,6 +247,13 @@
 	else
 		[[self window] setFrame:NSMakeRect([window frame].origin.x, [window frame].origin.y, [window frame].size.width, 124) display:YES animate:NO];
 }
+
+/////////////////////////
+// Main thread actions //
+/////////////////////////
+
+#pragma mark -
+#pragma mark •• Main thread actions
 
 - (void)setMaxiumValueOnMainThread:(NSNumber *)number
 {
