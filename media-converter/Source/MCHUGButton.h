@@ -9,7 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface MCHUGButton : NSButton {
+@interface MCHUGButton : NSButton
+{
 
 }
 
