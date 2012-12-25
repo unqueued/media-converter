@@ -54,7 +54,6 @@
 - (void)dealloc
 {
     [image release];
-    image = nil;
 	
 	[super dealloc];
 }

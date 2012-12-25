@@ -22,7 +22,6 @@
 - (void)dealloc
 {
 	[filterOptions release];
-	filterOptions = nil;
 	
 	[super dealloc];
 }

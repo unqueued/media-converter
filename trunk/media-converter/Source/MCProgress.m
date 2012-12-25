@@ -32,9 +32,6 @@
 
 	//Release our stuff
 	[notificationNames release];
-	notificationNames = nil;
-	
-	cancelNotification = nil;
 	
 	[super dealloc];
 }
