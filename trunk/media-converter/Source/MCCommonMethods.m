@@ -104,6 +104,22 @@
 	return paths;
 }
 
+///////////////////////////////
+// String convertion actions //
+///////////////////////////////
+
+#pragma mark -
+#pragma mark •• String convertion actions
+
++ (CGFloat)secondsFromTimeString:(NSString *)timeString
+{
+	CGFloat hours = [[[timeString componentsSeparatedByString:@":"] objectAtIndex:0] doubleValue];
+	CGFloat minutes = [[[timeString componentsSeparatedByString:@":"] objectAtIndex:1] doubleValue];
+	CGFloat seconds = [[[timeString componentsSeparatedByString:@":"] objectAtIndex:2] doubleValue];
+	
+	return (hours * 60 * 60) + (minutes * 60) + seconds;
+}
+
 ///////////////////
 // Error actions //
 ///////////////////
@@ -213,19 +229,7 @@
 	BOOL succes = YES;
 	NSString *details = @"";
 	NSFileManager *defaultManager = [MCCommonMethods defaultManager];
-
-	if ([MCCommonMethods OSVersion] >= 0x1050)
-	{
-		NSError *myError;
-		succes = [defaultManager moveItemAtPath:srcPath toPath:dstPath error:&myError];
-			
-		if (!succes)
-			details = [myError localizedDescription];
-	}
-	else
-	{
-		succes = [defaultManager movePath:srcPath toPath:dstPath handler:nil];
-	}
+	succes = [defaultManager movePath:srcPath toPath:dstPath handler:nil];
 		
 	if (!succes && error != nil)
 	{
@@ -268,19 +272,8 @@
 	
 	if ([defaultManager fileExistsAtPath:path])
 	{
-		if ([MCCommonMethods OSVersion] >= 0x1050)
-		{
-			NSError *myError;
-			succes = [defaultManager removeItemAtPath:path error:&myError];
-			
-			if (!succes)
-				details = [myError localizedDescription];
-		}
-		else
-		{
-			succes = [defaultManager removeFileAtPath:path handler:nil];
-			details = [NSString stringWithFormat:NSLocalizedString(@"File path: %@", nil), path];
-		}
+		succes = [defaultManager removeFileAtPath:path handler:nil];
+		details = [NSString stringWithFormat:NSLocalizedString(@"File path: %@", nil), path];
 		
 		if (!succes)
 		{
@@ -307,22 +300,11 @@
 	BOOL succes;
 	NSString *details;
 	
-	if ([MCCommonMethods OSVersion] >= 0x1040)
-	{
-		NSError *myError;
-		succes = [string writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&myError];
-			
-			if (!succes)
-			details = [myError localizedDescription];
-	}
-	else
-	{
-		succes = [string writeToFile:path atomically:YES];
-		NSFileManager *defaultManager = [MCCommonMethods defaultManager];
-		NSString *file = [defaultManager displayNameAtPath:path];
-		NSString *parent = [defaultManager displayNameAtPath:[path stringByDeletingLastPathComponent]];
-		details = [NSString stringWithFormat:NSLocalizedString(@"Failed to write '%@' to '%@'", nil), file, parent];
-	}
+	NSError *myError;
+	succes = [string writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&myError];
+	
+	if (!succes)
+		details = [myError localizedDescription];
 
 	if (!succes && error != nil)
 		*error = details;
@@ -358,35 +340,21 @@
 
 + (id)stringWithContentsOfFile:(NSString *)path
 {
-	#if MAC_OS_X_VERSION_MAX_ALLOWED < 1040
-	if ([MCCommonMethods OSVersion] < 0x1040)
-		return [NSString stringWithContentsOfFile:path];
-	else
-	#endif
-		return [NSString stringWithContentsOfFile:path usedEncoding:nil error:nil];
+	return [NSString stringWithContentsOfFile:path usedEncoding:nil error:nil];
 }
 
 + (id)stringWithContentsOfFile:(NSString *)path encoding:(NSStringEncoding)enc error:(NSError **)error
 {
-	#if MAC_OS_X_VERSION_MAX_ALLOWED < 1040
-	if ([MCCommonMethods OSVersion] < 0x1040)
-	{
-		NSData *stringData = [NSData dataWithContentsOfFile:path];
-		return [[NSString alloc] initWithData:stringData encoding:enc];
-	}
-	else
-	#endif
-		return [NSString stringWithContentsOfFile:path encoding:enc error:&*error];
+	return [NSString stringWithContentsOfFile:path encoding:enc error:&*error];
 }
 
 + (NSFileManager *)defaultManager
 {
-	#if MAC_OS_X_VERSION_MAX_ALLOWED < 1050
-	if ([MCCommonMethods OSVersion] < 0x1050)
-		return [NSFileManager defaultManager];
-	else
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
+	return [[[NSFileManager alloc] init] autorelease];
+	#else
+	return [NSFileManager defaultManager];
 	#endif
-		return [[[NSFileManager alloc] init] autorelease];
 }
 
 ///////////////////
@@ -536,21 +504,14 @@
 	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
 	return YES;
 	#else
-	if ([MCCommonMethods OSVersion] >= 0x1050)
-	{
-		return YES;
-	}
-	else
-	{
-		if (![[MCCommonMethods defaultManager] fileExistsAtPath:@"/usr/local/bin/python"])
-			return NO;
+	if (![[MCCommonMethods defaultManager] fileExistsAtPath:@"/usr/local/bin/python"])
+		return NO;
 	
-		NSString *string;
-		[MCCommonMethods launchNSTaskAtPath:@"/usr/local/bin/python" withArguments:[NSArray arrayWithObject:@"-V"] outputError:YES outputString:YES output:&string inputPipe:nil predefinedTask:nil];
-		NSInteger version = [[[[[string componentsSeparatedByString:@"Python 2."] objectAtIndex:1] componentsSeparatedByString:@"."] objectAtIndex:0] integerValue];
+	NSString *string;
+	[MCCommonMethods launchNSTaskAtPath:@"/usr/local/bin/python" withArguments:[NSArray arrayWithObject:@"-V"] outputError:YES outputString:YES output:&string inputPipe:nil predefinedTask:nil];
+	NSInteger version = [[[[[string componentsSeparatedByString:@"Python 2."] objectAtIndex:1] componentsSeparatedByString:@"."] objectAtIndex:0] integerValue];
 		
-		return (version >= 5);
-	}
+	return (version >= 5);
 	#endif
 }
 
@@ -745,6 +706,7 @@
 
 		[currentContent saveGraphicsState];
 		[currentContent setCompositingOperation:NSCompositeSourceOver];
+		
 		CGContextSetAlpha(cgContext, alphaValue);
 	
 		[attrStr drawInRect:NSMakeRect(x + boxMarge, y + boxMarge, width - (boxMarge * 2), height)];
@@ -867,16 +829,15 @@
 	{
 		if ([control isKindOfClass:[NSTextField class]])
 		{
-			[control setObjectValue:property];
+			if ([property isKindOfClass:[NSString class]])
+				[control setStringValue:property];
+			else
+				[control setStringValue:[property stringValue]];
 		}
 		else if ([[control cell] isKindOfClass:[MCCheckBoxCell class]])
-		{
 			[(MCCheckBoxCell *)[control cell] setStateWithoutSelecting:NSOnState];
-		}
 		else
-		{
 			[control setObjectValue:property];
-		}
 						
 		[control setEnabled:YES];
 	}
@@ -935,6 +896,22 @@
 	}
 	
 	return newArray;
+}
+
++ (void)sendEndSelector:(SEL)sel toObject:(id)receiver withObject:(id)object withReturnCode:(NSInteger)code
+{
+	NSMethodSignature *aSignature;
+	NSInvocation *anInvocation;
+
+	//Get the methods signature and set the selector
+	aSignature = [[receiver class] instanceMethodSignatureForSelector:sel];
+	anInvocation = [NSInvocation invocationWithMethodSignature:aSignature];
+	[anInvocation setSelector:sel];
+	//Set arguments
+	[anInvocation setArgument:&object atIndex:2];
+	[anInvocation setArgument:&code atIndex:3];
+	//Perform selector
+	[anInvocation invokeWithTarget:receiver];
 }
 
 @end
