@@ -37,7 +37,7 @@
 	NSInteger inputWidth;
 	NSInteger inputHeight;
 	CGFloat inputFps;
-	NSInteger inputTotalTime;
+	CGFloat inputTotalTime;
 	CGFloat inputAspect;
 	//inputFormat: 0 = normal; 1 = dv; 2 = mpeg2
 	NSInteger inputFormat;
@@ -49,8 +49,6 @@
 	NSString *convertExtension;
 	NSString *temporaryFolder;
 	NSFileHandle *currentFileHandle;
-	
-	NSMutableDictionary *defaultSettings;
 	
 	//Encodings
 	NSArray *cyrillicLanguages;
@@ -65,7 +63,7 @@
 //Encode actions
 
 //Convert a bunch of files with ffmpeg/movtoyuv/QuickTime
-- (NSInteger)batchConvert:(NSArray *)files toDestination:(NSString *)destination withOptions:(NSDictionary *)options withDefaults:(NSDictionary *)defaults errorString:(NSString **)error;
+- (NSInteger)batchConvert:(NSArray *)files toDestination:(NSString *)destination withOptions:(NSDictionary *)options errorString:(NSString **)error;
 //Encode the file, use wav file if quicktime created it, use pipe (from movtoy4m)
 - (NSInteger)encodeFileAtPath:(NSString *)path errorString:(NSString **)error;
 //Encode sound to wav
@@ -106,13 +104,12 @@
 //Framework actions
 - (NSArray *)succesArray;
 
-- (void)createSubtitleMovieAtPath:(NSString *)path withOptions:(NSArray *)options subtitleFile:(NSString *)file;
+- (void)createSubtitleMovieAtPath:(NSString *)path withOptions:(NSArray *)options subtitleFile:(NSString *)file withSize:(NSSize)size;
 - (CGFloat)secondsFromFormatedString:(NSString *)string;
-- (NSString *)stringByReplacingOccurrencesOfString:(NSString *)target withString:(NSString *)replacement inString:(NSString *)string;
 
 //Subtitle actions
 //outputType: 0 = mp4, 1 = mkv, 2 = ogg (kate)
-- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type currentOptions:(NSArray *)options;
+- (BOOL)createMovieWithSubtitlesAtPath:(NSString *)path inputFile:(NSString *)inFile ouputType:(NSString *)type currentOptions:(NSArray *)options withSize:(NSSize)size;
 - (BOOL)extractSubtitlesFromMovieAtPath:(NSString *)inPath toPath:(NSString *)outPath shouldRename:(BOOL)rename;
 - (NSArray *)trackDictionariesFromPath:(NSString *)path withType:(NSString *)type;
 
@@ -141,15 +138,12 @@
 - (BOOL)testFontWithName:(NSString *)name;
 
 //Other actions
-- (NSInteger)convertToEven:(NSString *)number;
-- (NSInteger)getPadSize:(CGFloat)size withAspect:(NSSize)aspect withTopBars:(BOOL)topBars;
 - (NSInteger)totalTimeInSeconds:(NSString *)path;
 - (NSString *)mediaTimeString:(NSString *)path;
 - (void)setErrorStringWithString:(NSString *)string;
 
 - (NSArray *)getFormats;
-- (NSArray *)getVideoCodecs;
-- (NSArray *)getAudioCodecs;
+- (NSArray *)getCodecsOfType:(NSString *)type;
 - (void)extractImportantFontsToPath:(NSString *)path statusStart:(NSInteger)start;
 - (void)downloadYouTubeURL:(NSString *)urlString toTask:(NSTask *)inTask outPipe:(NSPipe **)pipe;
 - (NSString *)getYouTubeName:(NSString *)urlString;
