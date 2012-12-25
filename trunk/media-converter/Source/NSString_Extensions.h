@@ -13,6 +13,7 @@
 @interface NSString (MyExtensions)
 #if MAC_OS_X_VERSION_MAX_ALLOWED < 1050
 - (NSInteger)integerValue;
+- (NSString *)stringByReplacingOccurrencesOfString:(NSString *)target withString:(NSString *)replacement;
 #endif
 - (CGFloat)cgfloatValue;
 @end
