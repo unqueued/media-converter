@@ -515,6 +515,7 @@
 		FEA8D4FF1322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
 		FEA8D5001322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
 		FEA8D5021322AD4E00C10516 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FEB448D01689F40000938559 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE0812671652ACCA0061AE04 /* Growl.framework */; };
 		FEB4E2B01313B09100F608D0 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
 		FEBC384512F163B300F0A20A /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
 		FEBC386712F169BE00F0A20A /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
@@ -692,6 +693,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FEB448D01689F40000938559 /* Growl.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
