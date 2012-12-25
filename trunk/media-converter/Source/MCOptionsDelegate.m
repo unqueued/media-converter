@@ -6,7 +6,7 @@
 //
 
 #import "MCOptionsDelegate.h"
-#import "MCPreferences.h"
+#import "MCPresetManager.h"
 
 @implementation MCOptionsDelegate
 
@@ -22,7 +22,6 @@
 {
 	//Release our stuff
 	[tableData release];
-	tableData = nil;
 
 	[super dealloc];
 }
@@ -50,13 +49,10 @@
 		NSDictionary *currentDictionary = [tableData objectAtIndex:index];
 		NSString *currentKey = [[currentDictionary allKeys] objectAtIndex:0];
 		
-		[(MCPreferences *)windowController updateForKey:currentKey withProperty:nil];
+		[(MCPresetManager *)windowController updateForKey:currentKey withProperty:nil];
 	}
 
 	[tableData removeObjectsInArray:removeObjects];
-	
-	
-	
 	[tableView reloadData];
 }
 
@@ -118,13 +114,13 @@
 		id currentObject = [currentDictionary objectForKey:currentKey];
 		newDictionary = [NSDictionary dictionaryWithObject:currentObject forKey:anObject];
 		
-		[(MCPreferences *)windowController updateForKey:currentKey withProperty:nil];
-		[(MCPreferences *)windowController updateForKey:anObject withProperty:currentObject];
+		[(MCPresetManager *)windowController updateForKey:currentKey withProperty:nil];
+		[(MCPresetManager *)windowController updateForKey:anObject withProperty:currentObject];
 	}
 	else
 	{
 		newDictionary = [NSDictionary dictionaryWithObject:anObject forKey:currentKey];
-		[(MCPreferences *)windowController updateForKey:currentKey withProperty:anObject];
+		[(MCPresetManager *)windowController updateForKey:currentKey withProperty:anObject];
 	}
 
 	[tableData replaceObjectAtIndex:currentIndex withObject:newDictionary];
