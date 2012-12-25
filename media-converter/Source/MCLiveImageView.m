@@ -8,6 +8,7 @@
 
 #import "MCLiveImageView.h"
 #import "MCCommonMethods.h"
+#import "NSNumber_Extensions.h"
 
 
 @implementation MCLiveImageView
