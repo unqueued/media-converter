@@ -7,7 +7,6 @@
 //
 
 #import "MCMainController.h"
-#import "MCGrowlController.h"
 #import "NSNumber_Extensions.h"
 #import "NSArray_Extensions.h"
 #import "MCAlert.h"
@@ -18,7 +17,7 @@
 + (void)initialize
 {
 	NSDictionary *infoDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
-	
+
 	//Setup some defaults for the preferences (used when options aren't set)
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSArray *defaultKeys = [NSArray arrayWithObjects:	@"MCUseSoundEffects",
@@ -55,8 +54,18 @@
 	[defaults registerDefaults:appDefaults];
 }
 
+- (void)dealloc
+{
+	[growlController release];
+	[preferences release];
+	
+	[super dealloc];
+}
+
 - (void)awakeFromNib
 {
+	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+
 	//Setup action button
 	[actionButton setDelegate:self];
 	[actionButton addMenuWithTitle:NSLocalizedString(@"Edit Preset…", nil) withSelector:@selector(edit:)];
@@ -74,8 +83,6 @@
 	
 	//Quit the application when the main window is closed (seems to be accepted in Mac OS X)
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:NSWindowWillCloseNotification object:mainWindow];
-
-	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 	
 	//Setup Preset popup in the main window
 	[presetPopUp removeAllItems];
@@ -121,8 +128,6 @@
 				
 				[presetPopUp setEnabled:NO];
 				[presetPopUp addItemWithTitle:NSLocalizedString(@"No Presets", nil)];
-	
-				[[MCGrowlController alloc] init];
 				
 				return;
 			}
@@ -142,26 +147,20 @@
 		for (i = 0; i < [presetPaths count]; i ++)
 		{
 			NSString *path = [presetPaths objectAtIndex:i];
-			
-			NSDictionary *preset = [NSDictionary dictionaryWithContentsOfFile:path];
-			
-			NSString *name = [preset objectForKey:@"Name"];
-			NSDictionary *newPreset = [NSDictionary dictionaryWithObjectsAndKeys:name, @"Name", path, @"Path", nil];
-			
-			[savedPresets addObject:newPreset];
+			[savedPresets addObject:path];
 		}
 
 		[standardDefaults setObject:savedPresets forKey:@"MCPresets"];
 	}
 	
+	//Check version to update some presets and phyton if needed (after asking of course)
+	[self performSelectorOnMainThread:@selector(versionUpdateCheck) withObject:nil waitUntilDone:YES];
+	
 	//Now really update preset popup
 	[self updatePresets];
 	
-	//Create our Growl object
-	[[MCGrowlController alloc] init];
-	
-	//Check version to update some presets and phyton if needed (after asking of cource)
-	[self performSelectorOnMainThread:@selector(versionUpdateCheck) withObject:nil waitUntilDone:NO];
+	//Create our Growl controller
+	growlController = [[MCGrowlController alloc] init];
 }
 
 //Files dropped on the application icon, opened with... or other external open methods
@@ -185,14 +184,23 @@
 	
 	if ([presetFiles count] > 0)
 	{
-		[self openPreferences:nil];
-		[preferences openPresetFiles:filenames];
+		NSInteger result = [[MCPresetManager defaultManager] openPresetFiles:filenames];
+		
+		if (result != 0)
+		{
+			NSString *finishMessage;
+			
+			if (result == 1)
+				finishMessage = NSLocalizedString(@"Succesfully installed 1 preset", nil);
+			else
+				finishMessage = [NSString stringWithFormat:NSLocalizedString(@"Succesfully installed %li presets", nil), result];
+				
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"growlInstalledPresets" object:finishMessage];
+		}
 	}
 	
 	if ([otherFiles count] > 0)
-	{
 		[self checkFiles:otherFiles];
-	}
 }
 
 ////////////////////
@@ -202,16 +210,16 @@
 #pragma mark -
 #pragma mark •• Update actions
 
-//Some things changed in version 1.2, check if we need to update things
+//Some things changed in newer versions, check if we need to update things
 - (void)versionUpdateCheck
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+	
 	CGFloat lastCheck = [[standardDefaults objectForKey:@"MCLastCheck"] cgfloatValue];
+	NSInteger returnCode;
 	
 	if (lastCheck < 1.2)
 	{
-		NSInteger returnCode;
-		
 		//Check for phyton and ask to upgrade it if needed
 		if (![MCCommonMethods isPythonUpgradeInstalled])
 		{
@@ -226,8 +234,8 @@
 		
 			if (returnCode == NSAlertFirstButtonReturn) 
 				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.python.org/download"]];
-		}
-		
+			}
+	
 		//Ask if the user wants to update the presets for using subtitles
 		NSAlert *upgradeAlert = [[[NSAlert alloc] init] autorelease];
 		[upgradeAlert addButtonWithTitle:NSLocalizedString(@"Update", nil)];
@@ -246,7 +254,7 @@
 			NSInteger i;
 			for (i = 0; i < [presets count]; i ++)
 			{
-				NSString *path = [[presets objectAtIndex:i] objectForKey:@"Path"];
+				NSString *path = [presets objectAtIndex:i];
 				NSMutableDictionary *preset = [NSMutableDictionary dictionaryWithContentsOfFile:path];
 				[preset setObject:@"1.2" forKey:@"Version"];
 
@@ -293,7 +301,7 @@
 		[preferences updateFontListForWindow:nil];
 		
 		//Update "MCLastCheck" so we'll won't check again
-		[standardDefaults setObject:[NSNumber numberWithCGFloat:1.2] forKey:@"MCLastCheck"];
+		[standardDefaults setObject:[NSNumber numberWithCGFloat:1.3] forKey:@"MCLastCheck"];
 		
 		[preferences release];
 		preferences = nil;
@@ -301,6 +309,20 @@
 		//Make sure our main window is in front
 		[mainWindow makeKeyAndOrderFront:nil];
 	}
+	/*else if (lastCheck < 1.3)
+	{
+		NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
+		NSMutableArray *updatedPresets = [NSMutableArray array];
+			
+		NSInteger i;
+		for (i = 0; i < [presets count]; i ++)
+		{
+			NSString *presetPath = [[presets objectAtIndex:i] objectForKey:@"Path"];
+			[updatedPresets addObject:presetPath];
+		}
+			
+		[standardDefaults setObject:updatedPresets forKey:@"MCPresets"];
+	}*/
 }
 
 //When the application starts or when a change has been made related to the presets update the preset menu
@@ -308,6 +330,7 @@
 - (void)updatePresets
 {
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+	
 	NSString *currentTitle = [presetPopUp titleOfSelectedItem];
 
 	[presetPopUp removeAllItems];
@@ -326,16 +349,22 @@
 		NSInteger i;
 		for (i = 0; i < [presets count]; i ++)
 		{
-			NSDictionary *preset = [presets objectAtIndex:i];
-			NSString *name = [preset objectForKey:@"Name"];
-			[presetPopUp addItemWithTitle:name];
+			NSString *path = [presets objectAtIndex:i];
+			
+			if ([[MCCommonMethods defaultManager] fileExistsAtPath:path])
+			{
+				NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
+				NSString *name = [dictionary objectForKey:@"Name"];
+			
+				[presetPopUp addItemWithTitle:name];
+			}
 		}
 	
 		if (currentTitle && [presetPopUp itemWithTitle:currentTitle])
 		{
 			[presetPopUp selectItemWithTitle:currentTitle];
 			NSNumber *selectIndex = [NSNumber numberWithInteger:[presetPopUp indexOfItemWithTitle:currentTitle]];
-			[[NSUserDefaults standardUserDefaults] setObject:selectIndex forKey:@"MCSelectedPreset"];
+			[standardDefaults setObject:selectIndex forKey:@"MCSelectedPreset"];
 		}
 		else
 		{
@@ -367,37 +396,30 @@
 //Edit the preset
 - (IBAction)edit:(id)sender
 {
-	if (preferences == nil)
-	{
-		preferences = [[MCPreferences alloc] init];
-		[preferences setDelegate:self];
-	}
-	
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 	NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
+	NSString *path = [presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]];
 	
-	NSDictionary *presetDictionary = [presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]];
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[presetDictionary objectForKey:@"Name"], @"Name", [presetDictionary objectForKey:@"Path"], @"Path", nil];
-	
-	[preferences editPresetForWindow:mainWindow withDictionary:dictionary];
+	MCPresetManager *presetManager = [MCPresetManager defaultManager];
+	[presetManager setDelegate:self];
+	[presetManager editPresetForWindow:mainWindow withPresetPath:path didEndSelector:@selector(presetManagerEnded:returnCode:)];
+}
+
+- (void)presetManagerEnded:(MCPresetManager *)manager returnCode:(NSInteger)returnCode
+{
+	if (returnCode == NSOKButton)
+		[self updatePresets];
 }
 
 //Save the preset
 - (IBAction)saveDocumentAs:(id)sender
-{
-	if (preferences == nil)
-	{
-		preferences = [[MCPreferences alloc] init];
-		[preferences setDelegate:self];
-	}
-	
+{	
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 	NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
 	
-	NSDictionary *presetDictionary = [presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]];
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[presetDictionary objectForKey:@"Name"], @"Name", [presetDictionary objectForKey:@"Path"], @"Path", nil];
+	NSString *path = [presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]];
 
-	[preferences savePresetForWindow:mainWindow withDictionary:dictionary];
+	[[MCPresetManager defaultManager] savePresetForWindow:mainWindow withPresetPath:path];
 }
 
 //////////////////
@@ -472,7 +494,7 @@
 //Get the application or external applications source (links to a folder)
 - (IBAction)downloadSource:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/projects/media-converter/files/media-converter/1.2/"]];
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://sourceforge.net/projects/media-converter/files/media-converter/1.3/"]];
 }
 
 //Opens internal donation html page
@@ -604,6 +626,8 @@
 		[progressPanel release];
 		progressPanel = nil;
 	}
+	
+	[convertObject release];
 
 	[pool release];
 	pool = nil;
@@ -750,102 +774,13 @@
 	
 	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
 	NSArray *presets = [standardDefaults objectForKey:@"MCPresets"];
-	NSDictionary *options = [NSDictionary dictionaryWithContentsOfFile:[[presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]] objectForKey:@"Path"]];
+	NSString *presetPath = [presets objectAtIndex:[[standardDefaults objectForKey:@"MCSelectedPreset"] integerValue]];
+	NSDictionary *options = [NSDictionary dictionaryWithContentsOfFile:presetPath];
 	
-	NSArray *extraOptionMappings = [[NSArray alloc] initWithObjects:	
-																//Video
-																@"Keep Aspect",									//101
-																@"Auto Aspect",									//102
-																@"Auto Size",									//103
-																
-																//Subtitles
-																@"Subtitle Type",								//104
-																@"Subtitle Default Language",					//105
-																// Hardcoded
-																@"Font",										//106
-																@"Font Size",									//107
-																@"Color",										//108
-																@"Horizontal Alignment",						//109
-																@"Vertical Alignment",							//110
-																@"Left Margin",									//111
-																@"Right Margin",								//112
-																@"Top Margin",									//113
-																@"Bottom Margin",								//114
-																@"Method",										//115
-																@"Box Color",									//116
-																@"Box Marge",									//117
-																@"Box Alpha Value",								//118
-																@"Border Color",								//119
-																@"Border Size",									//120
-																@"Alpha Value",									//121
-																// DVD
-																@"Subtitle Font",								//122
-																@"Subtitle Font Size",							//123
-																@"Subtitle Horizontal Alignment",				//124
-																@"Subtitle Vertical Alignment",					//125
-																@"Subtitle Left Margin",						//126
-																@"Subtitle Right Margin",						//127
-																@"Subtitle Top Margin",							//128
-																@"Subtitle Bottom Margin",						//129
-																
-																//Advanced
-																@"Two Pass",									//130
-																@"Start Atom",									//131
-		nil];
-		
-		NSArray *extraOptionDefaultValues = [[NSArray alloc] initWithObjects:	
-																//Video
-																[NSNumber numberWithBool:NO],										// Keep Aspect
-																[NSNumber numberWithBool:NO],										// Auto Aspect
-																[NSNumber numberWithBool:NO],										// Auto Size
-																
-																//Subtitles
-																@"Subtitle Type",													// Subtitle Type
-																@"Subtitle Default Language",										// Subtitle Default Language
-																// Hardcoded
-																@"Helvetica",														// Font
-																[NSNumber numberWithCGFloat:24],									// Font Size
-																[NSArchiver archivedDataWithRootObject:[NSColor whiteColor]],		// Color
-																@"center",															// Horizontal Alignment
-																@"bottom",															// Vertical Alignment
-																[NSNumber numberWithInteger:0],										// Left Margin
-																[NSNumber numberWithInteger:0],										// Right Margin
-																[NSNumber numberWithInteger:0],										// Top Margin
-																[NSNumber numberWithInteger:0],										// Bottom Margin
-																@"border",															// Method
-																[NSArchiver archivedDataWithRootObject:[NSColor darkGrayColor]],	// Box Color
-																[NSNumber numberWithInteger:10],									// Box Marge
-																[NSNumber numberWithDouble:0.50],									// Box Alpha Value
-																[NSArchiver archivedDataWithRootObject:[NSColor blackColor]],		// Border Color
-																[NSNumber numberWithInteger:4],										// Border Size
-																[NSNumber numberWithDouble:1.0],									// Alpha Value
-																// DVD
-																@"Helvetica",														// Subtitle Font
-																[NSNumber numberWithCGFloat:24],									// Subtitle Font Size
-																@"center",															// Subtitle Horizontal Alignment
-																@"bottom",															// Subtitle Vertical Alignment
-																[NSNumber numberWithInteger:60],									// Subtitle Left Margin
-																[NSNumber numberWithInteger:60],									// Subtitle Right Margin
-																[NSNumber numberWithInteger:20],									// Subtitle Top Margin
-																[NSNumber numberWithInteger:30],									// Subtitle Bottom Margin
-																
-																//Advanced
-																[NSNumber numberWithBool:NO],										// Two Pass
-																[NSNumber numberWithBool:NO],										// Start Atom
-		nil];
-	
-	NSInteger result = [converter batchConvert:inputFiles toDestination:path withOptions:options withDefaults:[NSDictionary	dictionaryWithObjects:extraOptionDefaultValues forKeys:extraOptionMappings] errorString:&errorString];
-
-	//NSArray *succeededFiles = [NSArray arrayWithArray:[converter succesArray]];
+	NSInteger result = [converter batchConvert:inputFiles toDestination:path withOptions:options errorString:&errorString];
 	
 	[converter release];
 	converter = nil;
-
-	/*NSInteger y;
-	for (y=0;y<[succeededFiles count];y++)
-	{
-		[self addFile:[succeededFiles objectAtIndex:y] isSelfEncoded:YES];
-	}*/
 
 	[progressPanel endSheet];
 	[progressPanel release];
@@ -868,7 +803,6 @@
 	}
 
 	[pool release];
-	pool = nil;
 }
 
 //Show an alert if some files failed to be converted

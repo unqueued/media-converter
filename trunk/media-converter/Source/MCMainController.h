@@ -13,6 +13,8 @@
 #import "MCProgress.h"
 #import "MCConverter.h"
 #import "MCPreferences.h"
+#import "MCPresetManager.h"
+#import "MCGrowlController.h"
 
 @interface MCMainController : NSObject
 {
@@ -27,6 +29,7 @@
 	MCProgress *progressPanel;
 	MCConverter *converter;
 	MCPreferences *preferences;
+	MCGrowlController *growlController;
 	
 	//Other variables
 	NSArray *inputFiles;
