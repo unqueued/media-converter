@@ -28,7 +28,11 @@
 	NSBezierPath *path = [[[NSBezierPath alloc] init] autorelease];
 	NSRect buttonRect = NSMakeRect(frame.origin.x + 1, (frame.size.height - 18) / 2, frame.size.width - 2, 18);
 	
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
 	[path appendBezierPathWithRoundedRect:buttonRect xRadius:10 yRadius:10];
+	#else
+	[path appendBezierPathWithRect:buttonRect];
+	#endif
 	
 	[[NSColor whiteColor] set];
 	
@@ -39,12 +43,15 @@
 	
 	if ([self state] == NSOnState)
 	{
+		// NSGradients are supported from 10.5 and up
+		#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1050
 		NSColor *startColor = [NSColor colorWithDeviceRed:0 green:0 blue:0 alpha:0.0];
 		NSColor *endColor = [NSColor colorWithDeviceRed:0.12156862745098 green:0.12156862745098 blue:0.12156862745098 alpha:0.5];
-			
+		
 		NSGradient *gradient = [[[NSGradient alloc] initWithStartingColor:startColor endingColor:endColor] autorelease];
 	
 		[gradient drawInBezierPath:path angle:-90];
+		#endif
 	}
 	else
 	{
