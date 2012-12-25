@@ -26,10 +26,7 @@
 - (void)dealloc
 {
 	if (array)
-	{
 		[array release];
-		array = nil;
-	}
 	
 	[super dealloc];
 }

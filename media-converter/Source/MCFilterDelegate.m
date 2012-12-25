@@ -35,9 +35,7 @@
 {
 	//Release our stuff
 	[tableData release];
-	tableData = nil;
 	[filters release];
-	filters = nil;
 
 	[super dealloc];
 }
@@ -461,7 +459,6 @@
 	}
 	
 	[tableData replaceObjectAtIndex:destIndex withObject:[NSUnarchiver unarchiveObjectWithData:data]];
-				
 	[tableView reloadData];
 	
 	if (isSelected)
