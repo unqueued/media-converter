@@ -912,6 +912,8 @@
 		FEA8D4B413229AB200C10516 /* MCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCTableView.m; path = Source/MCTableView.m; sourceTree = "<group>"; };
 		FEA8D4F81322AD4E00C10516 /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/Donation; sourceTree = "<group>"; };
 		FEA8D5061322AD5800C10516 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Dutch; path = Dutch.lproj/Donation; sourceTree = "<group>"; };
+		FEB448391689F2F600938559 /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme.txt; path = Frameworks/Readme.txt; sourceTree = "<group>"; };
+		FEB4483A1689F32300938559 /* Readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme.txt; path = Binaries/Readme.txt; sourceTree = "<group>"; };
 		FEB4E2AE1313B09100F608D0 /* NSArray_Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSArray_Extensions.h; path = Source/NSArray_Extensions.h; sourceTree = "<group>"; };
 		FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArray_Extensions.m; path = Source/NSArray_Extensions.m; sourceTree = "<group>"; };
 		FEBC384212F163B300F0A20A /* Presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presets; path = Resources/Presets; sourceTree = "<group>"; };
@@ -1198,6 +1200,7 @@
 		FE1A925A12EC4CB6007273B3 /* Included Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FEB448391689F2F600938559 /* Readme.txt */,
 				FE0812521652ACB50061AE04 /* PowerPC */,
 				FE08125C1652ACC10061AE04 /* Intel */,
 				FE0812661652ACCA0061AE04 /* Intel-64 */,
@@ -1243,6 +1246,7 @@
 		FE6CDC9216521C6A0046E59E /* Binaries */ = {
 			isa = PBXGroup;
 			children = (
+				FEB4483A1689F32300938559 /* Readme.txt */,
 				FE6CDC9716521CA30046E59E /* PowerPC */,
 				FE6CDCB216521CB90046E59E /* Intel */,
 				FE6CDCCD16521CC70046E59E /* Intel-64 */,
