@@ -30,6 +30,9 @@ typedef float CGFloat;
 //Get full paths for multiple folders in an array
 + (NSArray *)getFullPathsForFolders:(NSArray *)folders withType:(NSString *)type;
 
+//String convertion actions
++ (CGFloat)secondsFromTimeString:(NSString *)timeString;
+
 //Error actions
 + (BOOL)createDirectoryAtPath:(NSString *)path errorString:(NSString **)error;
 + (BOOL)copyItemAtPath:(NSString *)inPath toPath:(NSString *)newPath errorString:(NSString **)error;
@@ -73,5 +76,7 @@ typedef float CGFloat;
 + (NSArray *)defaultVerticalPopupArray;
 
 + (NSMutableArray *)popupArrayWithNames:(NSArray *)names forFormats:(NSArray *)formats;
+
++ (void)sendEndSelector:(SEL)sel toObject:(id)receiver withObject:(id)object withReturnCode:(NSInteger)code;
 
 @end
