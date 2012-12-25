@@ -52,3 +52,10 @@
 }
 
 @end
+
+NSInteger evenInteger(NSInteger to)
+{
+	to -= (NSInteger)((unsigned)to & 1);
+  
+	return to;
+}

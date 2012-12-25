@@ -20,3 +20,5 @@
 + (NSNumber *)numberWithCGFloat:(CGFloat)value;
 - (CGFloat)cgfloatValue;
 @end
+
+NSInteger evenInteger(NSInteger to);
