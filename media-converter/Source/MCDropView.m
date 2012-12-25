@@ -24,6 +24,7 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [self unregisterDraggedTypes];
+	
     [super dealloc];
 }
 

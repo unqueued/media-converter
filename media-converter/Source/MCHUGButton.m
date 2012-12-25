@@ -12,41 +12,50 @@
 
 @implementation MCHUGButton
 
-- (id)initWithFrame:(NSRect)frameRect  {
-    self = [super initWithFrame:frameRect];
-    if(self != nil) {
+- (id)initWithFrame:(NSRect)frameRect
+{
+	if (self == [super initWithFrame:frameRect])
+	{
         MCHUGButtonCell *myCell;
         myCell = [[MCHUGButtonCell alloc] initImageCell:nil];
         [self setCell:myCell];
         [myCell release];
-        }
+	}
+	
     return self;
 }
 
-- (void)setImage:(NSImage *)i {
-    [[self cell] setImage:i];
+- (void)setImage:(NSImage *)image
+{
+    [[self cell] setImage:image];
     [self setNeedsDisplay];
 }
 
-+ (Class)cellClass {
++ (Class)cellClass
+{
     return [MCHUGButtonCell class];
 }
 
-- (void)mouseDown:(NSEvent *)ev {
+- (void)mouseDown:(NSEvent *)ev
+{
     [self setState:NSOffState];
     [self setNeedsDisplay];
     [super mouseDown:ev];
 }
 
-- (void)mouseUp:(NSEvent *)theEvent {
+- (void)mouseUp:(NSEvent *)theEvent
+{
     [self setState:NSOnState];
     [self setNeedsDisplay];
     [super mouseUp:theEvent];
 }
 
-- (void)drawRect:(NSRect)fr {
+- (void)drawRect:(NSRect)frame
+{
     NSView *myView = [self superview];
-    if(myView) {
+    
+	if (myView)
+	{
         [[self cell] drawWithFrame:[self bounds] inView:myView];
     }
 }
