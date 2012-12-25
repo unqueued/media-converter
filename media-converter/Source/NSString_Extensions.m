@@ -16,6 +16,15 @@
 {
 	return [self intValue];
 }
+
+- (NSString *)stringByReplacingOccurrencesOfString:(NSString *)target withString:(NSString *)replacement
+{
+	NSMutableString *mutString = [self mutableCopy];
+	
+	[mutString replaceOccurrencesOfString:target withString:replacement options:NSLiteralSearch	range:NSMakeRange(0, [self length])];
+	
+	return [mutString autorelease];
+}
 #endif
 
 - (CGFloat)cgfloatValue
