@@ -12,8 +12,7 @@
 
 - (void)awakeFromNib
 {
-	if ([MCCommonMethods OSVersion] > 0x1039)
-		[self setBezelStyle:10];
+	[self setBezelStyle:10];
 }
 
 @end
