@@ -21,15 +21,17 @@
 {
 	self = [super init];
 	
-	notifications = [[NSArray alloc] initWithObjects:	NSLocalizedString(@"Finished converting",nil),
-														nil];
+	notifications = [[NSArray alloc] initWithObjects:		NSLocalizedString(@"Finished converting", nil),
+															NSLocalizedString(@"Installed new preset", nil)
+															, nil];
 														
 	notificationNames = [[NSArray alloc] initWithObjects:	@"growlFinishedConverting",
-															nil];
+															@"growlInstalledPresets"
+															, nil];
 	
 	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
 	NSInteger i;
-	for (i=0;i< [notificationNames count];i++)
+	for (i = 0; i < [notificationNames count]; i ++)
 	{
 		[defaultCenter addObserver:self selector:@selector(growlMessage:) name:[notificationNames objectAtIndex:i] object:nil];
 	}
@@ -43,10 +45,7 @@
 - (void)dealloc
 {
 	[notifications release];
-	notifications = nil;
-	
 	[notificationNames release];
-	notificationNames = nil;
 
 	[super dealloc];
 }
