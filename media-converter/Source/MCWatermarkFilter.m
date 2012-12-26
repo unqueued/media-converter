@@ -77,7 +77,7 @@
 	[sheet setCanChooseDirectories:NO];
 	[sheet setAllowsMultipleSelection:NO];
 	
-	NSInteger result = [sheet runModalForDirectory:nil file:nil types:[NSArray arrayWithObject:@"png"]];
+	NSInteger result = [sheet runModalForDirectory:nil file:nil types:[NSImage imageFileTypes]];
 	
 	if (result == NSOKButton)
 	{
