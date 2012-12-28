@@ -41,6 +41,7 @@
 	CGFloat inputAspect;
 	//inputFormat: 0 = normal; 1 = dv; 2 = mpeg2
 	NSInteger inputFormat;
+	BOOL hasInputDARValue;
 
 	NSDictionary *convertOptions;
 	NSString *errorString;
