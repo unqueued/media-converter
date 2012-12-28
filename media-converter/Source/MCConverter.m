@@ -237,97 +237,96 @@
 	
 	NSArray *padOptions = [NSArray array];
 	
-	NSString *aspectString = nil;
+	CGFloat width, height;
+	CGFloat aspect = 0;
 	
+	// Set the size to the input or given size
+	if ([options objectForKey:@"-s"])
+	{
+		NSString *sizeString = [options objectForKey:@"-s"];
+		NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
+		width = [[sizeParts objectAtIndex:0] cgfloatValue];
+		height = [[sizeParts objectAtIndex:1] cgfloatValue];
+	}
+	else
+	{
+		width = (CGFloat)inputWidth;
+		height = (CGFloat)inputHeight;
+	}
+	
+	// Force the input rate
 	if (![options objectForKey:@"-r"])
 		[options setObject:[NSString stringWithFormat:@"%.2f", inputFps] forKey:@"-r"];
 
 	if ([[extraOptions objectForKey:@"Auto Size"] boolValue] == YES && [options objectForKey:@"-s"])
 	{
+		// Disable aspect since it isn't needed anymore
 		[options setObject:nil forKey:@"-aspect"];
-		
-		//Must be a better way since multiple videofilters can be set
-		//if ([[options objectForKey:@"-vf"] rangeOfString:@"setdar"].length > 0)
-		//	[options setObject:nil forKey:@"-vf"];
 	
 		NSString *newSizeString;
-
-		NSString *sizeString = [options objectForKey:@"-s"];
-		NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
-		CGFloat width = [[sizeParts objectAtIndex:0] cgfloatValue];
-
-		CGFloat aspect;
+		
+		// Get the right aspect
 		if (inputAspect <= (CGFloat)4 / (CGFloat)3)
-		{
-			aspectString = @"4:3";
 			aspect = (CGFloat)4 / (CGFloat)3;
-		}
 		else
-		{
-			aspectString = @"16:9";
 			aspect = (CGFloat)16 / (CGFloat)9;
-		}
 		
+		// Construct a new aspect and change it in the options
 		newSizeString = [NSString stringWithFormat:@"%ix%i", (NSInteger)width, evenInteger((NSInteger)(width / aspect))];
-		
 		[options setObject:newSizeString forKey:@"-s"];
 	}
 	else if ([[extraOptions objectForKey:@"Auto Aspect"] boolValue] == YES)
 	{
 		NSString *newAspectString;
 		
-		if (inputAspect <= (CGFloat)4 / (CGFloat)3)
+		if (inputAspect <= 4/3)
+		{
+			aspect = 4/3;
 			newAspectString = @"4:3";
+		}
 		else
+		{
+			aspect = 16/9;
 			newAspectString = @"16:9";
-	
+		}
+		
 		[options setObject:newAspectString forKey:@"-aspect"];
 		[options setObject:[NSString stringWithFormat:@"setdar=%@", newAspectString] forKey:@"-vf"];
 	}
+	else
+	{
+		if ([options objectForKey:@"-aspect"])
+		{
+			NSString *aspectString = [options objectForKey:@"-aspect"];
+			NSArray *aspectParts = [aspectString componentsSeparatedByString:@":"];
+			CGFloat aspectWidth = [[aspectParts objectAtIndex:0] cgfloatValue];
+			CGFloat aspectHeight = [[aspectParts objectAtIndex:1] cgfloatValue];
+			
+			aspect = aspectWidth / aspectHeight;
+		}
+		else
+		{
+			if (hasInputDARValue)
+				aspect = inputAspect;
+			else
+				aspect = width / height;
+		}
+	}
 	
 	NSString *padString = nil;
-	NSString *sizeString = [options objectForKey:@"-s"];
-
-	NSSize movieSize = NSMakeSize((CGFloat)inputWidth, (CGFloat)inputHeight);
-	if (sizeString)
+	if ([options objectForKey:@"-s"])
 	{
-		NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
-		CGFloat width = [[sizeParts objectAtIndex:0] cgfloatValue];
-		CGFloat height = [[sizeParts objectAtIndex:1] cgfloatValue];
-		movieSize = NSMakeSize(width, height);
-		
 		NSInteger keepAspect = [[extraOptions objectForKey:@"Keep Aspect"] integerValue];
 		
 		if (keepAspect > 0)
 		{
-			if (!aspectString)
-				aspectString = [options objectForKey:@"-aspect"];
-			
-			CGFloat aspectWidth;
-			CGFloat aspectHeight;
-			
-			if (aspectString)
+			if (inputAspect != aspect)
 			{
-				NSArray *aspectParts = [aspectString componentsSeparatedByString:@":"];
-				aspectWidth = [[aspectParts objectAtIndex:0] cgfloatValue];
-				aspectHeight = [[aspectParts objectAtIndex:1] cgfloatValue];
-					
-				if ((width / height) > (aspectWidth / aspectHeight))
-					height = evenInteger((NSInteger)(width / (aspectWidth / aspectHeight)));
+				if ((width / height) < aspect)
+					height = width / aspect;
 				else
-					width = evenInteger((NSInteger)(height * (aspectWidth / aspectHeight)));
-			}
-			else
-			{
-				aspectWidth = width;
-				aspectHeight = height;
-			}
-			
-			if (inputAspect != (aspectWidth / aspectHeight))
-			{
-				BOOL largerOutputAspect = ((aspectWidth / aspectHeight) > inputAspect);
-				movieSize = NSMakeSize(width, height);
-					
+					width = height * aspect;
+
 				NSInteger newWidth = width;
 				NSInteger newHeight = height;
 		
@@ -335,16 +334,16 @@
 				{
 					NSInteger padX = 0;
 					NSInteger padY = 0;
-						
-					if (largerOutputAspect)
+					
+					if (aspect > inputAspect)
 					{
-						padX = evenInteger((NSInteger)(((width * aspectWidth / aspectHeight) / ((CGFloat)inputWidth / (CGFloat)inputHeight) - width) / 2.0));
-						newWidth = (NSInteger)width - (padX * 2.0);
+						newWidth = evenInteger((NSInteger)(height * inputAspect));
+						padX = (NSInteger)((width - newWidth) / 2.0);
 					}
 					else
 					{
-						padY = evenInteger((NSInteger)((height - (height * (aspectWidth / aspectHeight) / ((CGFloat)inputWidth / (CGFloat)inputHeight))) / 2.0));
-						newHeight = (NSInteger)height - (padY * 2.0);
+						newHeight = evenInteger((NSInteger)(width / inputAspect));
+						padY = (NSInteger)((height - newHeight) / 2.0);
 					}
 						
 					padString = [NSString stringWithFormat:@"scale=%i:%i,pad=%i:%i:%i:%i:black", (NSInteger)newWidth, (NSInteger)newHeight, (NSInteger)width, (NSInteger)height, padX, padY];
@@ -354,15 +353,15 @@
 					NSInteger cropX = 0;
 					NSInteger cropY = 0;
 		
-					if (largerOutputAspect)
+					if (aspect > inputAspect)
 					{
-						newHeight = evenInteger((NSInteger)((width / (CGFloat)inputWidth) * (CGFloat)inputHeight));
-						cropY = (NSInteger)(((CGFloat)newHeight - height) / 2.0);
+						newHeight = evenInteger((NSInteger)(width / inputAspect));
+						cropY = (NSInteger)((newHeight - height) / 2.0);
 					}
 					else
 					{
-						newWidth = evenInteger((NSInteger)(width / (aspectWidth / aspectHeight) * ((CGFloat)inputWidth / (CGFloat)inputHeight)));
-						cropX = (newWidth - width) / 2.0;
+						newWidth = evenInteger((NSInteger)(height * inputAspect));
+						cropX = (NSInteger)((newWidth - width) / 2.0);
 					}
 				
 					padString = [NSString stringWithFormat:@"scale=%i:%i,crop=%i:%i:%i:%i:0", (NSInteger)newWidth, (NSInteger)newHeight, (NSInteger)width, (NSInteger)height, (NSInteger)cropX, (NSInteger)cropY];
@@ -390,7 +389,7 @@
 	{
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"MCStatusChanged" object:[NSString stringWithFormat:NSLocalizedString(@"Converting subtitles: %@…", nil), displayName]];
 		temporarySubtitleFile = [[temporaryFolder stringByAppendingPathComponent:@"tmpmovie"] stringByAppendingPathExtension:subtitleType];
-		BOOL createdFile = [self createMovieWithSubtitlesAtPath:temporarySubtitleFile inputFile:path ouputType:subtitleType currentOptions:options withSize:movieSize];
+		BOOL createdFile = [self createMovieWithSubtitlesAtPath:temporarySubtitleFile inputFile:path ouputType:subtitleType currentOptions:options withSize:NSMakeSize(width, height)];
 
 		//When the're no subtitle files the above method will fail
 		if (createdFile == NO)
@@ -554,23 +553,6 @@
 			if ([filters count] > 0)
 			{
 				NSString *newImagePath = [temporaryFolder stringByAppendingPathComponent:@"overlay.png"];
-			
-				NSString *sizeString = [options objectForKey:@"-s"];
-				CGFloat width;
-				CGFloat height;
-
-				if (sizeString)
-				{
-					NSArray *sizeParts = [sizeString componentsSeparatedByString:@"x"];
-					width = [[sizeParts objectAtIndex:0] cgfloatValue];
-					height = [[sizeParts objectAtIndex:1] cgfloatValue];
-				}
-				else
-				{
-					width = (CGFloat)inputWidth;
-					height = (CGFloat)inputHeight;
-				}
-			
 				NSImage *overlayImage = [[NSImage alloc] initWithSize:NSMakeSize(width, height)];
 
 				NSInteger z;
@@ -579,8 +561,17 @@
 					NSDictionary *filterDictionary = [filters objectAtIndex:z];
 					MCFilter *filter = [[NSClassFromString([filterDictionary objectForKey:@"Type"]) alloc] init];
 					[filter setOptions:[filterDictionary objectForKey:@"Options"]];
-				
-					NSImage *filterImage = [filter imageWithSize:NSMakeSize(width, height)];
+					
+					
+					NSSize imageSize;
+					
+					if (aspect > (width / height))
+						imageSize = NSMakeSize(width, (width / aspect));
+					else
+						imageSize = NSMakeSize((height * aspect), height);
+					 
+					NSImage *filterImage = [filter imageWithSize:imageSize];
+					[filterImage setSize:NSMakeSize(width, height)];
 
 					if (filterImage != nil)
 					{
@@ -693,7 +684,7 @@
 
 				[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:savedFontPath];
 		
-				[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd" currentOptions:nil withSize:movieSize];
+				[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd" currentOptions:nil withSize:NSMakeSize(width, height)];
 			}
 
 			if (useQuickTime == YES)
@@ -1382,6 +1373,18 @@
 	}
 	
 	BOOL hasOutput = YES;
+	
+	hasInputDARValue = ([inputString rangeOfString:@"DAR"].length > 0);
+	if (hasInputDARValue)
+	{
+		NSString *darString = [[[[inputString componentsSeparatedByString:@"DAR "] objectAtIndex:1] componentsSeparatedByString:@""] objectAtIndex:0];
+		NSArray *darComponents = [darString componentsSeparatedByString:@":"];
+		inputAspect = [[darComponents objectAtIndex:0] cgfloatValue] / [[darComponents objectAtIndex:1] cgfloatValue];
+	}
+	else
+	{
+		inputAspect = (CGFloat)inputWidth / (CGFloat)inputHeight;
+	}
 		
 	if (hasOutput)
 	{
