@@ -811,7 +811,7 @@
 															<reference ref="403164677"/>
 															<object class="NSMenuItem" id="1013563361">
 																<reference key="NSMenu" ref="1036786493"/>
-																<string key="NSTitle">Balken genruiken</string>
+																<string key="NSTitle">Balken gebruiken</string>
 																<string key="NSKeyEquiv"/>
 																<int key="NSKeyEquivModMask">1048576</int>
 																<int key="NSMnemonicLoc">2147483647</int>
@@ -7981,7 +7981,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">MCPresetManager.h</string>
+						<string key="minorKey">Source/MCPresetManager.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
