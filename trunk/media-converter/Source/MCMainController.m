@@ -887,7 +887,11 @@
 {
 	NSArray *protectedFileTypes = [NSArray arrayWithObjects:@"m4p", @"m4b", NSFileTypeForHFSTypeCode('M4P '), NSFileTypeForHFSTypeCode('M4B '), nil];
 	
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+	return ([protectedFileTypes containsObject:[[path pathExtension] lowercaseString]] | [protectedFileTypes containsObject:NSFileTypeForHFSTypeCode([[[[MCCommonMethods defaultManager] attributesOfItemAtPath:path error:nil] objectForKey:NSFileHFSTypeCode] longValue])]);
+	#else
 	return ([protectedFileTypes containsObject:[[path pathExtension] lowercaseString]] | [protectedFileTypes containsObject:NSFileTypeForHFSTypeCode([[[[MCCommonMethods defaultManager] fileAttributesAtPath:path traverseLink:YES] objectForKey:NSFileHFSTypeCode] longValue])]);
+	#endif
 }
 
 - (void)closeWindow

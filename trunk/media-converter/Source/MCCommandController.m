@@ -62,7 +62,11 @@
 
 	for(x = 0; x < [paths count]; x ++)
 	{
+		#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+		NSArray *itemsInPathToOpen = [[MCCommonMethods defaultManager] contentsOfDirectoryAtPath:[paths objectAtIndex:x] error:nil];
+		#else
 		NSArray *itemsInPathToOpen = [[MCCommonMethods defaultManager] directoryContentsAtPath:[paths objectAtIndex:x]];
+		#endif
 		NSInteger i;
 		NSInteger pathcount;
 		pathcount = [itemsInPathToOpen count];

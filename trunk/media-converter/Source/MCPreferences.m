@@ -247,7 +247,11 @@
 		for (i = 0; i < [selectedObjects count]; i ++)
 		{
 			NSString *presetPath = [selectedObjects objectAtIndex:i];
+			#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+			[[MCCommonMethods defaultManager] removeItemAtPath:presetPath error:nil];
+			#else
 			[[MCCommonMethods defaultManager] removeFileAtPath:presetPath handler:nil];
+			#endif
 		}
 	
 		[self reloadPresets];
@@ -836,15 +840,23 @@
 	else
 		[progressPanel performSelectorOnMainThread:@selector(beginWindow) withObject:nil waitUntilDone:NO];
 	
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+	[defaultManager createDirectoryAtPath:fontPath withIntermediateDirectories:YES attributes:nil error:nil];
+	#else
 	[defaultManager createDirectoryAtPath:fontPath attributes:nil];
+	#endif
 		
 	NSString *spumuxPath = [NSHomeDirectory() stringByAppendingPathComponent:@".spumux"];
 	NSString *uniqueSpumuxPath = [MCCommonMethods uniquePathNameFromPath:spumuxPath withSeperator:@"_"];
 		
 	if ([defaultManager fileExistsAtPath:spumuxPath])
 		[MCCommonMethods moveItemAtPath:spumuxPath toPath:uniqueSpumuxPath error:nil];
-		
+	
+	#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+	[defaultManager createSymbolicLinkAtPath:spumuxPath withDestinationPath:fontPath error:nil];
+	#else
 	[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:fontPath];
+	#endif
 		
 	NSMutableArray *fontFolderPaths = [NSMutableArray arrayWithObjects:@"/System/Library/Fonts", @"/Library/Fonts", nil];
 	NSString *homeFontsFolder = [[NSHomeDirectory() stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Fonts"];
@@ -874,10 +886,18 @@
 					
 		if (![defaultManager fileExistsAtPath:newFontPath])
 		{
+			#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+			[defaultManager createSymbolicLinkAtPath:newFontPath withDestinationPath:currentFontPath error:nil];
+			#else
 			[defaultManager createSymbolicLinkAtPath:newFontPath pathContent:currentFontPath];
+			#endif
 					
 			if (![converter testFontWithName:fontName])
-				[defaultManager removeFileAtPath:newFontPath handler:0];
+				#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+				[[MCCommonMethods defaultManager] removeItemAtPath:newFontPath error:nil];
+				#else
+				[[MCCommonMethods defaultManager] removeFileAtPath:newFontPath handler:nil];
+				#endif
 		}
 			
 		[progressPanel setValue:[NSNumber numberWithDouble:i + 1]];

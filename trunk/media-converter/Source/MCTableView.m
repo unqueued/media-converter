@@ -44,7 +44,7 @@
 	if ([super respondsToSelector:aSelector])
 		return [super methodSignatureForSelector:aSelector];
 	else
-		return [[self delegate] methodSignatureForSelector:aSelector];
+		return [(NSObject *)[self delegate] methodSignatureForSelector:aSelector];
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector

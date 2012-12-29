@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "MCCommonMethods.h"
 
-
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+@interface MCPreferences : NSWindowController <NSToolbarDelegate>
+#else
 @interface MCPreferences : NSWindowController
+#endif
 {
 	/* Preferences views */
 	// General
