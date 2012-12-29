@@ -1,0 +1,95 @@
+#kiwi-mediaconverterwindow-image {
+	display: inline-block;
+	background-image: url(../gfx/mediaconverterwindow.png);
+	width: 200px;
+	height: 165px;
+	background-size: 200px 165px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	#kiwi-mediaconverterwindow-image {
+	display: inline-block;
+	background-image: url(../gfx/mediaconverterwindow@2x.png);
+	background-size: 200px 165px;
+	}
+}
+
+#kiwi-mediaconvertericon-image {
+	display: inline-block;
+	background-image: url(../gfx/mediaconvertericon.png);
+	width: 32px;
+	height: 32px;
+	background-size: 32px 32px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	#kiwi-mediaconvertericon-image {
+	display: inline-block;
+	background-image: url(../gfx/mediaconvertericon@2x.png);
+	background-size: 32px 32px;
+	}
+}
+
+#kiwi-mainwindow-image {
+	display: inline-block;
+	background-image: url(../gfx/mainwindow@2x.png);
+	width: 300px;
+	height: 248px;
+	background-size: 300px 248px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	#kiwi-mainwindow-image {
+	display: inline-block;
+	background-image: url(../gfx/mainwindow@2x.png);
+	background-size: 300px 248px;
+	}
+}
+
+#kiwi-prefgeneral-image {
+	display: inline-block;
+	background-image: url(../gfx/prefgeneral@2x.png);
+	width: 400px;
+	height: 246px;
+	background-size: 400px 246px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	#kiwi-prefgeneral-image {
+	display: inline-block;
+	background-image: url(../gfx/prefgeneral@2x.png);
+	background-size: 400px 246px;
+	}
+}
+
+#kiwi-prefpresets-image {
+	display: inline-block;
+	background-image: url(../gfx/prefpresets@2x.png);
+	width: 400px;
+	height: 455px;
+	background-size: 400px 455px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	#kiwi-prefpresets-image {
+	display: inline-block;
+	background-image: url(../gfx/prefpresets@2x.png);
+	background-size: 400px 455px;
+	}
+}
+
+#kiwi-prefadvanced-image {
+	display: inline-block;
+	background-image: url(../gfx/prefadvanced@2x.png);
+	width: 400px;
+	height: 240px;
+	background-size: 400px 240px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	#kiwi-prefadvanced-image {
+	display: inline-block;
+	background-image: url(../gfx/prefadvanced@2x.png);
+	background-size: 400px 240px;
+	}
+}
