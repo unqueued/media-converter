@@ -124,6 +124,96 @@
 		FE17FBAC16482035002DCA9E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
 		FE1A925012EC4C4A007273B3 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
 		FE1A97A612EC4D42007273B3 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FE1D0646168EF60100143A71 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		FE1D0647168EF60100143A71 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		FE1D0648168EF60100143A71 /* Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9DC01A12E99B2B007D3E9F /* Empty.png */; };
+		FE1D0649168EF60100143A71 /* Dropzone.pdf in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DC12EB01F20047FD26 /* Dropzone.pdf */; };
+		FE1D064A168EF60100143A71 /* Media Converter.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE8086DE12EB092D0047FD26 /* Media Converter.icns */; };
+		FE1D064B168EF60100143A71 /* -1.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1012EB19AC0047FD26 /* -1.png */; };
+		FE1D064C168EF60100143A71 /* 0.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1112EB19AC0047FD26 /* 0.png */; };
+		FE1D064D168EF60100143A71 /* 100.png in Resources */ = {isa = PBXBuildFile; fileRef = FE808C1312EB19AC0047FD26 /* 100.png */; };
+		FE1D064E168EF60100143A71 /* complete.aif in Resources */ = {isa = PBXBuildFile; fileRef = FE1A924F12EC4C4A007273B3 /* complete.aif */; };
+		FE1D064F168EF60100143A71 /* MCPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CD8512EEB83B00981441 /* MCPreferences.xib */; };
+		FE1D0650168EF60100143A71 /* Advanced.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBE12EEC26000981441 /* Advanced.tiff */; };
+		FE1D0651168EF60100143A71 /* General.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FEF5CFBF12EEC26000981441 /* General.tiff */; };
+		FE1D0652168EF60100143A71 /* Presets in Resources */ = {isa = PBXBuildFile; fileRef = FEBC384212F163B300F0A20A /* Presets */; };
+		FE1D0653168EF60100143A71 /* Create Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE77D66E13192E8800731569 /* Create Preset.png */; };
+		FE1D0654168EF60100143A71 /* Presets.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FE5F7D46131D960900BF0236 /* Presets.tiff */; };
+		FE1D0655168EF60100143A71 /* MCProgress.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9893132105CB00B440F4 /* MCProgress.xib */; };
+		FE1D0656168EF60100143A71 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9897132105DA00B440F4 /* Localizable.strings */; };
+		FE1D0657168EF60100143A71 /* MCPresets.icns in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B0013210D3100B440F4 /* MCPresets.icns */; };
+		FE1D0658168EF60100143A71 /* Add Preset.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9B3613210E6200B440F4 /* Add Preset.png */; };
+		FE1D0659168EF60100143A71 /* MediaConverterHelp in Resources */ = {isa = PBXBuildFile; fileRef = FE4E9BEA13218B7600B440F4 /* MediaConverterHelp */; };
+		FE1D065A168EF60100143A71 /* Donation in Resources */ = {isa = PBXBuildFile; fileRef = FEA8D4F71322AD4E00C10516 /* Donation */; };
+		FE1D065B168EF60100143A71 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FEF466401324E2000079DBCF /* Credits.rtf */; };
+		FE1D065C168EF60100143A71 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEFA3D161333F651009B543D /* Languages.plist */; };
+		FE1D065D168EF60100143A71 /* SubTest.mpg in Resources */ = {isa = PBXBuildFile; fileRef = FE58A69D135EBE8400A99750 /* SubTest.mpg */; };
+		FE1D065E168EF60100143A71 /* SubTest.srt in Resources */ = {isa = PBXBuildFile; fileRef = FE58A69E135EBE8400A99750 /* SubTest.srt */; };
+		FE1D065F168EF60100143A71 /* youtube-dl.sh in Resources */ = {isa = PBXBuildFile; fileRef = FEA3B06A13630DC800AD6085 /* youtube-dl.sh */; };
+		FE1D0660168EF60100143A71 /* MCInstallPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEA63EB61376C352001816F2 /* MCInstallPanel.xib */; };
+		FE1D0661168EF60100143A71 /* Sintel-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE48BD6B13A631A600C98912 /* Sintel-frame.jpg */; };
+		FE1D0662168EF60100143A71 /* Gear with arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FE9086D313B3EB0800844F19 /* Gear with arrow.png */; };
+		FE1D0663168EF60100143A71 /* MCWatermarkFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE10B99C13C1D1A200194E45 /* MCWatermarkFilter.xib */; };
+		FE1D0664168EF60100143A71 /* MCTextFilter.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE23AE8A13E04E9800B4E457 /* MCTextFilter.xib */; };
+		FE1D0665168EF60100143A71 /* Sintel-frame-dark.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FE59A54713ED2576001414DC /* Sintel-frame-dark.jpg */; };
+		FE1D0666168EF60100143A71 /* MCPresetManager.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE6677251425D458009BB3A5 /* MCPresetManager.xib */; };
+		FE1D0667168EF60100143A71 /* LanguageCodes.plist in Resources */ = {isa = PBXBuildFile; fileRef = FE0353DE15FA5D0D0006538C /* LanguageCodes.plist */; };
+		FE1D0668168EF60100143A71 /* MP4Box in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCCE16521CC80046E59E /* MP4Box */; };
+		FE1D0669168EF60100143A71 /* ffmpeg in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCCF16521CC80046E59E /* ffmpeg */; };
+		FE1D066A168EF60100143A71 /* fondu in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD016521CC80046E59E /* fondu */; };
+		FE1D066B168EF60100143A71 /* katedec in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD116521CC80046E59E /* katedec */; };
+		FE1D066C168EF60100143A71 /* kateenc in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD216521CC80046E59E /* kateenc */; };
+		FE1D066D168EF60100143A71 /* mkvextract in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD316521CC80046E59E /* mkvextract */; };
+		FE1D066E168EF60100143A71 /* mkvinfo in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD416521CC80046E59E /* mkvinfo */; };
+		FE1D066F168EF60100143A71 /* mkvmerge in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD516521CC80046E59E /* mkvmerge */; };
+		FE1D0670168EF60100143A71 /* oggz-info in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD716521CC80046E59E /* oggz-info */; };
+		FE1D0671168EF60100143A71 /* oggz-merge in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD816521CC80046E59E /* oggz-merge */; };
+		FE1D0672168EF60100143A71 /* qt-faststart in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCD916521CC80046E59E /* qt-faststart */; };
+		FE1D0673168EF60100143A71 /* spumux in Resources */ = {isa = PBXBuildFile; fileRef = FE6CDCDA16521CC80046E59E /* spumux */; };
+		FE1D0674168EF60100143A71 /* oggz-rip in Resources */ = {isa = PBXBuildFile; fileRef = FE0FBA0E1656B9B7007D737F /* oggz-rip */; };
+		FE1D0675168EF60100143A71 /* LanguageConversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEDB790C1688743400745F56 /* LanguageConversion.plist */; };
+		FE1D0677168EF60100143A71 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FE1D0678168EF60100143A71 /* MCDropView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F112EB09E30047FD26 /* MCDropView.m */; };
+		FE1D0679168EF60100143A71 /* MCMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8086F712EB0BA00047FD26 /* MCMainController.m */; };
+		FE1D067A168EF60100143A71 /* MCCommonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7612EB0FEE0047FD26 /* MCCommonMethods.m */; };
+		FE1D067B168EF60100143A71 /* MCConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7712EB0FEE0047FD26 /* MCConverter.m */; };
+		FE1D067C168EF60100143A71 /* MCProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = FE808B7812EB0FEE0047FD26 /* MCProgress.m */; };
+		FE1D067D168EF60100143A71 /* MCGrowlController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1A97A512EC4D42007273B3 /* MCGrowlController.m */; };
+		FE1D067E168EF60100143A71 /* MCPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CD8C12EEB89D00981441 /* MCPreferences.m */; };
+		FE1D067F168EF60100143A71 /* MCPantherCompatibleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF5CFB712EEBF1F00981441 /* MCPantherCompatibleButton.m */; };
+		FE1D0680168EF60100143A71 /* MCOptionsDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEBC386512F169BE00F0A20A /* MCOptionsDelegate.m */; };
+		FE1D0681168EF60100143A71 /* MCPopupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EF51F130A7E630076FE30 /* MCPopupButton.m */; };
+		FE1D0682168EF60100143A71 /* MCCheckBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE0EFC7F130A928B0076FE30 /* MCCheckBoxCell.m */; };
+		FE1D0683168EF60100143A71 /* NSArray_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB4E2AF1313B09100F608D0 /* NSArray_Extensions.m */; };
+		FE1D0684168EF60100143A71 /* ImageAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D88B13192F1400731569 /* ImageAndTextCell.m */; };
+		FE1D0685168EF60100143A71 /* MCAddDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D8A913192FA400731569 /* MCAddDelegate.m */; };
+		FE1D0686168EF60100143A71 /* MCCrippledButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9BD131940B000731569 /* MCCrippledButton.m */; };
+		FE1D0687168EF60100143A71 /* MCCommandController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE77D9E1131941C500731569 /* MCCommandController.m */; };
+		FE1D0688168EF60100143A71 /* NSControl_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4B131A857800E244C9 /* NSControl_Extensions.m */; };
+		FE1D0689168EF60100143A71 /* NSNumber_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4D131A857800E244C9 /* NSNumber_Extensions.m */; };
+		FE1D068A168EF60100143A71 /* NSString_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF7FB4F131A857800E244C9 /* NSString_Extensions.m */; };
+		FE1D068B168EF60100143A71 /* MCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA8D4B413229AB200C10516 /* MCTableView.m */; };
+		FE1D068C168EF60100143A71 /* MCAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = FEF466F2132527860079DBCF /* MCAlert.m */; };
+		FE1D068D168EF60100143A71 /* MCOptionsTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED68D0E13265A1000332D8E /* MCOptionsTableView.m */; };
+		FE1D068E168EF60100143A71 /* MCInstallPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA63EA41376C28D001816F2 /* MCInstallPanel.m */; };
+		FE1D068F168EF60100143A71 /* MCFilterDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7AAEE013B602E8008DC4F7 /* MCFilterDelegate.m */; };
+		FE1D0690168EF60100143A71 /* MCWatermarkFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97513C1CCD000194E45 /* MCWatermarkFilter.m */; };
+		FE1D0691168EF60100143A71 /* MCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE10B97F13C1CCDC00194E45 /* MCFilter.m */; };
+		FE1D0692168EF60100143A71 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
+		FE1D0693168EF60100143A71 /* MCTextFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AEE213E04FA200B4E457 /* MCTextFilter.m */; };
+		FE1D0694168EF60100143A71 /* MCColorWell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24912C13E8020D00D744A7 /* MCColorWell.m */; };
+		FE1D0695168EF60100143A71 /* MCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24915513E8046400D744A7 /* MCTextView.m */; };
+		FE1D0696168EF60100143A71 /* MCHUGButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CE87113EBF8EB00538F2B /* MCHUGButtonCell.m */; };
+		FE1D0697168EF60100143A71 /* MCHUGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2CEB0913EC910600538F2B /* MCHUGButton.m */; };
+		FE1D0698168EF60100143A71 /* MCImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE2BE7213EEA25500C1C035 /* MCImageView.m */; };
+		FE1D0699168EF60100143A71 /* MCProgressSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = FE700953140CD7F1002429E1 /* MCProgressSlider.m */; };
+		FE1D069A168EF60100143A71 /* MCLiveImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED1605E141380D100841674 /* MCLiveImageView.m */; };
+		FE1D069B168EF60100143A71 /* MCPresetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE66771E1425D434009BB3A5 /* MCPresetManager.m */; };
+		FE1D069D168EF60100143A71 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		FE1D069E168EF60100143A71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE59A53013ED22B5001414DC /* QuartzCore.framework */; };
+		FE1D06D6168EF7A600143A71 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE0812671652ACCA0061AE04 /* Growl.framework */; };
+		FE1D06D7168EF7AA00143A71 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE0812671652ACCA0061AE04 /* Growl.framework */; };
+		FE1D072F168EFD9600143A71 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FE08127B1652ACE60061AE04 /* Growl.framework */; };
 		FE23AC8C13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
 		FE23AC8E13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
 		FE23AC8F13E02CF300B4E457 /* MCActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FE23AC8A13E02CF300B4E457 /* MCActionButton.m */; };
@@ -639,6 +729,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FE1D072F168EFD9600143A71 /* Growl.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -650,6 +741,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FE0AA93A1689E13D007C3BAB /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FE1D06A1168EF60100143A71 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FE1D06D7168EF7AA00143A71 /* Growl.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -751,6 +853,7 @@
 		FE1A924F12EC4C4A007273B3 /* complete.aif */ = {isa = PBXFileReference; lastKnownFileType = file; name = complete.aif; path = Sounds/complete.aif; sourceTree = "<group>"; };
 		FE1A97A412EC4D42007273B3 /* MCGrowlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGrowlController.h; path = Source/MCGrowlController.h; sourceTree = "<group>"; };
 		FE1A97A512EC4D42007273B3 /* MCGrowlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCGrowlController.m; path = Source/MCGrowlController.m; sourceTree = "<group>"; };
+		FE1D06A6168EF60100143A71 /* Media Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Media Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE23AC8913E02CF300B4E457 /* MCActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCActionButton.h; path = Source/MCActionButton.h; sourceTree = "<group>"; };
 		FE23AC8A13E02CF300B4E457 /* MCActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MCActionButton.m; path = Source/MCActionButton.m; sourceTree = "<group>"; };
 		FE23AE8B13E04E9800B4E457 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Dutch; path = Dutch.lproj/MCTextFilter.xib; sourceTree = "<group>"; };
@@ -970,6 +1073,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FE1D069C168EF60100143A71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE1D069D168EF60100143A71 /* Cocoa.framework in Frameworks */,
+				FE1D069E168EF60100143A71 /* QuartzCore.framework in Frameworks */,
+				FE1D06D6168EF7A600143A71 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FE303308164EAB800095B6DE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1064,6 +1177,7 @@
 				FECA02D11566BC4900970EDC /* Media Converter.app */,
 				FE17FBB216482035002DCA9E /* Media Converter.app */,
 				FE303311164EAB800095B6DE /* Media Converter.app */,
+				FE1D06A6168EF60100143A71 /* Media Converter.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1621,6 +1735,25 @@
 			productReference = FE17FBB216482035002DCA9E /* Media Converter.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FE1D0644168EF60100143A71 /* Media Converter (Intel 64-bit) - 10.6 and up (Retina) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE1D06A3168EF60100143A71 /* Build configuration list for PBXNativeTarget "Media Converter (Intel 64-bit) - 10.6 and up (Retina)" */;
+			buildPhases = (
+				FE1D0645168EF60100143A71 /* Resources */,
+				FE1D0676168EF60100143A71 /* Sources */,
+				FE1D069C168EF60100143A71 /* Frameworks */,
+				FE1D06A1168EF60100143A71 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Media Converter (Intel 64-bit) - 10.6 and up (Retina)";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Media Converter";
+			productReference = FE1D06A6168EF60100143A71 /* Media Converter.app */;
+			productType = "com.apple.product-type.application";
+		};
 		FE3032B1164EAB800095B6DE /* Media Converter (Intel) - 10.4 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE30330E164EAB800095B6DE /* Build configuration list for PBXNativeTarget "Media Converter (Intel) - 10.4" */;
@@ -1743,6 +1876,7 @@
 				FE17FB5216482035002DCA9E /* Media Converter (PowerPC) - 10.4 */,
 				FE3032B1164EAB800095B6DE /* Media Converter (Intel) - 10.4 */,
 				8D1107260486CEB800E47090 /* Media Converter (Universal) - 10.4 */,
+				FE1D0644168EF60100143A71 /* Media Converter (Intel 64-bit) - 10.6 and up (Retina) */,
 			);
 		};
 /* End PBXProject section */
@@ -1855,6 +1989,61 @@
 				FE6CDD1D16521CF30046E59E /* spumux in Resources */,
 				FE0FBA131656B9D4007D737F /* oggz-rip in Resources */,
 				FEDB790F1688743400745F56 /* LanguageConversion.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FE1D0645168EF60100143A71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE1D0646168EF60100143A71 /* InfoPlist.strings in Resources */,
+				FE1D0647168EF60100143A71 /* MainMenu.xib in Resources */,
+				FE1D0648168EF60100143A71 /* Empty.png in Resources */,
+				FE1D0649168EF60100143A71 /* Dropzone.pdf in Resources */,
+				FE1D064A168EF60100143A71 /* Media Converter.icns in Resources */,
+				FE1D064B168EF60100143A71 /* -1.png in Resources */,
+				FE1D064C168EF60100143A71 /* 0.png in Resources */,
+				FE1D064D168EF60100143A71 /* 100.png in Resources */,
+				FE1D064E168EF60100143A71 /* complete.aif in Resources */,
+				FE1D064F168EF60100143A71 /* MCPreferences.xib in Resources */,
+				FE1D0650168EF60100143A71 /* Advanced.tiff in Resources */,
+				FE1D0651168EF60100143A71 /* General.tiff in Resources */,
+				FE1D0652168EF60100143A71 /* Presets in Resources */,
+				FE1D0653168EF60100143A71 /* Create Preset.png in Resources */,
+				FE1D0654168EF60100143A71 /* Presets.tiff in Resources */,
+				FE1D0655168EF60100143A71 /* MCProgress.xib in Resources */,
+				FE1D0656168EF60100143A71 /* Localizable.strings in Resources */,
+				FE1D0657168EF60100143A71 /* MCPresets.icns in Resources */,
+				FE1D0658168EF60100143A71 /* Add Preset.png in Resources */,
+				FE1D0659168EF60100143A71 /* MediaConverterHelp in Resources */,
+				FE1D065A168EF60100143A71 /* Donation in Resources */,
+				FE1D065B168EF60100143A71 /* Credits.rtf in Resources */,
+				FE1D065C168EF60100143A71 /* Languages.plist in Resources */,
+				FE1D065D168EF60100143A71 /* SubTest.mpg in Resources */,
+				FE1D065E168EF60100143A71 /* SubTest.srt in Resources */,
+				FE1D065F168EF60100143A71 /* youtube-dl.sh in Resources */,
+				FE1D0660168EF60100143A71 /* MCInstallPanel.xib in Resources */,
+				FE1D0661168EF60100143A71 /* Sintel-frame.jpg in Resources */,
+				FE1D0662168EF60100143A71 /* Gear with arrow.png in Resources */,
+				FE1D0663168EF60100143A71 /* MCWatermarkFilter.xib in Resources */,
+				FE1D0664168EF60100143A71 /* MCTextFilter.xib in Resources */,
+				FE1D0665168EF60100143A71 /* Sintel-frame-dark.jpg in Resources */,
+				FE1D0666168EF60100143A71 /* MCPresetManager.xib in Resources */,
+				FE1D0667168EF60100143A71 /* LanguageCodes.plist in Resources */,
+				FE1D0668168EF60100143A71 /* MP4Box in Resources */,
+				FE1D0669168EF60100143A71 /* ffmpeg in Resources */,
+				FE1D066A168EF60100143A71 /* fondu in Resources */,
+				FE1D066B168EF60100143A71 /* katedec in Resources */,
+				FE1D066C168EF60100143A71 /* kateenc in Resources */,
+				FE1D066D168EF60100143A71 /* mkvextract in Resources */,
+				FE1D066E168EF60100143A71 /* mkvinfo in Resources */,
+				FE1D066F168EF60100143A71 /* mkvmerge in Resources */,
+				FE1D0670168EF60100143A71 /* oggz-info in Resources */,
+				FE1D0671168EF60100143A71 /* oggz-merge in Resources */,
+				FE1D0672168EF60100143A71 /* qt-faststart in Resources */,
+				FE1D0673168EF60100143A71 /* spumux in Resources */,
+				FE1D0674168EF60100143A71 /* oggz-rip in Resources */,
+				FE1D0675168EF60100143A71 /* LanguageConversion.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2221,6 +2410,50 @@
 				FE17FBA616482035002DCA9E /* MCProgressSlider.m in Sources */,
 				FE17FBA716482035002DCA9E /* MCLiveImageView.m in Sources */,
 				FE17FBA816482035002DCA9E /* MCPresetManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FE1D0676168EF60100143A71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE1D0677168EF60100143A71 /* main.m in Sources */,
+				FE1D0678168EF60100143A71 /* MCDropView.m in Sources */,
+				FE1D0679168EF60100143A71 /* MCMainController.m in Sources */,
+				FE1D067A168EF60100143A71 /* MCCommonMethods.m in Sources */,
+				FE1D067B168EF60100143A71 /* MCConverter.m in Sources */,
+				FE1D067C168EF60100143A71 /* MCProgress.m in Sources */,
+				FE1D067D168EF60100143A71 /* MCGrowlController.m in Sources */,
+				FE1D067E168EF60100143A71 /* MCPreferences.m in Sources */,
+				FE1D067F168EF60100143A71 /* MCPantherCompatibleButton.m in Sources */,
+				FE1D0680168EF60100143A71 /* MCOptionsDelegate.m in Sources */,
+				FE1D0681168EF60100143A71 /* MCPopupButton.m in Sources */,
+				FE1D0682168EF60100143A71 /* MCCheckBoxCell.m in Sources */,
+				FE1D0683168EF60100143A71 /* NSArray_Extensions.m in Sources */,
+				FE1D0684168EF60100143A71 /* ImageAndTextCell.m in Sources */,
+				FE1D0685168EF60100143A71 /* MCAddDelegate.m in Sources */,
+				FE1D0686168EF60100143A71 /* MCCrippledButton.m in Sources */,
+				FE1D0687168EF60100143A71 /* MCCommandController.m in Sources */,
+				FE1D0688168EF60100143A71 /* NSControl_Extensions.m in Sources */,
+				FE1D0689168EF60100143A71 /* NSNumber_Extensions.m in Sources */,
+				FE1D068A168EF60100143A71 /* NSString_Extensions.m in Sources */,
+				FE1D068B168EF60100143A71 /* MCTableView.m in Sources */,
+				FE1D068C168EF60100143A71 /* MCAlert.m in Sources */,
+				FE1D068D168EF60100143A71 /* MCOptionsTableView.m in Sources */,
+				FE1D068E168EF60100143A71 /* MCInstallPanel.m in Sources */,
+				FE1D068F168EF60100143A71 /* MCFilterDelegate.m in Sources */,
+				FE1D0690168EF60100143A71 /* MCWatermarkFilter.m in Sources */,
+				FE1D0691168EF60100143A71 /* MCFilter.m in Sources */,
+				FE1D0692168EF60100143A71 /* MCActionButton.m in Sources */,
+				FE1D0693168EF60100143A71 /* MCTextFilter.m in Sources */,
+				FE1D0694168EF60100143A71 /* MCColorWell.m in Sources */,
+				FE1D0695168EF60100143A71 /* MCTextView.m in Sources */,
+				FE1D0696168EF60100143A71 /* MCHUGButtonCell.m in Sources */,
+				FE1D0697168EF60100143A71 /* MCHUGButton.m in Sources */,
+				FE1D0698168EF60100143A71 /* MCImageView.m in Sources */,
+				FE1D0699168EF60100143A71 /* MCProgressSlider.m in Sources */,
+				FE1D069A168EF60100143A71 /* MCLiveImageView.m in Sources */,
+				FE1D069B168EF60100143A71 /* MCPresetManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2696,6 +2929,57 @@
 			};
 			name = Release;
 		};
+		FE1D06A4168EF60100143A71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Intel-64\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				GCC_VERSION = "";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "Media Converter";
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		FE1D06A5168EF60100143A71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks/Intel-64\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Media Converter_Prefix.pch";
+				GCC_VERSION = "";
+				IBC_NOTICES = NO;
+				IBC_WARNINGS = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "Media Converter";
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
 		FE30330F164EAB800095B6DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2963,6 +3247,15 @@
 			buildConfigurations = (
 				FE17FBB016482035002DCA9E /* Debug */,
 				FE17FBB116482035002DCA9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FE1D06A3168EF60100143A71 /* Build configuration list for PBXNativeTarget "Media Converter (Intel 64-bit) - 10.6 and up (Retina)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE1D06A4168EF60100143A71 /* Debug */,
+				FE1D06A5168EF60100143A71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
