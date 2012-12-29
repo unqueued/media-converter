@@ -86,7 +86,11 @@
 	for (x = 0; x < [folders count]; x ++)
 	{
 		NSString *folder = [folders objectAtIndex:x];
+		#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+		NSArray *folderContents = [[MCCommonMethods defaultManager] contentsOfDirectoryAtPath:folder error:nil];
+		#else
 		NSArray *folderContents = [[MCCommonMethods defaultManager] directoryContentsAtPath:folder];
+		#endif
 	
 		NSInteger i;
 		for (i = 0; i < [folderContents count]; i ++)

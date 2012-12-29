@@ -681,8 +681,12 @@
 					[MCCommonMethods moveItemAtPath:spumuxPath toPath:uniqueSpumuxPath error:nil];
 			
 				NSString *savedFontPath = [defaults objectForKey:@"MCFontFolderPath"];
-
+				
+				#if MAC_OS_X_VERSION_MAX_ALLOWED >= 1060
+				[defaultManager createSymbolicLinkAtPath:spumuxPath withDestinationPath:savedFontPath error:nil];
+				#else
 				[defaultManager createSymbolicLinkAtPath:spumuxPath pathContent:savedFontPath];
+				#endif
 		
 				[self createMovieWithSubtitlesAtPath:outFileWithExtension inputFile:path ouputType:@"dvd" currentOptions:nil withSize:NSMakeSize(width, height)];
 			}
